@@ -16,7 +16,7 @@ def usuarios():
 def getUsuarioId(id):
 	"""Retorna los datos de un usuario especificando su id"""
 	user = Usuario()
-	user.id = id
+	user.id_usuario = id
 	return Usuario.getUsuarioId(user)
 def UpdateDataUsuario(id, nombre, apellido, rut, clave, tipo, status):
 	"""Actualiza todos los campos de un usuario especificando su id, nombre, apellido, rut, clave, tipo y status"""

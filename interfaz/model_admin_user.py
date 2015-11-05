@@ -9,9 +9,8 @@ import MySQLdb
 
 
 def connect():
-    db = MySQLdb.connect("localhost", "root", "", "cafe_nostro")
-    conn = db.cursor()
-    return conn
+    conex = MySQLdb.connect("localhost", "root", "", "cafe_nostro")
+    return conex
 
 
 class Usuario(object):
@@ -58,7 +57,8 @@ class Usuario(object):
         query = "SELECT * FROM {}".format(cls.__tablename__)
 
         try:
-            conn = connect()
+            conex = connect()
+            conn = conex.cursor()
             conn.execute(query)
             data = conn.fetchall()
             # print data
@@ -71,33 +71,39 @@ class Usuario(object):
         conn.close()
 
     def updateNombreUsuario(cls,nombre,id):
-        conn = connect()
+        conex = connect()
+        conn = conex.cursor()
         query = "UPDATE usuario SET nombre = ? WHERE idUsuario = ?"
         conn.execute(query, [nombre,idUsuario])
-        conn.commit()
+        conex.commit()
     def updateApellidoUsuario(cls,apellido,id):
-        conn = connect()
+        conex = connect()
+        conn = conex.cursor()
         query = "UPDATE usuario SET apellido = ? WHERE idUsuario = ?"
         conn.execute(query, [apellido,idUsuario])
-        conn.commit()
+        conex.commit()
     def updateRutUsuario(cls,rut,id):
-        conn = connect()
+        conex = connect()
+        conn = conex.cursor()
         query = "UPDATE usuario SET rut = ? WHERE idUsuario = ?"
         conn.execute(query, [rut,idUsuario])
-        conn.commit()
+        conex.commit()
     def UpdateDataUsuario(cls):
-        conn = connect()
+        conex = connect()
+        conn = conex.cursor()
         query = "UPDATE usuario SET nombre = ?, apellido = ?, rut = ?, clave = ?, tipo = ?, status = ? WHERE idUsuario = ?"
-        conn.execute(query, [nombre,apellido,rut,clave,tipo,status,id])
-        conn.commit()
+        conn.execute(query ,(str(cls.nombre), str(cls.apellido), str(cls.rut), str(cls.clave), str(cls.tipo), str(cls.status), str(cls.id_user)))
+        conex.commit()
     def AddDataUsuario(cls):
-        conn = connect()
+        conex = connect()
+        conn = conex.cursor()
         query = "INSERT INTO usuario(nombre, apellido, rut, clave, tipo, status) VALUES(%s, %s, %s, %s, %s, %s)"
         conn.execute(query ,(str(cls.nombre), str(cls.apellido), str(cls.rut), str(cls.clave), str(cls.tipo), str(cls.status)))
-        conn.close()
+        conex.commit()
     def getUsuarioId(cls):
-        conn = connect()
+        conex = connect()
+        conn = conex.cursor()
         query = "SELECT * FROM usuario WHERE idUsuario = %s"
-        conn.execute(query, (str(cls.id)))
+        conn.execute(query, (str(int(cls.id_usuario))))
         usuario = conn.fetchall()
         return usuario

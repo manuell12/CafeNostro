@@ -1,14 +1,32 @@
 # -*- coding: utf-8 -*-
 import sys
 from PySide import QtGui, QtCore
-from FormularioUsuario_ui import Ui_FormularioUsuario
+import FormularioUsuario_ui
+'''Importar controlador'''
 
 class FormularioUsuario(QtGui.QDialog):
-	def __init__(self, parent=None):
-		QtGui.QDialog.__init__(self, parent)
-		self.ui = Ui_FormularioUsuario()
+	identificador = False
+	def __init__(self, id=None):
+		super(FormularioUsuario, self).__init__()
+		self.ui = FormularioUsuario_ui.Ui_Dialog()
 		self.ui.setupUi(self)
 		self.show()
+		self.connect_actions()
+		if(id==None):
+			self.id=0
+			self.identificador = False
+			self.setWindowTitle("Nuevo Usuario")
+			self.show()
+		else:
+			self.id=id
+			self.identificador = True
+			self.setWindowTitle("Editar Usuario")
+			usuario = controlador.getUsuarioId(id)
+			for row in usuario:
+				self.ui.lineEdit_nombre.setText(row['nombre'])
+				self.ui.lineEdit_apellido.setText(row['apellido'])
+				self.ui.lineEdit_rut.setText(row['rut'])
+				self.ui.lineEdit_clave.setEnabled(False)
 
 def run():
 	app = QtGui.QApplication(sys.argv)

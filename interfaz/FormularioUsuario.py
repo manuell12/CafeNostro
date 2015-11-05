@@ -2,7 +2,7 @@
 import sys
 from PySide import QtGui, QtCore
 import FormularioUsuario_ui
-'''Importar controlador'''
+import controller_admin_user
 
 class FormularioUsuario(QtGui.QDialog):
 	identificador = False
@@ -11,7 +11,6 @@ class FormularioUsuario(QtGui.QDialog):
 		self.ui = FormularioUsuario_ui.Ui_Dialog()
 		self.ui.setupUi(self)
 		self.show()
-		self.connect_actions()
 		if(id==None):
 			self.id=0
 			self.identificador = False
@@ -21,7 +20,7 @@ class FormularioUsuario(QtGui.QDialog):
 			self.id=id
 			self.identificador = True
 			self.setWindowTitle("Editar Usuario")
-			usuario = controlador.getUsuarioId(id)
+			usuario = controller_admin_user.getUsuarioId(id)
 			for row in usuario:
 				self.ui.lineEdit_nombre.setText(row['nombre'])
 				self.ui.lineEdit_apellido.setText(row['apellido'])

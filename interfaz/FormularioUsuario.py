@@ -7,9 +7,13 @@ import controller_admin_user
 class FormularioUsuario(QtGui.QDialog):
 	reloadT = QtCore.Signal()
 	identificador = False
+	__type_users__ = (
+		(u"Administrador"),
+		(u"Garzón")
+	)
 	def __init__(self, id=None):
 		super(FormularioUsuario, self).__init__()
-		self.ui = FormularioUsuario_ui.Ui_Dialog()
+		self.ui = FormularioUsuario_ui.Ui_FormularioUsuario()
 		self.ui.setupUi(self)
 		self.show()
 		if(id==None):
@@ -23,30 +27,28 @@ class FormularioUsuario(QtGui.QDialog):
 			self.setWindowTitle("Editar Usuario")
 			usuario = controller_admin_user.getUsuarioId(id)
 			for row in usuario:
-				self.nombre = row['nombre']
+				self.nombre = row[1]
 				self.ui.lineEdit_nombre.setText(self.nombre)
-				self.apellido = row['apellido']
+				self.apellido = row[2]
 				self.ui.lineEdit_apellido.setText(self.apellido)
-				self.rut = row['rut']
+				self.rut = row[3]
 				self.ui.lineEdit_rut.setText(self.rut)
-				self.tipo = row['tipo']
-				self.ui.lineEdit_tipo.setText(self.tipo)
-				self.status = row['status']
-				self.ui.lineEdit_status.setText(self.status)
+				self.tipo = row[5]
+				self.ui.lineEdit_tipo.setText(self.__type_users__[self.tipo])
+				self.status = row[6]
+				self.ui.lineEdit_status.setText(str(self.status))
 
-	def connect_actions(self):
-		self.accept.connect(self.action_btn_aceptar)
-	def action_btn_aceptar(self):
+	def accept(self):
 		self.nombre = str(self.ui.lineEdit_nombre.text())
 		self.apellido = str(self.ui.lineEdit_apellido.text())
 		self.rut = str(self.ui.lineEdit_rut.text())
 		self.clave = str(self.ui.lineEdit_clave.text())
-		self.tipo = str(self.ui.lineEdit_tipo.text())
-		self.status = str(self.ui.lineEdit_apellido.status())
-		if(identificador):
-			controller_admin_user.AddDataUsuario(self.nombre, self.apellido, self.rut, self.clave, self.tipo, self.status)
-		else:
+		self.tipo = int(self.ui.lineEdit_tipo.text())
+		self.status = int(self.ui.lineEdit_status.text())
+		if(self.identificador):
 			controller_admin_user.UpdateDataUsuario(self.id, self.nombre, self.apellido, self.rut, self.clave, self.tipo, self.status)
+		else:
+			controller_admin_user.AddDataUsuario(self.nombre, self.apellido, self.rut, self.clave, self.tipo, self.status)
 		self.reloadT.emit()
 
 def run():

@@ -70,40 +70,34 @@ class Usuario(object):
 
         conn.close()
 
-    def updateNombreUsuario(nombre,id):
-        conex = connect()
-        c = conex[0]
-        conn = conex[1]
+    def updateNombreUsuario(cls,nombre,id):
+        conn = connect()
         query = "UPDATE usuario SET nombre = ? WHERE idUsuario = ?"
-        c.execute(query, [nombre,idUsuario])
+        conn.execute(query, [nombre,idUsuario])
         conn.commit()
-    def updateApellidoUsuario(apellido,id):
-        conex = connect()
-        c = conex[0]
-        conn = conex[1]
+    def updateApellidoUsuario(cls,apellido,id):
+        conn = connect()
         query = "UPDATE usuario SET apellido = ? WHERE idUsuario = ?"
-        c.execute(query, [apellido,idUsuario])
+        conn.execute(query, [apellido,idUsuario])
         conn.commit()
-    def updateRutUsuario(rut,id):
-        conex = connect()
-        c = conex[0]
-        conn = conex[1]
+    def updateRutUsuario(cls,rut,id):
+        conn = connect()
         query = "UPDATE usuario SET rut = ? WHERE idUsuario = ?"
-        c.execute(query, [rut,idUsuario])
+        conn.execute(query, [rut,idUsuario])
         conn.commit()
-    def UpdateDataUsuario(id, nombre, apellido, rut, clave):
-        c = connect()
-        query = "UPDATE usuario SET nombre = ?, apellido = ?, rut = ?, clave = ? WHERE idUsuario = ?"
-        c[0].execute(query, [nombre,apellido,rut,clave,id])
-        c[1].commit()
-    def AddDataUsuario(nombre, apellido, rut, clave):
-        c = connect()
-        c[0].execute('''INSERT INTO usuario(nombre, apellido, rut, clave)
-                        VALUES(?, ?, ?, ?)''',(nombre, apellido, rut, clave))
-        c[1].commit()
-    def getUsuarioId(id):
-        c = connect()[0]
-        query = "SELECT * FROM usuario WHERE idUsuario = ?"
-        resultado = c.execute(query, [id])
-        usuario = resultado.fetchall()
+    def UpdateDataUsuario(cls):
+        conn = connect()
+        query = "UPDATE usuario SET nombre = ?, apellido = ?, rut = ?, clave = ?, tipo = ?, status = ? WHERE idUsuario = ?"
+        conn.execute(query, [nombre,apellido,rut,clave,tipo,status,id])
+        conn.commit()
+    def AddDataUsuario(cls):
+        conn = connect()
+        query = "INSERT INTO usuario(nombre, apellido, rut, clave, tipo, status) VALUES(%s, %s, %s, %s, %s, %s)"
+        conn.execute(query ,(str(cls.nombre), str(cls.apellido), str(cls.rut), str(cls.clave), str(cls.tipo), str(cls.status)))
+        conn.close()
+    def getUsuarioId(cls):
+        conn = connect()
+        query = "SELECT * FROM usuario WHERE idUsuario = %s"
+        conn.execute(query, (str(cls.id)))
+        usuario = conn.fetchall()
         return usuario

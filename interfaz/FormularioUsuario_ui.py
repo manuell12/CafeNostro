@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'FormularioUsuario.ui'
+# Form implementation generated from reading ui file 'C:\Users\danie\Documents\Proyecto Taller\CafeNostro\interfaz\FormularioUsuario.ui'
 #
-# Created: Thu Nov 05 15:25:36 2015
+# Created: Fri Nov 06 10:59:50 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -13,7 +13,7 @@ class Ui_FormularioUsuario(object):
     def setupUi(self, FormularioUsuario):
         FormularioUsuario.setObjectName("FormularioUsuario")
         FormularioUsuario.setEnabled(True)
-        FormularioUsuario.resize(385, 209)
+        FormularioUsuario.resize(385, 232)
         self.verticalLayout_3 = QtGui.QVBoxLayout(FormularioUsuario)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.groupBox = QtGui.QGroupBox(FormularioUsuario)
@@ -39,9 +39,6 @@ class Ui_FormularioUsuario(object):
         self.label_5 = QtGui.QLabel(self.groupBox)
         self.label_5.setObjectName("label_5")
         self.verticalLayout.addWidget(self.label_5)
-        self.label_6 = QtGui.QLabel(self.groupBox)
-        self.label_6.setObjectName("label_6")
-        self.verticalLayout.addWidget(self.label_6)
         self.horizontalLayout.addLayout(self.verticalLayout)
         self.verticalLayout_2 = QtGui.QVBoxLayout()
         self.verticalLayout_2.setObjectName("verticalLayout_2")
@@ -57,12 +54,9 @@ class Ui_FormularioUsuario(object):
         self.lineEdit_rut = QtGui.QLineEdit(self.groupBox)
         self.lineEdit_rut.setObjectName("lineEdit_rut")
         self.verticalLayout_2.addWidget(self.lineEdit_rut)
-        self.lineEdit_tipo = QtGui.QLineEdit(self.groupBox)
-        self.lineEdit_tipo.setObjectName("lineEdit_tipo")
-        self.verticalLayout_2.addWidget(self.lineEdit_tipo)
-        self.lineEdit_status = QtGui.QLineEdit(self.groupBox)
-        self.lineEdit_status.setObjectName("lineEdit_status")
-        self.verticalLayout_2.addWidget(self.lineEdit_status)
+        self.comboBox_tipo = QtGui.QComboBox(self.groupBox)
+        self.comboBox_tipo.setObjectName("comboBox_tipo")
+        self.verticalLayout_2.addWidget(self.comboBox_tipo)
         self.horizontalLayout.addLayout(self.verticalLayout_2)
         spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem1)
@@ -86,5 +80,4 @@ class Ui_FormularioUsuario(object):
         self.label_4.setText(QtGui.QApplication.translate("FormularioUsuario", "Contraseña", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("FormularioUsuario", "Rut", None, QtGui.QApplication.UnicodeUTF8))
         self.label_5.setText(QtGui.QApplication.translate("FormularioUsuario", "Tipo", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_6.setText(QtGui.QApplication.translate("FormularioUsuario", "Status", None, QtGui.QApplication.UnicodeUTF8))
 

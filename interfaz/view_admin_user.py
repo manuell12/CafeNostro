@@ -35,6 +35,7 @@ class AdminUsers(QtGui.QDialog):
 		self.set_model_table()
 		self.set_source_model(self.load_users(self))
 		self.connect_actions()
+		self.ui.tableUsers.setColumnHidden(0,True)
 		self.show()
 
 
@@ -43,10 +44,13 @@ class AdminUsers(QtGui.QDialog):
 		self.ui.editar_button.clicked.connect(self.action_btn_editar)
 		self.ui.nuevo_button.clicked.connect(self.action_btn_nuevo)
 
+	def reload_data_table(self):
+		self.set_source_model(self.load_users(self))
+
 	def action_btn_nuevo(self):
 		"""Metodo para lanzar el formulario de creacion del nuevo usuario"""
 		self.nuevoUsuarioWindow = FormularioUsuario.FormularioUsuario()
-		#self.nuevoUsuarioWindow.reloadT.connect(self.load_users(self))
+		self.nuevoUsuarioWindow.reloadT.connect(self.reload_data_table)
 		self.nuevoUsuarioWindow.exec_()
 
 	def action_btn_editar(self):
@@ -59,7 +63,7 @@ class AdminUsers(QtGui.QDialog):
 			return False
 		else:
 			self.editUsuarioWindow = FormularioUsuario.FormularioUsuario(self.id)
-			#self.editUsuarioWindow.reloadT.connect(self.load_users(self))
+			self.editUsuarioWindow.reloadT.connect(self.reload_data_table)
 			self.editUsuarioWindow.exec_()
 
 	def load_users(self, parent):
@@ -90,12 +94,14 @@ class AdminUsers(QtGui.QDialog):
 
 		modelSel = self.ui.tableUsers.selectionModel()
 		modelSel.currentChanged.connect(self.tabla_cell_selected)
+
 		return model
 
 	def tabla_cell_selected(self,index,indexp):
 		model = self.ui.tableUsers.model()
 		index = self.ui.tableUsers.currentIndex()
 		self.id = model.index(index.row(), 0, QtCore.QModelIndex()).data()
+
 
 	def set_model_table(self):
 		"""Define el módelo de la grilla para trabajarla."""

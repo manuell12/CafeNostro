@@ -45,6 +45,8 @@ class Usuario(object):
         self.clave = clave
         self.tipo = tipo
         self.status = status
+        if status == None:
+            self.status = 0
 
     @classmethod
     def all(cls):
@@ -91,8 +93,8 @@ class Usuario(object):
     def UpdateDataUsuario(cls):
         conex = connect()
         conn = conex.cursor()
-        query = "UPDATE usuario SET nombre = ?, apellido = ?, rut = ?, clave = ?, tipo = ?, status = ? WHERE idUsuario = ?"
-        conn.execute(query ,(str(cls.nombre), str(cls.apellido), str(cls.rut), str(cls.clave), str(cls.tipo), str(cls.status), str(cls.id_user)))
+        query = "UPDATE usuario SET nombre = %s, apellido = %s, rut = %s, clave = %s, tipo = %s, status = %s WHERE idUsuario = %s"
+        conn.execute(query ,(str(cls.nombre), str(cls.apellido), str(cls.rut), str(cls.clave), str(cls.tipo), str(cls.status), str(cls.id_usuario)))
         conex.commit()
     def AddDataUsuario(cls):
         conex = connect()
@@ -103,7 +105,7 @@ class Usuario(object):
     def getUsuarioId(cls):
         conex = connect()
         conn = conex.cursor()
-        query = "SELECT * FROM usuario WHERE idUsuario = %s"
-        conn.execute(query, (str(int(cls.id_usuario))))
+        query = "SELECT * FROM usuario WHERE idUsuario = {}".format(cls.id_usuario)
+        conn.execute(query)
         usuario = conn.fetchall()
         return usuario

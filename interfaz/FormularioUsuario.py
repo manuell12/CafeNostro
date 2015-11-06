@@ -16,6 +16,8 @@ class FormularioUsuario(QtGui.QDialog):
 		self.ui = FormularioUsuario_ui.Ui_FormularioUsuario()
 		self.ui.setupUi(self)
 		self.show()
+		for num,name in enumerate(self.__type_users__):
+			self.ui.comboBox_tipo.addItem(name, num)
 		if(id==None):
 			self.id=0
 			self.identificador = False
@@ -34,19 +36,21 @@ class FormularioUsuario(QtGui.QDialog):
 				self.rut = row[3]
 				self.ui.lineEdit_rut.setText(self.rut)
 				self.tipo = row[5]
-				self.ui.lineEdit_tipo.setText(self.__type_users__[self.tipo])
+				self.ui.comboBox_tipo.setCurrentIndex(int(self.tipo))
 
 	def accept(self):
 		self.nombre = str(self.ui.lineEdit_nombre.text())
 		self.apellido = str(self.ui.lineEdit_apellido.text())
 		self.rut = str(self.ui.lineEdit_rut.text())
 		self.clave = str(self.ui.lineEdit_clave.text())
-		self.tipo = int(self.ui.lineEdit_tipo.text())
-		self.status = int(self.ui.lineEdit_status.text())
+		self.tipo = int(self.ui.comboBox_tipo.currentIndex())
+		self.status = None
 		if(self.identificador):
 			controller_admin_user.UpdateDataUsuario(self.id, self.nombre, self.apellido, self.rut, self.clave, self.tipo, self.status)
+			self.setVisible(False)
 		else:
 			controller_admin_user.AddDataUsuario(self.nombre, self.apellido, self.rut, self.clave, self.tipo, self.status)
+			self.setVisible(False)
 		self.reloadT.emit()
 
 def run():

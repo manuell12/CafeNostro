@@ -22,21 +22,21 @@ class FormularioUsuario(QtGui.QDialog):
 			self.setWindowTitle("Nuevo Usuario")
 			self.show()
 		else:
-			self.id=id
-			self.identificador = True
-			self.setWindowTitle("Editar Usuario")
-			usuario = controller_admin_user.getUsuarioId(id)
-			for row in usuario:
-				self.nombre = row[1]
-				self.ui.lineEdit_nombre.setText(self.nombre)
-				self.apellido = row[2]
-				self.ui.lineEdit_apellido.setText(self.apellido)
-				self.rut = row[3]
-				self.ui.lineEdit_rut.setText(self.rut)
-				self.tipo = row[5]
-				self.ui.lineEdit_tipo.setText(self.__type_users__[self.tipo])
-				self.status = row[6]
-				self.ui.lineEdit_status.setText(str(self.status))
+                        self.id=id
+                        self.identificador = True
+                        self.setWindowTitle("Editar Usuario")
+                        usuario = controller_admin_user.getUsuarioId(id)
+                        for row in usuario:
+                                self.nombre = row[1]
+                                self.ui.lineEdit_nombre.setText(self.nombre)
+                                self.apellido = row[2]
+                                self.ui.lineEdit_apellido.setText(self.apellido)
+                                self.rut = row[3]
+                                self.ui.lineEdit_rut.setText(self.rut)
+                                self.tipo = row[5]
+                                self.ui.lineEdit_tipo.setText(self.__type_users__[self.tipo])
+                                self.status = row[6]
+                                self.ui.lineEdit_status.setText(str(self.status))
 
 	def accept(self):
 		self.nombre = str(self.ui.lineEdit_nombre.text())

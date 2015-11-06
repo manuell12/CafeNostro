@@ -42,13 +42,15 @@ class AdminUsers(QtGui.QDialog):
 		"""conectar botones con su respectiva accion"""
 		self.ui.editar_button.clicked.connect(self.action_btn_editar)
 		self.ui.nuevo_button.clicked.connect(self.action_btn_nuevo)
+		self.ui.eliminar_button.clicked.connect(self.action_btn_eliminar)
 
 	def action_btn_nuevo(self):
 		"""Metodo para lanzar el formulario de creacion del nuevo usuario"""
 		self.nuevoUsuarioWindow = FormularioUsuario.FormularioUsuario()
 		#self.nuevoUsuarioWindow.reloadT.connect(self.load_users(self))
 		self.nuevoUsuarioWindow.exec_()
-
+                #self.load_users(self)
+                
 	def action_btn_editar(self):
 		index = self.ui.tableUsers.currentIndex()
 		if index.row() == -1: #No se ha seleccionado producto
@@ -61,7 +63,23 @@ class AdminUsers(QtGui.QDialog):
 			self.editUsuarioWindow = FormularioUsuario.FormularioUsuario(self.id)
 			#self.editUsuarioWindow.reloadT.connect(self.load_users(self))
 			self.editUsuarioWindow.exec_()
-
+                        #self.load_users(self)
+                
+        def action_btn_eliminar(self):
+                """Metodo que elimina un usuario en la base de datos"""
+                index = self.ui.tableUsers.currentIndex()
+                print index.row()
+                if index.row() == -1: #No se ha seleccionado producto
+			msgBox = QtGui.QMessageBox()
+			msgBox.setWindowTitle("Error")
+			msgBox.setText("Debe seleccionar un usuario.")
+			msgBox.exec_()
+			return False
+		else:
+                        usuario = controller_admin_user.deleteUser(index.row() + 1)
+                        print usuario
+                        self.load_users(self)
+                
 	def load_users(self, parent):
 		"""
 		Carga la información de la base de datos en la tabla.

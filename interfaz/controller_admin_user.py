@@ -26,3 +26,8 @@ def AddDataUsuario(nombre, apellido, rut, clave, tipo, status):
 	"""Agrega un usuario nuevo a la base de datos. Recibe como entrada todos los campos necesarios para su creacion"""
 	user = Usuario(None, nombre, apellido, rut, clave, tipo, status)
 	return Usuario.AddDataUsuario(user)
+def deleteUser(id):
+        """Elimina un usuario de la base de datos"""
+        user = Usuario()
+        user.id_usuario = id
+	return Usuario.deleteUsers(user)

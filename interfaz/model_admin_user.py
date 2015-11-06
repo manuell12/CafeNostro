@@ -109,3 +109,9 @@ class Usuario(object):
         conn.execute(query)
         usuario = conn.fetchall()
         return usuario
+    def deleteUsers(cls):
+        conex = connect()
+        conn = conex.cursor()
+        query = "DELETE FROM usuario WHERE idUsuario = {}".format(cls.id_usuario)
+        conn.execute(query)
+        conex.commit()

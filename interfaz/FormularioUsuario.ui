@@ -53,9 +53,16 @@
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="label_4">
+         <widget class="QLabel" name="label_clave">
           <property name="text">
            <string>Contraseña</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_verif">
+          <property name="text">
+           <string>Repita Contraseña</string>
           </property>
          </widget>
         </item>
@@ -85,6 +92,9 @@
         </item>
         <item>
          <widget class="QLineEdit" name="lineEdit_clave"/>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineEdit_verif"/>
         </item>
         <item>
          <widget class="QLineEdit" name="lineEdit_rut"/>

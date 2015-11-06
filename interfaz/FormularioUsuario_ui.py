@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\danie\Documents\Proyecto Taller\CafeNostro\interfaz\FormularioUsuario.ui'
+# Form implementation generated from reading ui file 'c:\Users\danie\Documents\Proyecto Taller\CafeNostro\interfaz\FormularioUsuario.ui'
 #
-# Created: Fri Nov 06 10:59:50 2015
+# Created: Fri Nov 06 12:56:57 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -30,9 +30,12 @@ class Ui_FormularioUsuario(object):
         self.label_2 = QtGui.QLabel(self.groupBox)
         self.label_2.setObjectName("label_2")
         self.verticalLayout.addWidget(self.label_2)
-        self.label_4 = QtGui.QLabel(self.groupBox)
-        self.label_4.setObjectName("label_4")
-        self.verticalLayout.addWidget(self.label_4)
+        self.label_clave = QtGui.QLabel(self.groupBox)
+        self.label_clave.setObjectName("label_clave")
+        self.verticalLayout.addWidget(self.label_clave)
+        self.label_verif = QtGui.QLabel(self.groupBox)
+        self.label_verif.setObjectName("label_verif")
+        self.verticalLayout.addWidget(self.label_verif)
         self.label_3 = QtGui.QLabel(self.groupBox)
         self.label_3.setObjectName("label_3")
         self.verticalLayout.addWidget(self.label_3)
@@ -51,6 +54,9 @@ class Ui_FormularioUsuario(object):
         self.lineEdit_clave = QtGui.QLineEdit(self.groupBox)
         self.lineEdit_clave.setObjectName("lineEdit_clave")
         self.verticalLayout_2.addWidget(self.lineEdit_clave)
+        self.lineEdit_verif = QtGui.QLineEdit(self.groupBox)
+        self.lineEdit_verif.setObjectName("lineEdit_verif")
+        self.verticalLayout_2.addWidget(self.lineEdit_verif)
         self.lineEdit_rut = QtGui.QLineEdit(self.groupBox)
         self.lineEdit_rut.setObjectName("lineEdit_rut")
         self.verticalLayout_2.addWidget(self.lineEdit_rut)
@@ -77,7 +83,8 @@ class Ui_FormularioUsuario(object):
         self.groupBox.setTitle(QtGui.QApplication.translate("FormularioUsuario", "Datos de Usuario", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("FormularioUsuario", "Nombre", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("FormularioUsuario", "Apellido", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_4.setText(QtGui.QApplication.translate("FormularioUsuario", "Contraseña", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_clave.setText(QtGui.QApplication.translate("FormularioUsuario", "Contraseña", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_verif.setText(QtGui.QApplication.translate("FormularioUsuario", "Repita Contraseña", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("FormularioUsuario", "Rut", None, QtGui.QApplication.UnicodeUTF8))
         self.label_5.setText(QtGui.QApplication.translate("FormularioUsuario", "Tipo", None, QtGui.QApplication.UnicodeUTF8))
 

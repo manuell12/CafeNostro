@@ -16,6 +16,8 @@ class FormularioUsuario(QtGui.QDialog):
 		self.ui = FormularioUsuario_ui.Ui_FormularioUsuario()
 		self.ui.setupUi(self)
 		self.show()
+		self.ui.lineEdit_clave.setEchoMode(QtGui.QLineEdit.Password)
+		self.ui.lineEdit_verif.setEchoMode(QtGui.QLineEdit.Password)
 		for num,name in enumerate(self.__type_users__):
 			self.ui.comboBox_tipo.addItem(name, num)
 		if(id==None):
@@ -37,20 +39,29 @@ class FormularioUsuario(QtGui.QDialog):
 				self.ui.lineEdit_rut.setText(self.rut)
 				self.tipo = row[5]
 				self.ui.comboBox_tipo.setCurrentIndex(int(self.tipo))
+				self.ui.lineEdit_verif.setVisible(False)
+				self.ui.label_verif.setVisible(False)
+				self.ui.lineEdit_clave.setEnabled(False)
 
 	def accept(self):
 		self.nombre = str(self.ui.lineEdit_nombre.text())
 		self.apellido = str(self.ui.lineEdit_apellido.text())
 		self.rut = str(self.ui.lineEdit_rut.text())
 		self.clave = str(self.ui.lineEdit_clave.text())
+		self.verif = str(self.ui.lineEdit_verif.text())
 		self.tipo = int(self.ui.comboBox_tipo.currentIndex())
 		self.status = None
 		if(self.identificador):
 			controller_admin_user.UpdateDataUsuario(self.id, self.nombre, self.apellido, self.rut, self.clave, self.tipo, self.status)
 			self.setVisible(False)
 		else:
-			controller_admin_user.AddDataUsuario(self.nombre, self.apellido, self.rut, self.clave, self.tipo, self.status)
-			self.setVisible(False)
+			if self.verif == self.clave:
+				controller_admin_user.AddDataUsuario(self.nombre, self.apellido, self.rut, self.clave, self.tipo, self.status)
+				self.setVisible(False)
+			else:
+				self.errorMessageDialog = QtGui.QErrorMessage(self)
+				self.errorMessageDialog.setWindowTitle("ERROR")
+				self.errorMessageDialog.showMessage(u"Las contraseñas no coinciden")
 		self.reloadT.emit()
 
 def run():

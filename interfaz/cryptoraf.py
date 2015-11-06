@@ -210,22 +210,22 @@ class CryptoRAF:
 
         return result
 
-    def decode_hex(self, text):
-        result = u''
-        i = 0
-        imax = len(text)
+    # def decode_hex(self, text):
+    #     result = u''
+    #     i = 0
+    #     imax = len(text)
 
-        while i < imax:
-            hexa = "0x" + text[i:i + 2]
-            c = int(hexa, 0)
+    #     while i < imax:
+    #         hexa = "0x" + text[i:i + 2]
+    #         c = int(hexa, 0)
 
-            # print str(i) + " >> " + hexa + " >> " + str(c)
+    #         # print str(i) + " >> " + hexa + " >> " + str(c)
 
-            result += self.codebase[c]
+    #         result += self.codebase[c]
 
-            i += 2
+    #         i += 2
 
-        return result
+    #     return result
 
     def code(self, text, key):
         result = u''
@@ -254,65 +254,41 @@ class CryptoRAF:
 
         return result
 
-    def decode(self, text, key):
-        result = u''
-        i = y = 0
-        imaxi = len(text)
-        imaxy = len(key)
+    # def decode(self, text, key):
+    #     result = u''
+    #     i = y = 0
+    #     imaxi = len(text)
+    #     imaxy = len(key)
 
-        # Inspecting the text
-        while i < imaxi:
-            # index in key
-            if y == imaxy:
-                y = 0
+    #     # Inspecting the text
+    #     while i < imaxi:
+    #         # index in key
+    #         if y == imaxy:
+    #             y = 0
 
-            # Locating the current position of the key in codebase
-            x = self.codebase.find(key[y])
-            # Select matrix[x] and locate the current position in text
-            z = self.codebase.find(text[i])
+    #         # Locating the current position of the key in codebase
+    #         x = self.codebase.find(key[y])
+    #         # Select matrix[x] and locate the current position in text
+    #         z = self.codebase.find(text[i])
 
-            if z > -1:
-                result += self.matrix[x][z]
-            else:
-                result += text[i]
+    #         if z > -1:
+    #             result += self.matrix[x][z]
+    #         else:
+    #             result += text[i]
 
-            y += 1
-            i += 1
+    #         y += 1
+    #         i += 1
 
-        return result
+    #     return result
 
     def encrypt(self, text, key):
         result = self.code(text, key)
         result = self.code_hex(result)
         return result
 
-    def decrypt(self, text, key):
-        result = self.decode_hex(text)
-        result = self.decode(result, key)
+    # def decrypt(self, text, key):
+    #     result = self.decode_hex(text)
+    #     result = self.decode(result, key)
         
-        return result
+    #     return result
 
-
-# [ TESTING ]
-crypt = CryptoRAF()
-text = u"123456"
-key = u"#m"
-#rencrypt = crypt.code(text, key)
-#print ">> Encriptando '" + text + "' usando '" + key + "'"
-#print "      >> Resultado: " + rencrypt
-#rencrypt2 = crypt.code_hex(rencrypt)
-#print "      >> Resultado: " + rencrypt2
-#print ">> Desencriptando '" + text + "' usando '" + key + "'"
-#dencrypt = crypt.decode(rencrypt, key)
-#print "      >> Resultado: " + dencrypt
-#dencrypt2 = crypt.decode_hex(rencrypt2)
-#print "      >> Resultado: " + dencrypt2
-#print ""
-print ">> Encriptación final:"
-final_encrypt = crypt.encrypt(text, key)
-print "      >> Resultado: " + final_encrypt
-print ">> Desencriptación final:"
-final_decrypt = crypt.decrypt(final_encrypt, key)
-print "      >> Resultado: " + final_decrypt
-
-#crypt.create_random_matrix()

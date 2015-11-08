@@ -33,8 +33,7 @@ class MainWindow(QtGui.QMainWindow):
                               QtCore.SIGNAL("triggered()"), self.admin_users)
 
     def admin_users(self):
-        admin_user = AdminUsers()
-        admin_user.exec_()
+        admin_user = AdminUsers().exec_()
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)

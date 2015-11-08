@@ -72,46 +72,56 @@ class Usuario(object):
 
         conn.close()
 
-    def updateNombreUsuario(cls,nombre,id):
+    def updateNombreUsuario(cls, nombre, id):
         conex = connect()
         conn = conex.cursor()
         query = "UPDATE usuario SET nombre = ? WHERE idUsuario = ?"
-        conn.execute(query, [nombre,idUsuario])
+        conn.execute(query, [nombre, idUsuario])
         conex.commit()
-    def updateApellidoUsuario(cls,apellido,id):
+
+    def updateApellidoUsuario(cls, apellido, id):
         conex = connect()
         conn = conex.cursor()
         query = "UPDATE usuario SET apellido = ? WHERE idUsuario = ?"
-        conn.execute(query, [apellido,idUsuario])
+        conn.execute(query, [apellido, idUsuario])
         conex.commit()
-    def updateRutUsuario(cls,rut,id):
+
+    def updateRutUsuario(cls, rut, id):
         conex = connect()
         conn = conex.cursor()
         query = "UPDATE usuario SET rut = ? WHERE idUsuario = ?"
-        conn.execute(query, [rut,idUsuario])
+        conn.execute(query, [rut, idUsuario])
         conex.commit()
+
     def UpdateDataUsuario(cls):
         conex = connect()
         conn = conex.cursor()
         query = "UPDATE usuario SET nombre = %s, apellido = %s, rut = %s, clave = %s, tipo = %s, status = %s WHERE idUsuario = %s"
-        conn.execute(query ,(str(cls.nombre), str(cls.apellido), str(cls.rut), str(cls.clave), str(cls.tipo), str(cls.status), str(cls.id_usuario)))
+        conn.execute(query, (str(cls.nombre), str(cls.apellido), str(cls.rut), str(
+            cls.clave), str(cls.tipo), str(cls.status), str(cls.id_usuario)))
         conex.commit()
+
     def AddDataUsuario(cls):
         conex = connect()
         conn = conex.cursor()
         query = "INSERT INTO usuario(nombre, apellido, rut, clave, tipo, status) VALUES(%s, %s, %s, %s, %s, %s)"
-        conn.execute(query ,(str(cls.nombre), str(cls.apellido), str(cls.rut), str(cls.clave), str(cls.tipo), str(cls.status)))
+        conn.execute(query, (str(cls.nombre), str(cls.apellido), str(
+            cls.rut), str(cls.clave), str(cls.tipo), str(cls.status)))
         conex.commit()
+
     def getUsuarioId(cls):
         conex = connect()
         conn = conex.cursor()
-        query = "SELECT * FROM usuario WHERE idUsuario = {}".format(cls.id_usuario)
+        query = "SELECT * FROM usuario WHERE idUsuario = {}".format(
+            cls.id_usuario)
         conn.execute(query)
         usuario = conn.fetchall()
         return usuario
+
     def deleteUsers(cls):
         conex = connect()
         conn = conex.cursor()
-        query = "DELETE FROM usuario WHERE idUsuario = {}".format(cls.id_usuario)
+        query = "DELETE FROM usuario WHERE idUsuario = {}".format(
+            cls.id_usuario)
         conn.execute(query)
         conex.commit()

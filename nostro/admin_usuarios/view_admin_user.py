@@ -5,7 +5,7 @@ from PySide import QtCore, QtGui
 from admin_user import Ui_AdminUsers
 import controller_admin_user
 import sys
-import FormularioUsuario
+import view_formulario_usuario
 
 
 class AdminUsers(QtGui.QDialog):
@@ -27,6 +27,7 @@ class AdminUsers(QtGui.QDialog):
         self.ui.setupUi(self)
         self.setWindowFlags(QtCore.Qt.WindowTitleHint)
         self.setFocus()
+        self.setModal(True)
         self.set_model_table()
         self.set_source_model(self.load_users(self))
         self.ui.tableUsers.verticalHeader().setVisible(False)
@@ -45,7 +46,7 @@ class AdminUsers(QtGui.QDialog):
 
     def action_btn_nuevo(self):
         """Metodo para lanzar el formulario de creacion del nuevo usuario"""
-        self.nuevoUsuarioWindow = FormularioUsuario.FormularioUsuario()
+        self.nuevoUsuarioWindow = view_formulario_usuario.FormularioUsuario()
         self.nuevoUsuarioWindow.reloadT.connect(self.reload_data_table)
         self.nuevoUsuarioWindow.exec_()
         # self.load_users(self)
@@ -59,7 +60,7 @@ class AdminUsers(QtGui.QDialog):
             msgBox.exec_()
             return False
         else:
-            self.editUsuarioWindow = FormularioUsuario.FormularioUsuario(
+            self.editUsuarioWindow = view_formulario_usuario.FormularioUsuario(
                 self.id)
             self.editUsuarioWindow.reloadT.connect(self.reload_data_table)
             self.editUsuarioWindow.exec_()

@@ -1,90 +1,79 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
+import sys
+from PySide import QtGui, QtCore
+import formulario_usuario
+import controller_admin_user
 
-# Form implementation generated from reading ui file 'c:\Users\danie\Documents\Proyecto Taller\CafeNostro\interfaz\FormularioUsuario.ui'
-#
-# Created: Fri Nov 06 12:56:57 2015
-#      by: pyside-uic 0.2.15 running on PySide 1.2.1
-#
-# WARNING! All changes made in this file will be lost!
 
-from PySide import QtCore, QtGui
+class FormularioUsuario(QtGui.QDialog):
 
-class Ui_FormularioUsuario(object):
-    def setupUi(self, FormularioUsuario):
-        FormularioUsuario.setObjectName("FormularioUsuario")
-        FormularioUsuario.setEnabled(True)
-        FormularioUsuario.resize(385, 232)
-        self.verticalLayout_3 = QtGui.QVBoxLayout(FormularioUsuario)
-        self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.groupBox = QtGui.QGroupBox(FormularioUsuario)
-        self.groupBox.setObjectName("groupBox")
-        self.horizontalLayout = QtGui.QHBoxLayout(self.groupBox)
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.horizontalLayout.addItem(spacerItem)
-        self.verticalLayout = QtGui.QVBoxLayout()
-        self.verticalLayout.setObjectName("verticalLayout")
-        self.label = QtGui.QLabel(self.groupBox)
-        self.label.setObjectName("label")
-        self.verticalLayout.addWidget(self.label)
-        self.label_2 = QtGui.QLabel(self.groupBox)
-        self.label_2.setObjectName("label_2")
-        self.verticalLayout.addWidget(self.label_2)
-        self.label_clave = QtGui.QLabel(self.groupBox)
-        self.label_clave.setObjectName("label_clave")
-        self.verticalLayout.addWidget(self.label_clave)
-        self.label_verif = QtGui.QLabel(self.groupBox)
-        self.label_verif.setObjectName("label_verif")
-        self.verticalLayout.addWidget(self.label_verif)
-        self.label_3 = QtGui.QLabel(self.groupBox)
-        self.label_3.setObjectName("label_3")
-        self.verticalLayout.addWidget(self.label_3)
-        self.label_5 = QtGui.QLabel(self.groupBox)
-        self.label_5.setObjectName("label_5")
-        self.verticalLayout.addWidget(self.label_5)
-        self.horizontalLayout.addLayout(self.verticalLayout)
-        self.verticalLayout_2 = QtGui.QVBoxLayout()
-        self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.lineEdit_nombre = QtGui.QLineEdit(self.groupBox)
-        self.lineEdit_nombre.setObjectName("lineEdit_nombre")
-        self.verticalLayout_2.addWidget(self.lineEdit_nombre)
-        self.lineEdit_apellido = QtGui.QLineEdit(self.groupBox)
-        self.lineEdit_apellido.setObjectName("lineEdit_apellido")
-        self.verticalLayout_2.addWidget(self.lineEdit_apellido)
-        self.lineEdit_clave = QtGui.QLineEdit(self.groupBox)
-        self.lineEdit_clave.setObjectName("lineEdit_clave")
-        self.verticalLayout_2.addWidget(self.lineEdit_clave)
-        self.lineEdit_verif = QtGui.QLineEdit(self.groupBox)
-        self.lineEdit_verif.setObjectName("lineEdit_verif")
-        self.verticalLayout_2.addWidget(self.lineEdit_verif)
-        self.lineEdit_rut = QtGui.QLineEdit(self.groupBox)
-        self.lineEdit_rut.setObjectName("lineEdit_rut")
-        self.verticalLayout_2.addWidget(self.lineEdit_rut)
-        self.comboBox_tipo = QtGui.QComboBox(self.groupBox)
-        self.comboBox_tipo.setObjectName("comboBox_tipo")
-        self.verticalLayout_2.addWidget(self.comboBox_tipo)
-        self.horizontalLayout.addLayout(self.verticalLayout_2)
-        spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.horizontalLayout.addItem(spacerItem1)
-        self.verticalLayout_3.addWidget(self.groupBox)
-        self.buttonBox = QtGui.QDialogButtonBox(FormularioUsuario)
-        self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
-        self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
-        self.buttonBox.setObjectName("buttonBox")
-        self.verticalLayout_3.addWidget(self.buttonBox)
+    reloadT = QtCore.Signal()
+    identificador = False
+    __type_users__ = ((u"Administrador"),
+                      (u"Garzón"))
 
-        self.retranslateUi(FormularioUsuario)
-        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("accepted()"), FormularioUsuario.accept)
-        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("rejected()"), FormularioUsuario.reject)
-        QtCore.QMetaObject.connectSlotsByName(FormularioUsuario)
+    def __init__(self, id=None):
+        super(FormularioUsuario, self).__init__()
+        self.ui = formulario_usuario.Ui_FormularioUsuario()
+        self.ui.setupUi(self)
+        self.setWindowFlags(QtCore.Qt.WindowTitleHint)
+        self.setModal(True)
+        self.show()
+        self.ui.lineEdit_clave.setEchoMode(QtGui.QLineEdit.Password)
+        self.ui.lineEdit_verif.setEchoMode(QtGui.QLineEdit.Password)
+        for num, name in enumerate(self.__type_users__):
+            self.ui.comboBox_tipo.addItem(name, num)
+        if(id == None):
+            self.id = 0
+            self.identificador = False
+            self.setWindowTitle("Nuevo Usuario")
+            self.show()
+        else:
+            self.id = id
+            self.identificador = True
+            self.setWindowTitle("Editar Usuario")
+            usuario = controller_admin_user.getUsuarioId(id)
+            for row in usuario:
+                self.nombre = row[1]
+                self.ui.lineEdit_nombre.setText(self.nombre)
+                self.apellido = row[2]
+                self.ui.lineEdit_apellido.setText(self.apellido)
+                self.rut = row[3]
+                self.ui.lineEdit_rut.setText(self.rut)
+                self.password = row[4]
+                self.tipo = row[5]
+                self.ui.comboBox_tipo.setCurrentIndex(int(self.tipo))
+                self.ui.lineEdit_verif.setVisible(False)
+                self.ui.label_verif.setVisible(False)
+                self.ui.lineEdit_clave.setEnabled(False)
 
-    def retranslateUi(self, FormularioUsuario):
-        FormularioUsuario.setWindowTitle(QtGui.QApplication.translate("FormularioUsuario", "Formulario Usuario", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox.setTitle(QtGui.QApplication.translate("FormularioUsuario", "Datos de Usuario", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("FormularioUsuario", "Nombre", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("FormularioUsuario", "Apellido", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_clave.setText(QtGui.QApplication.translate("FormularioUsuario", "Contraseña", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_verif.setText(QtGui.QApplication.translate("FormularioUsuario", "Repita Contraseña", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setText(QtGui.QApplication.translate("FormularioUsuario", "Rut", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_5.setText(QtGui.QApplication.translate("FormularioUsuario", "Tipo", None, QtGui.QApplication.UnicodeUTF8))
+    def accept(self):
+        self.nombre = unicode(self.ui.lineEdit_nombre.text())
+        self.apellido = unicode(self.ui.lineEdit_apellido.text())
+        self.rut = self.ui.lineEdit_rut.text()
+        self.clave = unicode(self.ui.lineEdit_clave.text())
+        self.verif = unicode(self.ui.lineEdit_verif.text())
+        self.tipo = int(self.ui.comboBox_tipo.currentIndex())
+        self.status = None
+        if(self.identificador):  # Editar Usuario
+            controller_admin_user.UpdateDataUsuario(
+                self.id, self.nombre, self.apellido, self.rut, self.password, self.tipo, self.status)
+            self.setVisible(False)
+        else:
+            if self.verif == self.clave:
+                controller_admin_user.AddDataUsuario(
+                    self.nombre, self.apellido, self.rut, self.clave, self.tipo, self.status)
+                self.setVisible(False)
+            else:
+                self.errorMessageDialog = QtGui.QErrorMessage(self)
+                self.errorMessageDialog.setWindowTitle("ERROR")
+                self.errorMessageDialog.showMessage(
+                    u"Las contraseñas no coinciden")
+        self.reloadT.emit()
 
+
+if __name__ == '__main__':
+    app = QtGui.QApplication(sys.argv)
+    main = FormularioUsuario()
+    sys.exit(app.exec_())

@@ -51,8 +51,10 @@ class Login(QtGui.QDialog):
                 if mensaje == True:
                     self.correctMessage(u"""Ingreso valido""")
                     self.close()
-                    main = MainWindow()
-                    main.exec_()
+                    self.main = MainWindow()
+                    self.main.show()
+                    #self.hide()
+                    self.setVisible(False)
                 else:
                     self.correctMessage(u"""Ingreso  no valido""")
             # self.reject()

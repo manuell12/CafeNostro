@@ -4,10 +4,10 @@
 Muestra la ventana de login para identificarse en el sistema.
 """
 import sys
-# sys.path.append('.\main_window')
+sys.path.append('..\main_window')
 from PySide import QtCore, QtGui
 from mainwindow_login import Ui_Dialog
-from main_window.view_main_window import MainWindow
+from view_main_window import MainWindow
 import controller_login
 import model_login
 

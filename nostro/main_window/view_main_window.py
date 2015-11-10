@@ -21,14 +21,8 @@ class MainWindow(QtGui.QMainWindow):
         super(MainWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-
         self.set_signals()
-
         self.show()
-
-    def closeEvent(self, event):
-        self.closed.emit()
-        event.accept()
 
     def set_signals(self):
         QtGui.QAction.connect(self.ui.actionUsuarios,
@@ -38,9 +32,11 @@ class MainWindow(QtGui.QMainWindow):
 
     def admin_users(self):
         admin_user = AdminUsers().exec_()
+        self.setVisible(True)
 
     def admin_productos(self):
         admin_producto = AdminProductos().exec_()
+        self.setVisible(True)
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)

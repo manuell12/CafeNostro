@@ -56,7 +56,7 @@ class Login(QtGui.QDialog):
                     #self.hide()
                     self.setVisible(False)
                 else:
-                    self.correctMessage(u"""Ingreso  no valido""")
+                    self.correctMessage(u"""Ingreso no valido""")
             # self.reject()
 
     def errorMessage(self, message):

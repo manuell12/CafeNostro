@@ -26,7 +26,7 @@ class AdminUsers(QtGui.QDialog):
         self.ui = Ui_AdminUsers()
         self.ui.setupUi(self)
         self.setWindowFlags(QtCore.Qt.WindowTitleHint)
-        self.setFocus()
+        # self.setFocus()
         self.setModal(True)
         self.set_model_table()
         self.set_source_model(self.load_users(self))

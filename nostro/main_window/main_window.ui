@@ -28,6 +28,7 @@
      <string>&amp;Administración</string>
     </property>
     <addaction name="actionUsuarios"/>
+    <addaction name="actionProductos"/>
    </widget>
    <addaction name="menuAdministraci_n"/>
   </widget>
@@ -40,6 +41,11 @@
     <string>Ingresa a la ventana de administración de usuarios</string>
    </property>
   </action>
+  <action name="actionProductos">
+   <property name="text">
+    <string>Productos</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections>
@@ -50,8 +56,8 @@
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>67</x>
-     <y>35</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>

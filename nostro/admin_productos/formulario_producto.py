@@ -70,7 +70,7 @@ class Ui_FormularioProducto(object):
         QtCore.QMetaObject.connectSlotsByName(FormularioProducto)
 
     def retranslateUi(self, FormularioProducto):
-        FormularioProducto.setWindowTitle(QtGui.QApplication.translate("FormularioProducto", "Formulario Usuario", None, QtGui.QApplication.UnicodeUTF8))
+        FormularioProducto.setWindowTitle(QtGui.QApplication.translate("FormularioProducto", "Formulario Producto", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox.setTitle(QtGui.QApplication.translate("FormularioProducto", "Datos de Usuario", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("FormularioProducto", "Nombre", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("FormularioProducto", "Descripcion", None, QtGui.QApplication.UnicodeUTF8))

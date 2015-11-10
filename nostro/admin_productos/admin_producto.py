@@ -52,7 +52,7 @@ class Ui_AdminProductos(object):
         QtCore.QMetaObject.connectSlotsByName(AdminProductos)
 
     def retranslateUi(self, AdminProductos):
-        AdminProductos.setWindowTitle(QtGui.QApplication.translate("AdminProductos", "Lista de Usuarios", None, QtGui.QApplication.UnicodeUTF8))
+        AdminProductos.setWindowTitle(QtGui.QApplication.translate("AdminProductos", "Lista de Productos", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("AdminProductos", "Productos registrados", None, QtGui.QApplication.UnicodeUTF8))
         self.nuevo_button.setText(QtGui.QApplication.translate("AdminProductos", "&Nuevo", None, QtGui.QApplication.UnicodeUTF8))
         self.editar_button.setText(QtGui.QApplication.translate("AdminProductos", "&Editar", None, QtGui.QApplication.UnicodeUTF8))

@@ -87,6 +87,17 @@ class Usuario(object):
         conex.commit()
         conn.close()
 
+    def UpdateStatusUsuario(cls):
+        '''Interacciona con la base de datos a travez de una query que actualiza el estado de un usuario, especificando su id'''
+        conex = connect()
+        conn = conex.cursor()
+        query = "UPDATE usuario SET status = %s WHERE idUsuario = %s"
+        conn.execute(query,
+                     (int(cls.status),
+                      cls.id_usuario))
+        conex.commit()
+        conn.close()
+
     def AddDataUsuario(cls):
         conex = connect()
         conn = conex.cursor()
@@ -124,11 +135,35 @@ class Usuario(object):
     def all(cls):
         """
         Método utlizado para obtener la colección completa de filas
-        en la tabla pelicula.
+        en la tabla usuario.
         Este método al ser de clase no necesita una instancia (objeto)
         Sólo basta con invocarlo desde la clase
         """
-        query = "SELECT * FROM {}".format(cls.__tablename__)
+        query = "SELECT * FROM {}".format(
+            cls.__tablename__)
+
+        try:
+            conex = connect()
+            conn = conex.cursor()
+            conn.execute(query)
+            data = conn.fetchall()
+            # print data
+            return data
+
+        except MySQLdb.Error as e:
+            print "Error al obtener los usuarios:", e.args[0]
+            return None
+
+        conn.close()
+
+    def getUsuarioStatus(cls):
+        """
+        Método utlizado para obtener los usuarios que compartan un valor de status.
+        Este método al ser de clase no necesita una instancia (objeto)
+        Sólo basta con invocarlo desde la clase
+        """
+        query = "SELECT * FROM usuario WHERE status = {}".format(
+            cls.status)
 
         try:
             conex = connect()

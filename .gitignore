@@ -2,9 +2,6 @@
 __pycache__/
 *.py[cod]
 
-# User Interfaces extension of QtDesigner
-*.ui
-
 # C extensions
 *.so
 

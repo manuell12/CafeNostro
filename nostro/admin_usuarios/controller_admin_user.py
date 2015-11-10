@@ -22,8 +22,15 @@ def getUsuarioId(id):
 
 def UpdateDataUsuario(id, nombre, apellido, rut, clave, tipo, status):
     """Actualiza todos los campos de un usuario especificando su id, nombre, apellido, rut, clave, tipo y status"""
-    user = Usuario(id, nombre, apellido, rut, clave, tipo, status)
-    Usuario.UpdateDataUsuario(user)
+    if clave == None:
+        user = Usuario(id, nombre, apellido, rut, clave, tipo, status)
+        Usuario.UpdateDataUsuarioWithoutNewPass(user)
+    else:
+        crypt = c.CryptoRAF()
+        clave_encriptada = crypt.encrypt(
+        clave, "fhfs8sdfkjshuif7yr4021934234233ihsidf89sssx")
+        user = Usuario(id, nombre, apellido, rut, clave_encriptada, tipo, status)
+        Usuario.UpdateDataUsuario(user)
 
 def UpdateStatusUsuario(id, status):
     """Actualiza el estado de un usuario especificando su id"""

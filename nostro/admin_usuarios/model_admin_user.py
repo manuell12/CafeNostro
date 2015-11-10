@@ -75,12 +75,27 @@ class Usuario(object):
     def UpdateDataUsuario(cls):
         conex = connect()
         conn = conex.cursor()
-        query = "UPDATE usuario SET nombre = %s, apellido = %s, rut = %s, clave = %s, tipo = %s, status = %s WHERE idUsuario = %s"
+
+        query = "UPDATE usuario SET nombre = %s, apellido = %s, rut = %s, clave =  %s , tipo = %s, status = %s WHERE idUsuario = %s"
         conn.execute(query,
                      (cls.nombre,
                       cls.apellido,
                       cls.rut,
                       cls.clave,
+                      cls.tipo,
+                      cls.status,
+                      cls.id_usuario))
+        conex.commit()
+        conn.close()
+
+    def UpdateDataUsuarioWithoutNewPass(cls):
+        conex = connect()
+        conn = conex.cursor()
+        query = "UPDATE usuario SET nombre = %s, apellido = %s, rut = %s, tipo = %s, status = %s WHERE idUsuario = %s"
+        conn.execute(query,
+                     (cls.nombre,
+                      cls.apellido,
+                      cls.rut,
                       cls.tipo,
                       cls.status,
                       cls.id_usuario))

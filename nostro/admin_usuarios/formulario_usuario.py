@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'c:\Users\danie\Documents\Proyecto Taller\CafeNostro\interfaz\FormularioUsuario.ui'
+# Form implementation generated from reading ui file 'C:\Users\danie\Documents\Proyecto Taller\CafeNostro\nostro\admin_usuarios\formulario_usuario_ui.ui'
 #
-# Created: Fri Nov 06 12:56:57 2015
+# Created: Mon Nov 09 23:03:00 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -13,7 +13,7 @@ class Ui_FormularioUsuario(object):
     def setupUi(self, FormularioUsuario):
         FormularioUsuario.setObjectName("FormularioUsuario")
         FormularioUsuario.setEnabled(True)
-        FormularioUsuario.resize(385, 232)
+        FormularioUsuario.resize(384, 289)
         self.verticalLayout_3 = QtGui.QVBoxLayout(FormularioUsuario)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.groupBox = QtGui.QGroupBox(FormularioUsuario)
@@ -22,6 +22,8 @@ class Ui_FormularioUsuario(object):
         self.horizontalLayout.setObjectName("horizontalLayout")
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
+        self.horizontalLayout_2 = QtGui.QHBoxLayout()
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.verticalLayout = QtGui.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
         self.label = QtGui.QLabel(self.groupBox)
@@ -30,6 +32,13 @@ class Ui_FormularioUsuario(object):
         self.label_2 = QtGui.QLabel(self.groupBox)
         self.label_2.setObjectName("label_2")
         self.verticalLayout.addWidget(self.label_2)
+        self.label_cambiar_c = QtGui.QLabel(self.groupBox)
+        self.label_cambiar_c.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.label_cambiar_c.setObjectName("label_cambiar_c")
+        self.verticalLayout.addWidget(self.label_cambiar_c)
+        self.label_clave_actual = QtGui.QLabel(self.groupBox)
+        self.label_clave_actual.setObjectName("label_clave_actual")
+        self.verticalLayout.addWidget(self.label_clave_actual)
         self.label_clave = QtGui.QLabel(self.groupBox)
         self.label_clave.setObjectName("label_clave")
         self.verticalLayout.addWidget(self.label_clave)
@@ -42,7 +51,7 @@ class Ui_FormularioUsuario(object):
         self.label_5 = QtGui.QLabel(self.groupBox)
         self.label_5.setObjectName("label_5")
         self.verticalLayout.addWidget(self.label_5)
-        self.horizontalLayout.addLayout(self.verticalLayout)
+        self.horizontalLayout_2.addLayout(self.verticalLayout)
         self.verticalLayout_2 = QtGui.QVBoxLayout()
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.lineEdit_nombre = QtGui.QLineEdit(self.groupBox)
@@ -51,6 +60,12 @@ class Ui_FormularioUsuario(object):
         self.lineEdit_apellido = QtGui.QLineEdit(self.groupBox)
         self.lineEdit_apellido.setObjectName("lineEdit_apellido")
         self.verticalLayout_2.addWidget(self.lineEdit_apellido)
+        self.pushButton_cambiar_c = QtGui.QPushButton(self.groupBox)
+        self.pushButton_cambiar_c.setObjectName("pushButton_cambiar_c")
+        self.verticalLayout_2.addWidget(self.pushButton_cambiar_c)
+        self.lineEdit_clave_actual = QtGui.QLineEdit(self.groupBox)
+        self.lineEdit_clave_actual.setObjectName("lineEdit_clave_actual")
+        self.verticalLayout_2.addWidget(self.lineEdit_clave_actual)
         self.lineEdit_clave = QtGui.QLineEdit(self.groupBox)
         self.lineEdit_clave.setObjectName("lineEdit_clave")
         self.verticalLayout_2.addWidget(self.lineEdit_clave)
@@ -63,7 +78,8 @@ class Ui_FormularioUsuario(object):
         self.comboBox_tipo = QtGui.QComboBox(self.groupBox)
         self.comboBox_tipo.setObjectName("comboBox_tipo")
         self.verticalLayout_2.addWidget(self.comboBox_tipo)
-        self.horizontalLayout.addLayout(self.verticalLayout_2)
+        self.horizontalLayout_2.addLayout(self.verticalLayout_2)
+        self.horizontalLayout.addLayout(self.horizontalLayout_2)
         spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem1)
         self.verticalLayout_3.addWidget(self.groupBox)
@@ -83,8 +99,11 @@ class Ui_FormularioUsuario(object):
         self.groupBox.setTitle(QtGui.QApplication.translate("FormularioUsuario", "Datos de Usuario", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("FormularioUsuario", "Nombre", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("FormularioUsuario", "Apellido", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_cambiar_c.setText(QtGui.QApplication.translate("FormularioUsuario", ">", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_clave_actual.setText(QtGui.QApplication.translate("FormularioUsuario", "Contraseña actual", None, QtGui.QApplication.UnicodeUTF8))
         self.label_clave.setText(QtGui.QApplication.translate("FormularioUsuario", "Contraseña", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_verif.setText(QtGui.QApplication.translate("FormularioUsuario", "Repita Contraseña", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_verif.setText(QtGui.QApplication.translate("FormularioUsuario", "Repita contraseña", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("FormularioUsuario", "Rut", None, QtGui.QApplication.UnicodeUTF8))
         self.label_5.setText(QtGui.QApplication.translate("FormularioUsuario", "Tipo", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_cambiar_c.setText(QtGui.QApplication.translate("FormularioUsuario", "Cambiar Contraseña", None, QtGui.QApplication.UnicodeUTF8))
 

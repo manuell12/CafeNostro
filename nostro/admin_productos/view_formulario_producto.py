@@ -51,8 +51,9 @@ class FormularioProducto(QtGui.QDialog):
         self.tipo = self.__type_productos__[int(self.ui.comboBox_id_categoria.currentIndex())]
         self.precio_neto = unicode(self.ui.lineEdit_precio_neto.text())
         self.id_categoria = int(self.ui.comboBox_id_categoria.currentIndex())
+        self.status = 1
         if(self.identificador):  # Editar Producto
-            self.status = 1
+            
             controller_admin_producto.UpdateDataProducto(
                 self.id, self.nombre, self.descripcion, self.tipo, self.precio_neto, self.status, self.id_categoria)
             self.setVisible(False)

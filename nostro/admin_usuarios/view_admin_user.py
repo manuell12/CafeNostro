@@ -67,7 +67,7 @@ class AdminUsers(QtGui.QDialog):
             # self.load_users(self)
 
     def action_btn_eliminar(self):
-        """Metodo que elimina un usuario en la base de datos"""
+        """Accion a realizar al presionar el boton eliminar"""
         index = self.ui.tableUsers.currentIndex()
         if index.row() == -1:  # No se ha seleccionado producto
             msgBox = QtGui.QMessageBox()
@@ -76,7 +76,7 @@ class AdminUsers(QtGui.QDialog):
             msgBox.exec_()
             return False
         else:
-            usuario = controller_admin_user.deleteUser(self.id)
+            usuario = controller_admin_user.UpdateStatusUsuario(0,self.id)
             self.reload_data_table()
 
     def load_users(self, parent):
@@ -89,7 +89,7 @@ class AdminUsers(QtGui.QDialog):
         """
         self.typeModelClass = parent
 
-        usuarios = controller_admin_user.usuarios()
+        usuarios = controller_admin_user.getUsuarioStatus(1)
         row = len(usuarios)
 
         model = QtGui.QStandardItemModel(row, len(self.__header_table__))

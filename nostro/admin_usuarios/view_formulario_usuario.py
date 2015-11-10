@@ -55,7 +55,7 @@ class FormularioUsuario(QtGui.QDialog):
         self.clave = unicode(self.ui.lineEdit_clave.text())
         self.verif = unicode(self.ui.lineEdit_verif.text())
         self.tipo = int(self.ui.comboBox_tipo.currentIndex())
-        self.status = None
+        self.status = 1
         if(self.identificador):  # Editar Usuario
             controller_admin_user.UpdateDataUsuario(
                 self.id, self.nombre, self.apellido, self.rut, self.password, self.tipo, self.status)

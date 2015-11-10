@@ -54,13 +54,13 @@ class Usuarios(object):
 
     def load(self, rut=None, clave=None):
         """
-        Carga un usuario desde la base de datos por su nombre y clave.
+        Carga un usuario de estado "1" desde la base de datos por su nombre y clave.
         """
 
         conn = connect()
         #query = "SELECT * FROM {}".format(self.__tablename__)
         if rut is not None and clave is not None:
-            query = ("SELECT * FROM usuario WHERE rut = '%s'" % rut + " AND clave = '%s'" % clave)
+            query = ("SELECT * FROM usuario WHERE rut = '%s'" % rut + " AND clave = '%s'" % clave + " AND status = '%s'" % 1)
             #condition = "rut"
         """
         if clave is not None:

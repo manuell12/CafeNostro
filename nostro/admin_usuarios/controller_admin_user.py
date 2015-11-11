@@ -34,7 +34,8 @@ def UpdateDataUsuario(id, nombre, apellido, rut, clave, tipo, status):
 
 def UpdateStatusUsuario(id, status):
     """Actualiza el estado de un usuario especificando su id"""
-    user = Usuario(status)
+    user = Usuario()
+    user.id_usuario = id
     user.status = status
     Usuario.UpdateStatusUsuario(user)
 

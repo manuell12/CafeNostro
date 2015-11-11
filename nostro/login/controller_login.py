@@ -19,3 +19,9 @@ def obtenerUsuario(rut=None,password=None):
     usuario = Usuarios(None, None, None, rut, clave_encriptada, None, None)
     valido = usuario.userValido()
     return valido
+
+def obtenerTipoUsuario(rut):
+	"""Retorna el tipo de usuario identificado por el rut"""
+	usuario = Usuarios()
+	usuario.rut = rut
+	return Usuarios.getTipoUsuarioPorRut(usuario)

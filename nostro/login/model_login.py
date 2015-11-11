@@ -67,11 +67,8 @@ class Usuarios(object):
             query += " WHERE clave = ?"
             condition = clave
         """
-        print query
         conn.execute(query)
-        #print result
         row = conn.fetchone()
-        print row
         conn.close()
         if row is not None:
             self.idUsuario = row[0]
@@ -82,9 +79,14 @@ class Usuarios(object):
             self.tipo = row[5]
             self.status = row[6]
             self.valido = True
-        else:
-            print "El usuario no se encuentra en la base de datos"
 
     def userValido(self):
         return self.valido    
 
+    def getTipoUsuarioPorRut(cls):
+        conn = connect()
+        query = ("SELECT tipo FROM usuario WHERE rut = '%s'" % cls.rut)
+        conn.execute(query)
+        Producto = conn.fetchall()
+        return Producto
+        conn.close()

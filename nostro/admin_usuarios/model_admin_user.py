@@ -45,8 +45,6 @@ class Usuario(object):
         self.clave = clave
         self.tipo = tipo
         self.status = status
-        if status == None:
-            self.status = 0
 
     def updateNombreUsuario(cls, nombre, id):
         conex = connect()
@@ -75,7 +73,6 @@ class Usuario(object):
     def UpdateDataUsuario(cls):
         conex = connect()
         conn = conex.cursor()
-
         query = "UPDATE usuario SET nombre = %s, apellido = %s, rut = %s, clave =  %s , tipo = %s, status = %s WHERE idUsuario = %s"
         conn.execute(query,
                      (cls.nombre,

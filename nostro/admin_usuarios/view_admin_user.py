@@ -76,7 +76,7 @@ class AdminUsers(QtGui.QDialog):
             msgBox.exec_()
             return False
         else:
-            usuario = controller_admin_user.UpdateStatusUsuario(0,self.id)
+            usuario = controller_admin_user.UpdateStatusUsuario(self.id,0)
             self.reload_data_table()
 
     def load_users(self, parent):

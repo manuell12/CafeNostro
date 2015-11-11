@@ -17,13 +17,16 @@ from view_admin_producto import AdminProductos
 class MainWindow(QtGui.QMainWindow):
     closed = QtCore.Signal()
 
-    def __init__(self):
+    def __init__(self,tipo=None):
         super(MainWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.set_signals()
         self.show()
-
+        if(tipo != None):
+            if(tipo == 1):
+                self.ui.actionUsuarios.setEnabled(False)
+                self.ui.actionProductos.setEnabled(False)
     def set_signals(self):
         QtGui.QAction.connect(self.ui.actionUsuarios,
                               QtCore.SIGNAL("triggered()"), self.admin_users)

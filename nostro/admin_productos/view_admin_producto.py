@@ -17,11 +17,10 @@ class AdminProductos(QtGui.QDialog):
                         (u"Precio neto", 100),
                         (u"Categoria",100))
 
-    __type_productos__ = ((u"------"),
-                      (u"Comida"),
-                      (u"Helado"),
-                      (u"Café"),
-                      (u"Bebida"))
+    types = controller_admin_producto.getNombresCategorias()
+    __type_productos__ = ["----"]
+    for data in types:
+        __type_productos__.append(data[0])
 
     def __init__(self):
         'Constructor de la clase'
@@ -80,7 +79,7 @@ class AdminProductos(QtGui.QDialog):
             msgBox.exec_()
             return False
         else:
-            producto = controller_admin_producto.UpdateStatusProducto(0,self.id)
+            producto = controller_admin_producto.UpdateStatusProducto(self.id,0)
             self.reload_data_table()
 
     def load_productos(self, parent):
@@ -93,7 +92,7 @@ class AdminProductos(QtGui.QDialog):
         """
         self.typeModelClass = parent
 
-        productos = controller_admin_producto.Productos()
+        productos = controller_admin_producto.getProductoStatus(1)
         row = len(productos)
 
         model = QtGui.QStandardItemModel(row, len(self.__header_table__))

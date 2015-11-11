@@ -45,8 +45,6 @@ class Producto(object):
         self.precio_neto = precio_neto
         self.status = status
         self.id_categoria = id_categoria
-        if id_categoria == None:
-            self.id_categoria = 0
 
     def updateNombreProducto(cls, nombre, id):
         conex = connect()
@@ -92,9 +90,9 @@ class Producto(object):
         '''Interacciona con la base de datos a travez de una query que actualiza el estado de un Producto, especificando su id'''
         conex = connect()
         conn = conex.cursor()
-        query = "UPDATE producto SET idCategoria = %s WHERE idProducto = %s"
+        query = "UPDATE producto SET status = %s WHERE idProducto = %s"
         conn.execute(query,
-                     (int(cls.id_categoria),
+                     (int(cls.status),
                       cls.id_producto))
         conex.commit()
         conn.close()
@@ -160,11 +158,9 @@ class Producto(object):
     def getProductoStatus(cls):
         """
         Método utlizado para obtener los Productos que compartan un valor de id_categoria.
-        Este método al ser de clase no necesita una instancia (objeto)
-        Sólo basta con invocarlo desde la clase
         """
-        query = "SELECT * FROM producto WHERE id_categoria = {}".format(
-            cls.id_categoria)
+        query = "SELECT * FROM producto WHERE status = {}".format(
+            cls.status)
 
         try:
             conex = connect()
@@ -176,6 +172,76 @@ class Producto(object):
 
         except MySQLdb.Error as e:
             print "Error al obtener los Productos:", e.args[0]
+            return None
+
+        conn.close()
+
+class Categoria(object):
+    """
+    Clase que representa a la tabla categoria.
+    Una instancia de esta clase representa una fila.
+    La instancia (objeto) puede estar en la BD o no.
+    """
+    __tablename__ = "categoria"
+    id_categoria = None  # Primary Key
+    nombre = ""
+    descripcion = ""
+    preparada_en = ""
+
+    def __init__(
+            self,
+            id_producto=None,
+            nombre="",
+            descripcion="",
+            categoria=""):
+
+        self.id_producto = id_producto
+        self.nombre = nombre
+        self.descripcion = descripcion
+        self.categoria = categoria
+
+    @classmethod
+    def getCategorias(cls):
+        """
+        Método utlizado para obtener todas las filas de la tabla categoria
+        Este método al ser de clase no necesita una instancia (objeto)
+        Sólo basta con invocarlo desde la clase
+        """
+        query = "SELECT * FROM categoria"
+
+        try:
+            conex = connect()
+            conn = conex.cursor()
+            conn.execute(query)
+            data = conn.fetchall()
+            # print data
+            return data
+
+        except MySQLdb.Error as e:
+            print "Error al obtener las categorias", e.args[0]
+            return None
+
+        conn.close()
+
+    @classmethod
+    def getNombresCategorias(cls):
+        """
+        Método utlizado para obtener todos los nomrbes de las categorias ingresadas
+        Este método al ser de clase no necesita una instancia (objeto)
+        Sólo basta con invocarlo desde la clase
+        """
+        query = "SELECT nombre FROM categoria"
+
+        try:
+            conex = connect()
+            conn = conex.cursor()
+            conn.execute(query)
+            data = conn.fetchall()
+            # print data
+            return data
+
+        except MySQLdb.Error as e:
+            print "Error al obtener las categorias", e.args[0]
             return None
 
         conn.close()

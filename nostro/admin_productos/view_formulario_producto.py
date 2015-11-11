@@ -10,11 +10,11 @@ class FormularioProducto(QtGui.QDialog):
 
     reloadT = QtCore.Signal()
     identificador = False
-    __type_productos__ = ((u"------"),
-                      (u"Comida"),
-                      (u"Helado"),
-                      (u"Café"),
-                      (u"Bebida"))
+
+    types = controller_admin_producto.getNombresCategorias()
+    __type_productos__ = ["----"]
+    for data in types:
+        __type_productos__.append(data[0])
 
     def __init__(self, id=None):
         super(FormularioProducto, self).__init__()

@@ -6,8 +6,6 @@ Archivo de la vista principal que concentra practicamente todas las
 funcionalidades.
 """
 import sys
-sys.path.append('../admin_usuarios')
-sys.path.append('../admin_productos')
 from PySide import QtCore, QtGui
 from main_window import Ui_MainWindow
 from view_admin_user import AdminUsers

@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
 import sys
 from login.view_login import Login
 from PySide import QtGui

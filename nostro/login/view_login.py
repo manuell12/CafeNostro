@@ -4,6 +4,7 @@
 Muestra la ventana de login para identificarse en el sistema.
 """
 import sys
+sys.path.append('.\main_window')
 from PySide import QtCore, QtGui
 from mainwindow_login import Ui_Dialog
 from view_main_window import MainWindow

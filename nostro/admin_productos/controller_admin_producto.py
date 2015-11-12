@@ -54,3 +54,62 @@ def deleteproducto(id):
     producto = Producto()
     producto.id_producto = id
     Producto.deleteproductos(producto)
+
+def validarNombreF(label, nombre):
+    """Cambia el estado del label segun la respuesta de validacion del nombre ingresado"""
+    if(validaTexto(nombre,"texto")):
+        label.setText(u"<font color='green'><b>Nombre correcto.</b></font>")
+    else:
+        label.setText(u"<font color='red'><b>Debe tener sólo letras.</b></font>")
+
+def validarPrecioNetoF(label, precio_neto):
+    """Cambia el estado del label segun la respuesta de validacion del apellido ingresado"""
+    valida = validaTexto(precio_neto,"digito")
+    if(valida):
+        if(float(precio_neto)>=0 and float(precio_neto)<100000):
+            label.setText(u"<font color='green'><b>Precio neto correcto.</b></font>")
+        else:
+            label.setText(u"<font color='red'><b>Debe ser un valor entre 0 y 99999.</b></font>")
+    else:
+        label.setText(u"<font color='red'><b>Debe tener sólo números.</b></font>")
+
+def validarDatos(nombre,precio_neto,categoria):
+    if(nombre != u"<font color='green'><b>Nombre correcto.</b></font>"):
+        return False
+    if(precio_neto != u"<font color='green'><b>Precio neto correcto.</b></font>"):
+        return False
+    if(categoria != u"<font color='green'><b>Seleccion correcta.</b></font>"):
+        return False
+    return True
+
+def validaTexto(text,validacion):
+    '''Función que evalua y valida el string 'text' dependiendo el valor del segundo parámetro:
+    numeros: retorna 'True' si el string 'text' posee sólo numeros
+    no_simbolos: retorna 'True' si el string 'text' posee sólo letras (mayusculas o minusculas o acentos) y/o números
+    Retorna 'False' en caso contrario o si el string 'text' esta vacío'''
+
+    valido=True
+
+    if (validacion=="digito"):
+        cadena = "0123456789."
+
+    if (validacion=="numeros"):
+        cadena = "0123456789"
+
+    if (validacion=="no_simbolos"):
+        cadena = " ,.-abcdefghijklmnñopqrstuvwxyzáéíóúABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÚ0123456789"
+
+    if (validacion=="texto"):
+        cadena = " abcdefghijklmnñopqrstuvwxyzáéíóúABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÚ"
+
+    i=0
+    string_num=str(text)
+
+    if(len(string_num)==0):
+        valido=False
+
+    while(valido and (i<len(string_num))):
+        if (not string_num[i] in cadena):
+            valido=False
+        i=i+1
+    return valido

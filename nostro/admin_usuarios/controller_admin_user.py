@@ -58,3 +58,130 @@ def deleteUser(id):
     user = Usuario()
     user.id_usuario = id
     Usuario.deleteUsers(user)
+
+def validarNombreF(label, nombre):
+    """Cambia el estado del label segun la respuesta de validacion del nombre ingresado"""
+    if(validaTexto(nombre,"texto")):
+        label.setText(u"<font color='green'><b>Nombre correcto.</b></font>")
+    else:
+        label.setText(u"<font color='red'><b>Debe tener sólo letras.</b></font>")
+
+def validarApellidoF(label, apellido):
+    """Cambia el estado del label segun la respuesta de validacion del apellido ingresado"""
+    if(validaTexto(apellido,"texto")):
+        label.setText(u"<font color='green'><b>Apellido correcto.</b></font>")
+    else:
+        label.setText(u"<font color='red'><b>Debe tener sólo letras.</b></font>")
+
+def validarRutF(label, rut):
+    """Cambia el estado del label segun la respuesta de validacion del apellido ingresado"""
+    if(validaRut(rut)):
+        label.setText(u"<font color='green'><b>Rut correcto.</b></font>")
+    else:
+        label.setText(u"<font color='red'><b>Rut incorrecto, ej: 12345678-9</b></font>")
+
+def validarDatos(nombre,apellido,rut,verif,clave_ac,tipo):
+    if(clave_ac == None and verif !=None): # Nuevo usuario
+        if(nombre != u"<font color='green'><b>Nombre correcto.</b></font>"):
+            return False
+        if(apellido != u"<font color='green'><b>Apellido correcto.</b></font>"):
+            return False
+        if(rut != u"<font color='green'><b>Rut correcto.</b></font>"):
+            return False
+        if(verif != u"<font color='green'><b>Contraseñas coinciden.</b></font>"):
+            return False
+        if(tipo != u"<font color='green'><b>Seleccion correcta.</b></font>"):
+            return False
+        return True
+    if(clave_ac == None and verif == None): # Editar usuario, sin cambio de clave
+        if(nombre != u"<font color='green'><b>Nombre correcto.</b></font>"):
+            return False
+        if(apellido != u"<font color='green'><b>Apellido correcto.</b></font>"):
+            return False
+        if(rut != u"<font color='green'><b>Rut correcto.</b></font>"):
+            return False
+        if(tipo != u"<font color='green'><b>Seleccion correcta.</b></font>"):
+            return False
+        return True
+    else: # Cambio de clave
+        if(nombre != u"<font color='green'><b>Nombre correcto.</b></font>"):
+            return False
+        if(apellido != u"<font color='green'><b>Apellido correcto.</b></font>"):
+            return False
+        if(rut != u"<font color='green'><b>Rut correcto.</b></font>"):
+            return False
+        if(clave_ac != u"<font color='green'><b>Contraseña ingresada correcta.</b></font>"):
+            return False
+        if(verif != u"<font color='green'><b>Contraseñas coinciden.</b></font>"):
+            return False
+        if(tipo != u"<font color='green'><b>Seleccion correcta.</b></font>"):
+            return False
+        return True
+
+def validaTexto(text,validacion):
+    '''Función que evalua y valida el string 'text' dependiendo el valor del segundo parámetro:
+    numeros: retorna 'True' si el string 'text' posee sólo numeros
+    no_simbolos: retorna 'True' si el string 'text' posee sólo letras (mayusculas o minusculas o acentos) y/o números
+    Retorna 'False' en caso contrario o si el string 'text' esta vacío'''
+
+    valido=True
+
+    if (validacion=="digito"):
+        cadena = "0123456789kK"
+
+    if (validacion=="numeros"):
+        cadena = "0123456789"
+
+    if (validacion=="no_simbolos"):
+        cadena = " ,.-abcdefghijklmnñopqrstuvwxyzáéíóúABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÚ0123456789"
+
+    if (validacion=="texto"):
+        cadena = " abcdefghijklmnñopqrstuvwxyzáéíóúABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÚ"
+
+    i=0
+    string_num=str(text)
+
+    if(len(string_num)==0):
+        valido=False
+
+    while(valido and (i<len(string_num))):
+        if (not string_num[i] in cadena):
+            valido=False
+        i=i+1
+    return valido
+
+def validaRut(rut):
+    '''Función que valida si el rut es valido, retorna un booleano (true si es valido, false sino)'''
+    valido = True
+    suma = 0
+    multi= 2
+    datos_rut = rut.split('-') #separamos la cadena por '-'
+    if(len(datos_rut) == 2 and datos_rut[1] != ""):
+        valido = validaTexto(datos_rut[0],"numeros")
+        if(len(datos_rut[1])==1 and valido):
+            valido = validaTexto(datos_rut[1],"digito")
+        else:
+            valido = False
+        rut_1 = datos_rut[0]
+        dig = datos_rut[1]
+        if(len(rut_1)>= 6 and valido):
+            for r in rut_1[::-1]:
+                suma += int(r)* multi
+                multi+= 1
+                if multi == 8:
+                    multi = 2
+            resto = suma%11
+            resta = 11 - resto
+            if resta ==11:
+                dig_r= 0
+            if resta == 10:
+                dig_r = 'k'
+            else:
+                dig_r = resta
+            if(str(dig_r) != str(dig)):
+                valido = False
+            else:
+                valido = True
+    else:
+        valido = False
+    return valido

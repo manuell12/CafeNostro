@@ -3,7 +3,6 @@
 
 import sys
 sys.path.append('.\login')
-sys.path.append('.\main_window')
 from PySide import QtGui
 import view_login as v
 

@@ -74,7 +74,7 @@ class Producto(object):
         conex = connect()
         conn = conex.cursor()
 
-        query = "UPDATE producto SET nombre = %s, descripcion = %s, tipo = %s, precio_neto =  %s , status = %s, idCategoria = %s WHERE idProducto = %s"
+        query = "UPDATE producto SET nombre = %s, descripcion = %s, precio_neto = %s, precio_bruto =  %s , status = %s, idCategoria = %s WHERE idProducto = %s"
         conn.execute(query,
                      (cls.nombre,
                       cls.descripcion,
@@ -100,7 +100,7 @@ class Producto(object):
     def AddDataProducto(cls):
         conex = connect()
         conn = conex.cursor()
-        query = "INSERT INTO producto(nombre, descripcion, tipo, precio_neto, status, idCategoria) VALUES(%s, %s, %s, %s, %s, %s)"
+        query = "INSERT INTO producto(nombre, descripcion, precio_neto, precio_bruto, status, idCategoria) VALUES(%s, %s, %s, %s, %s, %s)"
         conn.execute(query,
                      (cls.nombre,
                       cls.descripcion,

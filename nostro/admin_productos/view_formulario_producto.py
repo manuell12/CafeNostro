@@ -73,10 +73,9 @@ class FormularioProducto(QtGui.QDialog):
 
     def accept(self):
         self.nombre = unicode(self.ui.lineEdit_nombre.text())
-        self.descripcion = unicode(self.ui.lineEdit_descripcion.toPlainText())
-        self.tipo = self.__type_productos__[
-            int(self.ui.comboBox_id_categoria.currentIndex())]
+        self.descripcion = unicode(self.ui.lineEdit_descripcion.toPlainText())        
         self.precio_neto = unicode(self.ui.lineEdit_precio_neto.text())
+        self.tipo = unicode(float(self.precio_neto)*0.81)
         self.id_categoria = int(self.ui.comboBox_id_categoria.currentIndex())
         self.status = 1
         if(self.identificador):  # Editar Producto

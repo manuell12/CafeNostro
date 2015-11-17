@@ -4,10 +4,9 @@
 Muestra la ventana de login para identificarse en el sistema.
 """
 import sys
-sys.path.append('.\main_window')
 from PySide import QtCore, QtGui
 from mainwindow_login import Ui_Dialog
-from view_main_window import MainWindow
+from main_window.view_main_window import MainWindow
 import controller_login
 import model_login
 
@@ -49,14 +48,15 @@ class Login(QtGui.QDialog):
                 self.errorMessage(u"""Error inesperado, intente nuevamente.""")
             else:
                 if mensaje == True:
-                    self.correctMessage(u"""Ingreso valido""")
+                    # self.correctMessage(u"""Ingreso valido""")
                     self.close()
-                    self.main = MainWindow(controller_login.obtenerTipoUsuario(self.ui.lineEdit_user.text())[0][0])
+                    self.main = MainWindow(controller_login.obtenerTipoUsuario(
+                        self.ui.lineEdit_user.text())[0][0])
                     self.main.show()
-                    #self.hide()
-                    self.setVisible(False)
+                    # self.hide()
+                    # self.setVisible(False)
                 else:
-                    self.correctMessage(u"""Ingreso no valido""")
+                    self.errorMessage(u"Ingreso no valido")
             # self.reject()
 
     def errorMessage(self, message):

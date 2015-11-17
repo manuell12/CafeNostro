@@ -8,14 +8,14 @@ import sys
 import view_formulario_producto
 
 
-class AdminProductos(QtGui.QDialog):
+class AdminProductos(QtGui.QWidget):
 
     __header_table__ = ((u"ID", 20),
                         (u"Nombre", 200),
-                        (u"Descripcion", 200),
-                        (u"Tipo", 120),
+                        (u"Descripcion", 200),                        
                         (u"Precio neto", 100),
-                        (u"Categoria",100))
+                        (u"Precio bruto", 100),
+                        (u"Categoria", 100))
 
     types = controller_admin_producto.getNombresCategorias()
     __type_productos__ = ["----"]
@@ -24,19 +24,14 @@ class AdminProductos(QtGui.QDialog):
 
     def __init__(self):
         'Constructor de la clase'
-        QtGui.QDialog.__init__(self)
-        # super(AdminProductos, self).__init__()
+        QtGui.QWidget.__init__(self)
         self.ui = Ui_AdminProductos()
         self.ui.setupUi(self)
-        self.setWindowFlags(QtCore.Qt.WindowTitleHint)
         self.setFocus()
-        self.setModal(True)
         self.set_model_table()
-        self.set_source_model(self.load_productos(self))
-        self.ui.tableProductos.verticalHeader().setVisible(False)
-        self.ui.tableProductos.setColumnHidden(3, True)
+        self.set_source_model(self.load_productos(self))        
+        self.ui.tableProductos.setColumnHidden(0, True)
         self.connect_actions()
-        self.show()
 
     def connect_actions(self):
         """Conectar botones con su respectiva accion"""
@@ -58,8 +53,9 @@ class AdminProductos(QtGui.QDialog):
         index = self.ui.tableProductos.currentIndex()
         if index.row() == -1:  # No se ha seleccionado producto
             msgBox = QtGui.QMessageBox()
-            msgBox.setWindowTitle("Error")
-            msgBox.setText("Debe seleccionar un producto.")
+            msgBox.setIcon(QtGui.QMessageBox.Critical)
+            msgBox.setWindowTitle(u"Error")
+            msgBox.setText(u"Debe seleccionar un producto.")
             msgBox.exec_()
             return False
         else:
@@ -74,13 +70,26 @@ class AdminProductos(QtGui.QDialog):
         index = self.ui.tableProductos.currentIndex()
         if index.row() == -1:  # No se ha seleccionado producto
             msgBox = QtGui.QMessageBox()
-            msgBox.setWindowTitle("Error")
-            msgBox.setText("Debe seleccionar un producto.")
+            msgBox.setIcon(QtGui.QMessageBox.Critical)
+            msgBox.setWindowTitle(u"Error")
+            msgBox.setText(u"Debe seleccionar un producto.")
             msgBox.exec_()
             return False
         else:
-            producto = controller_admin_producto.UpdateStatusProducto(self.id,0)
-            self.reload_data_table()
+            msgBox = QtGui.QMessageBox()
+            msgBox.setIcon(QtGui.QMessageBox.Warning)
+            msgBox.setStandardButtons(
+                QtGui.QMessageBox.Ok | QtGui.QMessageBox.Cancel)
+            msgBox.setWindowTitle(u"Advertencia")
+            msgBox.setText(
+                u"¿Esta seguro de querer eliminar el producto seleccionado?")
+            press = msgBox.exec_()
+            if press == QtGui.QMessageBox.Ok:
+                producto = controller_admin_producto.UpdateStatusProducto(
+                    self.id, 0)
+                self.reload_data_table()
+            else:
+                return False
 
     def load_productos(self, parent):
         """
@@ -99,7 +108,7 @@ class AdminProductos(QtGui.QDialog):
         # model = QtGui.QStandardItemModel(row, len(self.headerTabla), parent)
 
         for i, data in enumerate(productos):
-            row = [data[0], data[1], data[2], data[3], str(data[4]), data[6]]
+            row = [data[0], data[1], data[2], str(data[3]), str(data[4]), data[6]]
             for j, field in enumerate(row):
                 index = model.index(i, j, QtCore.QModelIndex())
                 if j is 5:

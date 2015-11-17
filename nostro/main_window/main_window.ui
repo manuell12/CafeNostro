@@ -24,12 +24,33 @@
     </rect>
    </property>
    <widget class="QMenu" name="menuAdministraci_n">
+    <property name="statusTip">
+     <string>Sección administrativa de la aplicación</string>
+    </property>
     <property name="title">
      <string>&amp;Administración</string>
     </property>
     <addaction name="actionUsuarios"/>
     <addaction name="actionProductos"/>
    </widget>
+   <widget class="QMenu" name="menuVenta">
+    <property name="statusTip">
+     <string>Sección venta de la aplicación</string>
+    </property>
+    <property name="title">
+     <string>&amp;Venta</string>
+    </property>
+    <addaction name="actionRealizar_Venta"/>
+   </widget>
+   <widget class="QMenu" name="menuArchivo">
+    <property name="title">
+     <string>&amp;Archivo</string>
+    </property>
+    <addaction name="actionCambiar_Usuario"/>
+    <addaction name="actionSalir"/>
+   </widget>
+   <addaction name="menuArchivo"/>
+   <addaction name="menuVenta"/>
    <addaction name="menuAdministraci_n"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -40,30 +61,55 @@
    <property name="statusTip">
     <string>Ingresa a la ventana de administración de usuarios</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+2</string>
+   </property>
   </action>
   <action name="actionProductos">
    <property name="text">
-    <string>Productos</string>
+    <string>&amp;Productos</string>
+   </property>
+   <property name="statusTip">
+    <string>Ingresa a la ventana de administración de productos</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+3</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WindowShortcut</enum>
+   </property>
+  </action>
+  <action name="actionRealizar_Venta">
+   <property name="text">
+    <string>&amp;Realizar Venta</string>
+   </property>
+   <property name="statusTip">
+    <string>Ingresa a la ventana donde se venden los productos del local</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+1</string>
+   </property>
+  </action>
+  <action name="actionSalir">
+   <property name="text">
+    <string>Salir</string>
+   </property>
+   <property name="statusTip">
+    <string>Cierra la aplicación</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F4</string>
+   </property>
+  </action>
+  <action name="actionCambiar_Usuario">
+   <property name="text">
+    <string>Cambiar Usuario</string>
+   </property>
+   <property name="statusTip">
+    <string>Regresa a la ventan Login para poder cambiar el usuario</string>
    </property>
   </action>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>actionUsuarios</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

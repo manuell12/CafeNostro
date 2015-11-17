@@ -8,7 +8,7 @@ import sys
 import view_formulario_usuario
 
 
-class AdminUsers(QtGui.QDialog):
+class AdminUsers(QtGui.QWidget):
 
     __header_table__ = ((u"ID", 20),
                         (u"Nombres", 200),
@@ -19,21 +19,17 @@ class AdminUsers(QtGui.QDialog):
     __type_users__ = ((u"Administrador"),
                       (u"Garzón"))
 
-    def __init__(self):
+    def __init__(self, parent=None):
         'Constructor de la clase'
-        QtGui.QDialog.__init__(self)
-        # super(AdminUsers, self).__init__()
+        QtGui.QWidget.__init__(self)
         self.ui = Ui_AdminUsers()
         self.ui.setupUi(self)
-        self.setWindowFlags(QtCore.Qt.WindowTitleHint)
-        # self.setFocus()
-        self.setModal(True)
+        self.setFocus()
         self.set_model_table()
         self.set_source_model(self.load_users(self))
         self.ui.tableUsers.verticalHeader().setVisible(False)
         self.ui.tableUsers.setColumnHidden(0, True)
         self.connect_actions()
-        self.show()
 
     def connect_actions(self):
         """Conectar botones con su respectiva accion"""
@@ -55,6 +51,7 @@ class AdminUsers(QtGui.QDialog):
         index = self.ui.tableUsers.currentIndex()
         if index.row() == -1:  # No se ha seleccionado producto
             msgBox = QtGui.QMessageBox()
+            msgBox.setIcon(QtGui.QMessageBox.Critical)
             msgBox.setWindowTitle("Error")
             msgBox.setText("Debe seleccionar un usuario.")
             msgBox.exec_()
@@ -71,13 +68,25 @@ class AdminUsers(QtGui.QDialog):
         index = self.ui.tableUsers.currentIndex()
         if index.row() == -1:  # No se ha seleccionado producto
             msgBox = QtGui.QMessageBox()
-            msgBox.setWindowTitle("Error")
-            msgBox.setText("Debe seleccionar un usuario.")
+            msgBox.setIcon(QtGui.QMessageBox.Critical)
+            msgBox.setWindowTitle(u"Error")
+            msgBox.setText(u"Debe seleccionar un usuario.")
             msgBox.exec_()
             return False
         else:
-            usuario = controller_admin_user.UpdateStatusUsuario(self.id,0)
-            self.reload_data_table()
+            msgBox = QtGui.QMessageBox()
+            msgBox.setIcon(QtGui.QMessageBox.Warning)
+            msgBox.setStandardButtons(
+                QtGui.QMessageBox.Ok | QtGui.QMessageBox.Cancel)
+            msgBox.setWindowTitle(u"Advertencia")
+            msgBox.setText(
+                u"¿Esta seguro de querer eliminar el usuario seleccionado?")
+            press = msgBox.exec_()
+            if press == QtGui.QMessageBox.Ok:
+                usuario = controller_admin_user.UpdateStatusUsuario(self.id, 0)
+                self.reload_data_table()
+            else:
+                return False
 
     def load_users(self, parent):
         """

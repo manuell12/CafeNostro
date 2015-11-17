@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\danie\Documents\ProyectoTaller\CafeNostro\nostro\admin_productos\formulario_producto.ui'
+# Form implementation generated from reading ui file '.\formulario_producto.ui'
 #
-# Created: Wed Nov 11 18:12:23 2015
-#      by: pyside-uic 0.2.15 running on PySide 1.2.1
+# Created: Sat Nov 14 02:04:07 2015
+#      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -20,7 +20,7 @@ class Ui_FormularioProducto(object):
         self.groupBox.setObjectName("groupBox")
         self.horizontalLayout = QtGui.QHBoxLayout(self.groupBox)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
         self.gridLayout = QtGui.QGridLayout()
         self.gridLayout.setObjectName("gridLayout")
@@ -62,7 +62,7 @@ class Ui_FormularioProducto(object):
         self.label_error_categoria.setObjectName("label_error_categoria")
         self.gridLayout.addWidget(self.label_error_categoria, 3, 2, 1, 1)
         self.horizontalLayout.addLayout(self.gridLayout)
-        spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem1)
         self.verticalLayout_3.addWidget(self.groupBox)
         self.buttonBox = QtGui.QDialogButtonBox(FormularioProducto)
@@ -75,13 +75,17 @@ class Ui_FormularioProducto(object):
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("accepted()"), FormularioProducto.accept)
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("rejected()"), FormularioProducto.reject)
         QtCore.QMetaObject.connectSlotsByName(FormularioProducto)
+        FormularioProducto.setTabOrder(self.lineEdit_nombre, self.lineEdit_descripcion)
+        FormularioProducto.setTabOrder(self.lineEdit_descripcion, self.lineEdit_precio_neto)
+        FormularioProducto.setTabOrder(self.lineEdit_precio_neto, self.comboBox_id_categoria)
+        FormularioProducto.setTabOrder(self.comboBox_id_categoria, self.buttonBox)
 
     def retranslateUi(self, FormularioProducto):
         FormularioProducto.setWindowTitle(QtGui.QApplication.translate("FormularioProducto", "Formulario Usuario", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox.setTitle(QtGui.QApplication.translate("FormularioProducto", "Datos de Usuario", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox.setTitle(QtGui.QApplication.translate("FormularioProducto", "Datos del producto", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("FormularioProducto", "Descripcion", None, QtGui.QApplication.UnicodeUTF8))
         self.label_verif.setText(QtGui.QApplication.translate("FormularioProducto", "Precio neto", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_error_nombre.setText(QtGui.QApplication.translate("FormularioProducto", "<html><head/><body><p><span style=\" font-weight:600; color:#ff0000;\">Debe tener sólo letras</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_error_nombre.setText(QtGui.QApplication.translate("FormularioProducto", "<html><head/><body><p><span style=\" font-weight:600; color:#ff0000;\">No puede estar vacío</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("FormularioProducto", "Nombre", None, QtGui.QApplication.UnicodeUTF8))
         self.label_5.setText(QtGui.QApplication.translate("FormularioProducto", "Categoria", None, QtGui.QApplication.UnicodeUTF8))
         self.label_error_precio.setText(QtGui.QApplication.translate("FormularioProducto", "<html><head/><body><p><span style=\" font-weight:600; color:#ff0000;\">Valor entre 0 y 99999</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))

@@ -1,23 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>AdminUsers</class>
- <widget class="QDialog" name="AdminUsers">
+ <widget class="QWidget" name="AdminUsers">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>400</height>
+    <width>612</width>
+    <height>407</height>
    </rect>
   </property>
-  <property name="maximumSize">
-   <size>
-    <width>600</width>
-    <height>400</height>
-   </size>
-  </property>
   <property name="windowTitle">
-   <string>Lista de Usuarios</string>
+   <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>

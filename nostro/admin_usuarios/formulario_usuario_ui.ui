@@ -201,6 +201,17 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>lineEdit_nombre</tabstop>
+  <tabstop>lineEdit_apellido</tabstop>
+  <tabstop>pushButton_cambiar_c</tabstop>
+  <tabstop>lineEdit_clave_actual</tabstop>
+  <tabstop>lineEdit_clave</tabstop>
+  <tabstop>lineEdit_verif</tabstop>
+  <tabstop>lineEdit_rut</tabstop>
+  <tabstop>comboBox_tipo</tabstop>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

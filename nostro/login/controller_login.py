@@ -9,8 +9,7 @@ enviar a la Vista.
 
 from model_login import Usuarios
 import sys
-sys.path.append('../admin_usuarios')
-import cryptoraf as c
+import admin_usuarios.cryptoraf as c
 
 def obtenerUsuario(rut=None,password=None):
     """Retorna un usuario (objeto) de estado "1" luego de buscarlo a travez de su nombre y clave"""

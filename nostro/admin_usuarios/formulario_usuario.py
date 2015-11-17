@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\danie\Documents\ProyectoTaller\CafeNostro\nostro\admin_usuarios\formulario_usuario_ui.ui'
+# Form implementation generated from reading ui file '.\formulario_usuario_ui.ui'
 #
-# Created: Wed Nov 11 18:12:20 2015
-#      by: pyside-uic 0.2.15 running on PySide 1.2.1
+# Created: Mon Nov 16 22:39:52 2015
+#      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -112,6 +112,14 @@ class Ui_FormularioUsuario(object):
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("accepted()"), FormularioUsuario.accept)
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("rejected()"), FormularioUsuario.reject)
         QtCore.QMetaObject.connectSlotsByName(FormularioUsuario)
+        FormularioUsuario.setTabOrder(self.lineEdit_nombre, self.lineEdit_apellido)
+        FormularioUsuario.setTabOrder(self.lineEdit_apellido, self.pushButton_cambiar_c)
+        FormularioUsuario.setTabOrder(self.pushButton_cambiar_c, self.lineEdit_clave_actual)
+        FormularioUsuario.setTabOrder(self.lineEdit_clave_actual, self.lineEdit_clave)
+        FormularioUsuario.setTabOrder(self.lineEdit_clave, self.lineEdit_verif)
+        FormularioUsuario.setTabOrder(self.lineEdit_verif, self.lineEdit_rut)
+        FormularioUsuario.setTabOrder(self.lineEdit_rut, self.comboBox_tipo)
+        FormularioUsuario.setTabOrder(self.comboBox_tipo, self.buttonBox)
 
     def retranslateUi(self, FormularioUsuario):
         FormularioUsuario.setWindowTitle(QtGui.QApplication.translate("FormularioUsuario", "Formulario Usuario", None, QtGui.QApplication.UnicodeUTF8))

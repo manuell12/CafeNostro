@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'admin_users.ui'
+# Form implementation generated from reading ui file '.\admin_users.ui'
 #
-# Created: Thu Nov 05 04:05:47 2015
+# Created: Fri Nov 13 23:42:50 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,8 +12,7 @@ from PySide import QtCore, QtGui
 class Ui_AdminUsers(object):
     def setupUi(self, AdminUsers):
         AdminUsers.setObjectName("AdminUsers")
-        AdminUsers.resize(600, 400)
-        AdminUsers.setMaximumSize(QtCore.QSize(600, 400))
+        AdminUsers.resize(612, 407)
         self.verticalLayout = QtGui.QVBoxLayout(AdminUsers)
         self.verticalLayout.setObjectName("verticalLayout")
         self.label = QtGui.QLabel(AdminUsers)
@@ -52,7 +51,7 @@ class Ui_AdminUsers(object):
         QtCore.QMetaObject.connectSlotsByName(AdminUsers)
 
     def retranslateUi(self, AdminUsers):
-        AdminUsers.setWindowTitle(QtGui.QApplication.translate("AdminUsers", "Lista de Usuarios", None, QtGui.QApplication.UnicodeUTF8))
+        AdminUsers.setWindowTitle(QtGui.QApplication.translate("AdminUsers", "Form", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("AdminUsers", "Usuarios registrados", None, QtGui.QApplication.UnicodeUTF8))
         self.nuevo_button.setText(QtGui.QApplication.translate("AdminUsers", "&Nuevo", None, QtGui.QApplication.UnicodeUTF8))
         self.editar_button.setText(QtGui.QApplication.translate("AdminUsers", "&Editar", None, QtGui.QApplication.UnicodeUTF8))

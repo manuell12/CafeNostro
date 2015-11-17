@@ -1,23 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>AdminProductos</class>
- <widget class="QDialog" name="AdminProductos">
+ <widget class="QWidget" name="AdminProductos">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>400</height>
+    <width>549</width>
+    <height>328</height>
    </rect>
   </property>
-  <property name="maximumSize">
-   <size>
-    <width>600</width>
-    <height>400</height>
-   </size>
-  </property>
   <property name="windowTitle">
-   <string>Lista de Usuarios</string>
+   <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -47,8 +41,14 @@
      <property name="selectionBehavior">
       <enum>QAbstractItemView::SelectRows</enum>
      </property>
+     <property name="sortingEnabled">
+      <bool>true</bool>
+     </property>
      <attribute name="horizontalHeaderMinimumSectionSize">
       <number>20</number>
+     </attribute>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
      </attribute>
     </widget>
    </item>

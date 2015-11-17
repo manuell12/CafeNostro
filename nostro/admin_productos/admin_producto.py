@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\danie\Documents\Proyecto Taller\CafeNostro\nostro\admin_productos\admin_producto.ui'
+# Form implementation generated from reading ui file '.\admin_producto.ui'
 #
-# Created: Mon Nov 09 23:47:35 2015
-#      by: pyside-uic 0.2.15 running on PySide 1.2.1
+# Created: Sat Nov 14 00:32:28 2015
+#      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,8 +12,7 @@ from PySide import QtCore, QtGui
 class Ui_AdminProductos(object):
     def setupUi(self, AdminProductos):
         AdminProductos.setObjectName("AdminProductos")
-        AdminProductos.resize(600, 400)
-        AdminProductos.setMaximumSize(QtCore.QSize(600, 400))
+        AdminProductos.resize(549, 328)
         self.verticalLayout = QtGui.QVBoxLayout(AdminProductos)
         self.verticalLayout.setObjectName("verticalLayout")
         self.label = QtGui.QLabel(AdminProductos)
@@ -26,8 +25,10 @@ class Ui_AdminProductos(object):
         self.tableProductos.setProperty("showDropIndicator", False)
         self.tableProductos.setDragDropOverwriteMode(False)
         self.tableProductos.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
+        self.tableProductos.setSortingEnabled(True)
         self.tableProductos.setObjectName("tableProductos")
         self.tableProductos.horizontalHeader().setMinimumSectionSize(20)
+        self.tableProductos.verticalHeader().setVisible(False)
         self.verticalLayout.addWidget(self.tableProductos)
         self.frame = QtGui.QFrame(AdminProductos)
         self.frame.setFrameShape(QtGui.QFrame.StyledPanel)
@@ -52,7 +53,7 @@ class Ui_AdminProductos(object):
         QtCore.QMetaObject.connectSlotsByName(AdminProductos)
 
     def retranslateUi(self, AdminProductos):
-        AdminProductos.setWindowTitle(QtGui.QApplication.translate("AdminProductos", "Lista de Productos", None, QtGui.QApplication.UnicodeUTF8))
+        AdminProductos.setWindowTitle(QtGui.QApplication.translate("AdminProductos", "Form", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("AdminProductos", "Productos registrados", None, QtGui.QApplication.UnicodeUTF8))
         self.nuevo_button.setText(QtGui.QApplication.translate("AdminProductos", "&Nuevo", None, QtGui.QApplication.UnicodeUTF8))
         self.editar_button.setText(QtGui.QApplication.translate("AdminProductos", "&Editar", None, QtGui.QApplication.UnicodeUTF8))

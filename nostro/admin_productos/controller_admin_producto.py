@@ -70,10 +70,11 @@ def deleteproducto(id):
 def validarNombreF(label, nombre):
     """Cambia el estado del label segun la respuesta de validacion del nombre ingresado"""
     if(validaTexto(nombre, "no_simbolos")):
-        label.setText(u"<font color='green'><b>Nombre correcto.</b></font>")
+        label.setText(
+            u"<font color='green'><b>Nombre correcto.</b></font>")
     else:
         label.setText(
-            u"<font color='red'><b>No debe estar vacío.</b></font>")
+            u"<font color='red'><b>Sólo puede contener letras y numeros.</b></font>")
 
 
 def validarPrecioNetoF(label, precio_neto):
@@ -116,13 +117,16 @@ def validaTexto(text, validacion):
         cadena = "0123456789"
 
     if (validacion == "no_simbolos"):
-        cadena = " ,.-abcdefghijklmnñopqrstuvwxyzáéíóúABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÚ0123456789"
+        cadena = " abcdefghijklmnñopqrstuvwxyzáéíóúABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÚ0123456789"
 
     if (validacion == "texto"):
         cadena = " abcdefghijklmnñopqrstuvwxyzáéíóúABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÚ"
 
     i = 0
-    string_num = str(text)
+    try:
+        string_num = str(text)
+    except:
+        return False
 
     if(len(string_num) == 0):
         valido = False

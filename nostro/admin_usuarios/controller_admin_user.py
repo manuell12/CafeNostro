@@ -62,23 +62,29 @@ def deleteUser(id):
 def validarNombreF(label, nombre):
     """Cambia el estado del label segun la respuesta de validacion del nombre ingresado"""
     if(validaTexto(nombre,"texto")):
-        label.setText(u"<font color='green'><b>Nombre correcto.</b></font>")
+        label.setText(
+            u"<font color='green'><b>Nombre correcto.</b></font>")
     else:
-        label.setText(u"<font color='red'><b>Debe tener sólo letras.</b></font>")
+        label.setText(
+            u"<font color='red'><b>Debe tener sólo letras.</b></font>")
 
 def validarApellidoF(label, apellido):
     """Cambia el estado del label segun la respuesta de validacion del apellido ingresado"""
     if(validaTexto(apellido,"texto")):
-        label.setText(u"<font color='green'><b>Apellido correcto.</b></font>")
+        label.setText(
+            u"<font color='green'><b>Apellido correcto.</b></font>")
     else:
-        label.setText(u"<font color='red'><b>Debe tener sólo letras.</b></font>")
+        label.setText(
+            u"<font color='red'><b>Debe tener sólo letras.</b></font>")
 
 def validarRutF(label, rut):
     """Cambia el estado del label segun la respuesta de validacion del apellido ingresado"""
     if(validaRut(rut)):
-        label.setText(u"<font color='green'><b>Rut correcto.</b></font>")
+        label.setText(
+            u"<font color='green'><b>Rut correcto.</b></font>")
     else:
-        label.setText(u"<font color='red'><b>Rut incorrecto, ej: 12345678-9</b></font>")
+        label.setText(
+            u"<font color='red'><b>Rut incorrecto, ej: 12345678-9</b></font>")
 
 def validarDatos(nombre,apellido,rut,verif,clave_ac,tipo):
     if(clave_ac == None and verif !=None): # Nuevo usuario

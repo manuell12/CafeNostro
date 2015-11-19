@@ -11,6 +11,7 @@ from main_window import Ui_MainWindow
 from admin_usuarios.view_admin_user import AdminUsers
 from admin_productos.view_admin_producto import AdminProductos
 from ventas.view_formulario_venta import FormularioVenta
+import admin_usuarios.controller_admin_user as controller
 
 
 class MainWindow(QtGui.QMainWindow):
@@ -33,6 +34,10 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.stackedWidget.addWidget(AdminUsers()) #2
         self.ui.stackedWidget.addWidget(AdminProductos()) #3
         self.rut = rut
+        self.nombre = controller.getUsuarioRut(rut)[0][1]+" "+controller.getUsuarioRut(rut)[0][2]
+        if(controller.getUsuarioRut(rut)[0][1] == "root"):
+            self.nombre = "ROOT"
+        self.ui.label_usuario.setText(u"<font color='black' size='5'><b>"+self.nombre+"</b></font>")
         if(tipo != None):
             if(tipo == 1):
                 self.ui.actionUsuarios.setEnabled(False)

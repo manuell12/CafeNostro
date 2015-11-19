@@ -36,13 +36,38 @@ class Pedido(object):
     def addDataPedido(cls):
         conex = connect()
         conn = conex.cursor()
-        query = "INSERT INTO pedido(mesa, en_curso) VALUES(%s, %s)"
+        query = "INSERT INTO pedido(idPedido, mesa, en_curso) VALUES(%s, %s, %s)"
         conn.execute(query,
-                     (cls.mesa,
+                     (cls.id_pedido,
+                      cls.mesa,
                       cls.en_curso))
         conex.commit()
         conn.close()
-        return 0
+
+    @classmethod
+    def all(cls):
+        """
+        Método utlizado para obtener la colección completa de filas
+        en la tabla pedido
+        Este método al ser de clase no necesita una instancia (objeto)
+        Sólo basta con invocarlo desde la clase
+        """
+        query = "SELECT * FROM {}".format(
+            cls.__tablename__)
+
+        try:
+            conex = connect()
+            conn = conex.cursor()
+            conn.execute(query)
+            data = conn.fetchall()
+            # print data
+            return data
+
+        except MySQLdb.Error as e:
+            print "Error al obtener los usuarios:", e.args[0]
+            return None
+
+        conn.close()
 
 class VentaProducto(object):
     """

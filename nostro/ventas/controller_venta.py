@@ -14,6 +14,10 @@ def Productos():
     """Retorna todos los Productos de la base de datos"""
     return Producto.all()
 
+def getPedidos():
+    """Retorna todos los pedidos"""
+    return Pedido.all()
+
 def getProductoStatus(status):
     """Obtiene los Productos de la base de datos que tengan el mismo estado determinado por el parámetro entregado"""
     producto = Producto()
@@ -35,8 +39,10 @@ def getProductoId(id_producto):
 def addDataPedido(mesa):
     """Agrega un pedido a la base de datos y retorna el id"""
     en_curso = 1
-    pedido = Pedido(None,mesa,en_curso)
-    return Pedido.addDataPedido(pedido)
+    pedidos = len(getPedidos())
+    pedido = Pedido(pedidos,mesa,en_curso)
+    Pedido.addDataPedido(pedido)
+    return pedidos
 
 def addDataVentaProducto(id_pedido, id_producto, precio_venta):
     """Agrega un producto a un pedido"""
@@ -83,7 +89,6 @@ def cambiarCantidadProducto(id_pedido, id_producto, cambiar):
     VentaProducto.cambiarCantidadProducto(venta_producto,cambiar)
     try:
         cantidad = VentaProducto.hayProductoPedido(venta_producto)[0][2]
-        print cantidad
     except:
         return False
     if(cantidad <= 0):

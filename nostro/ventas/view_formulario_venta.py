@@ -25,7 +25,7 @@ class FormularioVenta(QtGui.QWidget):
         self.setFocus()
         self.connect_actions()
         if(mesa == "0"):
-            self.id_pedido = 0 #controller.addDataPedido(mesa)
+            self.id_pedido = controller.addDataPedido(mesa)
 
         self.reload_data_table1()
         self.reload_data_table2()

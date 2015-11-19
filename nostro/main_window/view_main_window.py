@@ -10,6 +10,7 @@ from PySide import QtCore, QtGui
 from main_window import Ui_MainWindow
 from admin_usuarios.view_admin_user import AdminUsers
 from admin_productos.view_admin_producto import AdminProductos
+from ventas.view_formulario_venta import FormularioVenta
 
 
 class MainWindow(QtGui.QMainWindow):
@@ -27,6 +28,10 @@ class MainWindow(QtGui.QMainWindow):
         self.set_signals()
         self.showMaximized()
         self.show()
+        print self.ui.stackedWidget.addWidget(AdminUsers())
+        print self.ui.stackedWidget.addWidget(AdminProductos())
+        print self.ui.stackedWidget.addWidget(FormularioVenta())
+
         if(tipo != None):
             if(tipo == 1):
                 self.ui.actionUsuarios.setEnabled(False)
@@ -37,18 +42,23 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.actionRealizar_Venta.triggered.connect(self.venta)
         self.ui.actionUsuarios.triggered.connect(self.admin_users)
         self.ui.actionProductos.triggered.connect(self.admin_productos)
+        self.ui.pushButton_compra_directa.clicked.connect(self.formulario_venta)
 
     def venta(self):
         'Cambia a la interfaz de venta de producto'
-        pass
+        self.ui.stackedWidget.setCurrentIndex(4)
+
+    def formulario_venta(self):
+        'Cambia a la interfaz de formulario de venta'
+        self.ui.stackedWidget.setCurrentIndex(4)
 
     def admin_users(self):
         'Cambia a la interfaz de administración de usuarios'
-        self.setCentralWidget(AdminUsers())
+        self.ui.stackedWidget.setCurrentIndex(2)
 
     def admin_productos(self):
         'Cambia a la interfaz de administración de productos'
-        self.setCentralWidget(AdminProductos())
+        self.ui.stackedWidget.setCurrentIndex(3)
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '.\main_window.ui'
+# Form implementation generated from reading ui file 'c:\Users\danie\Documents\ProyectoTaller\CafeNostro\nostro\main_window\main_window.ui'
 #
-# Created: Sat Nov 14 01:26:15 2015
-#      by: pyside-uic 0.2.15 running on PySide 1.2.2
+# Created: Thu Nov 19 01:32:22 2015
+#      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -15,6 +15,35 @@ class Ui_MainWindow(object):
         MainWindow.resize(800, 600)
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
+        self.gridLayout = QtGui.QGridLayout(self.centralwidget)
+        self.gridLayout.setObjectName("gridLayout")
+        spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.gridLayout.addItem(spacerItem, 1, 0, 1, 1)
+        self.widget_barra = QtGui.QWidget(self.centralwidget)
+        self.widget_barra.setMinimumSize(QtCore.QSize(131, 101))
+        self.widget_barra.setMaximumSize(QtCore.QSize(131, 531))
+        self.widget_barra.setObjectName("widget_barra")
+        self.verticalLayout = QtGui.QVBoxLayout(self.widget_barra)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.pushButton_compra_directa = QtGui.QPushButton(self.widget_barra)
+        self.pushButton_compra_directa.setMinimumSize(QtCore.QSize(111, 41))
+        self.pushButton_compra_directa.setObjectName("pushButton_compra_directa")
+        self.verticalLayout.addWidget(self.pushButton_compra_directa)
+        self.pushButton_pedidos = QtGui.QPushButton(self.widget_barra)
+        self.pushButton_pedidos.setMinimumSize(QtCore.QSize(111, 41))
+        self.pushButton_pedidos.setObjectName("pushButton_pedidos")
+        self.verticalLayout.addWidget(self.pushButton_pedidos)
+        self.gridLayout.addWidget(self.widget_barra, 0, 0, 1, 1)
+        self.stackedWidget = QtGui.QStackedWidget(self.centralwidget)
+        self.stackedWidget.setObjectName("stackedWidget")
+        self.page_3 = QtGui.QWidget()
+        self.page_3.setObjectName("page_3")
+        self.stackedWidget.addWidget(self.page_3)
+        self.page_4 = QtGui.QWidget()
+        self.page_4.setObjectName("page_4")
+        self.stackedWidget.addWidget(self.page_4)
+        self.gridLayout.addWidget(self.stackedWidget, 0, 1, 2, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 21))
@@ -26,9 +55,6 @@ class Ui_MainWindow(object):
         self.menuArchivo = QtGui.QMenu(self.menubar)
         self.menuArchivo.setObjectName("menuArchivo")
         MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtGui.QStatusBar(MainWindow)
-        self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
         self.actionUsuarios = QtGui.QAction(MainWindow)
         self.actionUsuarios.setObjectName("actionUsuarios")
         self.actionProductos = QtGui.QAction(MainWindow)
@@ -54,6 +80,8 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "CaféNostro", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_compra_directa.setText(QtGui.QApplication.translate("MainWindow", "Compra Directa", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_pedidos.setText(QtGui.QApplication.translate("MainWindow", "Pedidos por Mesa", None, QtGui.QApplication.UnicodeUTF8))
         self.menuAdministraci_n.setStatusTip(QtGui.QApplication.translate("MainWindow", "Sección administrativa de la aplicación", None, QtGui.QApplication.UnicodeUTF8))
         self.menuAdministraci_n.setTitle(QtGui.QApplication.translate("MainWindow", "&Administración", None, QtGui.QApplication.UnicodeUTF8))
         self.menuVenta.setStatusTip(QtGui.QApplication.translate("MainWindow", "Sección venta de la aplicación", None, QtGui.QApplication.UnicodeUTF8))

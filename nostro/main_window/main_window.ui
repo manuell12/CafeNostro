@@ -13,7 +13,77 @@
   <property name="windowTitle">
    <string>CaféNostro</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="0">
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="0" column="0">
+     <widget class="QWidget" name="widget_barra" native="true">
+      <property name="minimumSize">
+       <size>
+        <width>131</width>
+        <height>101</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>131</width>
+        <height>531</height>
+       </size>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QPushButton" name="pushButton_compra_directa">
+         <property name="minimumSize">
+          <size>
+           <width>111</width>
+           <height>41</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Compra Directa</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_pedidos">
+         <property name="minimumSize">
+          <size>
+           <width>111</width>
+           <height>41</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Pedidos por Mesa</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="1" rowspan="2">
+     <widget class="QStackedWidget" name="stackedWidget">
+      <widget class="QWidget" name="page_3"/>
+      <widget class="QWidget" name="page_4"/>
+     </widget>
+    </item>
+   </layout>
+   <zorder>widget_barra</zorder>
+   <zorder>verticalSpacer</zorder>
+   <zorder>widget</zorder>
+   <zorder>stackedWidget</zorder>
+  </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
@@ -53,7 +123,6 @@
    <addaction name="menuVenta"/>
    <addaction name="menuAdministraci_n"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionUsuarios">
    <property name="text">
     <string>&amp;Usuarios</string>

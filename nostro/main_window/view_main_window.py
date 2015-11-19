@@ -20,7 +20,9 @@ class MainWindow(QtGui.QMainWindow):
     respecto a que es lo que el usuario desea hacer.
     """
 
-    def __init__(self, tipo=None):
+    venta_directa_en_curso = False
+
+    def __init__(self, tipo=None, rut=None):
         'Constructor de la clase'
         QtGui.QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
@@ -28,10 +30,9 @@ class MainWindow(QtGui.QMainWindow):
         self.set_signals()
         self.showMaximized()
         self.show()
-        print self.ui.stackedWidget.addWidget(AdminUsers())
-        print self.ui.stackedWidget.addWidget(AdminProductos())
-        print self.ui.stackedWidget.addWidget(FormularioVenta())
-
+        self.ui.stackedWidget.addWidget(AdminUsers()) #2
+        self.ui.stackedWidget.addWidget(AdminProductos()) #3
+        self.rut = rut
         if(tipo != None):
             if(tipo == 1):
                 self.ui.actionUsuarios.setEnabled(False)
@@ -42,14 +43,18 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.actionRealizar_Venta.triggered.connect(self.venta)
         self.ui.actionUsuarios.triggered.connect(self.admin_users)
         self.ui.actionProductos.triggered.connect(self.admin_productos)
-        self.ui.pushButton_compra_directa.clicked.connect(self.formulario_venta)
+        self.ui.pushButton_compra_directa.clicked.connect(self.formulario_venta_directa)
 
     def venta(self):
         'Cambia a la interfaz de venta de producto'
-        self.ui.stackedWidget.setCurrentIndex(4)
+        pass
 
-    def formulario_venta(self):
-        'Cambia a la interfaz de formulario de venta'
+    def formulario_venta_directa(self):
+        'Cambia a la interfaz de formulario de venta directa'
+        mesa = "0"
+        if(not self.venta_directa_en_curso):
+            self.ui.stackedWidget.addWidget(FormularioVenta(self.rut,mesa)) #4
+            self.venta_directa_en_curso = True
         self.ui.stackedWidget.setCurrentIndex(4)
 
     def admin_users(self):

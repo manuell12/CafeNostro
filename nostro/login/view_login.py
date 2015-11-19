@@ -51,7 +51,7 @@ class Login(QtGui.QDialog):
                     # self.correctMessage(u"""Ingreso valido""")
                     self.close()
                     self.main = MainWindow(controller_login.obtenerTipoUsuario(
-                        self.ui.lineEdit_user.text())[0][0])
+                        self.ui.lineEdit_user.text())[0][0],self.ui.lineEdit_user.text())
                     self.main.show()
                     # self.hide()
                     # self.setVisible(False)

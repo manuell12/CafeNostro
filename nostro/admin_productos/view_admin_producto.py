@@ -108,7 +108,7 @@ class AdminProductos(QtGui.QWidget):
         # model = QtGui.QStandardItemModel(row, len(self.headerTabla), parent)
 
         for i, data in enumerate(productos):
-            row = [data[0], data[1], data[2], str(data[3]), str(data[4]), data[6]]
+            row = [data[0], data[1], data[2], str(data[3]).split(".")[0], str(data[4]).split(".")[0], data[6]]
             for j, field in enumerate(row):
                 index = model.index(i, j, QtCore.QModelIndex())
                 if j is 5:

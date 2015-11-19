@@ -58,7 +58,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `producto` WRITE;
 /*!40000 ALTER TABLE `producto` DISABLE KEYS */;
-INSERT INTO `producto` VALUES (1,'Ristretto','','Café',1300.00000,'0',3),(2,'Lungo','','Café',1300.00000,'0',3),(3,'Espresso','','Café',1300.00000,'0',3),(4,'Espresso doble','','Café',1800.00000,'0',3),(5,'Americano','','Café',1350.00000,'0',3),(6,'Macchiato','','Café',1500.00000,'0',3),(7,'Macchiato doble','','Café',1950.00000,'0',3),(8,'Capuccino','','Café',1850.00000,'0',3),(9,'Capuccino grande','','Café',2000.00000,'0',3),(10,'Capuccino miel canela','','Café',2000.00000,'0',3),(11,'Latte macchiato','','Café',2000.00000,'0',3),(12,'Mokaccino','','Café',2550.00000,'0',3),(13,'Café helado','','Café',2850.00000,'0',3),(14,'Chocolate helado','','Café',2850.00000,'0',3),(15,'Nutelatte','','Café',2550.00000,'0',3),(16,'Chocolate sabores','','Café',2050.00000,'0',3),(17,'Chocolate marshmallows','','Café',2200.00000,'0',3),(18,'Té selección','','Café',1390.00000,'0',3),(19,'Tetera té gourmet','','Café',2550.00000,'0',3),(20,'Agua mineral','','Bebida',1450.00000,'0',4),(21,'Soda italiana','','Bebida',1500.00000,'0',4),(22,'Bebida','','Bebida',1500.00000,'0',4),(23,'Jugo natural','','Bebida',2100.00000,'0',4),(24,'Milk shake','','Bebida',2550.00000,'0',4),(25,'Copa helado','','Helado',2700.00000,'0',2),(26,'Panini queso, jamón, verduras','','Comida',2950.00000,'0',1),(27,'Panini queso, jamón, tomate, pesto','','Comida',2850.00000,'0',1),(28,'Panini queso, chorizo, morrón','','Comida',2700.00000,'0',1),(29,'Panini queso, jamón, dijon','','Comida',2650.00000,'0',1),(30,'Panini queso, tomate, orégano','','Comida',2650.00000,'0',1),(31,'Descafeinado','','Café',250.00000,'0',3);
+INSERT INTO `producto` VALUES (1,'Ristretto','',1053.00000,1300.00000,'1',3),(2,'Lungo','',1053.00000,1300.00000,'1',3),(3,'Espresso','',1053.00000,1300.00000,'1',3),(4,'Espresso doble','',1458.00000,1800.00000,'1',3),(5,'Americano','',1093.50000,1350.00000,'1',3),(6,'Macchiato','',1215.00000,1500.00000,'1',3),(7,'Macchiato doble','',1579.50000,1950.00000,'1',3),(8,'Capuccino','',1498.50000,1850.00000,'1',3),(9,'Capuccino grande','',1620.00000,2000.00000,'1',3),(10,'Capuccino miel canela','',1620.00000,2000.00000,'1',3),(11,'Latte macchiato','',1620.00000,2000.00000,'1',3),(12,'Mokaccino','',2065.50000,2550.00000,'1',3),(13,'Café helado','',2308.50000,2850.00000,'1',3),(14,'Chocolate helado','',2308.50000,2850.00000,'1',3),(15,'Nutelatte','',2065.50000,2550.00000,'1',3),(16,'Chocolate sabores','',1660.50000,2050.00000,'1',3),(17,'Chocolate marshmallows','',1782.00000,2200.00000,'1',3),(18,'Té selección','',1125.90000,1390.00000,'1',3),(19,'Tetera té gourmet','',2065.50000,2550.00000,'1',3),(20,'Agua mineral','',1174.50000,1450.00000,'1',4),(21,'Soda italiana','',1215.00000,1500.00000,'1',4),(22,'Bebida','',1215.00000,1500.00000,'1',4),(23,'Jugo natural','',1701.00000,2100.00000,'1',4),(24,'Milk shake','',2065.50000,2550.00000,'1',4),(25,'Copa helado','',2187.00000,2700.00000,'1',2),(26,'Panini queso, jamón, verduras','',2389.50000,2950.00000,'1',1),(27,'Panini queso, jamón, tomate, pesto','',2308.50000,2850.00000,'1',1),(28,'Panini queso, chorizo, morrón','',2187.00000,2700.00000,'1',1),(29,'Panini queso, jamón, dijon','',2146.50000,2650.00000,'1',1),(30,'Panini queso, tomate, orégano','',2146.50000,2650.00000,'1',1),(31,'Descafeinado','',202.50000,250.00000,'1',3),(32,'Café X','Un café que posee una X',1611.90000,1990.00000,'0',3),(33,'helado','Un helado bien frío',0.00000,990.00000,'0',2),(34,'Helado','Helado muy frio',801.90000,990.00000,'0',2),(35,'hlado 2','qwertyuikjhgf',7999.56000,9876.00000,'0',1);
 /*!40000 ALTER TABLE `producto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -68,7 +68,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (4,'root','root','root','2a533081',0,0);
+INSERT INTO `usuario` VALUES (4,'root','root','root','2a533081',0,1);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -99,4 +99,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-11-08 15:52:37
+-- Dump completed on 2015-11-18 22:06:37

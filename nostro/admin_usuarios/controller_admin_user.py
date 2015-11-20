@@ -145,7 +145,8 @@ def validaTexto(text,validacion):
         cadena = " abcdefghijklmnñopqrstuvwxyzáéíóúABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÚ"
 
     i=0
-    string_num=str(text)
+    print(text)
+    string_num=str(text.encode('utf-8'))
 
     if(len(string_num)==0):
         valido=False

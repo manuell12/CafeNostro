@@ -43,9 +43,9 @@ class FormularioUsuario(QtGui.QDialog):
             usuario = controller_admin_user.getUsuarioId(id)
             for row in usuario:
                 self.nombre = row[1]
-                self.ui.lineEdit_nombre.setText(self.nombre)
-                self.apellido = row[2]
-                self.ui.lineEdit_apellido.setText(self.apellido)
+                self.ui.lineEdit_nombre.setText((self.nombre))
+                self.apellido = (row[2])            
+                self.ui.lineEdit_apellido.setText((self.apellido))
                 self.rut = row[3]
                 self.ui.lineEdit_rut.setText(self.rut)
                 self.password = row[4]

@@ -124,7 +124,7 @@ def validaTexto(text, validacion):
 
     i = 0
     try:
-        string_num = str(text)
+        string_num = str(text.encode('utf-8'))
     except:
         return False
 

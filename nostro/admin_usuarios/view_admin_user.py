@@ -140,6 +140,11 @@ class AdminUsers(QtGui.QWidget):
         """
         self.proxyModel.setSourceModel(model)
 
+        self.ui.tableUsers.horizontalHeader().setResizeMode(
+            1, self.ui.tableUsers.horizontalHeader().Stretch)
+        self.ui.tableUsers.horizontalHeader().setResizeMode(
+            2, self.ui.tableUsers.horizontalHeader().Stretch)
+
         # Designamos los header de la grilla y sus respectivos anchos
         for col, h in enumerate(self.__header_table__):
             model.setHeaderData(col, QtCore.Qt.Horizontal, h[0])

@@ -11,8 +11,8 @@ import view_formulario_producto
 class AdminProductos(QtGui.QWidget):
 
     __header_table__ = ((u"ID", 20),
-                        (u"Nombre", 200),
-                        (u"Descripcion", 200),                        
+                        (u"Nombre", 300),
+                        (u"Descripcion", 500),
                         (u"Precio neto", 100),
                         (u"Precio bruto", 100),
                         (u"Categoria", 100))
@@ -29,7 +29,7 @@ class AdminProductos(QtGui.QWidget):
         self.ui.setupUi(self)
         self.setFocus()
         self.set_model_table()
-        self.set_source_model(self.load_productos(self))        
+        self.set_source_model(self.load_productos(self))
         self.ui.tableProductos.setColumnHidden(0, True)
         self.connect_actions()
 
@@ -108,7 +108,8 @@ class AdminProductos(QtGui.QWidget):
         # model = QtGui.QStandardItemModel(row, len(self.headerTabla), parent)
 
         for i, data in enumerate(productos):
-            row = [data[0], data[1], data[2], str(data[3]), str(data[4]), data[6]]
+            row = [data[0], data[1], data[2], str(
+                data[3]), str(data[4]), data[6]]
             for j, field in enumerate(row):
                 index = model.index(i, j, QtCore.QModelIndex())
                 if j is 5:
@@ -141,6 +142,9 @@ class AdminProductos(QtGui.QWidget):
         asigna el tamaño de las columnas a las grillas respectivas.
         """
         self.proxyModel.setSourceModel(model)
+
+        self.ui.tableProductos.horizontalHeader().setResizeMode(
+            2, self.ui.tableProductos.horizontalHeader().Stretch)
 
         # Designamos los header de la grilla y sus respectivos anchos
         for col, h in enumerate(self.__header_table__):

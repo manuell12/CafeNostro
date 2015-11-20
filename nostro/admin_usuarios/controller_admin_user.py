@@ -11,17 +11,31 @@ from model_admin_user import Usuario
 import cryptoraf as c
 
 def usuarios():
-    """Retorna todos los usuarios de la base de datos"""
+    """
+    Retorna todos los usuarios de la base de datos
+    """
     return Usuario.all()
 
 def getUsuarioId(id):
-    """Retorna los datos de un usuario especificando su id"""
+    """
+    Retorna los datos de un usuario especificando su id
+    """
     user = Usuario()
     user.id_usuario = id
     return Usuario.getUsuarioId(user)
 
+def getUsuarioRut(rut):
+    """
+    Retorna los datos de un usuario especificando su rut
+    """
+    user = Usuario()
+    user.rut = rut
+    return Usuario.getUsuarioRut(user)
+
 def UpdateDataUsuario(id, nombre, apellido, rut, clave, tipo, status):
-    """Actualiza todos los campos de un usuario especificando su id, nombre, apellido, rut, clave, tipo y status"""
+    """
+    Actualiza todos los campos de un usuario especificando su id, nombre, apellido, rut, clave, tipo y status
+    """
     if clave == None:
         user = Usuario(id, nombre, apellido, rut, clave, tipo, status)
         Usuario.UpdateDataUsuarioWithoutNewPass(user)
@@ -33,14 +47,18 @@ def UpdateDataUsuario(id, nombre, apellido, rut, clave, tipo, status):
         Usuario.UpdateDataUsuario(user)
 
 def UpdateStatusUsuario(id, status):
-    """Actualiza el estado de un usuario especificando su id"""
+    """
+    Actualiza el estado de un usuario especificando su id
+    """
     user = Usuario()
     user.id_usuario = id
     user.status = status
     Usuario.UpdateStatusUsuario(user)
 
 def AddDataUsuario(nombre, apellido, rut, clave, tipo, status):
-    """Agrega un usuario nuevo a la base de datos. Recibe como entrada todos los campos necesarios para su creacion"""
+    """
+    Agrega un usuario nuevo a la base de datos. Recibe como entrada todos los campos necesarios para su creacion
+    """
     crypt = c.CryptoRAF()
     clave_encriptada = crypt.encrypt(
         clave, "fhfs8sdfkjshuif7yr4021934234233ihsidf89sssx")
@@ -48,19 +66,25 @@ def AddDataUsuario(nombre, apellido, rut, clave, tipo, status):
     Usuario.AddDataUsuario(user)
 
 def getUsuarioStatus(status):
-    """Obtiene los usuarios de la base de datos que tengan el mismo estado determinado por el parámetro entregado"""
+    """
+    Obtiene los usuarios de la base de datos que tengan el mismo estado determinado por el parámetro entregado
+    """
     user = Usuario()
     user.status = status
     return Usuario.getUsuarioStatus(user)
 
 def deleteUser(id):
-    """Elimina un usuario de la base de datos"""
+    """
+    Elimina un usuario de la base de datos
+    """
     user = Usuario()
     user.id_usuario = id
     Usuario.deleteUsers(user)
 
 def validarNombreF(label, nombre):
-    """Cambia el estado del label segun la respuesta de validacion del nombre ingresado"""
+    """
+    Cambia el estado del label segun la respuesta de validacion del nombre ingresado
+    """
     if(validaTexto(nombre,"texto")):
         label.setText(
             u"<font color='green'><b>Nombre correcto.</b></font>")
@@ -69,7 +93,9 @@ def validarNombreF(label, nombre):
             u"<font color='red'><b>Debe tener sólo letras.</b></font>")
 
 def validarApellidoF(label, apellido):
-    """Cambia el estado del label segun la respuesta de validacion del apellido ingresado"""
+    """
+    Cambia el estado del label segun la respuesta de validacion del apellido ingresado
+    """
     if(validaTexto(apellido,"texto")):
         label.setText(
             u"<font color='green'><b>Apellido correcto.</b></font>")
@@ -78,7 +104,9 @@ def validarApellidoF(label, apellido):
             u"<font color='red'><b>Debe tener sólo letras.</b></font>")
 
 def validarRutF(label, rut):
-    """Cambia el estado del label segun la respuesta de validacion del apellido ingresado"""
+    """
+    Cambia el estado del label segun la respuesta de validacion del apellido ingresado
+    """
     if(validaRut(rut)):
         label.setText(
             u"<font color='green'><b>Rut correcto.</b></font>")

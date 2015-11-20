@@ -134,6 +134,17 @@ class Usuario(object):
         return usuario
         conn.close()
 
+    def getUsuarioRut(cls):
+        conex = connect()
+        conn = conex.cursor()
+        print cls.rut
+        query = "SELECT * FROM usuario WHERE rut = '{0}'".format(
+            cls.rut)
+        conn.execute(query)
+        usuario = conn.fetchall()
+        return usuario
+        conn.close()
+
     def deleteUsers(cls):
         conex = connect()
         conn = conex.cursor()

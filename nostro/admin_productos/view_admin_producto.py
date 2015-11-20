@@ -114,6 +114,7 @@ class AdminProductos(QtGui.QWidget):
                    format(round(data[3], 2)),
                    int(data[4]),
                    data[6]]
+            # row = [data[0], data[1], data[2], str(data[3]).split(".")[0], str(data[4]).split(".")[0], data[6]]
             for j, field in enumerate(row):
                 index = model.index(i, j, QtCore.QModelIndex())
                 if j is 5:

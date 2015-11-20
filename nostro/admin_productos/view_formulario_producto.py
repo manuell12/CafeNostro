@@ -42,7 +42,7 @@ class FormularioProducto(QtGui.QDialog):
                 self.descripcion = row[2]
                 self.ui.lineEdit_descripcion.setText(self.descripcion)
                 self.precio_neto = str(row[4])
-                self.ui.lineEdit_precio_neto.setText(self.precio_neto)
+                self.ui.lineEdit_precio_neto.setText(str(self.precio_neto).split(".")[0])
                 self.id_categoria = row[6]
                 self.ui.comboBox_id_categoria.setCurrentIndex(
                     int(self.id_categoria))

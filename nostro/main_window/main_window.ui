@@ -6,20 +6,121 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>643</width>
+    <height>462</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>CaféNostro</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QGroupBox" name="groupBox">
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
+      <property name="title">
+       <string>Inicio</string>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QPushButton" name="pushButton_compra_directa">
+           <property name="minimumSize">
+            <size>
+             <width>111</width>
+             <height>41</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Compra Directa</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_pedidos">
+           <property name="minimumSize">
+            <size>
+             <width>111</width>
+             <height>41</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Pedidos por Mesa</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_usuario">
+           <property name="font">
+            <font>
+             <family>Calibri</family>
+            </font>
+           </property>
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QStackedWidget" name="stackedWidget">
+      <widget class="QWidget" name="page_3"/>
+      <widget class="QWidget" name="page_4"/>
+     </widget>
+    </item>
+   </layout>
+   <zorder>widget</zorder>
+   <zorder>stackedWidget</zorder>
+   <zorder>groupBox</zorder>
+  </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>643</width>
      <height>21</height>
     </rect>
    </property>
@@ -33,15 +134,6 @@
     <addaction name="actionUsuarios"/>
     <addaction name="actionProductos"/>
    </widget>
-   <widget class="QMenu" name="menuVenta">
-    <property name="statusTip">
-     <string>Sección venta de la aplicación</string>
-    </property>
-    <property name="title">
-     <string>&amp;Venta</string>
-    </property>
-    <addaction name="actionRealizar_Venta"/>
-   </widget>
    <widget class="QMenu" name="menuArchivo">
     <property name="title">
      <string>&amp;Archivo</string>
@@ -50,10 +142,8 @@
     <addaction name="actionSalir"/>
    </widget>
    <addaction name="menuArchivo"/>
-   <addaction name="menuVenta"/>
    <addaction name="menuAdministraci_n"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionUsuarios">
    <property name="text">
     <string>&amp;Usuarios</string>

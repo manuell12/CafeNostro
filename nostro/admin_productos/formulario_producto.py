@@ -84,7 +84,7 @@ class Ui_FormularioProducto(object):
         FormularioProducto.setWindowTitle(QtGui.QApplication.translate("FormularioProducto", "Formulario Usuario", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox.setTitle(QtGui.QApplication.translate("FormularioProducto", "Datos del producto", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("FormularioProducto", "Descripcion", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_verif.setText(QtGui.QApplication.translate("FormularioProducto", "Precio neto", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_verif.setText(QtGui.QApplication.translate("FormularioProducto", "Precio bruto", None, QtGui.QApplication.UnicodeUTF8))
         self.label_error_nombre.setText(QtGui.QApplication.translate("FormularioProducto", "<html><head/><body><p><span style=\" font-weight:600; color:#ff0000;\">No puede estar vacío</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("FormularioProducto", "Nombre", None, QtGui.QApplication.UnicodeUTF8))
         self.label_5.setText(QtGui.QApplication.translate("FormularioProducto", "Categoria", None, QtGui.QApplication.UnicodeUTF8))

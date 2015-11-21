@@ -111,7 +111,7 @@ class AdminProductos(QtGui.QWidget):
             row = [data[0],
                    data[1],
                    data[2],
-                   format(round(data[3], 2)),
+                   int(data[3]),
                    int(data[4]),
                    data[6]]
             # row = [data[0], data[1], data[2], str(data[3]).split(".")[0], str(data[4]).split(".")[0], data[6]]

@@ -32,9 +32,9 @@ def getProductoId(id):
     return Producto.getProductoId(producto)
 
 
-def UpdateDataProducto(id, nombre, descripcion, tipo, precio_neto, status, id_categoria):
-    producto = Producto(id, nombre, descripcion, tipo,
-                        precio_neto, status, id_categoria)
+def UpdateDataProducto(id, nombre, descripcion, precio_neto, precio_bruto, status, id_categoria):
+    producto = Producto(id, nombre, descripcion, precio_neto,
+                        precio_bruto, status, id_categoria)
     Producto.UpdateDataProducto(producto)
 
 
@@ -46,10 +46,10 @@ def UpdateStatusProducto(id, status):
     Producto.UpdateStatusProducto(producto)
 
 
-def AddDataProducto(nombre, descripcion, tipo, precio_neto, status, id_categoria):
+def AddDataProducto(nombre, descripcion, precio_neto, precio_bruto, status, id_categoria):
     """Agrega un Producto nuevo a la base de datos. Recibe como entrada todos los campos necesarios para su creacion"""
-    producto = Producto(None, nombre, descripcion, tipo,
-                        precio_neto, status, int(id_categoria))
+    producto = Producto(None, nombre, descripcion, precio_neto,
+                        precio_bruto, status, int(id_categoria))
     Producto.AddDataProducto(producto)
 
 

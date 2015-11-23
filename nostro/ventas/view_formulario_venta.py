@@ -102,7 +102,7 @@ class FormularioVenta(QtGui.QWidget):
         # model = QtGui.QStandardItemModel(row, len(self.headerTabla), parent)
 
         for i, data in enumerate(productos):
-            row = [data[0], data[1], str(data[4]).split(".")[0]]
+            row = [data.id_producto, data.nombre, str(data.precio_bruto).split(".")[0]]
             for j, field in enumerate(row):
                 index = model.index(i, j, QtCore.QModelIndex())
                 if j is 5:
@@ -147,6 +147,10 @@ class FormularioVenta(QtGui.QWidget):
         """
         self.proxyModel.setSourceModel(model)
 
+        self.ui.tableView_total_productos.horizontalHeader().setResizeMode(
+            1, self.ui.tableView_total_productos.horizontalHeader().Stretch)
+
+
         # Designamos los header de la grilla y sus respectivos anchos
         for col, h in enumerate(self.__header_table__):
             model.setHeaderData(col, QtCore.Qt.Horizontal, h[0])
@@ -175,8 +179,8 @@ class FormularioVenta(QtGui.QWidget):
         subtotal = 0
 
         for i, data in enumerate(productos):
-            row = [data[1], controller.getProductoId(data[1])[0][1], data[2], str(data[3]).split(".")[0]]
-            subtotal = subtotal + (long(data[3])*data[2])
+            row = [data.id_producto, controller.getProductoId(data.id_producto)[0].nombre, data.cantidad, str(data.precio_venta).split(".")[0]]
+            subtotal = subtotal + (long(data.precio_venta)*data.cantidad)
             for j, field in enumerate(row):
                 index = model.index(i, j, QtCore.QModelIndex())
                 if j is 5:
@@ -219,6 +223,9 @@ class FormularioVenta(QtGui.QWidget):
         asigna el tamaño de las columnas a las grillas respectivas.
         """
         self.proxyModel.setSourceModel(model)
+
+        self.ui.tableView_pedido.horizontalHeader().setResizeMode(
+            1, self.ui.tableView_pedido.horizontalHeader().Stretch)
 
         # Designamos los header de la grilla y sus respectivos anchos
         for col, h in enumerate(self.__header_table2__):

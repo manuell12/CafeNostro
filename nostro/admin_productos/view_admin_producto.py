@@ -20,7 +20,7 @@ class AdminProductos(QtGui.QWidget):
     types = controller_admin_producto.getNombresCategorias()
     __type_productos__ = ["----"]
     for data in types:
-        __type_productos__.append(data[0])
+        __type_productos__.append(data.nombre)
 
     def __init__(self):
         'Constructor de la clase'
@@ -105,16 +105,14 @@ class AdminProductos(QtGui.QWidget):
         row = len(productos)
 
         model = QtGui.QStandardItemModel(row, len(self.__header_table__))
-        # model = QtGui.QStandardItemModel(row, len(self.headerTabla), parent)
 
         for i, data in enumerate(productos):
-            row = [data[0],
-                   data[1],
-                   data[2],
-                   format(round(data[3], 2)),
-                   int(data[4]),
-                   data[6]]
-            # row = [data[0], data[1], data[2], str(data[3]).split(".")[0], str(data[4]).split(".")[0], data[6]]
+            row = [data.id_producto,
+                   data.nombre,
+                   data.descripcion,
+                   int(data.precio_neto),
+                   int(data.precio_bruto),
+                   data.id_categoria]
             for j, field in enumerate(row):
                 index = model.index(i, j, QtCore.QModelIndex())
                 if j is 5:

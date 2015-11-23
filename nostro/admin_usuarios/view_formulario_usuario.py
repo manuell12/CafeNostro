@@ -42,14 +42,14 @@ class FormularioUsuario(QtGui.QDialog):
             self.setWindowTitle("Editar Usuario")
             usuario = controller_admin_user.getUsuarioId(id)
             for row in usuario:
-                self.nombre = row[1]
+                self.nombre = row.nombre
                 self.ui.lineEdit_nombre.setText((self.nombre))
-                self.apellido = (row[2])            
+                self.apellido = (row.apellido)            
                 self.ui.lineEdit_apellido.setText((self.apellido))
-                self.rut = row[3]
+                self.rut = row.rut
                 self.ui.lineEdit_rut.setText(self.rut)
-                self.password = row[4]
-                self.tipo = row[5]
+                self.password = row.clave
+                self.tipo = row.tipo
                 self.ui.comboBox_tipo.setCurrentIndex(int(self.tipo)+1)
             self.ui.lineEdit_verif.setVisible(False)
             self.ui.label_verif.setVisible(False)

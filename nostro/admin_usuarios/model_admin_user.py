@@ -12,6 +12,14 @@ def connect():
     conex = MySQLdb.connect("localhost", "root", "", "cafe_nostro")
     return conex
 
+def obtenerObjetoUsuarios(data):
+    """
+    Recibe como parametro la tupla recibida desde la BD y retorna una lista de objetos con todos los datos de los productos.
+    """
+    lista = list()
+    for i,row in enumerate(data):
+        lista.append(Usuario(row[0],row[1],row[2],row[3],row[4],row[5],row[6]))
+    return lista
 
 class Usuario(object):
     """
@@ -131,19 +139,18 @@ class Usuario(object):
             cls.id_usuario)
         conn.execute(query)
         usuario = conn.fetchall()
-        return usuario
         conn.close()
+        return obtenerObjetoUsuarios(usuario)
 
     def getUsuarioRut(cls):
         conex = connect()
         conn = conex.cursor()
-        print cls.rut
         query = "SELECT * FROM usuario WHERE rut = '{0}'".format(
             cls.rut)
         conn.execute(query)
         usuario = conn.fetchall()
-        return usuario
         conn.close()
+        return obtenerObjetoUsuarios(usuario)
 
     def deleteUsers(cls):
         conex = connect()
@@ -170,8 +177,7 @@ class Usuario(object):
             conn = conex.cursor()
             conn.execute(query)
             data = conn.fetchall()
-            # print data
-            return data
+            return obtenerObjetoUsuarios(data)
 
         except MySQLdb.Error as e:
             print "Error al obtener los usuarios:", e.args[0]
@@ -193,8 +199,7 @@ class Usuario(object):
             conn = conex.cursor()
             conn.execute(query)
             data = conn.fetchall()
-            # print data
-            return data
+            return obtenerObjetoUsuarios(data)
 
         except MySQLdb.Error as e:
             print "Error al obtener los usuarios:", e.args[0]

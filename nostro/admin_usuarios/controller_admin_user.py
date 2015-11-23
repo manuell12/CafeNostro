@@ -173,7 +173,7 @@ def validaTexto(text,validacion):
         cadena = " abcdefghijklmnñopqrstuvwxyzáéíóúABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÚ"
 
     i=0
-    print(text)
+    #print(text)
     string_num=str(text.encode('utf-8'))
 
     if(len(string_num)==0):

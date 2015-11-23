@@ -105,7 +105,7 @@ class AdminUsers(QtGui.QWidget):
         # model = QtGui.QStandardItemModel(row, len(self.headerTabla), parent)
 
         for i, data in enumerate(usuarios):
-            row = [data[0], data[1], data[2], data[3], data[5]]
+            row = [data.id_usuario, data.nombre, data.apellido, data.rut, data.tipo]
             for j, field in enumerate(row):
                 index = model.index(i, j, QtCore.QModelIndex())
                 if j is 4:

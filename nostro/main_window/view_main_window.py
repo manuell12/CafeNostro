@@ -34,8 +34,8 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.stackedWidget.addWidget(AdminUsers()) #2
         self.ui.stackedWidget.addWidget(AdminProductos()) #3
         self.rut = rut
-        self.nombre = controller.getUsuarioRut(rut)[0][1]+" "+controller.getUsuarioRut(rut)[0][2]
-        if(controller.getUsuarioRut(rut)[0][1] == "root"):
+        self.nombre = unicode(controller.getUsuarioRut(rut)[0].nombre)+" "+unicode(controller.getUsuarioRut(rut)[0].apellido)
+        if(controller.getUsuarioRut(rut)[0].nombre == "root"):
             self.nombre = "ROOT"
         self.ui.label_usuario.setText(u"<font color='black' size='5'><b>"+self.nombre+"</b></font>")
         if(tipo != None):

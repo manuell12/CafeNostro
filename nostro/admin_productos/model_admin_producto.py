@@ -12,6 +12,23 @@ def connect():
     conex = MySQLdb.connect("localhost", "root", "", "cafe_nostro")
     return conex
 
+def obtenerObjetoProductos(data):
+    """
+    Recibe como parametro la tupla recibida desde la BD y retorna una lista de objetos con todos los datos de los productos.
+    """
+    listaP = list()
+    for i,row in enumerate(data):
+        listaP.append(Producto(row[0],row[1],row[2],row[3],row[4],row[5],row[6]))
+    return listaP
+
+def obtenerObjetoCategorias(data):
+    """
+    Recibe como parametro la tupla recibida desde la BD y retorna una lista de objetos con todos los datos de las categorias.
+    """
+    listaC = list()
+    for i,row in enumerate(data):
+        listaC.append(Categoria(row[0],row[1],row[2],row[3]))
+    return listaC
 
 class Producto(object):
     """
@@ -23,8 +40,8 @@ class Producto(object):
     id_producto = None  # Primary Key
     nombre = ""
     descripcion = ""
-    tipo = ""
     precio_neto = ""
+    precio_bruto = ""
     status = ""
     id_categoria = ""
 
@@ -33,16 +50,16 @@ class Producto(object):
             id_producto=None,
             nombre="",
             descripcion="",
-            tipo="",
             precio_neto="",
+            precio_bruto="",
             status="",
             id_categoria=""):
 
         self.id_producto = id_producto
         self.nombre = nombre
         self.descripcion = descripcion
-        self.tipo = tipo
         self.precio_neto = precio_neto
+        self.precio_bruto = precio_bruto
         self.status = status
         self.id_categoria = id_categoria
 
@@ -78,8 +95,8 @@ class Producto(object):
         conn.execute(query,
                      (cls.nombre,
                       cls.descripcion,
-                      cls.tipo,
                       cls.precio_neto,
+                      cls.precio_bruto,
                       cls.status,
                       cls.id_categoria,
                       cls.id_producto))
@@ -104,8 +121,8 @@ class Producto(object):
         conn.execute(query,
                      (cls.nombre,
                       cls.descripcion,
-                      cls.tipo,
                       cls.precio_neto,
+                      cls.precio_bruto,
                       cls.status,
                       cls.id_categoria))
         conex.commit()
@@ -118,8 +135,8 @@ class Producto(object):
             cls.id_producto)
         conn.execute(query)
         Producto = conn.fetchall()
-        return Producto
         conn.close()
+        return obtenerObjetoProductos(Producto)
 
     def getProductoCategoria(cls):
         conex = connect()
@@ -128,8 +145,8 @@ class Producto(object):
             cls.id_categoria)
         conn.execute(query)
         Producto = conn.fetchall()
-        return Producto
         conn.close()
+        return obtenerObjetoProductos(Producto)
 
 
     def deleteProducto(cls):
@@ -157,8 +174,7 @@ class Producto(object):
             conn = conex.cursor()
             conn.execute(query)
             data = conn.fetchall()
-            # print data
-            return data
+            return obtenerObjetoProductos(data)
 
         except MySQLdb.Error as e:
             print "Error al obtener los Productos:", e.args[0]
@@ -168,7 +184,7 @@ class Producto(object):
 
     def getProductoStatus(cls):
         """
-        Método utlizado para obtener los Productos que compartan un valor de id_categoria.
+        Método utlizado para obtener los Productos que compartan un valor de id_status.
         """
         query = "SELECT * FROM producto WHERE status = {}".format(
             cls.status)
@@ -178,8 +194,7 @@ class Producto(object):
             conn = conex.cursor()
             conn.execute(query)
             data = conn.fetchall()
-            # print data
-            return data
+            return obtenerObjetoProductos(data)
 
         except MySQLdb.Error as e:
             print "Error al obtener los Productos:", e.args[0]
@@ -225,8 +240,7 @@ class Categoria(object):
             conn = conex.cursor()
             conn.execute(query)
             data = conn.fetchall()
-            # print data
-            return data
+            return obtenerObjetoCategorias(data)
 
         except MySQLdb.Error as e:
             print "Error al obtener las categorias", e.args[0]
@@ -241,18 +255,19 @@ class Categoria(object):
         Este método al ser de clase no necesita una instancia (objeto)
         Sólo basta con invocarlo desde la clase
         """
-        query = "SELECT nombre FROM categoria"
+        query = "SELECT * FROM categoria"
 
         try:
             conex = connect()
             conn = conex.cursor()
             conn.execute(query)
             data = conn.fetchall()
-            # print data
-            return data
+            return obtenerObjetoCategorias(data)
 
         except MySQLdb.Error as e:
             print "Error al obtener las categorias", e.args[0]
             return None
 
         conn.close()
+
+

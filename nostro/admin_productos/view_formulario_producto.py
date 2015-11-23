@@ -14,7 +14,7 @@ class FormularioProducto(QtGui.QDialog):
     types = controller_admin_producto.getNombresCategorias()
     __type_productos__ = ["----"]
     for data in types:
-        __type_productos__.append(data[0])
+        __type_productos__.append(data.nombre)
 
     def __init__(self, id=None):
         super(FormularioProducto, self).__init__()
@@ -37,13 +37,13 @@ class FormularioProducto(QtGui.QDialog):
             self.setWindowTitle("Editar Producto")
             producto = controller_admin_producto.getProductoId(id)
             for row in producto:
-                self.nombre = row[1]
+                self.nombre = row.nombre
                 self.ui.lineEdit_nombre.setText(self.nombre)
-                self.descripcion = row[2]
+                self.descripcion = row.descripcion
                 self.ui.lineEdit_descripcion.setText(self.descripcion)
-                self.precio_neto = str(row[4])
-                self.ui.lineEdit_precio_neto.setText(str(self.precio_neto).split(".")[0])
-                self.id_categoria = row[6]
+                self.precio_bruto = int(row.precio_bruto)
+                self.ui.lineEdit_precio_neto.setText(str(self.precio_bruto).split(".")[0])
+                self.id_categoria = row.id_categoria
                 self.ui.comboBox_id_categoria.setCurrentIndex(
                     int(self.id_categoria))
 
@@ -74,8 +74,8 @@ class FormularioProducto(QtGui.QDialog):
     def accept(self):
         self.nombre = unicode(self.ui.lineEdit_nombre.text())
         self.descripcion = unicode(self.ui.lineEdit_descripcion.toPlainText())        
-        self.precio_neto = unicode(self.ui.lineEdit_precio_neto.text())
-        self.tipo = unicode(float(self.precio_neto)*0.81)
+        self.precio_bruto = unicode(self.ui.lineEdit_precio_neto.text())
+        self.precio_neto = unicode(float(self.precio_bruto)*0.81)
         self.id_categoria = int(self.ui.comboBox_id_categoria.currentIndex())
         self.status = 1
         if(self.identificador):  # Editar Producto
@@ -85,7 +85,7 @@ class FormularioProducto(QtGui.QDialog):
                 self.ui.label_error_categoria.text())
             if(validar):
                 controller_admin_producto.UpdateDataProducto(
-                    self.id, self.nombre, self.descripcion, self.tipo, self.precio_neto, self.status, self.id_categoria)
+                    self.id, self.nombre, self.descripcion, self.precio_neto, self.precio_bruto, self.status, self.id_categoria)
                 msgBox = QtGui.QMessageBox()
                 msgBox.setIcon(QtGui.QMessageBox.Information)
                 msgBox.setWindowTitle("Correcto")
@@ -99,7 +99,7 @@ class FormularioProducto(QtGui.QDialog):
                 self.ui.label_error_categoria.text())
             if(validar):
                 controller_admin_producto.AddDataProducto(
-                    self.nombre, self.descripcion, self.tipo, self.precio_neto, self.status, self.id_categoria)
+                    self.nombre, self.descripcion, self.precio_neto, self.precio_bruto, self.status, self.id_categoria)
                 msgBox = QtGui.QMessageBox()
                 msgBox.setIcon(QtGui.QMessageBox.Information)
                 msgBox.setWindowTitle("Correcto")

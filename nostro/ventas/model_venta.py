@@ -12,6 +12,24 @@ def connect():
     conex = MySQLdb.connect("localhost", "root", "", "cafe_nostro")
     return conex
 
+def obtenerObjetoPedidos(data):
+    """
+    Recibe como parametro la tupla recibida desde la BD y retorna una lista de objetos con todos los datos de los productos.
+    """
+    lista = list()
+    for i,row in enumerate(data):
+        lista.append(Pedido(row[0],row[1],row[2]))
+    return lista
+
+def obtenerObjetoVentaProductos(data):
+    """
+    Recibe como parametro la tupla recibida desde la BD y retorna una lista de objetos con todos los datos de los productos.
+    """
+    lista = list()
+    for i,row in enumerate(data):
+        lista.append(VentaProducto(row[0],row[1],row[2],row[3],row[4]))
+    return lista
+
 class Pedido(object):
     """
     Clase que representa a la tabla Pedido.
@@ -60,8 +78,7 @@ class Pedido(object):
             conn = conex.cursor()
             conn.execute(query)
             data = conn.fetchall()
-            # print data
-            return data
+            return obtenerObjetoPedidos(data)
 
         except MySQLdb.Error as e:
             print "Error al obtener los usuarios:", e.args[0]
@@ -122,8 +139,7 @@ class VentaProducto(object):
             conn = conex.cursor()
             conn.execute(query)
             data = conn.fetchall()
-            # print data
-            return data
+            return obtenerObjetoVentaProductos(data)
 
         except MySQLdb.Error as e:
             print "Error al obtener los Productos:", e.args[0]
@@ -155,8 +171,7 @@ class VentaProducto(object):
             conn = conex.cursor()
             conn.execute(query)
             data = conn.fetchall()
-            # print data
-            return data
+            return obtenerObjetoVentaProductos(data)
 
         except MySQLdb.Error as e:
             print "Error al obtener los Productos:", e.args[0]

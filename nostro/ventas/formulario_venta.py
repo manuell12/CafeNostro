@@ -172,7 +172,7 @@ class Ui_FormularioVenta(object):
     def retranslateUi(self, FormularioVenta):
         FormularioVenta.setWindowTitle(QtGui.QApplication.translate("FormularioVenta", "Form", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_filtrar_cocina.setText(QtGui.QApplication.translate("FormularioVenta", "Cocina", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_filtrar_cafeteria.setText(QtGui.QApplication.translate("FormularioVenta", "Cafeteria", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_filtrar_cafeteria.setText(QtGui.QApplication.translate("FormularioVenta", "Cafetería", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_filtrar_bebidas.setText(QtGui.QApplication.translate("FormularioVenta", "Bebidas", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_filtrar_helados.setText(QtGui.QApplication.translate("FormularioVenta", "Helados", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("FormularioVenta", "Cantidad", None, QtGui.QApplication.UnicodeUTF8))

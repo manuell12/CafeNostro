@@ -97,7 +97,7 @@ def validarDatos(nombre, precio_neto, categoria):
         return False
     if(precio_neto != u"<font color='green'><b>Precio bruto correcto.</b></font>"):
         return False
-    if(categoria != u"<font color='green'><b>Seleccion correcta.</b></font>"):
+    if(categoria != u"<font color='green'><b>Selección correcta.</b></font>"):
         return False
     return True
 

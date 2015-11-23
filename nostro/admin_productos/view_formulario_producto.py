@@ -66,7 +66,7 @@ class FormularioProducto(QtGui.QDialog):
     def comboBox_id_categoria_changed(self, index):
         if(index != 0):
             self.ui.label_error_categoria.setText(
-                u"<font color='green'><b>Seleccion correcta.</b></font>")
+                u"<font color='green'><b>Selección correcta.</b></font>")
         else:
             self.ui.label_error_categoria.setText(
                 u"<font color='red'><b>Debe seleccionar un tipo.</b></font>")

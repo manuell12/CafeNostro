@@ -107,5 +107,5 @@ class Ui_MainWindow(object):
         self.actionSalir.setStatusTip(QtGui.QApplication.translate("MainWindow", "Cierra la aplicación", None, QtGui.QApplication.UnicodeUTF8))
         self.actionSalir.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+F4", None, QtGui.QApplication.UnicodeUTF8))
         self.actionCambiar_Usuario.setText(QtGui.QApplication.translate("MainWindow", "Cambiar Usuario", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionCambiar_Usuario.setStatusTip(QtGui.QApplication.translate("MainWindow", "Regresa a la ventan Login para poder cambiar el usuario", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionCambiar_Usuario.setStatusTip(QtGui.QApplication.translate("MainWindow", "Regresa a la ventana Login para poder cambiar el usuario", None, QtGui.QApplication.UnicodeUTF8))
 

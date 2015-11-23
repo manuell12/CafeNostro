@@ -59,7 +59,7 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QtGui.QApplication.translate(
-            "Dialog", "Cafe Nostro", None, QtGui.QApplication.UnicodeUTF8))
+            "Dialog", "Café Nostro", None, QtGui.QApplication.UnicodeUTF8))
         self.label_5.setText(QtGui.QApplication.translate(
             "Dialog", "Login", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate(

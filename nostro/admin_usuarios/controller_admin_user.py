@@ -187,7 +187,7 @@ def validaTexto(text,validacion):
 
 def validaRut(rut):
     '''Función que valida si el rut es valido, retorna un booleano (true si es valido, false sino)'''
-    valido = True
+    valido = False
     suma = 0
     multi= 2
     datos_rut = rut.split('-') #separamos la cadena por '-'
@@ -207,16 +207,20 @@ def validaRut(rut):
                     multi = 2
             resto = suma%11
             resta = 11 - resto
-            if resta ==11:
-                dig_r= 0
-            if resta == 10:
+            if resta == 11:
+                dig_r = 0
+            elif resta == 10:
                 dig_r = 'k'
             else:
                 dig_r = resta
+            print dig_r
+            print dig
             if(str(dig_r) != str(dig)):
                 valido = False
             else:
                 valido = True
+        else:
+            valido = False
     else:
         valido = False
     return valido

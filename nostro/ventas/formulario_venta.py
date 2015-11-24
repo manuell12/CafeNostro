@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'c:\Users\danie\Documents\ProyectoTaller\CafeNostro\nostro\ventas\formulario_venta.ui'
+# Form implementation generated from reading ui file 'formulario_venta.ui'
 #
-# Created: Thu Nov 19 18:25:52 2015
+# Created: Mon Nov 23 22:23:35 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -20,6 +20,7 @@ class Ui_FormularioVenta(object):
         self.verticalLayout = QtGui.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
         self.tableView_total_productos = QtGui.QTableView(FormularioVenta)
+        self.tableView_total_productos.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.tableView_total_productos.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
         self.tableView_total_productos.setAlternatingRowColors(True)
         self.tableView_total_productos.setSelectionMode(QtGui.QAbstractItemView.SingleSelection)
@@ -172,7 +173,7 @@ class Ui_FormularioVenta(object):
     def retranslateUi(self, FormularioVenta):
         FormularioVenta.setWindowTitle(QtGui.QApplication.translate("FormularioVenta", "Form", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_filtrar_cocina.setText(QtGui.QApplication.translate("FormularioVenta", "Cocina", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_filtrar_cafeteria.setText(QtGui.QApplication.translate("FormularioVenta", "Cafetería", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_filtrar_cafeteria.setText(QtGui.QApplication.translate("FormularioVenta", "Cafeteria", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_filtrar_bebidas.setText(QtGui.QApplication.translate("FormularioVenta", "Bebidas", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_filtrar_helados.setText(QtGui.QApplication.translate("FormularioVenta", "Helados", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("FormularioVenta", "Cantidad", None, QtGui.QApplication.UnicodeUTF8))

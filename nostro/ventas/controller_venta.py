@@ -88,7 +88,7 @@ def cambiarCantidadProducto(id_pedido, id_producto, cambiar):
     venta_producto.id_pedido = id_pedido
     VentaProducto.cambiarCantidadProducto(venta_producto,cambiar)
     try:
-        cantidad = VentaProducto.hayProductoPedido(venta_producto)[0][2]
+        cantidad = VentaProducto.hayProductoPedido(venta_producto)[0].cantidad
     except:
         return False
     if(cantidad <= 0):

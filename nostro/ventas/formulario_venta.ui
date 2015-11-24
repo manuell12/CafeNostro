@@ -20,6 +20,9 @@
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QTableView" name="tableView_total_productos">
+         <property name="focusPolicy">
+          <enum>Qt::StrongFocus</enum>
+         </property>
          <property name="editTriggers">
           <set>QAbstractItemView::NoEditTriggers</set>
          </property>
@@ -457,10 +460,6 @@
     </layout>
    </item>
   </layout>
-  <zorder>gridLayoutWidget_3</zorder>
-  <zorder>horizontalLayoutWidget_4</zorder>
-  <zorder>horizontalLayoutWidget_5</zorder>
-  <zorder>pushButton_agregar</zorder>
  </widget>
  <resources/>
  <connections/>

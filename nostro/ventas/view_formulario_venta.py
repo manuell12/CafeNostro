@@ -45,32 +45,47 @@ class FormularioVenta(QtGui.QWidget):
     def action_agregar(self):
         controller.addDataVentaProducto(self.id_pedido,self.id_tablaP,self.precio_tablaP)
         self.reload_data_table2()
+        self.ui.tableView_total_productos.setFocus()
 
     def action_eliminar(self):
         controller.deleteProducto(self.id_pedido,self.id_tablaPd)
         self.reload_data_table2()
+        self.ui.tableView_pedido.selectRow(self.row_tablaPd)
+        self.ui.tableView_pedido.setFocus()
 
     def action_aumentar(self):
         controller.cambiarCantidadProducto(self.id_pedido, self.id_tablaPd, "aumentar")
         self.reload_data_table2()
+        self.ui.tableView_pedido.selectRow(self.row_tablaPd)
+        self.ui.tableView_pedido.setFocus()
 
     def action_disminuir(self):
         controller.cambiarCantidadProducto(self.id_pedido, self.id_tablaPd, "disminuir")
         self.reload_data_table2()
+        self.ui.tableView_pedido.selectRow(self.row_tablaPd)
+        self.ui.tableView_pedido.setFocus()
 
     """" ================================ FILTROS TABLA TOTAL PRODUCTOS =================================== """
 
     def action_cafeteria(self):
         self.filtrar_data_table1("categoria",3)
+        self.ui.tableView_total_productos.selectRow(self.id_tablaP)
+        self.ui.tableView_total_productos.setFocus()
 
     def action_cocina(self):
         self.filtrar_data_table1("categoria",1)
+        self.ui.tableView_total_productos.selectRow(self.id_tablaP)
+        self.ui.tableView_total_productos.setFocus()
 
     def action_bebidas(self):
         self.filtrar_data_table1("categoria",4)
+        self.ui.tableView_total_productos.selectRow(self.id_tablaP)
+        self.ui.tableView_total_productos.setFocus()
 
     def action_helados(self):
         self.filtrar_data_table1("categoria",2)
+        self.ui.tableView_total_productos.selectRow(self.id_tablaP)
+        self.ui.tableView_total_productos.setFocus()
 
     """ ============================================================================= TABLA TOTAL PRODUCTOS ============================================="""
 
@@ -204,6 +219,7 @@ class FormularioVenta(QtGui.QWidget):
     def cell_selected_table2(self, index, indexp):
         model = self.ui.tableView_pedido.model()
         index = self.ui.tableView_pedido.currentIndex()
+        self.row_tablaPd = index.row()
         self.id_tablaPd = model.index(index.row(), 0, QtCore.QModelIndex()).data()
         self.precio_tablaPd = model.index(index.row(), 3, QtCore.QModelIndex()).data()
         #self.ui.lcdNumber_subtotal.display(self.id)

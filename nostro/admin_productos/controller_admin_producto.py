@@ -136,3 +136,14 @@ def validaTexto(text, validacion):
             valido = False
         i = i + 1
     return valido
+
+def monetaryFormat(price):
+    price = str(price)
+    price = price[::-1]
+    price_formatted = ""
+    for i,a in enumerate(price):
+        if(i > 0 and i % 3 == 0):
+            price_formatted = price_formatted + "."
+        price_formatted = price_formatted + price[i]
+    price_formatted = price_formatted[::-1]
+    return price_formatted

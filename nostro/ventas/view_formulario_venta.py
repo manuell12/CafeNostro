@@ -5,6 +5,7 @@ from PySide import QtCore, QtGui
 from formulario_venta import Ui_FormularioVenta
 import sys
 import controller_venta as controller
+import admin_productos.controller_admin_producto as c
 
 class FormularioVenta(QtGui.QWidget):
 
@@ -117,7 +118,7 @@ class FormularioVenta(QtGui.QWidget):
         # model = QtGui.QStandardItemModel(row, len(self.headerTabla), parent)
 
         for i, data in enumerate(productos):
-            row = [data.id_producto, data.nombre, str(data.precio_bruto).split(".")[0]]
+            row = [data.id_producto, data.nombre, c.monetaryFormat(str(data.precio_bruto).split(".")[0])]
             for j, field in enumerate(row):
                 index = model.index(i, j, QtCore.QModelIndex())
                 if j is 5:
@@ -144,7 +145,10 @@ class FormularioVenta(QtGui.QWidget):
         self.id_tablaP = model.index(index.row(), 0, QtCore.QModelIndex()).data()
         self.nombre_tablaP = model.index(index.row(), 1, QtCore.QModelIndex()).data()
         self.precio_tablaP = model.index(index.row(), 2, QtCore.QModelIndex()).data()
-
+        precio = self.precio_tablaP.split(".")
+        self.precio_tablaP = ""
+        for i in range(len(precio)):
+            self.precio_tablaP = self.precio_tablaP + precio[i]
     def set_model_table1(self):
         """Define el módelo de la grilla para trabajarla."""
         self.proxyModel = QtGui.QSortFilterProxyModel()
@@ -194,7 +198,7 @@ class FormularioVenta(QtGui.QWidget):
         subtotal = 0
 
         for i, data in enumerate(productos):
-            row = [data.id_producto, controller.getProductoId(data.id_producto)[0].nombre, data.cantidad, str(data.precio_venta).split(".")[0]]
+            row = [data.id_producto, controller.getProductoId(data.id_producto)[0].nombre, data.cantidad, c.monetaryFormat(str(data.precio_venta).split(".")[0])]
             subtotal = subtotal + (long(data.precio_venta)*data.cantidad)
             for j, field in enumerate(row):
                 index = model.index(i, j, QtCore.QModelIndex())

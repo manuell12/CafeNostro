@@ -110,8 +110,8 @@ class AdminProductos(QtGui.QWidget):
             row = [data.id_producto,
                    data.nombre,
                    data.descripcion,
-                   int(data.precio_neto),
-                   int(data.precio_bruto),
+                   controller_admin_producto.monetaryFormat(int(data.precio_neto)),
+                   controller_admin_producto.monetaryFormat(int(data.precio_bruto)),
                    data.id_categoria]
             for j, field in enumerate(row):
                 index = model.index(i, j, QtCore.QModelIndex())

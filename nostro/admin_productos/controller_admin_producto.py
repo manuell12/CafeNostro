@@ -117,7 +117,7 @@ def validaTexto(text, validacion):
         cadena = "0123456789"
 
     if (validacion == "no_simbolos"):
-        cadena = " abcdefghijklmnñopqrstuvwxyzáéíóúABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÚ0123456789"
+        cadena = " ,abcdefghijklmnñopqrstuvwxyzáéíóúABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÚ0123456789"
 
     if (validacion == "texto"):
         cadena = " abcdefghijklmnñopqrstuvwxyzáéíóúABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÚ"

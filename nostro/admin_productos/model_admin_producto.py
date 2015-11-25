@@ -18,7 +18,7 @@ def obtenerObjetoProductos(data):
     """
     listaP = list()
     for i,row in enumerate(data):
-        listaP.append(Producto(row[0],row[1],row[2],row[3],row[4],row[5],row[6]))
+        listaP.append(Producto(row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7]))
     return listaP
 
 def obtenerObjetoCategorias(data):
@@ -44,6 +44,7 @@ class Producto(object):
     precio_bruto = ""
     status = ""
     id_categoria = ""
+    codigo = ""
 
     def __init__(
             self,
@@ -53,7 +54,8 @@ class Producto(object):
             precio_neto="",
             precio_bruto="",
             status="",
-            id_categoria=""):
+            id_categoria="",
+            codigo=""):
 
         self.id_producto = id_producto
         self.nombre = nombre
@@ -62,6 +64,7 @@ class Producto(object):
         self.precio_bruto = precio_bruto
         self.status = status
         self.id_categoria = id_categoria
+        self.codigo = codigo
 
     def updateNombreProducto(cls, nombre, id):
         conex = connect()

@@ -77,7 +77,7 @@ class FormularioProducto(QtGui.QDialog):
         self.precio_bruto = unicode(self.ui.lineEdit_precio_neto.text())
         self.precio_neto = unicode(float(self.precio_bruto)*0.81)
         self.id_categoria = int(self.ui.comboBox_id_categoria.currentIndex())
-        self.status = 1
+        self.status = controller_admin_producto.getProductoId(self.id)[0].status
         if(self.identificador):  # Editar Producto
             validar = controller_admin_producto.validarDatos(
                 self.ui.label_error_nombre.text(),

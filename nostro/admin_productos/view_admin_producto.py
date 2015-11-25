@@ -12,6 +12,7 @@ import os
 class AdminProductos(QtGui.QWidget):
 
     __header_table__ = [(u"ID"),
+                        (U"Código"),
                         (u"Nombre"),
                         (u"Descripcion"),
                         (u"Precio neto"),
@@ -50,7 +51,7 @@ class AdminProductos(QtGui.QWidget):
 
     def load_data_table(self):
         self.ui.tableProductos.sortItems(0, QtCore.Qt.AscendingOrder)
-        self.ui.tableProductos.setColumnCount(7)
+        self.ui.tableProductos.setColumnCount(8)
         self.ui.tableProductos.setHorizontalHeaderLabels(self.__header_table__)
         __check_icons__ = [(QtGui.QIcon(os.getcwd() + "/admin_productos/icons/red_check.png")),
                            (QtGui.QIcon(os.getcwd() + "/admin_productos/icons/green_check.png"))]
@@ -61,6 +62,7 @@ class AdminProductos(QtGui.QWidget):
 
         for i, data in enumerate(productos):
             row = [QtGui.QTableWidgetItem(controller_admin_producto.zerosAtLeft(data.id_producto,2)),
+                   QtGui.QTableWidgetItem(data.codigo),
                    QtGui.QTableWidgetItem(data.nombre),
                    QtGui.QTableWidgetItem(data.descripcion),
                    QtGui.QTableWidgetItem(controller_admin_producto.monetaryFormat(int(data.precio_neto))),
@@ -75,7 +77,7 @@ class AdminProductos(QtGui.QWidget):
         self.ui.tableProductos.resizeColumnsToContents()
         self.ui.tableProductos.resizeColumnsToContents()
         self.ui.tableProductos.horizontalHeader().setResizeMode(
-            2, self.ui.tableProductos.horizontalHeader().Stretch)
+            3, self.ui.tableProductos.horizontalHeader().Stretch)
 
     def reload_data_table(self):
         self.ui.tableProductos.setRowCount(0)
@@ -127,6 +129,7 @@ class AdminProductos(QtGui.QWidget):
                 producto = controller_admin_producto.deleteProducto(
                     self.id)
                 self.reload_data_table()
+                self.ui.tableProductos.setFocus()
             else:
                 return False
 
@@ -150,6 +153,7 @@ class AdminProductos(QtGui.QWidget):
                 producto = controller_admin_producto.UpdateStatusProducto(
                     self.id, 0)
             self.load_data_table()
+            self.ui.tableProductos.setFocus()
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)

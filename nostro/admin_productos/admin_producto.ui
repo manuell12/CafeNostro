@@ -62,13 +62,6 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QLabel" name="label_iconoculiao">
-        <property name="text">
-         <string>iconoculiao</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -82,7 +75,42 @@
        </spacer>
       </item>
       <item>
+       <widget class="QPushButton" name="estado_button">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Cambiar estado</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Minimum</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
        <widget class="QPushButton" name="nuevo_button">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>50</height>
+         </size>
+        </property>
         <property name="text">
          <string>&amp;Nuevo</string>
         </property>
@@ -90,6 +118,12 @@
       </item>
       <item>
        <widget class="QPushButton" name="editar_button">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>50</height>
+         </size>
+        </property>
         <property name="text">
          <string>&amp;Editar</string>
         </property>
@@ -97,6 +131,12 @@
       </item>
       <item>
        <widget class="QPushButton" name="eliminar_button">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>50</height>
+         </size>
+        </property>
         <property name="text">
          <string>E&amp;liminar</string>
         </property>

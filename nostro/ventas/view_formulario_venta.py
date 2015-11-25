@@ -70,22 +70,34 @@ class FormularioVenta(QtGui.QWidget):
 
     def action_cafeteria(self):
         self.filtrar_data_table1("categoria",3)
-        self.ui.tableView_total_productos.selectRow(self.id_tablaP)
+        try:
+            self.ui.tableView_total_productos.selectRow(self.id_tablaP)
+        except:
+            pass
         self.ui.tableView_total_productos.setFocus()
 
     def action_cocina(self):
         self.filtrar_data_table1("categoria",1)
-        self.ui.tableView_total_productos.selectRow(self.id_tablaP)
+        try:
+            self.ui.tableView_total_productos.selectRow(self.id_tablaP)
+        except:
+            pass
         self.ui.tableView_total_productos.setFocus()
 
     def action_bebidas(self):
         self.filtrar_data_table1("categoria",4)
-        self.ui.tableView_total_productos.selectRow(self.id_tablaP)
+        try:
+            self.ui.tableView_total_productos.selectRow(self.id_tablaP)
+        except:
+            pass
         self.ui.tableView_total_productos.setFocus()
 
     def action_helados(self):
         self.filtrar_data_table1("categoria",2)
-        self.ui.tableView_total_productos.selectRow(self.id_tablaP)
+        try:
+            self.ui.tableView_total_productos.selectRow(self.id_tablaP)
+        except:
+            pass
         self.ui.tableView_total_productos.setFocus()
 
     """ ============================================================================= TABLA TOTAL PRODUCTOS ============================================="""

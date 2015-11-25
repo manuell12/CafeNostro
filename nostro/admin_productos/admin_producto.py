@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'admin_producto.ui'
 #
-# Created: Wed Nov 25 01:09:05 2015
+# Created: Wed Nov 25 05:10:52 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -37,18 +37,24 @@ class Ui_AdminProductos(object):
         self.frame.setObjectName("frame")
         self.horizontalLayout = QtGui.QHBoxLayout(self.frame)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.label_iconoculiao = QtGui.QLabel(self.frame)
-        self.label_iconoculiao.setObjectName("label_iconoculiao")
-        self.horizontalLayout.addWidget(self.label_iconoculiao)
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
+        self.estado_button = QtGui.QPushButton(self.frame)
+        self.estado_button.setMinimumSize(QtCore.QSize(100, 50))
+        self.estado_button.setObjectName("estado_button")
+        self.horizontalLayout.addWidget(self.estado_button)
+        spacerItem1 = QtGui.QSpacerItem(20, 20, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem1)
         self.nuevo_button = QtGui.QPushButton(self.frame)
+        self.nuevo_button.setMinimumSize(QtCore.QSize(0, 50))
         self.nuevo_button.setObjectName("nuevo_button")
         self.horizontalLayout.addWidget(self.nuevo_button)
         self.editar_button = QtGui.QPushButton(self.frame)
+        self.editar_button.setMinimumSize(QtCore.QSize(0, 50))
         self.editar_button.setObjectName("editar_button")
         self.horizontalLayout.addWidget(self.editar_button)
         self.eliminar_button = QtGui.QPushButton(self.frame)
+        self.eliminar_button.setMinimumSize(QtCore.QSize(0, 50))
         self.eliminar_button.setObjectName("eliminar_button")
         self.horizontalLayout.addWidget(self.eliminar_button)
         self.verticalLayout.addWidget(self.frame)
@@ -60,7 +66,7 @@ class Ui_AdminProductos(object):
         AdminProductos.setWindowTitle(QtGui.QApplication.translate("AdminProductos", "Form", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("AdminProductos", "Productos registrados", None, QtGui.QApplication.UnicodeUTF8))
         self.tableProductos.setSortingEnabled(True)
-        self.label_iconoculiao.setText(QtGui.QApplication.translate("AdminProductos", "iconoculiao", None, QtGui.QApplication.UnicodeUTF8))
+        self.estado_button.setText(QtGui.QApplication.translate("AdminProductos", "Cambiar estado", None, QtGui.QApplication.UnicodeUTF8))
         self.nuevo_button.setText(QtGui.QApplication.translate("AdminProductos", "&Nuevo", None, QtGui.QApplication.UnicodeUTF8))
         self.editar_button.setText(QtGui.QApplication.translate("AdminProductos", "&Editar", None, QtGui.QApplication.UnicodeUTF8))
         self.eliminar_button.setText(QtGui.QApplication.translate("AdminProductos", "E&liminar", None, QtGui.QApplication.UnicodeUTF8))

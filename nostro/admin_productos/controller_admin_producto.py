@@ -60,11 +60,11 @@ def getProductoStatus(status):
     return Producto.getProductoStatus(producto)
 
 
-def deleteproducto(id):
+def deleteProducto(id):
     """Elimina un Producto de la base de datos"""
     producto = Producto()
     producto.id_producto = id
-    Producto.deleteproductos(producto)
+    Producto.deleteProducto(producto)
 
 
 def validarNombreF(label, nombre):

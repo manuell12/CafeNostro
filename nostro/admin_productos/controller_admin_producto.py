@@ -147,3 +147,10 @@ def monetaryFormat(price):
         price_formatted = price_formatted + price[i]
     price_formatted = price_formatted[::-1]
     return price_formatted
+
+def zerosAtLeft(num, size):
+    num = str(num)
+    if(int(size) == 2):
+        while(len(num) < 2):
+            num = "0" + num
+    return num

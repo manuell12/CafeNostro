@@ -12,23 +12,27 @@ def connect():
     conex = MySQLdb.connect("localhost", "root", "", "cafe_nostro")
     return conex
 
+
 def obtenerObjetoProductos(data):
     """
     Recibe como parametro la tupla recibida desde la BD y retorna una lista de objetos con todos los datos de los productos.
     """
     listaP = list()
-    for i,row in enumerate(data):
-        listaP.append(Producto(row[0],row[1],row[2],row[3],row[4],row[5],row[6]))
+    for i, row in enumerate(data):
+        listaP.append(Producto(row[0], row[1], row[
+                      2], row[3], row[4], row[5], row[6]))
     return listaP
+
 
 def obtenerObjetoCategorias(data):
     """
     Recibe como parametro la tupla recibida desde la BD y retorna una lista de objetos con todos los datos de las categorias.
     """
     listaC = list()
-    for i,row in enumerate(data):
-        listaC.append(Categoria(row[0],row[1],row[2],row[3]))
+    for i, row in enumerate(data):
+        listaC.append(Categoria(row[0], row[1], row[2], row[3]))
     return listaC
+
 
 class Producto(object):
     """
@@ -148,7 +152,6 @@ class Producto(object):
         conn.close()
         return obtenerObjetoProductos(Producto)
 
-
     def deleteProducto(cls):
         conex = connect()
         conn = conex.cursor()
@@ -201,6 +204,7 @@ class Producto(object):
             return None
 
         conn.close()
+
 
 class Categoria(object):
     """
@@ -269,5 +273,3 @@ class Categoria(object):
             return None
 
         conn.close()
-
-

@@ -47,6 +47,7 @@ class AdminProductos(QtGui.QWidget):
         self.nuevoProductoWindow = view_formulario_producto.FormularioProducto()
         self.nuevoProductoWindow.reloadT.connect(self.reload_data_table)
         self.nuevoProductoWindow.exec_()
+        self.ui.tableProductos.selectRow(0)
         # self.load_productos(self)
 
     def action_btn_editar(self):
@@ -63,7 +64,8 @@ class AdminProductos(QtGui.QWidget):
                 self.id)
             self.editProductoWindow.reloadT.connect(self.reload_data_table)
             self.editProductoWindow.exec_()
-            # self.load_productos(self)
+            # self.load_productos(self)                            
+            self.ui.tableProductos.selectRow(index.row())
 
     def action_btn_eliminar(self):
         """Accion a realizar al presionar el boton eliminar"""
@@ -110,8 +112,10 @@ class AdminProductos(QtGui.QWidget):
             row = [data.id_producto,
                    data.nombre,
                    data.descripcion,
-                   controller_admin_producto.monetaryFormat(int(data.precio_neto)),
-                   controller_admin_producto.monetaryFormat(int(data.precio_bruto)),
+                   controller_admin_producto.monetaryFormat(
+                       int(data.precio_neto)),
+                   controller_admin_producto.monetaryFormat(
+                       int(data.precio_bruto)),
                    data.id_categoria]
             for j, field in enumerate(row):
                 index = model.index(i, j, QtCore.QModelIndex())
@@ -154,7 +158,7 @@ class AdminProductos(QtGui.QWidget):
             model.setHeaderData(col, QtCore.Qt.Horizontal, h[0])
             self.ui.tableProductos.setColumnWidth(col, h[1])
 
-        self.ui.tableProductos.sortByColumn(0, QtCore.Qt.AscendingOrder)
+        self.ui.tableProductos.sortByColumn(0, QtCore.Qt.DescendingOrder)
 
 
 if __name__ == "__main__":

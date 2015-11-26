@@ -75,6 +75,17 @@ def hayProductoPedido(id_pedido, id_producto):
     except:
         return False
 
+def hayProducto(id_producto):
+    """Retorna True si existe un producto en la tabla de venta"""
+    venta_producto = VentaProducto()
+    venta_producto.id_producto = id_producto
+    producto = VentaProducto.hayProducto(venta_producto)
+    try:
+        intentar = producto[0]
+        return True
+    except:
+        return False
+
 def cambiarCantidadProducto(id_pedido, id_producto, cambiar):
     """
     Cambia la cantidad de un producto depentiendo el parámetro 'cambiar':

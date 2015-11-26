@@ -179,6 +179,26 @@ class VentaProducto(object):
 
         conn.close()
 
+    def hayProducto(cls):
+        """
+        Método que retorna un producto en la tabla venta_has_producto.
+        """
+        query = "SELECT * FROM venta_has_producto WHERE idProducto = {0}".format(
+            cls.id_producto)
+
+        try:
+            conex = connect()
+            conn = conex.cursor()
+            conn.execute(query)
+            data = conn.fetchall()
+            return obtenerObjetoVentaProductos(data)
+
+        except MySQLdb.Error as e:
+            print "Error al obtener los Productos:", e.args[0]
+            return None
+
+        conn.close()
+
     def cambiarCantidadProducto(cls,cambiar):
         '''Interacciona con la base de datos a travez de una query que actualiza el estado de un Producto, especificando su id'''
         conex = connect()

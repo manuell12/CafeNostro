@@ -7,6 +7,7 @@ import controller_admin_producto
 import sys
 import view_formulario_producto
 import os
+import ventas.controller_venta as controller_venta
 
 
 class AdminProductos(QtGui.QWidget):
@@ -117,21 +118,29 @@ class AdminProductos(QtGui.QWidget):
             msgBox.exec_()
             return False
         else:
-            msgBox = QtGui.QMessageBox()
-            msgBox.setIcon(QtGui.QMessageBox.Warning)
-            msgBox.setStandardButtons(
-                QtGui.QMessageBox.Ok | QtGui.QMessageBox.Cancel)
-            msgBox.setWindowTitle(u"Advertencia")
-            msgBox.setText(
-                u"¿Esta seguro de querer eliminar el producto seleccionado?")
-            press = msgBox.exec_()
-            if press == QtGui.QMessageBox.Ok:
-                producto = controller_admin_producto.deleteProducto(
-                    self.id)
-                self.reload_data_table()
-                self.ui.tableProductos.setFocus()
-            else:
+            if (controller_venta.hayProducto(self.id)):
+                msgBox = QtGui.QMessageBox()
+                msgBox.setIcon(QtGui.QMessageBox.Critical)
+                msgBox.setWindowTitle(u"Error")
+                msgBox.setText(u"No se puede eliminar el producto porque forma parte de una venta.")
+                msgBox.exec_()
                 return False
+            else:
+                msgBox = QtGui.QMessageBox()
+                msgBox.setIcon(QtGui.QMessageBox.Warning)
+                msgBox.setStandardButtons(
+                    QtGui.QMessageBox.Ok | QtGui.QMessageBox.Cancel)
+                msgBox.setWindowTitle(u"Advertencia")
+                msgBox.setText(
+                    u"¿Esta seguro de querer eliminar el producto seleccionado?")
+                press = msgBox.exec_()
+                if press == QtGui.QMessageBox.Ok:
+                    producto = controller_admin_producto.deleteProducto(
+                        self.id)
+                    self.reload_data_table()
+                    self.ui.tableProductos.setFocus()
+                else:
+                    return False
 
     def action_btn_estado(self):
         """Accion a realizar al presionar el boton cambiar estado"""

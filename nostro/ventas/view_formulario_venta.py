@@ -7,6 +7,7 @@ import sys
 import controller_venta as controller
 import admin_productos.controller_admin_producto as c
 import admin_usuarios.controller_admin_user as controller_admin_user
+from ventas.view_admin_venta import AdminVentas
 import datetime, time
 
 
@@ -297,11 +298,14 @@ class FormularioVenta(QtGui.QWidget):
     """ ======================================================================= CERRAR VENTA ============================================================ """
 
     def action_cerrar_venta(self):
+        self.agregarVenta()
+
+    def agregarVenta(self):
         y = int(time.strftime("%Y"))
         m = int(time.strftime("%m"))
         d = int(time.strftime("%d"))
         fecha = datetime.date(y,m,d)
-        num_documento = 0
+        num_documento = len(controller.getVentas())
         tipo = "directa"
         total_pago = self.ui.lcdNumber_total.value()
         id_pedido = int(self.id_pedido)

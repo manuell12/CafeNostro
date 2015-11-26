@@ -6,6 +6,7 @@ from admin_venta import Ui_AdminVentas
 import controller_venta
 import sys
 import admin_productos.controller_admin_producto as c
+import admin_usuarios.controller_admin_user as controller
 #import view_formulario_admin_venta
 
 
@@ -15,7 +16,8 @@ class AdminVentas(QtGui.QWidget):
                         (u"Número documento", 150),
                         (u"Fecha", 200),
                         (u"Tipo", 120),
-                        (u"Total pago", 100))
+                        (u"Total pago", 100),
+                        (u"Usuario encargado", 200))
 
     def __init__(self, parent=None):
         'Constructor de la clase'
@@ -33,9 +35,13 @@ class AdminVentas(QtGui.QWidget):
         """Conectar botones con su respectiva accion"""
         self.ui.pushButton_editar.clicked.connect(self.action_btn_editar)
         self.ui.pushButton_eliminar.clicked.connect(self.action_btn_eliminar)
+        self.ui.tableView_ventas.viewportEntered.connect(self.mouse_entered)
 
     def reload_data_table(self):
         self.set_source_model(self.load_ventas(self))
+
+    def mouse_entered(self):
+        self.reload_data_table();
 
     def action_btn_editar(self):
         index = self.ui.tableView_ventas.currentIndex()
@@ -75,7 +81,7 @@ class AdminVentas(QtGui.QWidget):
         # model = QtGui.QStandardItemModel(row, len(self.headerTabla), parent)
 
         for i, data in enumerate(ventas):
-            row = [data.id_venta, data.num_documento, str(data.fecha), data.tipo, c.monetaryFormat(int(data.total_pago))]
+            row = [data.id_venta, data.num_documento, str(data.fecha), data.tipo, c.monetaryFormat(int(data.total_pago)), unicode(controller.getUsuarioId(data.id_usuario)[0].nombre)+" "+unicode(controller.getUsuarioId(data.id_usuario)[0].apellido)]
             for j, field in enumerate(row):
                 index = model.index(i, j, QtCore.QModelIndex())
                 if j is 4:

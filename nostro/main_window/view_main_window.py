@@ -32,10 +32,12 @@ class MainWindow(QtGui.QMainWindow):
         self.set_signals()
         self.showMaximized()
         self.show()
+        self.rut = rut
         self.ui.stackedWidget.addWidget(AdminUsers()) #2
         self.ui.stackedWidget.addWidget(AdminProductos()) #3
-        self.ui.stackedWidget.addWidget(AdminVentas()) #4
-        self.rut = rut
+        self.ui.stackedWidget.addWidget(FormularioVenta(self.rut,"0")) #4
+        self.ui.stackedWidget.addWidget(AdminVentas()) #5
+
         self.nombre = unicode(controller.getUsuarioRut(rut)[0].nombre)+" "+unicode(controller.getUsuarioRut(rut)[0].apellido)
         if(controller.getUsuarioRut(rut)[0].nombre == "root"):
             self.nombre = "ROOT"
@@ -54,11 +56,7 @@ class MainWindow(QtGui.QMainWindow):
 
     def formulario_venta_directa(self):
         'Cambia a la interfaz de formulario de venta directa'
-        mesa = "0"
-        if(not self.venta_directa_en_curso):
-            self.ui.stackedWidget.addWidget(FormularioVenta(self.rut,mesa)) #5
-            self.venta_directa_en_curso = True
-        self.ui.stackedWidget.setCurrentIndex(5)
+        self.ui.stackedWidget.setCurrentIndex(4)
 
     def admin_users(self):
         'Cambia a la interfaz de administración de usuarios'
@@ -70,7 +68,8 @@ class MainWindow(QtGui.QMainWindow):
 
     def admin_ventas(self):
         'Cambia a la interfaz de venta de producto'
-        self.ui.stackedWidget.setCurrentIndex(4)
+        self.ui.stackedWidget.setCurrentIndex(5)
+        print self.ui.stackedWidget.count()
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'admin_venta.ui'
 #
-# Created: Thu Nov 26 10:10:35 2015
+# Created: Thu Nov 26 11:11:09 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -20,6 +20,7 @@ class Ui_AdminVentas(object):
         self.verticalLayout.addWidget(self.label)
         self.tableView_ventas = QtGui.QTableView(AdminVentas)
         self.tableView_ventas.setProperty("cursor", QtCore.Qt.PointingHandCursor)
+        self.tableView_ventas.setMouseTracking(True)
         self.tableView_ventas.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
         self.tableView_ventas.setTabKeyNavigation(False)
         self.tableView_ventas.setProperty("showDropIndicator", False)

@@ -7,6 +7,7 @@ import sys
 import controller_venta as controller
 import admin_productos.controller_admin_producto as c
 
+
 class FormularioVenta(QtGui.QWidget):
 
     __header_table__ = ((u"ID", 20),
@@ -31,37 +32,41 @@ class FormularioVenta(QtGui.QWidget):
         self.reload_data_table1()
         self.reload_data_table2()
 
-
     def connect_actions(self):
         self.ui.pushButton_agregar.clicked.connect(self.action_agregar)
         self.ui.pushButton_eliminar.clicked.connect(self.action_eliminar)
-        self.ui.pushButton_aumentar_cantidad.clicked.connect(self.action_aumentar)
-        self.ui.pushButton_disminuir_cantidad.clicked.connect(self.action_disminuir)
-        self.ui.pushButton_filtrar_cafeteria.clicked.connect(self.action_cafeteria)
+        self.ui.pushButton_aumentar_cantidad.clicked.connect(
+            self.action_aumentar)
+        self.ui.pushButton_disminuir_cantidad.clicked.connect(
+            self.action_disminuir)
+        self.ui.pushButton_filtrar_cafeteria.clicked.connect(
+            self.action_cafeteria)
         self.ui.pushButton_filtrar_cocina.clicked.connect(self.action_cocina)
         self.ui.pushButton_filtrar_bebidas.clicked.connect(self.action_bebidas)
         self.ui.pushButton_filtrar_helados.clicked.connect(self.action_helados)
 
-
     def action_agregar(self):
-        controller.addDataVentaProducto(self.id_pedido,self.id_tablaP,self.precio_tablaP)
+        controller.addDataVentaProducto(
+            self.id_pedido, self.id_tablaP, self.precio_tablaP)
         self.reload_data_table2()
         self.ui.tableView_total_productos.setFocus()
 
     def action_eliminar(self):
-        controller.deleteProducto(self.id_pedido,self.id_tablaPd)
+        controller.deleteProducto(self.id_pedido, self.id_tablaPd)
         self.reload_data_table2()
         self.ui.tableView_pedido.selectRow(self.row_tablaPd)
         self.ui.tableView_pedido.setFocus()
 
     def action_aumentar(self):
-        controller.cambiarCantidadProducto(self.id_pedido, self.id_tablaPd, "aumentar")
+        controller.cambiarCantidadProducto(
+            self.id_pedido, self.id_tablaPd, "aumentar")
         self.reload_data_table2()
         self.ui.tableView_pedido.selectRow(self.row_tablaPd)
         self.ui.tableView_pedido.setFocus()
 
     def action_disminuir(self):
-        controller.cambiarCantidadProducto(self.id_pedido, self.id_tablaPd, "disminuir")
+        controller.cambiarCantidadProducto(
+            self.id_pedido, self.id_tablaPd, "disminuir")
         self.reload_data_table2()
         self.ui.tableView_pedido.selectRow(self.row_tablaPd)
         self.ui.tableView_pedido.setFocus()
@@ -69,22 +74,22 @@ class FormularioVenta(QtGui.QWidget):
     """" ================================ FILTROS TABLA TOTAL PRODUCTOS =================================== """
 
     def action_cafeteria(self):
-        self.filtrar_data_table1("categoria",3)
+        self.filtrar_data_table1("categoria", 3)
         self.ui.tableView_total_productos.selectRow(self.id_tablaP)
         self.ui.tableView_total_productos.setFocus()
 
     def action_cocina(self):
-        self.filtrar_data_table1("categoria",1)
+        self.filtrar_data_table1("categoria", 1)
         self.ui.tableView_total_productos.selectRow(self.id_tablaP)
         self.ui.tableView_total_productos.setFocus()
 
     def action_bebidas(self):
-        self.filtrar_data_table1("categoria",4)
+        self.filtrar_data_table1("categoria", 4)
         self.ui.tableView_total_productos.selectRow(self.id_tablaP)
         self.ui.tableView_total_productos.setFocus()
 
     def action_helados(self):
-        self.filtrar_data_table1("categoria",2)
+        self.filtrar_data_table1("categoria", 2)
         self.ui.tableView_total_productos.selectRow(self.id_tablaP)
         self.ui.tableView_total_productos.setFocus()
 
@@ -118,7 +123,8 @@ class FormularioVenta(QtGui.QWidget):
         # model = QtGui.QStandardItemModel(row, len(self.headerTabla), parent)
 
         for i, data in enumerate(productos):
-            row = [data.id_producto, data.nombre, c.monetaryFormat(str(data.precio_bruto).split(".")[0])]
+            row = [data.id_producto, data.nombre, c.monetaryFormat(
+                str(data.precio_bruto).split(".")[0])]
             for j, field in enumerate(row):
                 index = model.index(i, j, QtCore.QModelIndex())
                 if j is 5:
@@ -135,27 +141,31 @@ class FormularioVenta(QtGui.QWidget):
         self.set_model_table1()
         self.set_source_model_table1(self.load_productos_table1(self))
 
-    def filtrar_data_table1(self,tipo,valor):
+    def filtrar_data_table1(self, tipo, valor):
         self.set_model_table1()
-        self.set_source_model_table1(self.load_productos_table1(self,tipo,valor))
+        self.set_source_model_table1(
+            self.load_productos_table1(self, tipo, valor))
 
     def cell_selected_table1(self, index, indexp):
         model = self.ui.tableView_total_productos.model()
         index = self.ui.tableView_total_productos.currentIndex()
-        self.id_tablaP = model.index(index.row(), 0, QtCore.QModelIndex()).data()
-        self.nombre_tablaP = model.index(index.row(), 1, QtCore.QModelIndex()).data()
-        self.precio_tablaP = model.index(index.row(), 2, QtCore.QModelIndex()).data()
+        self.id_tablaP = model.index(
+            index.row(), 0, QtCore.QModelIndex()).data()
+        self.nombre_tablaP = model.index(
+            index.row(), 1, QtCore.QModelIndex()).data()
+        self.precio_tablaP = model.index(
+            index.row(), 2, QtCore.QModelIndex()).data()
         precio = self.precio_tablaP.split(".")
         self.precio_tablaP = ""
         for i in range(len(precio)):
             self.precio_tablaP = self.precio_tablaP + precio[i]
+
     def set_model_table1(self):
         """Define el módelo de la grilla para trabajarla."""
         self.proxyModel = QtGui.QSortFilterProxyModel()
         self.proxyModel.setDynamicSortFilter(True)
 
         self.ui.tableView_total_productos.setModel(self.proxyModel)
-        
 
     def set_source_model_table1(self, model):
         """
@@ -169,13 +179,13 @@ class FormularioVenta(QtGui.QWidget):
         self.ui.tableView_total_productos.horizontalHeader().setResizeMode(
             1, self.ui.tableView_total_productos.horizontalHeader().Stretch)
 
-
         # Designamos los header de la grilla y sus respectivos anchos
         for col, h in enumerate(self.__header_table__):
             model.setHeaderData(col, QtCore.Qt.Horizontal, h[0])
             self.ui.tableView_total_productos.setColumnWidth(col, h[1])
 
-        self.ui.tableView_total_productos.sortByColumn(0, QtCore.Qt.AscendingOrder)
+        self.ui.tableView_total_productos.sortByColumn(
+            0, QtCore.Qt.AscendingOrder)
         self.ui.tableView_total_productos.setColumnHidden(0, True)
 
     """ ======================================================================= TABLA PRODUCTOS PEDIDOS ============================================================ """
@@ -198,8 +208,9 @@ class FormularioVenta(QtGui.QWidget):
         subtotal = 0
 
         for i, data in enumerate(productos):
-            row = [data.id_producto, controller.getProductoId(data.id_producto)[0].nombre, data.cantidad, c.monetaryFormat(str(data.precio_venta).split(".")[0])]
-            subtotal = subtotal + (long(data.precio_venta)*data.cantidad)
+            row = [data.id_producto, controller.getProductoId(data.id_producto)[
+                0].nombre, data.cantidad, c.monetaryFormat(str(data.precio_venta).split(".")[0])]
+            subtotal = subtotal + (long(data.precio_venta) * data.cantidad)
             for j, field in enumerate(row):
                 index = model.index(i, j, QtCore.QModelIndex())
                 if j is 5:
@@ -208,8 +219,8 @@ class FormularioVenta(QtGui.QWidget):
                     model.setData(index, field)
 
         self.ui.lcdNumber_subtotal.display(subtotal)
-        self.ui.lcdNumber_propina.display(subtotal*0.1)
-        self.ui.lcdNumber_total.display(subtotal*1.1)
+        self.ui.lcdNumber_propina.display(subtotal * 0.1)
+        self.ui.lcdNumber_total.display(subtotal * 1.1)
 
         modelSel = self.ui.tableView_pedido.selectionModel()
         modelSel.currentChanged.connect(self.cell_selected_table2)
@@ -224,15 +235,17 @@ class FormularioVenta(QtGui.QWidget):
         model = self.ui.tableView_pedido.model()
         index = self.ui.tableView_pedido.currentIndex()
         self.row_tablaPd = index.row()
-        self.id_tablaPd = model.index(index.row(), 0, QtCore.QModelIndex()).data()
-        self.precio_tablaPd = model.index(index.row(), 3, QtCore.QModelIndex()).data()
-        #self.ui.lcdNumber_subtotal.display(self.id)
+        self.id_tablaPd = model.index(
+            index.row(), 0, QtCore.QModelIndex()).data()
+        self.precio_tablaPd = model.index(
+            index.row(), 3, QtCore.QModelIndex()).data()
+        # self.ui.lcdNumber_subtotal.display(self.id)
 
     def set_model_table2(self):
         """Define el módelo de la grilla para trabajarla."""
         self.proxyModel = QtGui.QSortFilterProxyModel()
         self.proxyModel.setDynamicSortFilter(True)
-        
+
         self.ui.tableView_pedido.setModel(self.proxyModel)
 
     def set_source_model_table2(self, model):

@@ -98,7 +98,7 @@ class Producto(object):
         conex = connect()
         conn = conex.cursor()
 
-        query = "UPDATE producto SET nombre = %s, descripcion = %s, precio_neto = %s, precio_bruto =  %s , status = %s, idCategoria = %s WHERE idProducto = %s"
+        query = "UPDATE producto SET nombre = %s, descripcion = %s, precio_neto = %s, precio_bruto =  %s , status = %s, idCategoria = %s, codigo = %s WHERE idProducto = %s"
         conn.execute(query,
                      (cls.nombre,
                       cls.descripcion,
@@ -106,6 +106,7 @@ class Producto(object):
                       cls.precio_bruto,
                       cls.status,
                       cls.id_categoria,
+                      cls.codigo,
                       cls.id_producto))
         conex.commit()
         conn.close()
@@ -124,14 +125,15 @@ class Producto(object):
     def AddDataProducto(cls):
         conex = connect()
         conn = conex.cursor()
-        query = "INSERT INTO producto(nombre, descripcion, precio_neto, precio_bruto, status, idCategoria) VALUES(%s, %s, %s, %s, %s, %s)"
+        query = "INSERT INTO producto(nombre, descripcion, precio_neto, precio_bruto, status, idCategoria, codigo) VALUES(%s, %s, %s, %s, %s, %s, %s)"
         conn.execute(query,
                      (cls.nombre,
                       cls.descripcion,
                       cls.precio_neto,
                       cls.precio_bruto,
                       cls.status,
-                      cls.id_categoria))
+                      cls.id_categoria,
+                      cls.codigo))
         conex.commit()
         conn.close()
 

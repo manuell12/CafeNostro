@@ -10,6 +10,7 @@ class FormularioProducto(QtGui.QDialog):
 
     reloadT = QtCore.Signal()
     identificador = False
+    codigo = ""
 
     types = controller_admin_producto.getNombresCategorias()
     __type_productos__ = ["----"]
@@ -87,8 +88,10 @@ class FormularioProducto(QtGui.QDialog):
         self.precio_bruto = unicode(self.ui.lineEdit_precio_neto.text())
         self.precio_neto = unicode(float(self.precio_bruto)*0.81)
         self.id_categoria = int(self.ui.comboBox_id_categoria.currentIndex())
-        self.status = controller_admin_producto.getProductoId(self.id)[0].status
+        self.status = 1
+        self.codigo = self.ui.lineEdit_codigo.text()
         if(self.identificador):  # Editar Producto
+            self.status = controller_admin_producto.getProductoId(self.id)[0].status
             validar = controller_admin_producto.validarDatos(
                 self.ui.label_error_nombre.text(),
                 self.ui.label_error_codigo.text(),
@@ -96,7 +99,7 @@ class FormularioProducto(QtGui.QDialog):
                 self.ui.label_error_categoria.text())
             if(validar):
                 controller_admin_producto.UpdateDataProducto(
-                    self.id, self.nombre, self.descripcion, self.precio_neto, self.precio_bruto, self.status, self.id_categoria)
+                    self.id, self.nombre, self.descripcion, self.precio_neto, self.precio_bruto, self.status, self.id_categoria, self.codigo)
                 msgBox = QtGui.QMessageBox()
                 msgBox.setIcon(QtGui.QMessageBox.Information)
                 msgBox.setWindowTitle("Correcto")
@@ -111,7 +114,7 @@ class FormularioProducto(QtGui.QDialog):
                 self.ui.label_error_categoria.text())
             if(validar):
                 controller_admin_producto.AddDataProducto(
-                    self.nombre, self.descripcion, self.precio_neto, self.precio_bruto, self.status, self.id_categoria)
+                    self.nombre, self.descripcion, self.precio_neto, self.precio_bruto, self.status, self.id_categoria, self.codigo)
                 msgBox = QtGui.QMessageBox()
                 msgBox.setIcon(QtGui.QMessageBox.Information)
                 msgBox.setWindowTitle("Correcto")

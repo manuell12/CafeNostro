@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'formulario_venta.ui'
 #
-# Created: Mon Nov 23 22:23:35 2015
+# Created: Thu Nov 26 02:58:34 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -19,6 +19,15 @@ class Ui_FormularioVenta(object):
         self.gridLayout_3.setObjectName("gridLayout_3")
         self.verticalLayout = QtGui.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
+        self.horizontalLayout_5 = QtGui.QHBoxLayout()
+        self.horizontalLayout_5.setObjectName("horizontalLayout_5")
+        self.label_5 = QtGui.QLabel(FormularioVenta)
+        self.label_5.setObjectName("label_5")
+        self.horizontalLayout_5.addWidget(self.label_5)
+        self.lineEdit_buscar_codigo = QtGui.QLineEdit(FormularioVenta)
+        self.lineEdit_buscar_codigo.setObjectName("lineEdit_buscar_codigo")
+        self.horizontalLayout_5.addWidget(self.lineEdit_buscar_codigo)
+        self.verticalLayout.addLayout(self.horizontalLayout_5)
         self.tableView_total_productos = QtGui.QTableView(FormularioVenta)
         self.tableView_total_productos.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.tableView_total_productos.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
@@ -172,6 +181,7 @@ class Ui_FormularioVenta(object):
 
     def retranslateUi(self, FormularioVenta):
         FormularioVenta.setWindowTitle(QtGui.QApplication.translate("FormularioVenta", "Form", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_5.setText(QtGui.QApplication.translate("FormularioVenta", "Buscar producto por código:", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_filtrar_cocina.setText(QtGui.QApplication.translate("FormularioVenta", "Cocina", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_filtrar_cafeteria.setText(QtGui.QApplication.translate("FormularioVenta", "Cafeteria", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_filtrar_bebidas.setText(QtGui.QApplication.translate("FormularioVenta", "Bebidas", None, QtGui.QApplication.UnicodeUTF8))

@@ -41,6 +41,7 @@ class FormularioVenta(QtGui.QWidget):
         self.ui.pushButton_filtrar_cocina.clicked.connect(self.action_cocina)
         self.ui.pushButton_filtrar_bebidas.clicked.connect(self.action_bebidas)
         self.ui.pushButton_filtrar_helados.clicked.connect(self.action_helados)
+        self.ui.lineEdit_buscar_codigo.textChanged.connect(self.lineEdit_buscar_codigo_changed)
 
 
     def action_agregar(self):
@@ -100,6 +101,9 @@ class FormularioVenta(QtGui.QWidget):
             pass
         self.ui.tableView_total_productos.setFocus()
 
+    def lineEdit_buscar_codigo_changed(self, text):
+        self.filtrar_data_table1("codigo",text)
+
     """ ============================================================================= TABLA TOTAL PRODUCTOS ============================================="""
 
     def load_productos_table1(self, parent, tipo=None, valor=None):
@@ -120,6 +124,8 @@ class FormularioVenta(QtGui.QWidget):
                 productos = controller.getProductoCategoria(3)
             if(valor == 4):
                 productos = controller.getProductoCategoria(4)
+        if(tipo == "codigo"):
+            productos = controller.getProductoCodigo(valor)
 
         if(tipo == None and valor == None):
             productos = controller.getProductoStatus(1)

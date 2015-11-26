@@ -30,6 +30,13 @@ def getProductoCategoria(categoria):
     producto.id_categoria = categoria
     return Producto.getProductoCategoria(producto)
 
+def getProductoCodigo(codigo):
+    """Obtiene el producto determinado por su codigo"""
+    producto = Producto()
+    codigo = codigo+"%"
+    producto.codigo = codigo
+    return Producto.getProductoCodigo(producto)
+
 def getProductoId(id_producto):
     """Obtiene los Productos de la base de datos que tengan el mismo id determinado por el parámetro entregado"""
     producto = Producto()

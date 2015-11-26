@@ -151,6 +151,14 @@ class Producto(object):
         conn.close()
         return obtenerObjetoProductos(Producto)
 
+    def getProductoCodigo(cls):
+        conex = connect()
+        conn = conex.cursor()
+        query = "SELECT * FROM producto WHERE codigo like %s and status = 1"
+        conn.execute(query,[cls.codigo])
+        Producto = conn.fetchall()
+        conn.close()
+        return obtenerObjetoProductos(Producto)
 
     def deleteProducto(cls):
         conex = connect()

@@ -59,6 +59,16 @@ def getProductoStatus(status):
     producto.status = status
     return Producto.getProductoStatus(producto)
 
+def hayProductoCodigo(codigo):
+    """Obtiene los Productos de la base de datos que tengan el mismo estado determinado por el parámetro entregado"""
+    producto = Producto()
+    producto.codigo = codigo
+    product = Producto.hayProductoCodigo(producto)
+    try:
+        intentar = product[0]
+        return True
+    except:
+        return False
 
 def deleteProducto(id):
     """Elimina un Producto de la base de datos"""
@@ -76,6 +86,22 @@ def validarNombreF(label, nombre):
         label.setText(
             u"<font color='red'><b>Sólo puede contener letras y numeros.</b></font>")
 
+def validarCodigoF(label, codigo, oldcodigo=""):
+    """Cambia el estado del label segun la respuesta de validacion del nombre ingresado"""
+    if(validaTexto(codigo, "codigo")):
+        if(hayProductoCodigo(codigo)):
+            if(codigo == oldcodigo):
+                label.setText(
+                    u"<font color='green'><b>Código correcto.</b></font>")
+            else:
+                label.setText(
+                    u"<font color='red'><b>Código ocupado.</b></font>")
+        else:
+            label.setText(
+                u"<font color='green'><b>Código correcto.</b></font>")
+    else:
+        label.setText(
+            u"<font color='red'><b>Sólo puede contener letras y numeros.</b></font>")
 
 def validarPrecioNetoF(label, precio_neto):
     """Cambia el estado del label segun la respuesta de validacion del apellido ingresado"""
@@ -92,8 +118,10 @@ def validarPrecioNetoF(label, precio_neto):
             u"<font color='red'><b>Debe tener sólo números.</b></font>")
 
 
-def validarDatos(nombre, precio_neto, categoria):
+def validarDatos(nombre, codigo, precio_neto, categoria):
     if(nombre != u"<font color='green'><b>Nombre correcto.</b></font>"):
+        return False
+    if(codigo != u"<font color='green'><b>Código correcto.</b></font>"):
         return False
     if(precio_neto != u"<font color='green'><b>Precio bruto correcto.</b></font>"):
         return False
@@ -118,6 +146,9 @@ def validaTexto(text, validacion):
 
     if (validacion == "no_simbolos"):
         cadena = " abcdefghijklmnñopqrstuvwxyzáéíóúABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÚ0123456789,"
+
+    if (validacion == "codigo"):
+        cadena = "0123456789abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
     if (validacion == "texto"):
         cadena = " abcdefghijklmnñopqrstuvwxyzáéíóúABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÚ"

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '.\formulario_usuario_ui.ui'
+# Form implementation generated from reading ui file 'formulario_usuario.ui'
 #
-# Created: Mon Nov 16 22:39:52 2015
-#      by: pyside-uic 0.2.15 running on PySide 1.2.2
+# Created: Thu Nov 26 04:02:55 2015
+#      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -95,6 +95,7 @@ class Ui_FormularioUsuario(object):
         self.label_error_verif.setObjectName("label_error_verif")
         self.gridLayout.addWidget(self.label_error_verif, 5, 2, 1, 1)
         self.label_error_rut = QtGui.QLabel(self.groupBox)
+        self.label_error_rut.setMinimumSize(QtCore.QSize(177, 20))
         self.label_error_rut.setText("")
         self.label_error_rut.setObjectName("label_error_rut")
         self.gridLayout.addWidget(self.label_error_rut, 6, 2, 1, 1)

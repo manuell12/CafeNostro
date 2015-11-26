@@ -218,6 +218,9 @@ class FormularioVenta(QtGui.QWidget):
                 else:
                     model.setData(index, field)
 
+        self.ui.lcdNumber_subtotal.setDecMode()
+        self.ui.lcdNumber_propina.setDecMode()
+        self.ui.lcdNumber_total.setDecMode()
         self.ui.lcdNumber_subtotal.display(subtotal)
         self.ui.lcdNumber_propina.display(subtotal * 0.1)
         self.ui.lcdNumber_total.display(subtotal * 1.1)

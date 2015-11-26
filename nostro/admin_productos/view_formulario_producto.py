@@ -39,6 +39,8 @@ class FormularioProducto(QtGui.QDialog):
             for row in producto:
                 self.nombre = row.nombre
                 self.ui.lineEdit_nombre.setText(self.nombre)
+                self.codigo = row.codigo
+                self.ui.lineEdit_codigo.setText(self.codigo)
                 self.descripcion = row.descripcion
                 self.ui.lineEdit_descripcion.setText(self.descripcion)
                 self.precio_bruto = int(row.precio_bruto)
@@ -50,6 +52,8 @@ class FormularioProducto(QtGui.QDialog):
     def connect_actions(self):
         self.ui.lineEdit_nombre.textChanged.connect(
             self.lineEdit_nombre_changed)
+        self.ui.lineEdit_codigo.textChanged.connect(
+            self.lineEdit_codigo_changed)
         self.ui.lineEdit_precio_neto.textChanged.connect(
             self.lineEdit_precio_neto_changed)
         self.ui.comboBox_id_categoria.currentIndexChanged.connect(
@@ -58,6 +62,12 @@ class FormularioProducto(QtGui.QDialog):
     def lineEdit_nombre_changed(self, text):
         controller_admin_producto.validarNombreF(
             self.ui.label_error_nombre, text)
+
+    def lineEdit_codigo_changed(self, text):
+        text_upper = text.upper()
+        self.ui.lineEdit_codigo.setText(text_upper)
+        controller_admin_producto.validarCodigoF(
+            self.ui.label_error_codigo, text_upper, self.codigo)
 
     def lineEdit_precio_neto_changed(self, text):
         controller_admin_producto.validarPrecioNetoF(
@@ -81,6 +91,7 @@ class FormularioProducto(QtGui.QDialog):
         if(self.identificador):  # Editar Producto
             validar = controller_admin_producto.validarDatos(
                 self.ui.label_error_nombre.text(),
+                self.ui.label_error_codigo.text(),
                 self.ui.label_error_precio.text(),
                 self.ui.label_error_categoria.text())
             if(validar):
@@ -95,6 +106,7 @@ class FormularioProducto(QtGui.QDialog):
         else:
             validar = controller_admin_producto.validarDatos(
                 self.ui.label_error_nombre.text(),
+                self.ui.label_error_codigo.text(),
                 self.ui.label_error_precio.text(),
                 self.ui.label_error_categoria.text())
             if(validar):

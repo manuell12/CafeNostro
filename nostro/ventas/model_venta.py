@@ -30,6 +30,15 @@ def obtenerObjetoVentaProductos(data):
         lista.append(VentaProducto(row[0],row[1],row[2],row[3],row[4]))
     return lista
 
+def obtenerObjetoVentas(data):
+    """
+    Recibe como parametro la tupla recibida desde la BD y retorna una lista de objetos con todos los datos de los productos.
+    """
+    lista = list()
+    for i,row in enumerate(data):
+        lista.append(Venta(row[0],row[1],row[2],row[3],row[4],row[5],row[6]))
+    return lista
+
 class Pedido(object):
     """
     Clase que representa a la tabla Pedido.
@@ -218,3 +227,73 @@ class VentaProducto(object):
             conex.commit()
             conn.close()
 
+class Venta(object):
+    """
+    Clase que representa a la tabla Pedido.
+    Una instancia de esta clase representa una fila.
+    La instancia (objeto) puede estar en la BD o no.
+    """
+    __tablename__ = "venta"
+    id_venta = None  # Primary Key
+    fecha = ""
+    num_documento = 0
+    tipo = ""
+    total_pago = 0
+    id_usuario = 0
+    id_pedido = 0
+
+    def __init__(
+            self,
+            id_venta=None,
+            fecha="",
+            num_documento=0,
+            tipo="",
+            total_pago=0,
+            id_usuario=0,
+            id_pedido=0):
+
+        self.id_venta = id_venta
+        self.fecha = fecha
+        self.num_documento = num_documento
+        self.tipo = tipo
+        self.total_pago = total_pago
+        self.id_usuario = id_usuario
+        self.id_pedido = id_pedido
+
+    def addDataVenta(cls):
+        conex = connect()
+        conn = conex.cursor()
+        query = "INSERT INTO venta(fecha, num_documento, tipo, total_pago, idUsuario, idPedido) VALUES(%s, %s, %s, %s, %s, %s)"
+        conn.execute(query,
+                     (cls.fecha,
+                      cls.num_documento,
+                      cls.tipo,
+                      cls.total_pago,
+                      cls.id_usuario,
+                      cls.id_pedido))
+        conex.commit()
+        conn.close()
+
+    @classmethod
+    def all(cls):
+        """
+        Método utlizado para obtener la colección completa de filas
+        en la tabla pedido
+        Este método al ser de clase no necesita una instancia (objeto)
+        Sólo basta con invocarlo desde la clase
+        """
+        query = "SELECT * FROM {}".format(
+            cls.__tablename__)
+
+        try:
+            conex = connect()
+            conn = conex.cursor()
+            conn.execute(query)
+            data = conn.fetchall()
+            return obtenerObjetoVentas(data)
+
+        except MySQLdb.Error as e:
+            print "Error al obtener las ventas:", e.args[0]
+            return None
+
+        conn.close()

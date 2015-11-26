@@ -6,6 +6,8 @@ from formulario_venta import Ui_FormularioVenta
 import sys
 import controller_venta as controller
 import admin_productos.controller_admin_producto as c
+import admin_usuarios.controller_admin_user as controller_admin_user
+import datetime, time
 
 
 class FormularioVenta(QtGui.QWidget):
@@ -18,6 +20,9 @@ class FormularioVenta(QtGui.QWidget):
                          (u"Nombre", 300),
                          (u"Cantidad", 100),
                          (u"Precio bruto", 100))
+
+    __type_pay__ = ((u"EFECTIVO"),
+                    (u"TARJETA"))
     id_tablaP = 0
     id_tablaPd = 0
 
@@ -30,9 +35,26 @@ class FormularioVenta(QtGui.QWidget):
         self.connect_actions()
         if(mesa == "0"):
             self.id_pedido = controller.addDataPedido(mesa)
+        self.rut_usuario = rut_usuario
 
         self.reload_data_table1()
         self.reload_data_table2()
+
+        model = QtGui.QStandardItemModel()
+        for text in self.__type_pay__:
+            text_item = QtGui.QStandardItem(text)
+            text_item.setSizeHint(QtCore.QSize(100, 50))
+            text_item.setTextAlignment(QtCore.Qt.AlignHCenter)
+            text_item.setTextAlignment(QtCore.Qt.AlignVCenter)
+            model.appendRow([text_item])
+        view = QtGui.QTreeView()
+        view.header().hide()
+        view.setRootIsDecorated(False)
+        self.ui.comboBox_tipo_pago.setView(view)
+        self.ui.comboBox_tipo_pago.setModel(model)
+        self.ui.comboBox_tipo_pago.setEditable(True)
+        self.ui.comboBox_tipo_pago.lineEdit().setAlignment(QtCore.Qt.AlignHCenter)
+        self.ui.comboBox_tipo_pago.setEditable(False)
 
     def connect_actions(self):
         self.ui.pushButton_agregar.clicked.connect(self.action_agregar)
@@ -46,6 +68,7 @@ class FormularioVenta(QtGui.QWidget):
         self.ui.pushButton_filtrar_cocina.clicked.connect(self.action_cocina)
         self.ui.pushButton_filtrar_bebidas.clicked.connect(self.action_bebidas)
         self.ui.pushButton_filtrar_helados.clicked.connect(self.action_helados)
+        self.ui.pushButton_cerrar_venta.clicked.connect(self.action_cerrar_venta)
         self.ui.lineEdit_buscar_codigo.textChanged.connect(self.lineEdit_buscar_codigo_changed)
 
     def action_agregar(self):
@@ -270,6 +293,21 @@ class FormularioVenta(QtGui.QWidget):
 
         self.ui.tableView_pedido.sortByColumn(0, QtCore.Qt.AscendingOrder)
         self.ui.tableView_pedido.setColumnHidden(0, True)
+
+    """ ======================================================================= CERRAR VENTA ============================================================ """
+
+    def action_cerrar_venta(self):
+        y = int(time.strftime("%Y"))
+        m = int(time.strftime("%m"))
+        d = int(time.strftime("%d"))
+        fecha = datetime.date(y,m,d)
+        num_documento = 0
+        tipo = "directa"
+        total_pago = self.ui.lcdNumber_total.value()
+        id_pedido = int(self.id_pedido)
+        id_usuario = int(controller_admin_user.getUsuarioRut(self.rut_usuario)[0].id_usuario)
+        controller.addDataVenta(fecha,num_documento,tipo,total_pago,id_usuario,id_pedido)
+
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)

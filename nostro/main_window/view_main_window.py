@@ -10,6 +10,7 @@ from PySide import QtCore, QtGui
 from main_window import Ui_MainWindow
 from admin_usuarios.view_admin_user import AdminUsers
 from admin_productos.view_admin_producto import AdminProductos
+from ventas.view_admin_venta import AdminVentas
 from ventas.view_formulario_venta import FormularioVenta
 import admin_usuarios.controller_admin_user as controller
 
@@ -33,6 +34,7 @@ class MainWindow(QtGui.QMainWindow):
         self.show()
         self.ui.stackedWidget.addWidget(AdminUsers()) #2
         self.ui.stackedWidget.addWidget(AdminProductos()) #3
+        self.ui.stackedWidget.addWidget(AdminVentas()) #4
         self.rut = rut
         self.nombre = unicode(controller.getUsuarioRut(rut)[0].nombre)+" "+unicode(controller.getUsuarioRut(rut)[0].apellido)
         if(controller.getUsuarioRut(rut)[0].nombre == "root"):
@@ -45,22 +47,18 @@ class MainWindow(QtGui.QMainWindow):
 
     def set_signals(self):
         'Setea los triggers que se usaran para cambiar la interfaz'
-        self.ui.actionRealizar_Venta.triggered.connect(self.venta)
+        self.ui.actionVentas.triggered.connect(self.admin_ventas)
         self.ui.actionUsuarios.triggered.connect(self.admin_users)
         self.ui.actionProductos.triggered.connect(self.admin_productos)
         self.ui.pushButton_compra_directa.clicked.connect(self.formulario_venta_directa)
-
-    def venta(self):
-        'Cambia a la interfaz de venta de producto'
-        pass
 
     def formulario_venta_directa(self):
         'Cambia a la interfaz de formulario de venta directa'
         mesa = "0"
         if(not self.venta_directa_en_curso):
-            self.ui.stackedWidget.addWidget(FormularioVenta(self.rut,mesa)) #4
+            self.ui.stackedWidget.addWidget(FormularioVenta(self.rut,mesa)) #5
             self.venta_directa_en_curso = True
-        self.ui.stackedWidget.setCurrentIndex(4)
+        self.ui.stackedWidget.setCurrentIndex(5)
 
     def admin_users(self):
         'Cambia a la interfaz de administración de usuarios'
@@ -69,6 +67,10 @@ class MainWindow(QtGui.QMainWindow):
     def admin_productos(self):
         'Cambia a la interfaz de administración de productos'
         self.ui.stackedWidget.setCurrentIndex(3)
+
+    def admin_ventas(self):
+        'Cambia a la interfaz de venta de producto'
+        self.ui.stackedWidget.setCurrentIndex(4)
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)

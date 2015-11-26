@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'c:\Users\danie\Documents\ProyectoTaller\CafeNostro\nostro\main_window\main_window.ui'
+# Form implementation generated from reading ui file 'main_window.ui'
 #
-# Created: Thu Nov 19 20:19:31 2015
+# Created: Thu Nov 26 10:23:00 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -75,14 +75,18 @@ class Ui_MainWindow(object):
         self.actionSalir.setObjectName("actionSalir")
         self.actionCambiar_Usuario = QtGui.QAction(MainWindow)
         self.actionCambiar_Usuario.setObjectName("actionCambiar_Usuario")
+        self.actionVentas = QtGui.QAction(MainWindow)
+        self.actionVentas.setObjectName("actionVentas")
         self.menuAdministraci_n.addAction(self.actionUsuarios)
         self.menuAdministraci_n.addAction(self.actionProductos)
+        self.menuAdministraci_n.addAction(self.actionVentas)
         self.menuArchivo.addAction(self.actionCambiar_Usuario)
         self.menuArchivo.addAction(self.actionSalir)
         self.menubar.addAction(self.menuArchivo.menuAction())
         self.menubar.addAction(self.menuAdministraci_n.menuAction())
 
         self.retranslateUi(MainWindow)
+        self.stackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -107,5 +111,7 @@ class Ui_MainWindow(object):
         self.actionSalir.setStatusTip(QtGui.QApplication.translate("MainWindow", "Cierra la aplicación", None, QtGui.QApplication.UnicodeUTF8))
         self.actionSalir.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+F4", None, QtGui.QApplication.UnicodeUTF8))
         self.actionCambiar_Usuario.setText(QtGui.QApplication.translate("MainWindow", "Cambiar Usuario", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionCambiar_Usuario.setStatusTip(QtGui.QApplication.translate("MainWindow", "Regresa a la ventana Login para poder cambiar el usuario", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionCambiar_Usuario.setStatusTip(QtGui.QApplication.translate("MainWindow", "Regresa a la ventan Login para poder cambiar el usuario", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionVentas.setText(QtGui.QApplication.translate("MainWindow", "&Ventas", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionVentas.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+4", None, QtGui.QApplication.UnicodeUTF8))
 

@@ -106,12 +106,14 @@
     </item>
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
       <widget class="QWidget" name="page_3"/>
       <widget class="QWidget" name="page_4"/>
      </widget>
     </item>
    </layout>
-   <zorder>widget</zorder>
    <zorder>stackedWidget</zorder>
    <zorder>groupBox</zorder>
   </widget>
@@ -133,6 +135,7 @@
     </property>
     <addaction name="actionUsuarios"/>
     <addaction name="actionProductos"/>
+    <addaction name="actionVentas"/>
    </widget>
    <widget class="QMenu" name="menuArchivo">
     <property name="title">
@@ -197,6 +200,14 @@
    </property>
    <property name="statusTip">
     <string>Regresa a la ventan Login para poder cambiar el usuario</string>
+   </property>
+  </action>
+  <action name="actionVentas">
+   <property name="text">
+    <string>&amp;Ventas</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+4</string>
    </property>
   </action>
  </widget>

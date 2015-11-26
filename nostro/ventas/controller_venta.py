@@ -30,6 +30,13 @@ def getProductoCategoria(categoria):
     producto.id_categoria = categoria
     return Producto.getProductoCategoria(producto)
 
+def getProductoCodigo(codigo):
+    """Obtiene el producto determinado por su codigo"""
+    producto = Producto()
+    codigo = codigo+"%"
+    producto.codigo = codigo
+    return Producto.getProductoCodigo(producto)
+
 def getProductoId(id_producto):
     """Obtiene los Productos de la base de datos que tengan el mismo id determinado por el parámetro entregado"""
     producto = Producto()
@@ -69,6 +76,17 @@ def hayProductoPedido(id_pedido, id_producto):
     venta_producto.id_producto = id_producto
     venta_producto.id_pedido = id_pedido
     producto = VentaProducto.hayProductoPedido(venta_producto)
+    try:
+        intentar = producto[0]
+        return True
+    except:
+        return False
+
+def hayProducto(id_producto):
+    """Retorna True si existe un producto en la tabla de venta"""
+    venta_producto = VentaProducto()
+    venta_producto.id_producto = id_producto
+    producto = VentaProducto.hayProducto(venta_producto)
     try:
         intentar = producto[0]
         return True

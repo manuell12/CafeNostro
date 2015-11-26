@@ -60,11 +60,11 @@ def getProductoStatus(status):
     return Producto.getProductoStatus(producto)
 
 
-def deleteproducto(id):
+def deleteProducto(id):
     """Elimina un Producto de la base de datos"""
     producto = Producto()
     producto.id_producto = id
-    Producto.deleteproductos(producto)
+    Producto.deleteProducto(producto)
 
 
 def validarNombreF(label, nombre):
@@ -147,3 +147,10 @@ def monetaryFormat(price):
         price_formatted = price_formatted + price[i]
     price_formatted = price_formatted[::-1]
     return price_formatted
+
+def zerosAtLeft(num, size):
+    num = str(num)
+    if(int(size) == 2):
+        while(len(num) < 2):
+            num = "0" + num
+    return num

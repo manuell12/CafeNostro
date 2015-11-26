@@ -22,7 +22,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QTableView" name="tableProductos">
+    <widget class="QTableWidget" name="tableProductos">
      <property name="cursor" stdset="0">
       <cursorShape>PointingHandCursor</cursorShape>
      </property>
@@ -44,10 +44,10 @@
      <property name="sortingEnabled">
       <bool>true</bool>
      </property>
-     <attribute name="horizontalHeaderMinimumSectionSize">
+     <attribute name="horizontalHeaderDefaultSectionSize">
       <number>20</number>
      </attribute>
-     <attribute name="verticalHeaderVisible">
+     <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
       <bool>false</bool>
      </attribute>
     </widget>
@@ -75,7 +75,42 @@
        </spacer>
       </item>
       <item>
+       <widget class="QPushButton" name="estado_button">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Cambiar estado</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Minimum</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
        <widget class="QPushButton" name="nuevo_button">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>50</height>
+         </size>
+        </property>
         <property name="text">
          <string>&amp;Nuevo</string>
         </property>
@@ -83,6 +118,12 @@
       </item>
       <item>
        <widget class="QPushButton" name="editar_button">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>50</height>
+         </size>
+        </property>
         <property name="text">
          <string>&amp;Editar</string>
         </property>
@@ -90,6 +131,12 @@
       </item>
       <item>
        <widget class="QPushButton" name="eliminar_button">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>50</height>
+         </size>
+        </property>
         <property name="text">
          <string>E&amp;liminar</string>
         </property>

@@ -19,6 +19,20 @@
      <item row="0" column="0">
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QLabel" name="label_5">
+           <property name="text">
+            <string>Buscar producto por código:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEdit_buscar_codigo"/>
+         </item>
+        </layout>
+       </item>
+       <item>
         <widget class="QTableView" name="tableView_total_productos">
          <property name="focusPolicy">
           <enum>Qt::StrongFocus</enum>

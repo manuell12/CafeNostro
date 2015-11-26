@@ -18,9 +18,9 @@ def obtenerObjetoProductos(data):
     Recibe como parametro la tupla recibida desde la BD y retorna una lista de objetos con todos los datos de los productos.
     """
     listaP = list()
-    for i, row in enumerate(data):
-        listaP.append(Producto(row[0], row[1], row[
-                      2], row[3], row[4], row[5], row[6]))
+    for i,row in enumerate(data):
+        listaP.append(Producto(row[0],row[1],row[
+            2],row[3],row[4],row[5],row[6],row[7]))
     return listaP
 
 
@@ -48,6 +48,7 @@ class Producto(object):
     precio_bruto = ""
     status = ""
     id_categoria = ""
+    codigo = ""
 
     def __init__(
             self,
@@ -57,7 +58,8 @@ class Producto(object):
             precio_neto="",
             precio_bruto="",
             status="",
-            id_categoria=""):
+            id_categoria="",
+            codigo=""):
 
         self.id_producto = id_producto
         self.nombre = nombre
@@ -66,6 +68,7 @@ class Producto(object):
         self.precio_bruto = precio_bruto
         self.status = status
         self.id_categoria = id_categoria
+        self.codigo = codigo
 
     def updateNombreProducto(cls, nombre, id):
         conex = connect()
@@ -148,6 +151,15 @@ class Producto(object):
         query = "SELECT * FROM producto WHERE idCategoria = {} and status = 1".format(
             cls.id_categoria)
         conn.execute(query)
+        Producto = conn.fetchall()
+        conn.close()
+        return obtenerObjetoProductos(Producto)
+
+    def getProductoCodigo(cls):
+        conex = connect()
+        conn = conex.cursor()
+        query = "SELECT * FROM producto WHERE codigo like %s and status = 1"
+        conn.execute(query,[cls.codigo])
         Producto = conn.fetchall()
         conn.close()
         return obtenerObjetoProductos(Producto)

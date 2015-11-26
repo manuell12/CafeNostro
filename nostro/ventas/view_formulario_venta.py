@@ -18,6 +18,8 @@ class FormularioVenta(QtGui.QWidget):
                          (u"Nombre", 300),
                          (u"Cantidad", 100),
                          (u"Precio bruto", 100))
+    id_tablaP = 0
+    id_tablaPd = 0
 
     def __init__(self, rut_usuario, mesa):
         'Constructor de la clase'
@@ -44,6 +46,7 @@ class FormularioVenta(QtGui.QWidget):
         self.ui.pushButton_filtrar_cocina.clicked.connect(self.action_cocina)
         self.ui.pushButton_filtrar_bebidas.clicked.connect(self.action_bebidas)
         self.ui.pushButton_filtrar_helados.clicked.connect(self.action_helados)
+        self.ui.lineEdit_buscar_codigo.textChanged.connect(self.lineEdit_buscar_codigo_changed)
 
     def action_agregar(self):
         controller.addDataVentaProducto(
@@ -74,24 +77,19 @@ class FormularioVenta(QtGui.QWidget):
     """" ================================ FILTROS TABLA TOTAL PRODUCTOS =================================== """
 
     def action_cafeteria(self):
-        self.filtrar_data_table1("categoria", 3)
-        self.ui.tableView_total_productos.selectRow(self.id_tablaP)
-        self.ui.tableView_total_productos.setFocus()
+        self.filtrar_data_table1("categoria",3)
 
     def action_cocina(self):
-        self.filtrar_data_table1("categoria", 1)
-        self.ui.tableView_total_productos.selectRow(self.id_tablaP)
-        self.ui.tableView_total_productos.setFocus()
+        self.filtrar_data_table1("categoria",1)
 
     def action_bebidas(self):
-        self.filtrar_data_table1("categoria", 4)
-        self.ui.tableView_total_productos.selectRow(self.id_tablaP)
-        self.ui.tableView_total_productos.setFocus()
+        self.filtrar_data_table1("categoria",4)
 
     def action_helados(self):
-        self.filtrar_data_table1("categoria", 2)
-        self.ui.tableView_total_productos.selectRow(self.id_tablaP)
-        self.ui.tableView_total_productos.setFocus()
+        self.filtrar_data_table1("categoria",2)
+
+    def lineEdit_buscar_codigo_changed(self, text):
+        self.filtrar_data_table1("codigo",text)
 
     """ ============================================================================= TABLA TOTAL PRODUCTOS ============================================="""
 
@@ -113,6 +111,8 @@ class FormularioVenta(QtGui.QWidget):
                 productos = controller.getProductoCategoria(3)
             if(valor == 4):
                 productos = controller.getProductoCategoria(4)
+        if(tipo == "codigo"):
+            productos = controller.getProductoCodigo(valor)
 
         if(tipo == None and valor == None):
             productos = controller.getProductoStatus(1)

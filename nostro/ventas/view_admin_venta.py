@@ -41,7 +41,7 @@ class AdminVentas(QtGui.QWidget):
         self.set_source_model(self.load_ventas(self))
 
     def mouse_entered(self):
-        self.reload_data_table();
+        pass
 
     def action_btn_editar(self):
         index = self.ui.tableView_ventas.currentIndex()

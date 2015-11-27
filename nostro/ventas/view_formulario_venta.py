@@ -27,15 +27,16 @@ class FormularioVenta(QtGui.QWidget):
     id_tablaP = 0
     id_tablaPd = 0
 
-    def __init__(self, rut_usuario, mesa):
+    def __init__(self, main, rut_usuario, mesa):
         'Constructor de la clase'
         QtGui.QWidget.__init__(self)
         self.ui = Ui_FormularioVenta()
         self.ui.setupUi(self)
         self.setFocus()
         self.connect_actions()
-        if(mesa == "0"):
-            self.id_pedido = controller.addDataPedido(mesa)
+        self.main = main
+        self.mesa = mesa
+        self.id_pedido = controller.addDataPedido(self.mesa)
         self.rut_usuario = rut_usuario
 
         self.reload_data_table1()
@@ -298,7 +299,21 @@ class FormularioVenta(QtGui.QWidget):
     """ ======================================================================= CERRAR VENTA ============================================================ """
 
     def action_cerrar_venta(self):
-        self.agregarVenta()
+    	msgBox = QtGui.QMessageBox()
+        msgBox.setIcon(QtGui.QMessageBox.Warning)
+        msgBox.setStandardButtons(
+            QtGui.QMessageBox.Ok | QtGui.QMessageBox.Cancel)
+        msgBox.setWindowTitle(u"Advertencia")
+        msgBox.setText(
+            u"Confirme para realizar venta")
+        press = msgBox.exec_()
+        if press == QtGui.QMessageBox.Ok:
+            self.agregarVenta()
+            self.main.stackedWidget.widget(5).reload_data_table()
+            self.id_pedido = controller.addDataPedido(self.mesa)
+            self.reload_data_table2()
+        else:
+            return False
 
     def agregarVenta(self):
         y = int(time.strftime("%Y"))
@@ -311,6 +326,16 @@ class FormularioVenta(QtGui.QWidget):
         id_pedido = int(self.id_pedido)
         id_usuario = int(controller_admin_user.getUsuarioRut(self.rut_usuario)[0].id_usuario)
         controller.addDataVenta(fecha,num_documento,tipo,total_pago,id_usuario,id_pedido)
+
+        if(int(self.ui.comboBox_tipo_pago.currentIndex()) == 0): #efectivo
+        	efectivo = total_pago
+        	tarjeta = 0
+        else:
+        	tarjeta = total_pago
+        	efectivo = 0
+        propina = self.ui.lcdNumber_propina.value()
+        id_venta = controller.getVentaPedidoId(id_pedido)[0].id_venta
+        controller.addDataPago(total_pago, efectivo, tarjeta, propina, id_venta)
 
 
 if __name__ == "__main__":

@@ -274,6 +274,26 @@ class Venta(object):
         conex.commit()
         conn.close()
 
+    def getVentaPedidoId(cls):
+        """
+        Método utlizado para obtener la venta de un pedido.
+        """
+        query = "SELECT * FROM venta WHERE idPedido = {}".format(
+            cls.id_pedido)
+
+        try:
+            conex = connect()
+            conn = conex.cursor()
+            conn.execute(query)
+            data = conn.fetchall()
+            return obtenerObjetoVentas(data)
+
+        except MySQLdb.Error as e:
+            print "Error al obtener los Productos:", e.args[0]
+            return None
+
+        conn.close()
+
     @classmethod
     def all(cls):
         """
@@ -296,4 +316,47 @@ class Venta(object):
             print "Error al obtener las ventas:", e.args[0]
             return None
 
+        conn.close()
+
+class Pago(object):
+    """
+    Clase que representa a la tabla Pedido.
+    Una instancia de esta clase representa una fila.
+    La instancia (objeto) puede estar en la BD o no.
+    """
+    __tablename__ = "venta"
+    id_pago = None  # Primary Key
+    pago_total = 0
+    efectivo = 0
+    tarjeta = 0
+    propina = 0
+    id_venta = 0
+
+    def __init__(
+            self,
+            id_pago = None,
+            pago_total = 0,
+            efectivo = 0,
+            tarjeta = 0,
+            propina = 0,
+            id_venta = 0):
+
+        self.id_pago = id_pago  # Primary Key
+        self.pago_total = pago_total
+        self.efectivo = efectivo
+        self.tarjeta = tarjeta
+        self.propina = propina
+        self.id_venta = id_venta
+
+    def addDataPago(cls):
+        conex = connect()
+        conn = conex.cursor()
+        query = "INSERT INTO pago(pago_total, efectivo, tarjeta, propina, idVenta) VALUES(%s, %s, %s, %s, %s)"
+        conn.execute(query,
+                     (cls.pago_total,
+                      cls.efectivo,
+                      cls.tarjeta,
+                      cls.propina,
+                      cls.id_venta))
+        conex.commit()
         conn.close()

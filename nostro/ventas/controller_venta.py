@@ -8,7 +8,7 @@ enviar a la Vista.
 """
 
 from admin_productos.model_admin_producto import Producto
-from model_venta import Pedido, VentaProducto, Venta
+from model_venta import Pedido, VentaProducto, Venta, Pago
 
 def Productos():
     """Retorna todos los Productos de la base de datos"""
@@ -21,6 +21,11 @@ def getPedidos():
 def getVentas():
     """Retorna todos los pedidos"""
     return Venta.all()
+
+def getVentaPedidoId(id_pedido):
+    venta = Venta()
+    venta.id_pedido = id_pedido
+    return Venta.getVentaPedidoId(venta)
 
 def getProductoStatus(status):
     """Obtiene los Productos de la base de datos que tengan el mismo estado determinado por el parámetro entregado"""
@@ -54,6 +59,11 @@ def addDataPedido(mesa):
     pedido = Pedido(pedidos,mesa,en_curso)
     Pedido.addDataPedido(pedido)
     return pedidos
+
+def addDataPago(pago_total, efectivo, tarjeta, propina, id_venta):
+    """Agrega un pedido a la base de datos y retorna el id"""
+    pago = Pago(None, pago_total, efectivo, tarjeta, propina, id_venta)
+    Pago.addDataPago(pago)
 
 def addDataVentaProducto(id_pedido, id_producto, precio_venta):
     """Agrega un producto a un pedido"""

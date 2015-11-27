@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'formulario_venta.ui'
 #
-# Created: Thu Nov 26 09:47:31 2015
+# Created: Fri Nov 27 08:39:09 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -204,7 +204,7 @@ class Ui_FormularioVenta(object):
         self.pushButton_cerrar_venta = QtGui.QPushButton(FormularioVenta)
         self.pushButton_cerrar_venta.setMinimumSize(QtCore.QSize(203, 51))
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(14)
         font.setWeight(75)
         font.setBold(True)
         self.pushButton_cerrar_venta.setFont(font)
@@ -233,5 +233,5 @@ class Ui_FormularioVenta(object):
 "-->", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_opciones.setText(QtGui.QApplication.translate("FormularioVenta", "Mas opciones", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_imprimir_comandas.setText(QtGui.QApplication.translate("FormularioVenta", "Imprimir Comandas", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_cerrar_venta.setText(QtGui.QApplication.translate("FormularioVenta", "Cerrar Venta", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_cerrar_venta.setText(QtGui.QApplication.translate("FormularioVenta", "Pagar", None, QtGui.QApplication.UnicodeUTF8))
 

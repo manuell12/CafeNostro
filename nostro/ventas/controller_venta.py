@@ -129,4 +129,9 @@ def addDataVenta(fecha,num_documento,tipo,total_pago,id_usuario,id_pedido):
     venta = Venta(None,fecha,num_documento,tipo,total_pago,id_usuario,id_pedido)
     Venta.addDataVenta(venta)
 
+def getIdPedido(id_venta):
+    """Obtiene el id_pedido a traves del id de la venta"""
+    id_pedido = Venta.getIdPedido(id_venta)
+    # print(id_pedido)
+    return id_pedido
 

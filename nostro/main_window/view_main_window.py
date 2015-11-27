@@ -36,7 +36,7 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.stackedWidget.addWidget(AdminUsers()) #2
         self.ui.stackedWidget.addWidget(AdminProductos()) #3
         self.ui.stackedWidget.addWidget(FormularioVenta(self.rut,"0")) #4
-        self.ui.stackedWidget.addWidget(AdminVentas()) #5
+        self.ui.stackedWidget.addWidget(AdminVentas(self.ui)) #5
 
         self.nombre = unicode(controller.getUsuarioRut(rut)[0].nombre)+" "+unicode(controller.getUsuarioRut(rut)[0].apellido)
         if(controller.getUsuarioRut(rut)[0].nombre == "root"):
@@ -69,7 +69,7 @@ class MainWindow(QtGui.QMainWindow):
     def admin_ventas(self):
         'Cambia a la interfaz de venta de producto'
         self.ui.stackedWidget.setCurrentIndex(5)
-        print self.ui.stackedWidget.count()
+        # print self.ui.stackedWidget.count()
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)

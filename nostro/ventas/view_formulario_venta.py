@@ -214,7 +214,7 @@ class FormularioVenta(QtGui.QWidget):
 
     """ ======================================================================= TABLA PRODUCTOS PEDIDOS ============================================================ """
 
-    def load_productos_table2(self, parent):
+    def load_productos_table2(self, pedido=None):
         """
         Carga la información de la base de datos en la tabla.
         Obtiene desde la base de datos a traves del controlador
@@ -222,9 +222,14 @@ class FormularioVenta(QtGui.QWidget):
         Crea un model para adjuntar los datos a la grilla y luego
         lo retorna para utilizarlo en setSourceModel.
         """
-        #self.typeModelClass = parent
-
-        productos = controller.getProductosPedido(self.id_pedido)
+        #self.typeModelClass = parent        
+        if pedido is None:            
+            productos = controller.getProductosPedido(self.id_pedido)
+            print(productos)
+        else:
+            print(pedido)
+            productos = controller.getProductosPedido(pedido)
+            print(productos)
         row = len(productos)
 
         model = QtGui.QStandardItemModel(row, len(self.__header_table2__))
@@ -256,7 +261,7 @@ class FormularioVenta(QtGui.QWidget):
 
     def reload_data_table2(self):
         self.set_model_table2()
-        self.set_source_model_table2(self.load_productos_table2(self))
+        self.set_source_model_table2(self.load_productos_table2()) #table2(self)
 
     def cell_selected_table2(self, index, indexp):
         model = self.ui.tableView_pedido.model()
@@ -303,7 +308,7 @@ class FormularioVenta(QtGui.QWidget):
     def agregarVenta(self):
         y = int(time.strftime("%Y"))
         m = int(time.strftime("%m"))
-        d = int(time.strftime("%d"))
+        d = int(time.strftime("%d")) 
         fecha = datetime.date(y,m,d)
         num_documento = len(controller.getVentas())
         tipo = "directa"

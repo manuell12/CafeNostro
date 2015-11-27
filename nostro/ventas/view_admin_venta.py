@@ -19,7 +19,7 @@ class AdminVentas(QtGui.QWidget):
                         (u"Total pago", 100),
                         (u"Usuario encargado", 200))
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, formularioVenta=None):
         'Constructor de la clase'
         QtGui.QWidget.__init__(self)
         self.ui = Ui_AdminVentas()
@@ -30,12 +30,14 @@ class AdminVentas(QtGui.QWidget):
         self.ui.tableView_ventas.verticalHeader().setVisible(False)
         self.ui.tableView_ventas.setColumnHidden(0, True)
         self.connect_actions()
+        self.mainwindow = parent
+        self.formularioVenta = formularioVenta
 
     def connect_actions(self):
         """Conectar botones con su respectiva accion"""
         self.ui.pushButton_editar.clicked.connect(self.action_btn_editar)
         self.ui.pushButton_eliminar.clicked.connect(self.action_btn_eliminar)
-        self.ui.tableView_ventas.viewportEntered.connect(self.mouse_entered)
+        # self.ui.tableView_ventas.viewportEntered.connect(self.mouse_entered)
 
     def reload_data_table(self):
         self.set_source_model(self.load_ventas(self))
@@ -43,8 +45,8 @@ class AdminVentas(QtGui.QWidget):
     def mouse_entered(self):
         self.reload_data_table();
 
-    def action_btn_editar(self):
-        index = self.ui.tableView_ventas.currentIndex()
+    def action_btn_editar(self):        
+        index = self.ui.tableView_ventas.currentIndex()                
         if index.row() == -1:  # No se ha seleccionado venta
             msgBox = QtGui.QMessageBox()
             msgBox.setIcon(QtGui.QMessageBox.Critical)
@@ -52,13 +54,16 @@ class AdminVentas(QtGui.QWidget):
             msgBox.setText("Debe seleccionar un venta.")
             msgBox.exec_()
             return False
-        else:
-            #self.editUsuarioWindow = view_formulario_admin_venta.FormularioUsuario(
-            #    self.id)
-            #self.editUsuarioWindow.reloadT.connect(self.reload_data_table)
-            #self.editUsuarioWindow.exec_()
-            # self.load_ventas(self)
-            pass
+        else:            
+            model = self.ui.tableView_ventas.model()
+            id_venta = model.index(index.row(), 0, QtCore.QModelIndex()).data()
+            id_pedido = controller_venta.getIdPedido(id_venta)
+            # print(id_pedido)
+
+            self.mainwindow.stackedWidget.setCurrentIndex(4)
+            print(self.mainwindow.stackedWidget.currentWidget())
+            print(type(self.mainwindow.stackedWidget.currentWidget()))
+            self.mainwindow.stackedWidget.currentWidget().load_productos_table2(id_pedido)
 
     def action_btn_eliminar(self):
         """Accion a realizar al presionar el boton eliminar"""

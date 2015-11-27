@@ -275,6 +275,18 @@ class Venta(object):
         conn.close()
 
     @classmethod
+    def getIdPedido(cls, id_venta):        
+        conex = connect()
+        conn = conex.cursor()
+        query = "SELECT `idPedido` FROM `venta` WHERE `idVenta` = {}".format(id_venta)
+        conn.execute(query)
+        data = conn.fetchall()[0][0]
+        ## print(data)        
+        conex.commit()
+        conn.close()
+        return data
+
+    @classmethod
     def all(cls):
         """
         Método utlizado para obtener la colección completa de filas

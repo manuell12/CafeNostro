@@ -14,10 +14,12 @@ import datetime, time
 class FormularioVenta(QtGui.QWidget):
 
     __header_table__ = ((u"ID", 20),
+    					(u"Código", 50),
                         (u"Nombre", 400),
                         (u"Precio bruto", 100))
 
     __header_table2__ = ((u"ID", 20),
+    					 (u"Código", 50),
                          (u"Nombre", 300),
                          (u"Cantidad", 100),
                          (u"Precio bruto", 100))
@@ -54,9 +56,6 @@ class FormularioVenta(QtGui.QWidget):
         view.setRootIsDecorated(False)
         self.ui.comboBox_tipo_pago.setView(view)
         self.ui.comboBox_tipo_pago.setModel(model)
-        self.ui.comboBox_tipo_pago.setEditable(True)
-        self.ui.comboBox_tipo_pago.lineEdit().setAlignment(QtCore.Qt.AlignHCenter)
-        self.ui.comboBox_tipo_pago.setEditable(False)
 
     def connect_actions(self):
         self.ui.pushButton_agregar.clicked.connect(self.action_agregar)
@@ -148,7 +147,7 @@ class FormularioVenta(QtGui.QWidget):
         # model = QtGui.QStandardItemModel(row, len(self.headerTabla), parent)
 
         for i, data in enumerate(productos):
-            row = [data.id_producto, data.nombre, c.monetaryFormat(
+            row = [data.id_producto, data.codigo, data.nombre, c.monetaryFormat(
                 str(data.precio_bruto).split(".")[0])]
             for j, field in enumerate(row):
                 index = model.index(i, j, QtCore.QModelIndex())
@@ -177,9 +176,9 @@ class FormularioVenta(QtGui.QWidget):
         self.id_tablaP = model.index(
             index.row(), 0, QtCore.QModelIndex()).data()
         self.nombre_tablaP = model.index(
-            index.row(), 1, QtCore.QModelIndex()).data()
-        self.precio_tablaP = model.index(
             index.row(), 2, QtCore.QModelIndex()).data()
+        self.precio_tablaP = model.index(
+            index.row(), 3, QtCore.QModelIndex()).data()
         precio = self.precio_tablaP.split(".")
         self.precio_tablaP = ""
         for i in range(len(precio)):
@@ -202,7 +201,7 @@ class FormularioVenta(QtGui.QWidget):
         self.proxyModel.setSourceModel(model)
 
         self.ui.tableView_total_productos.horizontalHeader().setResizeMode(
-            1, self.ui.tableView_total_productos.horizontalHeader().Stretch)
+            2, self.ui.tableView_total_productos.horizontalHeader().Stretch)
 
         # Designamos los header de la grilla y sus respectivos anchos
         for col, h in enumerate(self.__header_table__):
@@ -233,7 +232,7 @@ class FormularioVenta(QtGui.QWidget):
         subtotal = 0
 
         for i, data in enumerate(productos):
-            row = [data.id_producto, controller.getProductoId(data.id_producto)[
+            row = [data.id_producto, controller.getProductoId(data.id_producto)[0].codigo, controller.getProductoId(data.id_producto)[
                 0].nombre, data.cantidad, c.monetaryFormat(str(data.precio_venta).split(".")[0])]
             subtotal = subtotal + (long(data.precio_venta) * data.cantidad)
             for j, field in enumerate(row):
@@ -266,7 +265,7 @@ class FormularioVenta(QtGui.QWidget):
         self.id_tablaPd = model.index(
             index.row(), 0, QtCore.QModelIndex()).data()
         self.precio_tablaPd = model.index(
-            index.row(), 3, QtCore.QModelIndex()).data()
+            index.row(), 4, QtCore.QModelIndex()).data()
         # self.ui.lcdNumber_subtotal.display(self.id)
 
     def set_model_table2(self):
@@ -286,7 +285,7 @@ class FormularioVenta(QtGui.QWidget):
         self.proxyModel.setSourceModel(model)
 
         self.ui.tableView_pedido.horizontalHeader().setResizeMode(
-            1, self.ui.tableView_pedido.horizontalHeader().Stretch)
+            2, self.ui.tableView_pedido.horizontalHeader().Stretch)
 
         # Designamos los header de la grilla y sus respectivos anchos
         for col, h in enumerate(self.__header_table2__):
@@ -320,8 +319,14 @@ class FormularioVenta(QtGui.QWidget):
         m = int(time.strftime("%m"))
         d = int(time.strftime("%d"))
         fecha = datetime.date(y,m,d)
-        num_documento = len(controller.getVentas())
-        tipo = "directa"
+        try:
+        	num_documento = controller.getVentas()[-1].num_documento+1
+        except:
+        	num_documento = 0
+        if(self.mesa == "0"):
+        	tipo = "directa"
+        else:
+        	tipo = "pedido por mesa"
         total_pago = self.ui.lcdNumber_total.value()
         id_pedido = int(self.id_pedido)
         id_usuario = int(controller_admin_user.getUsuarioRut(self.rut_usuario)[0].id_usuario)

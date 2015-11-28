@@ -181,7 +181,6 @@ def monetaryFormat(price):
 
 def zerosAtLeft(num, size):
     num = str(num)
-    if(int(size) == 2):
-        while(len(num) < 2):
-            num = "0" + num
+    while(len(num) < int(size)):
+        num = "0" + num
     return num

@@ -81,7 +81,7 @@ class AdminVentas(QtGui.QWidget):
         # model = QtGui.QStandardItemModel(row, len(self.headerTabla), parent)
 
         for i, data in enumerate(ventas):
-            row = [data.id_venta, data.num_documento, str(data.fecha), data.tipo, c.monetaryFormat(int(data.total_pago)), unicode(controller.getUsuarioId(data.id_usuario)[0].nombre)+" "+unicode(controller.getUsuarioId(data.id_usuario)[0].apellido)]
+            row = [data.id_venta, c.zerosAtLeft(data.num_documento,8), str(data.fecha), data.tipo, c.monetaryFormat(int(data.total_pago)), unicode(controller.getUsuarioId(data.id_usuario)[0].nombre)+" "+unicode(controller.getUsuarioId(data.id_usuario)[0].apellido)]
             for j, field in enumerate(row):
                 index = model.index(i, j, QtCore.QModelIndex())
                 if j is 4:

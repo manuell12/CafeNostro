@@ -36,8 +36,8 @@
           <widget class="QPushButton" name="pushButton_compra_directa">
            <property name="minimumSize">
             <size>
-             <width>111</width>
-             <height>41</height>
+             <width>100</width>
+             <height>40</height>
             </size>
            </property>
            <property name="text">
@@ -46,15 +46,19 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_pedidos">
+          <widget class="Line" name="line">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="comboBox_mesas">
            <property name="minimumSize">
             <size>
-             <width>111</width>
-             <height>41</height>
+             <width>120</width>
+             <height>40</height>
             </size>
-           </property>
-           <property name="text">
-            <string>Pedidos por Mesa</string>
            </property>
           </widget>
          </item>

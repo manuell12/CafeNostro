@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main_window.ui'
 #
-# Created: Thu Nov 26 10:23:00 2015
+# Created: Sat Nov 28 03:26:16 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -27,13 +27,18 @@ class Ui_MainWindow(object):
         self.horizontalLayout = QtGui.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.pushButton_compra_directa = QtGui.QPushButton(self.groupBox)
-        self.pushButton_compra_directa.setMinimumSize(QtCore.QSize(111, 41))
+        self.pushButton_compra_directa.setMinimumSize(QtCore.QSize(100, 40))
         self.pushButton_compra_directa.setObjectName("pushButton_compra_directa")
         self.horizontalLayout.addWidget(self.pushButton_compra_directa)
-        self.pushButton_pedidos = QtGui.QPushButton(self.groupBox)
-        self.pushButton_pedidos.setMinimumSize(QtCore.QSize(111, 41))
-        self.pushButton_pedidos.setObjectName("pushButton_pedidos")
-        self.horizontalLayout.addWidget(self.pushButton_pedidos)
+        self.line = QtGui.QFrame(self.groupBox)
+        self.line.setFrameShape(QtGui.QFrame.VLine)
+        self.line.setFrameShadow(QtGui.QFrame.Sunken)
+        self.line.setObjectName("line")
+        self.horizontalLayout.addWidget(self.line)
+        self.comboBox_mesas = QtGui.QComboBox(self.groupBox)
+        self.comboBox_mesas.setMinimumSize(QtCore.QSize(120, 40))
+        self.comboBox_mesas.setObjectName("comboBox_mesas")
+        self.horizontalLayout.addWidget(self.comboBox_mesas)
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
         self.label_usuario = QtGui.QLabel(self.groupBox)
@@ -93,7 +98,6 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "CaféNostro", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox.setTitle(QtGui.QApplication.translate("MainWindow", "Inicio", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_compra_directa.setText(QtGui.QApplication.translate("MainWindow", "Compra Directa", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_pedidos.setText(QtGui.QApplication.translate("MainWindow", "Pedidos por Mesa", None, QtGui.QApplication.UnicodeUTF8))
         self.label_usuario.setText(QtGui.QApplication.translate("MainWindow", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
         self.menuAdministraci_n.setStatusTip(QtGui.QApplication.translate("MainWindow", "Sección administrativa de la aplicación", None, QtGui.QApplication.UnicodeUTF8))
         self.menuAdministraci_n.setTitle(QtGui.QApplication.translate("MainWindow", "&Administración", None, QtGui.QApplication.UnicodeUTF8))

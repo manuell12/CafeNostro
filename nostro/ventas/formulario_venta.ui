@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>675</width>
+    <width>699</width>
     <height>444</height>
    </rect>
   </property>
@@ -285,6 +285,20 @@
               </size>
              </property>
             </spacer>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_6">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Número de pagos: &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_numero_pagos">
+             <property name="text">
+              <string>01</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>

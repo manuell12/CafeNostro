@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'formulario_venta.ui'
 #
-# Created: Fri Nov 27 08:39:09 2015
+# Created: Wed Dec 02 13:05:20 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,7 +12,7 @@ from PySide import QtCore, QtGui
 class Ui_FormularioVenta(object):
     def setupUi(self, FormularioVenta):
         FormularioVenta.setObjectName("FormularioVenta")
-        FormularioVenta.resize(675, 444)
+        FormularioVenta.resize(699, 444)
         self.verticalLayout_6 = QtGui.QVBoxLayout(FormularioVenta)
         self.verticalLayout_6.setObjectName("verticalLayout_6")
         self.gridLayout_3 = QtGui.QGridLayout()
@@ -108,6 +108,12 @@ class Ui_FormularioVenta(object):
         self.horizontalLayout.addWidget(self.lcdNumber_subtotal)
         spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem1)
+        self.label_6 = QtGui.QLabel(FormularioVenta)
+        self.label_6.setObjectName("label_6")
+        self.horizontalLayout.addWidget(self.label_6)
+        self.label_numero_pagos = QtGui.QLabel(FormularioVenta)
+        self.label_numero_pagos.setObjectName("label_numero_pagos")
+        self.horizontalLayout.addWidget(self.label_numero_pagos)
         self.verticalLayout_2.addLayout(self.horizontalLayout)
         self.horizontalLayout_2 = QtGui.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
@@ -227,6 +233,8 @@ class Ui_FormularioVenta(object):
         self.pushButton_disminuir_cantidad.setText(QtGui.QApplication.translate("FormularioVenta", "-", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_eliminar.setText(QtGui.QApplication.translate("FormularioVenta", "Eliminar", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("FormularioVenta", "Subtotal:", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_6.setText(QtGui.QApplication.translate("FormularioVenta", "<html><head/><body><p>Número de pagos: </p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_numero_pagos.setText(QtGui.QApplication.translate("FormularioVenta", "01", None, QtGui.QApplication.UnicodeUTF8))
         self.label_4.setText(QtGui.QApplication.translate("FormularioVenta", "Propina (10%):", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("FormularioVenta", "Total:", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_agregar.setText(QtGui.QApplication.translate("FormularioVenta", "AGREGAR\n"

@@ -7,8 +7,10 @@ Valida los datos de entrada que envía la vista y decide que información
 enviar a la Vista.
 """
 
+from PySide import QtCore, QtGui
 from admin_productos.model_admin_producto import Producto
 from model_venta import Pedido, VentaProducto, Venta, Pago
+import admin_productos.controller_admin_producto as controller_admin_producto
 
 def Productos():
     """Retorna todos los Productos de la base de datos"""
@@ -139,4 +141,36 @@ def addDataVenta(fecha,num_documento,tipo,total_pago,id_usuario,id_pedido):
     venta = Venta(None,fecha,num_documento,tipo,total_pago,id_usuario,id_pedido)
     Venta.addDataVenta(venta)
 
+class TotalProductosModel(QtGui.QSortFilterProxyModel):
+    """
+    Un QSortFilterProxyModel especializado que carga los datos dados en un modelo bidimensional QStandardItemModel.
+    """
+    def __init__(self, datos, header, parent=None):
+        super(TotalProductosModel, self).__init__(parent)
+        self.data = datos
+        self.__header_table__ = header
+        self.load_data()
+        self.setDynamicSortFilter(True)
 
+    def load_data(self):
+        """
+        Carga la información dada en un QStandardItemModel
+        """
+        row = len(self.data)
+
+        model = QtGui.QStandardItemModel(row, len(self.__header_table__))
+
+        for i, data in enumerate(self.data):
+            row = [data.id_producto, data.codigo, data.nombre, controller_admin_producto.monetaryFormat(
+                str(data.precio_bruto).split(".")[0])]
+            for j, field in enumerate(row):
+                index = model.index(i, j, QtCore.QModelIndex())
+                if j is 5:
+                    model.setData(index, self.__type_productos__[field])
+                else:
+                    model.setData(index, field)
+
+        for col, h in enumerate(self.__header_table__):
+            model.setHeaderData(col, QtCore.Qt.Horizontal, h[0])
+
+        self.setSourceModel(model)

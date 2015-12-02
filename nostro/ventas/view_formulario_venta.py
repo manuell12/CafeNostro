@@ -24,8 +24,7 @@ class FormularioVenta(QtGui.QWidget):
                          (u"Cantidad", 100),
                          (u"Precio bruto", 100))
 
-    __type_pay__ = ((u"EFECTIVO"),
-                    (u"TARJETA"))
+    
     id_tablaP = 0
     id_tablaPd = 0
 
@@ -41,11 +40,16 @@ class FormularioVenta(QtGui.QWidget):
         self.id_pedido = controller.addDataPedido(self.mesa)
         self.rut_usuario = rut_usuario
 
-        self.reload_data_table1()
+        self.load_model_total_productos(controller.getProductoStatus(1))
         self.reload_data_table2()
+        self.set_combobox_tipo_pago()
+
+    def set_combobox_tipo_pago(self):
+        __type_pay__ = ((u"EFECTIVO"),
+                        (u"TARJETA"))
 
         model = QtGui.QStandardItemModel()
-        for text in self.__type_pay__:
+        for text in __type_pay__:
             text_item = QtGui.QStandardItem(text)
             text_item.setSizeHint(QtCore.QSize(100, 50))
             text_item.setTextAlignment(QtCore.Qt.AlignHCenter)
@@ -101,74 +105,27 @@ class FormularioVenta(QtGui.QWidget):
     """" ================================ FILTROS TABLA TOTAL PRODUCTOS =================================== """
 
     def action_cafeteria(self):
-        self.filtrar_data_table1("categoria",3)
+        productos = controller.getProductoCategoria(3)
+        load_model_total_productos(self,productos)
 
     def action_cocina(self):
-        self.filtrar_data_table1("categoria",1)
+        productos = controller.getProductoCategoria(1)
+        load_model_total_productos(self,productos)
 
     def action_bebidas(self):
-        self.filtrar_data_table1("categoria",4)
+        productos = controller.getProductoCategoria(4)
+        load_model_total_productos(self,productos)
 
     def action_helados(self):
-        self.filtrar_data_table1("categoria",2)
+        productos = controller.getProductoCategoria(2)
+        load_model_total_productos(self,productos)
 
     def lineEdit_buscar_codigo_changed(self, text):
-        self.filtrar_data_table1("codigo",text)
+        productos = controller.getProductoCodigo(text)
+        load_model_total_productos(self,productos)
 
     """ ============================================================================= TABLA TOTAL PRODUCTOS ============================================="""
 
-    def load_productos_table1(self, parent, tipo=None, valor=None):
-        """
-        Carga la información de la base de datos en la tabla.
-        Obtiene desde la base de datos a traves del controlador
-        la información completa de la tabla.
-        Crea un model para adjuntar los datos a la grilla y luego
-        lo retorna para utilizarlo en setSourceModel.
-        """
-
-        if(tipo == "categoria"):
-            if(valor == 1):
-                productos = controller.getProductoCategoria(1)
-            if(valor == 2):
-                productos = controller.getProductoCategoria(2)
-            if(valor == 3):
-                productos = controller.getProductoCategoria(3)
-            if(valor == 4):
-                productos = controller.getProductoCategoria(4)
-        if(tipo == "codigo"):
-            productos = controller.getProductoCodigo(valor)
-
-        if(tipo == None and valor == None):
-            productos = controller.getProductoStatus(1)
-
-        row = len(productos)
-
-        model = QtGui.QStandardItemModel(row, len(self.__header_table__))
-        # model = QtGui.QStandardItemModel(row, len(self.headerTabla), parent)
-
-        for i, data in enumerate(productos):
-            row = [data.id_producto, data.codigo, data.nombre, c.monetaryFormat(
-                str(data.precio_bruto).split(".")[0])]
-            for j, field in enumerate(row):
-                index = model.index(i, j, QtCore.QModelIndex())
-                if j is 5:
-                    model.setData(index, self.__type_productos__[field])
-                else:
-                    model.setData(index, field)
-
-        modelSel = self.ui.tableView_total_productos.selectionModel()
-        modelSel.currentChanged.connect(self.cell_selected_table1)
-
-        return model
-
-    def reload_data_table1(self):
-        self.set_model_table1()
-        self.set_source_model_table1(self.load_productos_table1(self))
-
-    def filtrar_data_table1(self, tipo, valor):
-        self.set_model_table1()
-        self.set_source_model_table1(
-            self.load_productos_table1(self, tipo, valor))
 
     def cell_selected_table1(self, index, indexp):
         model = self.ui.tableView_total_productos.model()
@@ -184,33 +141,24 @@ class FormularioVenta(QtGui.QWidget):
         for i in range(len(precio)):
             self.precio_tablaP = self.precio_tablaP + precio[i]
 
-    def set_model_table1(self):
-        """Define el módelo de la grilla para trabajarla."""
-        self.proxyModel = QtGui.QSortFilterProxyModel()
-        self.proxyModel.setDynamicSortFilter(True)
-
-        self.ui.tableView_total_productos.setModel(self.proxyModel)
-
-    def set_source_model_table1(self, model):
-        """
-        Actualiza constantemente el origen de los datos para siempre tenerlos
-        al día así pudiendo buscar y mostrar solo algunos datos.
-        Además llama a las funciones que rellenan los comboBox de filtrado y
-        asigna el tamaño de las columnas a las grillas respectivas.
-        """
-        self.proxyModel.setSourceModel(model)
+    def load_model_total_productos(self,data=""):
+        model = controller.TotalProductosModel(data,self.__header_table__)
+        self.ui.tableView_total_productos.setModel(model)
 
         self.ui.tableView_total_productos.horizontalHeader().setResizeMode(
             2, self.ui.tableView_total_productos.horizontalHeader().Stretch)
 
         # Designamos los header de la grilla y sus respectivos anchos
         for col, h in enumerate(self.__header_table__):
-            model.setHeaderData(col, QtCore.Qt.Horizontal, h[0])
             self.ui.tableView_total_productos.setColumnWidth(col, h[1])
 
         self.ui.tableView_total_productos.sortByColumn(
             0, QtCore.Qt.AscendingOrder)
         self.ui.tableView_total_productos.setColumnHidden(0, True)
+
+        modelSel = self.ui.tableView_total_productos.selectionModel()
+        modelSel.currentChanged.connect(self.cell_selected_table1)
+
 
     """ ======================================================================= TABLA PRODUCTOS PEDIDOS ============================================================ """
 

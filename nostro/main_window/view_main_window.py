@@ -24,9 +24,6 @@ class MainWindow(QtGui.QMainWindow):
 
     venta_directa_en_curso = False
     num_mesas = 5
-    __mesas__ = [" Pedido por mesa"]
-    for i in range(num_mesas):
-        __mesas__.append("    Mesa:     "+str(i+1))
 
     def __init__(self, tipo=None, rut=None):
         'Constructor de la clase'
@@ -52,9 +49,14 @@ class MainWindow(QtGui.QMainWindow):
             if(tipo == 1):
                 self.ui.actionUsuarios.setEnabled(False)
                 self.ui.actionProductos.setEnabled(False)
+        self.set_combobox_mesas()
 
-        model = QtGui.QStandardItemModel()
-        for text in self.__mesas__:
+    def set_combobox_mesas(self):
+        __mesas__ = [" Pedido por mesa"]
+        for i in range(self.num_mesas):
+            __mesas__.append("    Mesa:     "+str(i+1)) 
+            model = QtGui.QStandardItemModel()
+        for text in __mesas__:
             text_item = QtGui.QStandardItem(text)
             text_item.setSizeHint(QtCore.QSize(100, 50))
             text_item.setTextAlignment(QtCore.Qt.AlignHCenter)

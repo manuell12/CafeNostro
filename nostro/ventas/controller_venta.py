@@ -145,32 +145,28 @@ class TotalProductosModel(QtGui.QSortFilterProxyModel):
     """
     Un QSortFilterProxyModel especializado que carga los datos dados en un modelo bidimensional QStandardItemModel.
     """
-    def __init__(self, datos, header, parent=None):
+    def __init__(self, parent=None):
         super(TotalProductosModel, self).__init__(parent)
-        self.data = datos
-        self.__header_table__ = header
-        self.load_data()
         self.setDynamicSortFilter(True)
 
-    def load_data(self):
+    def load_data(self, datos, header):
         """
         Carga la información dada en un QStandardItemModel
         """
-        row = len(self.data)
+        row = len(datos)
 
-        model = QtGui.QStandardItemModel(row, len(self.__header_table__))
+        self.model = QtGui.QStandardItemModel(row, len(header))
 
-        for i, data in enumerate(self.data):
-            row = [data.id_producto, data.codigo, data.nombre, controller_admin_producto.monetaryFormat(
+        for i, data in enumerate(datos):
+            row = [controller_admin_producto.zerosAtLeft(data.id_producto,2), data.codigo, data.nombre, controller_admin_producto.monetaryFormat(
                 str(data.precio_bruto).split(".")[0])]
             for j, field in enumerate(row):
-                index = model.index(i, j, QtCore.QModelIndex())
-                if j is 5:
-                    model.setData(index, self.__type_productos__[field])
-                else:
-                    model.setData(index, field)
+                item = QtGui.QStandardItem(field)
+                self.model.setItem(i, j, item)
 
-        for col, h in enumerate(self.__header_table__):
-            model.setHeaderData(col, QtCore.Qt.Horizontal, h[0])
+        for col, h in enumerate(header):
+            self.model.setHeaderData(col, QtCore.Qt.Horizontal, h[0])
 
-        self.setSourceModel(model)
+        self.setSourceModel(self.model)
+
+    #def set_headers(header)

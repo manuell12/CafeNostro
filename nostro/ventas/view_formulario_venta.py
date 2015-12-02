@@ -106,49 +106,48 @@ class FormularioVenta(QtGui.QWidget):
 
     def action_cafeteria(self):
         productos = controller.getProductoCategoria(3)
-        load_model_total_productos(self,productos)
+        self.load_model_total_productos(productos)
 
     def action_cocina(self):
         productos = controller.getProductoCategoria(1)
-        load_model_total_productos(self,productos)
+        self.load_model_total_productos(productos)
 
     def action_bebidas(self):
         productos = controller.getProductoCategoria(4)
-        load_model_total_productos(self,productos)
+        self.load_model_total_productos(productos)
 
     def action_helados(self):
         productos = controller.getProductoCategoria(2)
-        load_model_total_productos(self,productos)
+        self.load_model_total_productos(productos)
 
     def lineEdit_buscar_codigo_changed(self, text):
         productos = controller.getProductoCodigo(text)
-        load_model_total_productos(self,productos)
+        self.load_model_total_productos(productos)
 
     """ ============================================================================= TABLA TOTAL PRODUCTOS ============================================="""
 
 
     def cell_selected_table1(self, index, indexp):
-        model = self.ui.tableView_total_productos.model()
-        index = self.ui.tableView_total_productos.currentIndex()
-        self.id_tablaP = model.index(
-            index.row(), 0, QtCore.QModelIndex()).data()
-        self.nombre_tablaP = model.index(
-            index.row(), 2, QtCore.QModelIndex()).data()
-        self.precio_tablaP = model.index(
-            index.row(), 3, QtCore.QModelIndex()).data()
+        model = self.ui.tableView_total_productos.model().sourceModel()
+        self.id_tablaP = int(model.item(index.row(),0).text())
+        self.nombre_tablaP = model.item(index.row(),2).text()
+        self.precio_tablaP = model.item(index.row(),3).text()
         precio = self.precio_tablaP.split(".")
         self.precio_tablaP = ""
         for i in range(len(precio)):
             self.precio_tablaP = self.precio_tablaP + precio[i]
 
     def load_model_total_productos(self,data=""):
-        model = controller.TotalProductosModel(data,self.__header_table__)
+        model = controller.TotalProductosModel()
         self.ui.tableView_total_productos.setModel(model)
+        model.load_data(data,self.__header_table__)
 
+        self.set_columns_total_productos()
+
+    def set_columns_total_productos(self):
         self.ui.tableView_total_productos.horizontalHeader().setResizeMode(
             2, self.ui.tableView_total_productos.horizontalHeader().Stretch)
 
-        # Designamos los header de la grilla y sus respectivos anchos
         for col, h in enumerate(self.__header_table__):
             self.ui.tableView_total_productos.setColumnWidth(col, h[1])
 

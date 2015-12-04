@@ -217,7 +217,7 @@ class FormularioVenta(QtGui.QWidget):
 
     """ ======================================================================= TABLA PRODUCTOS PEDIDOS ============================================================ """
 
-    def load_productos_table2(self, pedido=None):
+    def load_productos_table2(self, pedido=None):    
         """
         Carga la información de la base de datos en la tabla.
         Obtiene desde la base de datos a traves del controlador
@@ -228,10 +228,18 @@ class FormularioVenta(QtGui.QWidget):
         # self.typeModelClass = parent
         # print("load_productos_table2 pedido: {}".format(pedido))
         if pedido is None:
+            # self.edit = False
+            # print("Edit False")
+            self.ui.pushButton_imprimir_comandas.setEnabled(True)
+            self.ui.pushButton_cerrar_venta.setText("Cerrar Venta")
             productos = controller.getProductosPedido(self.id_pedido)
             # print(productos)
         else:
             # print(pedido)
+            self.edit = True
+            print("Edit True")
+            self.ui.pushButton_imprimir_comandas.setEnabled(False)
+            self.ui.pushButton_cerrar_venta.setText("Guardar Cambios")
             productos = controller.getProductosPedido(pedido)
             self.id_pedido = pedido
             # print(productos)
@@ -271,7 +279,7 @@ class FormularioVenta(QtGui.QWidget):
         else:
             self.set_source_model_table2(model)
 
-    def reload_data_table2(self):        
+    def reload_data_table2(self):
         self.set_model_table2()
         self.set_source_model_table2(
             self.load_productos_table2())  # table2(self)
@@ -316,7 +324,13 @@ class FormularioVenta(QtGui.QWidget):
     """ ======================================================================= CERRAR VENTA ============================================================ """
 
     def action_cerrar_venta(self):
-        self.agregarVenta()
+        try:
+            if self.edit is True:
+                self.editarVenta()
+            else:
+                self.agregarVenta()
+        except:
+            self.agregarVenta()
 
     def agregarVenta(self):
         y = int(time.strftime("%Y"))
@@ -331,6 +345,21 @@ class FormularioVenta(QtGui.QWidget):
             self.rut_usuario)[0].id_usuario)
         controller.addDataVenta(fecha, num_documento,
                                 tipo, total_pago, id_usuario, id_pedido)
+
+    def editarVenta(self):
+        print("-----Editar Venta-----")
+        y = int(time.strftime("%Y"))
+        m = int(time.strftime("%m"))
+        d = int(time.strftime("%d"))
+        fecha = datetime.date(y, m, d)
+        # num_documento = len(controller.getVentas())
+        # tipo = "directa"
+        total_pago = self.ui.lcdNumber_total.value()
+        id_venta = controller.getIdVenta(int(self.id_pedido))
+        id_usuario = int(controller_admin_user.getUsuarioRut(
+            self.rut_usuario)[0].id_usuario)
+        
+        controller.editDataVenta(id_venta, fecha, total_pago, id_usuario)        
 
 
 if __name__ == "__main__":

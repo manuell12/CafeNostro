@@ -281,12 +281,43 @@ class Venta(object):
         conex.commit()
         conn.close()
 
+    def edit_data_venta(cls):
+        print("{}\t{}\t{}\t{}".format(cls.id_venta, cls.fecha, cls.total_pago, cls.id_usuario))
+        try:
+            conex = connect()
+            conn = conex.cursor()
+            query = "UPDATE venta SET total_pago = {} WHERE idVenta = {}".format(
+                cls.total_pago,
+                cls.id_venta)
+            print(query)     
+            conn.execute(query)                            
+            conex.commit()
+        
+        except MySQLdb.Error as e:
+            print "Error al editar la venta:", e.args[0]                       
+    
+        conn.close()
+
     @classmethod
     def getIdPedido(cls, id_venta):
         conex = connect()
         conn = conex.cursor()
         query = "SELECT `idPedido` FROM `venta` WHERE `idVenta` = {}".format(
             id_venta)
+        conn.execute(query)
+        data = conn.fetchall()[0][0]
+        # print(data)
+        conex.commit()
+        conn.close()
+        return data
+
+    @classmethod
+    def get_id_venta(cls, id_pedido):
+        """ Obtiene el id venta que esta asociado a un pedido """
+        conex = connect()
+        conn = conex.cursor()
+        query = "SELECT `idVenta` FROM `venta` WHERE `idPedido` = {}".format(
+            id_pedido)
         conn.execute(query)
         data = conn.fetchall()[0][0]
         # print(data)

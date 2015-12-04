@@ -37,9 +37,12 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.stackedWidget.addWidget(AdminUsers()) #2
         self.ui.stackedWidget.addWidget(AdminProductos()) #3
         self.ui.stackedWidget.addWidget(FormularioVenta(self.ui,self.rut,"0")) #4
-        self.ui.stackedWidget.addWidget(AdminVentas()) #5
+        self.ui.stackedWidget.addWidget(AdminVentas(self.ui)) #5
         for i in range(self.num_mesas+1): #6 = primera mesa
             self.ui.stackedWidget.addWidget(FormularioVenta(self.ui,self.rut,str(i)))
+
+        # self.ui.stackedWidget.addWidget(FormularioVenta(self.rut,"0")) #4
+        # self.ui.stackedWidget.addWidget(AdminVentas(self.ui)) #5    
 
         self.nombre = unicode(controller.getUsuarioRut(rut)[0].nombre)+" "+unicode(controller.getUsuarioRut(rut)[0].apellido)
         if(controller.getUsuarioRut(rut)[0].nombre == "root"):
@@ -107,6 +110,12 @@ class MainWindow(QtGui.QMainWindow):
         'Cambia a la interfaz de editar ventas de productos'
         self.ui.comboBox_mesas.setCurrentIndex(0)
         self.ui.stackedWidget.setCurrentIndex(5)
+# =======
+#         """Cambia a la interfaz de venta de producto y la actualiza"""
+#         self.ui.stackedWidget.setCurrentIndex(5)
+#         self.ui.stackedWidget.currentWidget().reload_data_table()
+#         # print self.ui.stackedWidget.count()
+# >>>>>>> EditarVenta
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)

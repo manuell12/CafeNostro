@@ -12,32 +12,37 @@ def connect():
     conex = MySQLdb.connect("localhost", "root", "", "cafe_nostro")
     return conex
 
+
 def obtenerObjetoPedidos(data):
     """
     Recibe como parametro la tupla recibida desde la BD y retorna una lista de objetos con todos los datos de los productos.
     """
     lista = list()
-    for i,row in enumerate(data):
-        lista.append(Pedido(row[0],row[1],row[2]))
+    for i, row in enumerate(data):
+        lista.append(Pedido(row[0], row[1], row[2]))
     return lista
+
 
 def obtenerObjetoVentaProductos(data):
     """
     Recibe como parametro la tupla recibida desde la BD y retorna una lista de objetos con todos los datos de los productos.
     """
     lista = list()
-    for i,row in enumerate(data):
-        lista.append(VentaProducto(row[0],row[1],row[2],row[3],row[4]))
+    for i, row in enumerate(data):
+        lista.append(VentaProducto(row[0], row[1], row[2], row[3], row[4]))
     return lista
+
 
 def obtenerObjetoVentas(data):
     """
     Recibe como parametro la tupla recibida desde la BD y retorna una lista de objetos con todos los datos de los productos.
     """
     lista = list()
-    for i,row in enumerate(data):
-        lista.append(Venta(row[0],row[1],row[2],row[3],row[4],row[5],row[6]))
+    for i, row in enumerate(data):
+        lista.append(Venta(row[0], row[1], row[2],
+                           row[3], row[4], row[5], row[6]))
     return lista
+
 
 class Pedido(object):
     """
@@ -95,6 +100,7 @@ class Pedido(object):
 
         conn.close()
 
+
 class VentaProducto(object):
     """
     Clase que representa a la tabla venta_has_producto.
@@ -103,7 +109,7 @@ class VentaProducto(object):
     """
     __tablename__ = "venta_has_producto"
     id_pedido = None  # FK
-    id_producto = None # FK
+    id_producto = None  # FK
     cantidad = 0
     precio_venta = 0
     porcentaje_descuento = 0
@@ -173,7 +179,7 @@ class VentaProducto(object):
         Método que retorna un producto de un pedido en la tabla venta_has_producto.
         """
         query = "SELECT * FROM venta_has_producto WHERE idPedido = {0} and idProducto = {1}".format(
-            cls.id_pedido,cls.id_producto)
+            cls.id_pedido, cls.id_producto)
 
         try:
             conex = connect()
@@ -208,7 +214,7 @@ class VentaProducto(object):
 
         conn.close()
 
-    def cambiarCantidadProducto(cls,cambiar):
+    def cambiarCantidadProducto(cls, cambiar):
         '''Interacciona con la base de datos a travez de una query que actualiza el estado de un Producto, especificando su id'''
         conex = connect()
         conn = conex.cursor()
@@ -226,6 +232,7 @@ class VentaProducto(object):
                           cls.id_pedido))
             conex.commit()
             conn.close()
+
 
 class Venta(object):
     """
@@ -294,6 +301,51 @@ class Venta(object):
 
         conn.close()
 
+    def edit_data_venta(cls):
+        print("{}\t{}\t{}\t{}".format(cls.id_venta,
+                                      cls.fecha, cls.total_pago, cls.id_usuario))
+        try:
+            conex = connect()
+            conn = conex.cursor()
+            query = "UPDATE venta SET total_pago = {} WHERE idVenta = {}".format(
+                cls.total_pago,
+                cls.id_venta)
+            print(query)
+            conn.execute(query)
+            conex.commit()
+
+        except MySQLdb.Error as e:
+            print "Error al editar la venta:", e.args[0]
+
+        conn.close()
+
+    @classmethod
+    def getIdPedido(cls, id_venta):
+        conex = connect()
+        conn = conex.cursor()
+        query = "SELECT `idPedido` FROM `venta` WHERE `idVenta` = {}".format(
+            id_venta)
+        conn.execute(query)
+        data = conn.fetchall()[0][0]
+        # print(data)
+        conex.commit()
+        conn.close()
+        return data
+
+    @classmethod
+    def get_id_venta(cls, id_pedido):
+        """ Obtiene el id venta que esta asociado a un pedido """
+        conex = connect()
+        conn = conex.cursor()
+        query = "SELECT `idVenta` FROM `venta` WHERE `idPedido` = {}".format(
+            id_pedido)
+        conn.execute(query)
+        data = conn.fetchall()[0][0]
+        # print(data)
+        conex.commit()
+        conn.close()
+        return data
+
     @classmethod
     def all(cls):
         """
@@ -318,6 +370,7 @@ class Venta(object):
 
         conn.close()
 
+
 class Pago(object):
     """
     Clase que representa a la tabla Pedido.
@@ -334,12 +387,12 @@ class Pago(object):
 
     def __init__(
             self,
-            id_pago = None,
-            pago_total = 0,
-            efectivo = 0,
-            tarjeta = 0,
-            propina = 0,
-            id_venta = 0):
+            id_pago=None,
+            pago_total=0,
+            efectivo=0,
+            tarjeta=0,
+            propina=0,
+            id_venta=0):
 
         self.id_pago = id_pago  # Primary Key
         self.pago_total = pago_total
@@ -360,3 +413,4 @@ class Pago(object):
                       cls.id_venta))
         conex.commit()
         conn.close()
+

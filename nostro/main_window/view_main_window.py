@@ -74,7 +74,13 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.actionUsuarios.triggered.connect(self.admin_users)
         self.ui.actionProductos.triggered.connect(self.admin_productos)
         self.ui.pushButton_compra_directa.clicked.connect(self.formulario_venta_directa)
+        self.ui.pushButton_agregar_mesa.clicked.connect(self.action_agregar_mesa)
         self.ui.comboBox_mesas.currentIndexChanged.connect(self.comboBox_mesas_changed)
+
+    def action_agregar_mesa(self):
+        self.num_mesas = self.num_mesas+1
+        self.ui.stackedWidget.addWidget(FormularioVenta(self.ui,self.rut,str(self.num_mesas)))
+        self.set_combobox_mesas()
 
     def comboBox_mesas_changed(self,index):
         if(index == 0):

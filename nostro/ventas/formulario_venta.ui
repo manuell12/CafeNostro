@@ -572,7 +572,7 @@
       <widget class="QPushButton" name="pushButton_opciones">
        <property name="minimumSize">
         <size>
-         <width>0</width>
+         <width>100</width>
          <height>40</height>
         </size>
        </property>
@@ -606,8 +606,15 @@
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
-        <string>Imprimir Comandas</string>
+        <string>Imprimir Comanda</string>
        </property>
       </widget>
      </item>
@@ -615,15 +622,15 @@
       <widget class="QPushButton" name="pushButton_cerrar_venta">
        <property name="minimumSize">
         <size>
-         <width>203</width>
+         <width>100</width>
          <height>51</height>
         </size>
        </property>
        <property name="font">
         <font>
-         <pointsize>14</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
+         <pointsize>10</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
         </font>
        </property>
        <property name="text">

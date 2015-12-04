@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'formulario_venta.ui'
 #
-# Created: Wed Dec 02 13:05:20 2015
+# Created: Fri Dec 04 08:26:40 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -195,7 +195,7 @@ class Ui_FormularioVenta(object):
         self.comboBox_tipo_pago.setObjectName("comboBox_tipo_pago")
         self.horizontalLayout_6.addWidget(self.comboBox_tipo_pago)
         self.pushButton_opciones = QtGui.QPushButton(FormularioVenta)
-        self.pushButton_opciones.setMinimumSize(QtCore.QSize(0, 40))
+        self.pushButton_opciones.setMinimumSize(QtCore.QSize(100, 40))
         self.pushButton_opciones.setObjectName("pushButton_opciones")
         self.horizontalLayout_6.addWidget(self.pushButton_opciones)
         self.verticalLayout_6.addLayout(self.horizontalLayout_6)
@@ -205,14 +205,19 @@ class Ui_FormularioVenta(object):
         self.horizontalLayout_4.addItem(spacerItem9)
         self.pushButton_imprimir_comandas = QtGui.QPushButton(FormularioVenta)
         self.pushButton_imprimir_comandas.setMinimumSize(QtCore.QSize(111, 51))
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        font.setWeight(75)
+        font.setBold(True)
+        self.pushButton_imprimir_comandas.setFont(font)
         self.pushButton_imprimir_comandas.setObjectName("pushButton_imprimir_comandas")
         self.horizontalLayout_4.addWidget(self.pushButton_imprimir_comandas)
         self.pushButton_cerrar_venta = QtGui.QPushButton(FormularioVenta)
-        self.pushButton_cerrar_venta.setMinimumSize(QtCore.QSize(203, 51))
+        self.pushButton_cerrar_venta.setMinimumSize(QtCore.QSize(100, 51))
         font = QtGui.QFont()
-        font.setPointSize(14)
-        font.setWeight(75)
-        font.setBold(True)
+        font.setPointSize(10)
+        font.setWeight(50)
+        font.setBold(False)
         self.pushButton_cerrar_venta.setFont(font)
         self.pushButton_cerrar_venta.setObjectName("pushButton_cerrar_venta")
         self.horizontalLayout_4.addWidget(self.pushButton_cerrar_venta)
@@ -240,6 +245,6 @@ class Ui_FormularioVenta(object):
         self.pushButton_agregar.setText(QtGui.QApplication.translate("FormularioVenta", "AGREGAR\n"
 "-->", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_opciones.setText(QtGui.QApplication.translate("FormularioVenta", "Mas opciones", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_imprimir_comandas.setText(QtGui.QApplication.translate("FormularioVenta", "Imprimir Comandas", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_imprimir_comandas.setText(QtGui.QApplication.translate("FormularioVenta", "Imprimir Comanda", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_cerrar_venta.setText(QtGui.QApplication.translate("FormularioVenta", "Pagar", None, QtGui.QApplication.UnicodeUTF8))
 

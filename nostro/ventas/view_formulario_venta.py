@@ -464,6 +464,7 @@ class FormularioVenta(QtGui.QWidget):
             tarjeta = total_pago
             efectivo = 0
         propina = self.ui.lcdNumber_propina.value()
+        id_pedido = int(self.id_pedido)
         id_venta = controller.getVentaPedidoId(id_pedido)[0].id_venta
         controller.addDataPago(total_pago, efectivo,
                                tarjeta, propina, id_venta)

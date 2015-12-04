@@ -8,7 +8,8 @@ import controller_venta as controller
 import admin_productos.controller_admin_producto as c
 import admin_usuarios.controller_admin_user as controller_admin_user
 from ventas.view_admin_venta import AdminVentas
-import datetime, time
+import datetime
+import time
 
 
 class FormularioVenta(QtGui.QWidget):
@@ -69,8 +70,10 @@ class FormularioVenta(QtGui.QWidget):
         self.ui.pushButton_filtrar_cocina.clicked.connect(self.action_cocina)
         self.ui.pushButton_filtrar_bebidas.clicked.connect(self.action_bebidas)
         self.ui.pushButton_filtrar_helados.clicked.connect(self.action_helados)
-        self.ui.pushButton_cerrar_venta.clicked.connect(self.action_cerrar_venta)
-        self.ui.lineEdit_buscar_codigo.textChanged.connect(self.lineEdit_buscar_codigo_changed)
+        self.ui.pushButton_cerrar_venta.clicked.connect(
+            self.action_cerrar_venta)
+        self.ui.lineEdit_buscar_codigo.textChanged.connect(
+            self.lineEdit_buscar_codigo_changed)
 
     def action_agregar(self):
         controller.addDataVentaProducto(
@@ -101,19 +104,19 @@ class FormularioVenta(QtGui.QWidget):
     """" ================================ FILTROS TABLA TOTAL PRODUCTOS =================================== """
 
     def action_cafeteria(self):
-        self.filtrar_data_table1("categoria",3)
+        self.filtrar_data_table1("categoria", 3)
 
     def action_cocina(self):
-        self.filtrar_data_table1("categoria",1)
+        self.filtrar_data_table1("categoria", 1)
 
     def action_bebidas(self):
-        self.filtrar_data_table1("categoria",4)
+        self.filtrar_data_table1("categoria", 4)
 
     def action_helados(self):
-        self.filtrar_data_table1("categoria",2)
+        self.filtrar_data_table1("categoria", 2)
 
     def lineEdit_buscar_codigo_changed(self, text):
-        self.filtrar_data_table1("codigo",text)
+        self.filtrar_data_table1("codigo", text)
 
     """ ============================================================================= TABLA TOTAL PRODUCTOS ============================================="""
 
@@ -222,9 +225,9 @@ class FormularioVenta(QtGui.QWidget):
         Crea un model para adjuntar los datos a la grilla y luego
         lo retorna para utilizarlo en setSourceModel.
         """
-        #self.typeModelClass = parent 
-        print("load_productos_table2 pedido: {}".format(pedido))
-        if pedido is None:            
+        # self.typeModelClass = parent
+        # print("load_productos_table2 pedido: {}".format(pedido))
+        if pedido is None:
             productos = controller.getProductosPedido(self.id_pedido)
             # print(productos)
         else:
@@ -233,7 +236,7 @@ class FormularioVenta(QtGui.QWidget):
             self.id_pedido = pedido
             # print(productos)
         row = len(productos)
-        print("Total productos: {}".format(row))
+        # print("Total productos: {}".format(row))
 
         model = QtGui.QStandardItemModel(row, len(self.__header_table2__))
         # model = QtGui.QStandardItemModel(row, len(self.headerTabla), parent)
@@ -251,7 +254,6 @@ class FormularioVenta(QtGui.QWidget):
                 if j is 5:
                     model.setData(index, self.__type_productos__[field])
                 else:
-                    print("Insertar")
                     model.setData(index, field)
 
         self.ui.lcdNumber_subtotal.setDecMode()
@@ -269,10 +271,10 @@ class FormularioVenta(QtGui.QWidget):
         else:
             self.set_source_model_table2(model)
 
-    def reload_data_table2(self):
-        print("Recargar")
+    def reload_data_table2(self):        
         self.set_model_table2()
-        self.set_source_model_table2(self.load_productos_table2()) #table2(self)
+        self.set_source_model_table2(
+            self.load_productos_table2())  # table2(self)
 
     def cell_selected_table2(self, index, indexp):
         model = self.ui.tableView_pedido.model()
@@ -319,14 +321,16 @@ class FormularioVenta(QtGui.QWidget):
     def agregarVenta(self):
         y = int(time.strftime("%Y"))
         m = int(time.strftime("%m"))
-        d = int(time.strftime("%d")) 
-        fecha = datetime.date(y,m,d)
+        d = int(time.strftime("%d"))
+        fecha = datetime.date(y, m, d)
         num_documento = len(controller.getVentas())
         tipo = "directa"
         total_pago = self.ui.lcdNumber_total.value()
         id_pedido = int(self.id_pedido)
-        id_usuario = int(controller_admin_user.getUsuarioRut(self.rut_usuario)[0].id_usuario)
-        controller.addDataVenta(fecha,num_documento,tipo,total_pago,id_usuario,id_pedido)
+        id_usuario = int(controller_admin_user.getUsuarioRut(
+            self.rut_usuario)[0].id_usuario)
+        controller.addDataVenta(fecha, num_documento,
+                                tipo, total_pago, id_usuario, id_pedido)
 
 
 if __name__ == "__main__":

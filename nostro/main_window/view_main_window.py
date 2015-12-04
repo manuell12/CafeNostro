@@ -67,8 +67,9 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.stackedWidget.setCurrentIndex(3)
 
     def admin_ventas(self):
-        'Cambia a la interfaz de venta de producto'
+        """Cambia a la interfaz de venta de producto y la actualiza"""
         self.ui.stackedWidget.setCurrentIndex(5)
+        self.ui.stackedWidget.currentWidget().reload_data_table()
         # print self.ui.stackedWidget.count()
 
 if __name__ == '__main__':

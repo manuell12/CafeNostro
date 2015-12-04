@@ -222,29 +222,36 @@ class FormularioVenta(QtGui.QWidget):
         Crea un model para adjuntar los datos a la grilla y luego
         lo retorna para utilizarlo en setSourceModel.
         """
-        #self.typeModelClass = parent        
+        #self.typeModelClass = parent 
+        print("load_productos_table2 pedido: {}".format(pedido))
         if pedido is None:            
             productos = controller.getProductosPedido(self.id_pedido)
-            print(productos)
+            # print(productos)
         else:
-            print(pedido)
+            # print(pedido)
             productos = controller.getProductosPedido(pedido)
-            print(productos)
+            self.id_pedido = pedido
+            # print(productos)
         row = len(productos)
+        print("Total productos: {}".format(row))
 
         model = QtGui.QStandardItemModel(row, len(self.__header_table2__))
         # model = QtGui.QStandardItemModel(row, len(self.headerTabla), parent)
         subtotal = 0
 
         for i, data in enumerate(productos):
-            row = [data.id_producto, controller.getProductoId(data.id_producto)[
-                0].nombre, data.cantidad, c.monetaryFormat(str(data.precio_venta).split(".")[0])]
+            print(type(controller.getProductoId(data.id_producto)[
+                0].nombre))
+            row = [data.id_producto, (controller.getProductoId(data.id_producto)[
+                0].nombre), data.cantidad, c.monetaryFormat(str(data.precio_venta).split(".")[0])]
             subtotal = subtotal + (long(data.precio_venta) * data.cantidad)
             for j, field in enumerate(row):
+                print(row)
                 index = model.index(i, j, QtCore.QModelIndex())
                 if j is 5:
                     model.setData(index, self.__type_productos__[field])
                 else:
+                    print("Insertar")
                     model.setData(index, field)
 
         self.ui.lcdNumber_subtotal.setDecMode()
@@ -257,9 +264,13 @@ class FormularioVenta(QtGui.QWidget):
         modelSel = self.ui.tableView_pedido.selectionModel()
         modelSel.currentChanged.connect(self.cell_selected_table2)
 
-        return model
+        if pedido is None:
+            return model
+        else:
+            self.set_source_model_table2(model)
 
     def reload_data_table2(self):
+        print("Recargar")
         self.set_model_table2()
         self.set_source_model_table2(self.load_productos_table2()) #table2(self)
 

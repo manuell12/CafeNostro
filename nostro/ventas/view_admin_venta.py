@@ -43,10 +43,10 @@ class AdminVentas(QtGui.QWidget):
         self.set_source_model(self.load_ventas(self))
 
     def mouse_entered(self):
-        self.reload_data_table();
+        self.reload_data_table()
 
-    def action_btn_editar(self):        
-        index = self.ui.tableView_ventas.currentIndex()                
+    def action_btn_editar(self):
+        index = self.ui.tableView_ventas.currentIndex()
         if index.row() == -1:  # No se ha seleccionado venta
             msgBox = QtGui.QMessageBox()
             msgBox.setIcon(QtGui.QMessageBox.Critical)
@@ -54,16 +54,32 @@ class AdminVentas(QtGui.QWidget):
             msgBox.setText("Debe seleccionar un venta.")
             msgBox.exec_()
             return False
-        else:            
+        else:
             model = self.ui.tableView_ventas.model()
             id_venta = model.index(index.row(), 0, QtCore.QModelIndex()).data()
+            print("ID Venta {}".format(id_venta))
             id_pedido = controller_venta.getIdPedido(id_venta)
+            print("ID Pedido {}".format(id_pedido))
             # print(id_pedido)
+            # productos = controller_venta.getProductosPedido(id_pedido)
+            # # print(len(productos))
+
+            # for producto in productos:
+            #     for c in range(0, producto.cantidad):
+            #         print("{}\t{}\t{}\t{}\t{}".format(
+            #             producto.id_pedido,
+            #             producto.id_producto,
+            #             producto.cantidad,
+            #             producto.precio_venta,
+            #             producto.porcentaje_descuento))
+            #         controller_venta.addDataVentaProducto(
+            #             producto.id_pedido,
+            #             producto.id_producto,
+            #             producto.precio_venta)
 
             self.mainwindow.stackedWidget.setCurrentIndex(4)
-            print(self.mainwindow.stackedWidget.currentWidget())
-            print(type(self.mainwindow.stackedWidget.currentWidget()))
-            self.mainwindow.stackedWidget.currentWidget().load_productos_table2(id_pedido)
+            self.mainwindow.stackedWidget.currentWidget().reload_data_table2()
+            self.mainwindow.stackedWidget.currentWidget().load_productos_table2(id_pedido)            
 
     def action_btn_eliminar(self):
         """Accion a realizar al presionar el boton eliminar"""
@@ -86,7 +102,8 @@ class AdminVentas(QtGui.QWidget):
         # model = QtGui.QStandardItemModel(row, len(self.headerTabla), parent)
 
         for i, data in enumerate(ventas):
-            row = [data.id_venta, data.num_documento, str(data.fecha), data.tipo, c.monetaryFormat(int(data.total_pago)), unicode(controller.getUsuarioId(data.id_usuario)[0].nombre)+" "+unicode(controller.getUsuarioId(data.id_usuario)[0].apellido)]
+            row = [data.id_venta, data.num_documento, str(data.fecha), data.tipo, c.monetaryFormat(int(data.total_pago)), unicode(
+                controller.getUsuarioId(data.id_usuario)[0].nombre) + " " + unicode(controller.getUsuarioId(data.id_usuario)[0].apellido)]
             for j, field in enumerate(row):
                 index = model.index(i, j, QtCore.QModelIndex())
                 if j is 4:

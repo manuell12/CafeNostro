@@ -24,8 +24,7 @@ class FormularioVenta(QtGui.QWidget):
                          (u"Cantidad", 100),
                          (u"Precio bruto", 100))
 
-    __type_pay__ = ((u"EFECTIVO"),
-                    (u"TARJETA"))
+    
     id_tablaP = 0
     id_tablaPd = 0
 
@@ -41,11 +40,16 @@ class FormularioVenta(QtGui.QWidget):
         self.id_pedido = controller.addDataPedido(self.mesa)
         self.rut_usuario = rut_usuario
 
-        self.reload_data_table1()
+        self.load_model_total_productos(controller.getProductoStatus(1))
         self.reload_data_table2()
+        self.set_combobox_tipo_pago()
+
+    def set_combobox_tipo_pago(self):
+        __type_pay__ = ((u"EFECTIVO"),
+                        (u"TARJETA"))
 
         model = QtGui.QStandardItemModel()
-        for text in self.__type_pay__:
+        for text in __type_pay__:
             text_item = QtGui.QStandardItem(text)
             text_item.setSizeHint(QtCore.QSize(100, 50))
             text_item.setTextAlignment(QtCore.Qt.AlignHCenter)
@@ -60,6 +64,7 @@ class FormularioVenta(QtGui.QWidget):
     def connect_actions(self):
         self.ui.pushButton_agregar.clicked.connect(self.action_agregar)
         self.ui.pushButton_eliminar.clicked.connect(self.action_eliminar)
+        self.ui.pushButton_opciones.clicked.connect(self.action_opciones)
         self.ui.pushButton_aumentar_cantidad.clicked.connect(
             self.action_aumentar)
         self.ui.pushButton_disminuir_cantidad.clicked.connect(
@@ -101,116 +106,59 @@ class FormularioVenta(QtGui.QWidget):
     """" ================================ FILTROS TABLA TOTAL PRODUCTOS =================================== """
 
     def action_cafeteria(self):
-        self.filtrar_data_table1("categoria",3)
+        productos = controller.getProductoCategoria(3)
+        self.load_model_total_productos(productos)
 
     def action_cocina(self):
-        self.filtrar_data_table1("categoria",1)
+        productos = controller.getProductoCategoria(1)
+        self.load_model_total_productos(productos)
 
     def action_bebidas(self):
-        self.filtrar_data_table1("categoria",4)
+        productos = controller.getProductoCategoria(4)
+        self.load_model_total_productos(productos)
 
     def action_helados(self):
-        self.filtrar_data_table1("categoria",2)
+        productos = controller.getProductoCategoria(2)
+        self.load_model_total_productos(productos)
 
     def lineEdit_buscar_codigo_changed(self, text):
-        self.filtrar_data_table1("codigo",text)
+        productos = controller.getProductoCodigo(text)
+        self.load_model_total_productos(productos)
 
     """ ============================================================================= TABLA TOTAL PRODUCTOS ============================================="""
 
-    def load_productos_table1(self, parent, tipo=None, valor=None):
-        """
-        Carga la información de la base de datos en la tabla.
-        Obtiene desde la base de datos a traves del controlador
-        la información completa de la tabla.
-        Crea un model para adjuntar los datos a la grilla y luego
-        lo retorna para utilizarlo en setSourceModel.
-        """
-
-        if(tipo == "categoria"):
-            if(valor == 1):
-                productos = controller.getProductoCategoria(1)
-            if(valor == 2):
-                productos = controller.getProductoCategoria(2)
-            if(valor == 3):
-                productos = controller.getProductoCategoria(3)
-            if(valor == 4):
-                productos = controller.getProductoCategoria(4)
-        if(tipo == "codigo"):
-            productos = controller.getProductoCodigo(valor)
-
-        if(tipo == None and valor == None):
-            productos = controller.getProductoStatus(1)
-
-        row = len(productos)
-
-        model = QtGui.QStandardItemModel(row, len(self.__header_table__))
-        # model = QtGui.QStandardItemModel(row, len(self.headerTabla), parent)
-
-        for i, data in enumerate(productos):
-            row = [data.id_producto, data.codigo, data.nombre, c.monetaryFormat(
-                str(data.precio_bruto).split(".")[0])]
-            for j, field in enumerate(row):
-                index = model.index(i, j, QtCore.QModelIndex())
-                if j is 5:
-                    model.setData(index, self.__type_productos__[field])
-                else:
-                    model.setData(index, field)
-
-        modelSel = self.ui.tableView_total_productos.selectionModel()
-        modelSel.currentChanged.connect(self.cell_selected_table1)
-
-        return model
-
-    def reload_data_table1(self):
-        self.set_model_table1()
-        self.set_source_model_table1(self.load_productos_table1(self))
-
-    def filtrar_data_table1(self, tipo, valor):
-        self.set_model_table1()
-        self.set_source_model_table1(
-            self.load_productos_table1(self, tipo, valor))
 
     def cell_selected_table1(self, index, indexp):
-        model = self.ui.tableView_total_productos.model()
-        index = self.ui.tableView_total_productos.currentIndex()
-        self.id_tablaP = model.index(
-            index.row(), 0, QtCore.QModelIndex()).data()
-        self.nombre_tablaP = model.index(
-            index.row(), 2, QtCore.QModelIndex()).data()
-        self.precio_tablaP = model.index(
-            index.row(), 3, QtCore.QModelIndex()).data()
+        model = self.ui.tableView_total_productos.model().sourceModel()
+        self.id_tablaP = int(model.item(index.row(),0).text())
+        self.nombre_tablaP = model.item(index.row(),2).text()
+        self.precio_tablaP = model.item(index.row(),3).text()
         precio = self.precio_tablaP.split(".")
         self.precio_tablaP = ""
         for i in range(len(precio)):
             self.precio_tablaP = self.precio_tablaP + precio[i]
 
-    def set_model_table1(self):
-        """Define el módelo de la grilla para trabajarla."""
-        self.proxyModel = QtGui.QSortFilterProxyModel()
-        self.proxyModel.setDynamicSortFilter(True)
+    def load_model_total_productos(self,data=""):
+        model = controller.TotalProductosModel()
+        self.ui.tableView_total_productos.setModel(model)
+        model.load_data(data,self.__header_table__)
 
-        self.ui.tableView_total_productos.setModel(self.proxyModel)
+        self.set_columns_total_productos()
 
-    def set_source_model_table1(self, model):
-        """
-        Actualiza constantemente el origen de los datos para siempre tenerlos
-        al día así pudiendo buscar y mostrar solo algunos datos.
-        Además llama a las funciones que rellenan los comboBox de filtrado y
-        asigna el tamaño de las columnas a las grillas respectivas.
-        """
-        self.proxyModel.setSourceModel(model)
-
+    def set_columns_total_productos(self):
         self.ui.tableView_total_productos.horizontalHeader().setResizeMode(
             2, self.ui.tableView_total_productos.horizontalHeader().Stretch)
 
-        # Designamos los header de la grilla y sus respectivos anchos
         for col, h in enumerate(self.__header_table__):
-            model.setHeaderData(col, QtCore.Qt.Horizontal, h[0])
             self.ui.tableView_total_productos.setColumnWidth(col, h[1])
 
         self.ui.tableView_total_productos.sortByColumn(
             0, QtCore.Qt.AscendingOrder)
         self.ui.tableView_total_productos.setColumnHidden(0, True)
+
+        modelSel = self.ui.tableView_total_productos.selectionModel()
+        modelSel.currentChanged.connect(self.cell_selected_table1)
+
 
     """ ======================================================================= TABLA PRODUCTOS PEDIDOS ============================================================ """
 
@@ -295,6 +243,124 @@ class FormularioVenta(QtGui.QWidget):
         self.ui.tableView_pedido.sortByColumn(0, QtCore.Qt.AscendingOrder)
         self.ui.tableView_pedido.setColumnHidden(0, True)
 
+    """ ===================================================================== NUMERO DE PAGOS ============================================================ """
+
+    def action_opciones(self):
+        self.n_pagos = self.ui.label_numero_pagos.text()
+        self.nPagosDialog = self.createPagosWindow(1)
+        self.nPagosDialog.exec_()
+
+    def action_numero_pagos(self):
+        self.n_pagos = int(self.lineEdit_pagos[0].text())
+        aux = self.lineEdit_pagos[0]
+        self.clearLayout(self.groupBox.layout())
+        self.lineEdit_pagos = list()
+        self.lineEdit_pagos.append(aux)
+        
+        for i in range(self.n_pagos):
+            label = QtGui.QLabel("Pago "+str(i+1)+": ")
+            line_edit = QtGui.QLineEdit()
+            self.lineEdit_pagos.append(line_edit)
+            horizontalLayout = QtGui.QHBoxLayout()
+            horizontalLayout.addWidget(label)
+            horizontalLayout.addWidget(line_edit)
+            self.verticalLayout2.addLayout(horizontalLayout)
+
+        for i,lineEdit in enumerate(self.lineEdit_pagos):
+            if(i == 0):
+                lineEdit.setText(str(self.n_pagos))
+            else:
+                lineEdit.setText(str(int(self.ui.lcdNumber_total.value()/self.n_pagos)))
+
+    def action_guardar_pagos(self):
+        msgBox = QtGui.QMessageBox()
+        msgBox.setIcon(QtGui.QMessageBox.Warning)
+        msgBox.setStandardButtons(
+            QtGui.QMessageBox.Ok | QtGui.QMessageBox.Cancel)
+        msgBox.setWindowTitle(u"Advertencia")
+        msgBox.setText(
+            u"Confirme para realizar venta")
+        press = msgBox.exec_()
+        if press == QtGui.QMessageBox.Ok:
+            self.agregarVenta()
+            for i,lineEdit in enumerate(self.lineEdit_pagos):
+                if(i != 0):
+                    total_pago = int(lineEdit.text())
+                    efectivo = int(lineEdit.text())
+                    tarjeta = 0
+                    id_pedido = int(self.id_pedido)
+                    propina = self.ui.lcdNumber_propina.value()
+                    id_venta = controller.getVentaPedidoId(id_pedido)[0].id_venta
+                    controller.addDataPago(total_pago, efectivo, tarjeta, propina, id_venta)
+                    self.nPagosDialog.close()
+            self.main.stackedWidget.widget(5).reload_data_table()
+            self.id_pedido = controller.addDataPedido(self.mesa)
+            self.reload_data_table2()
+        else:
+            return False
+
+    def createPagosWindow(self, pagos):
+        self.n_pagos = pagos
+        w = QtGui.QDialog()
+        w.resize( 400, 100 )
+        w.setWindowTitle("Gestionar pagos")
+
+        self.groupBox = QtGui.QGroupBox()
+        self.groupBox.setTitle("Pagos")
+
+        verticalLayout1 = QtGui.QVBoxLayout()
+
+        label = QtGui.QLabel(u"Número de pagos: ")
+        lineEdit_numero_pagos = QtGui.QLineEdit(str(self.n_pagos))
+        pushButton_numero_pagos = QtGui.QPushButton("Aceptar")
+        pushButton_guardar_pagos = QtGui.QPushButton("Pagar")
+        horizontalLayout = QtGui.QHBoxLayout()
+        horizontalLayout.addWidget(label)
+        horizontalLayout.addWidget(lineEdit_numero_pagos)
+        horizontalLayout.addWidget(pushButton_numero_pagos)
+        verticalLayout1.addLayout(horizontalLayout)
+
+        self.verticalLayout2 = QtGui.QVBoxLayout(self.groupBox)
+
+        self.lineEdit_pagos = list()
+        self.lineEdit_pagos.append(lineEdit_numero_pagos)
+
+        for i in range(self.n_pagos):
+            label = QtGui.QLabel("Pago "+str(i+1)+": ")
+            line_edit = QtGui.QLineEdit()
+            self.lineEdit_pagos.append(line_edit)
+            horizontalLayout = QtGui.QHBoxLayout()
+            horizontalLayout.addWidget(label)
+            horizontalLayout.addWidget(line_edit)
+            self.verticalLayout2.addLayout(horizontalLayout)
+
+        self.lineEdit_pagos[1].setText(str(int(self.ui.lcdNumber_total.value())))
+
+        mainVLayout = QtGui.QVBoxLayout()
+        mainVLayout.addLayout(verticalLayout1)
+        mainVLayout.addWidget(self.groupBox)
+        mainVLayout.addWidget(pushButton_guardar_pagos)
+
+        mainHLayout = QtGui.QHBoxLayout()
+        mainHLayout.addLayout(mainVLayout)
+
+        w.setLayout(mainHLayout)
+
+        pushButton_numero_pagos.clicked.connect(self.action_numero_pagos)
+        pushButton_guardar_pagos.clicked.connect(self.action_guardar_pagos)
+        return w
+
+    def clearLayout(self, layout):
+        if layout is not None:
+            while layout.count():
+                item = layout.takeAt(0)
+                widget = item.widget()
+                if widget is not None:
+                    widget.deleteLater()
+                else:
+                    self.clearLayout(item.layout())
+
+
     """ ======================================================================= CERRAR VENTA ============================================================ """
 
     def action_cerrar_venta(self):
@@ -308,6 +374,7 @@ class FormularioVenta(QtGui.QWidget):
         press = msgBox.exec_()
         if press == QtGui.QMessageBox.Ok:
             self.agregarVenta()
+            self.agregarPedido()
             self.main.stackedWidget.widget(5).reload_data_table()
             self.id_pedido = controller.addDataPedido(self.mesa)
             self.reload_data_table2()
@@ -332,6 +399,8 @@ class FormularioVenta(QtGui.QWidget):
         id_usuario = int(controller_admin_user.getUsuarioRut(self.rut_usuario)[0].id_usuario)
         controller.addDataVenta(fecha,num_documento,tipo,total_pago,id_usuario,id_pedido)
 
+    def agregarPedido(self):
+        total_pago = self.ui.lcdNumber_total.value()
         if(int(self.ui.comboBox_tipo_pago.currentIndex()) == 0): #efectivo
         	efectivo = total_pago
         	tarjeta = 0

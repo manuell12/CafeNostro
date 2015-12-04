@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main_window.ui'
 #
-# Created: Sat Nov 28 03:26:16 2015
+# Created: Fri Dec 04 08:26:08 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -39,6 +39,15 @@ class Ui_MainWindow(object):
         self.comboBox_mesas.setMinimumSize(QtCore.QSize(120, 40))
         self.comboBox_mesas.setObjectName("comboBox_mesas")
         self.horizontalLayout.addWidget(self.comboBox_mesas)
+        self.line_2 = QtGui.QFrame(self.groupBox)
+        self.line_2.setFrameShape(QtGui.QFrame.VLine)
+        self.line_2.setFrameShadow(QtGui.QFrame.Sunken)
+        self.line_2.setObjectName("line_2")
+        self.horizontalLayout.addWidget(self.line_2)
+        self.pushButton_agregar_mesa = QtGui.QPushButton(self.groupBox)
+        self.pushButton_agregar_mesa.setMinimumSize(QtCore.QSize(90, 40))
+        self.pushButton_agregar_mesa.setObjectName("pushButton_agregar_mesa")
+        self.horizontalLayout.addWidget(self.pushButton_agregar_mesa)
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
         self.label_usuario = QtGui.QLabel(self.groupBox)
@@ -98,6 +107,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "CaféNostro", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox.setTitle(QtGui.QApplication.translate("MainWindow", "Inicio", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_compra_directa.setText(QtGui.QApplication.translate("MainWindow", "Compra Directa", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_agregar_mesa.setText(QtGui.QApplication.translate("MainWindow", "Agregar Mesa", None, QtGui.QApplication.UnicodeUTF8))
         self.label_usuario.setText(QtGui.QApplication.translate("MainWindow", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
         self.menuAdministraci_n.setStatusTip(QtGui.QApplication.translate("MainWindow", "Sección administrativa de la aplicación", None, QtGui.QApplication.UnicodeUTF8))
         self.menuAdministraci_n.setTitle(QtGui.QApplication.translate("MainWindow", "&Administración", None, QtGui.QApplication.UnicodeUTF8))

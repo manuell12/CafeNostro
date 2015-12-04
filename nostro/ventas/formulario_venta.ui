@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>675</width>
+    <width>699</width>
     <height>444</height>
    </rect>
   </property>
@@ -286,6 +286,20 @@
              </property>
             </spacer>
            </item>
+           <item>
+            <widget class="QLabel" name="label_6">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Número de pagos: &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_numero_pagos">
+             <property name="text">
+              <string>01</string>
+             </property>
+            </widget>
+           </item>
           </layout>
          </item>
          <item>
@@ -558,7 +572,7 @@
       <widget class="QPushButton" name="pushButton_opciones">
        <property name="minimumSize">
         <size>
-         <width>0</width>
+         <width>100</width>
          <height>40</height>
         </size>
        </property>
@@ -592,8 +606,15 @@
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
-        <string>Imprimir Comandas</string>
+        <string>Imprimir Comanda</string>
        </property>
       </widget>
      </item>
@@ -601,15 +622,15 @@
       <widget class="QPushButton" name="pushButton_cerrar_venta">
        <property name="minimumSize">
         <size>
-         <width>203</width>
+         <width>100</width>
          <height>51</height>
         </size>
        </property>
        <property name="font">
         <font>
-         <pointsize>14</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
+         <pointsize>10</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
         </font>
        </property>
        <property name="text">

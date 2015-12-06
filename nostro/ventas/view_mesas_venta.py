@@ -45,7 +45,10 @@ class MesasVenta(QtGui.QWidget):
         self.column = 0
         for mesa in range(self.num_mesas+1):
             if (mesa != 0):
-                pushButton_mesa = QtGui.QPushButton("Mesa "+str(mesa))
+                if (mesa < 10):
+                    pushButton_mesa = QtGui.QPushButton("Mesa 0"+str(mesa))
+                else:
+                    pushButton_mesa = QtGui.QPushButton("Mesa "+str(mesa))
 
                 self.list_mesas.append(pushButton_mesa)
 
@@ -59,5 +62,6 @@ class MesasVenta(QtGui.QWidget):
 
     def button_pressed(self):
         button_mesa = self.sender()
-        num_mesa = int(button_mesa.text()[-1])
+        num_mesa = int(button_mesa.text()[-2:])
+        print str(num_mesa)
         self.main.stackedWidget.setCurrentIndex(num_mesa+6)

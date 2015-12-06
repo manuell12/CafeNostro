@@ -215,3 +215,12 @@ def getIdVenta(id_pedido):
     """Obtiene el id del pedido a traves de la venta relacionada"""
     id_venta = Venta.get_id_venta(id_pedido)
     return id_venta
+
+class PushButtonMesa(QtGui.QPushButton):
+    """
+    Un QPushButton especializado que almacena el número de la mesa.
+    """
+    mesa = 0
+    def __init__(self, text, parent=None):
+        super(PushButtonMesa, self).__init__(parent)
+        self.setText(text)

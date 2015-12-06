@@ -43,7 +43,8 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.stackedWidget.addWidget(AdminVentas(self.ui)) #5
         self.ui.stackedWidget.addWidget(MesasVenta(self.ui,self.num_mesas,self.rut)) #6
         for i in range(self.num_mesas+1): #7 = primera mesa
-            self.ui.stackedWidget.addWidget(FormularioVenta(self.ui,self.rut,str(i)))
+            if(i != 0):
+                self.ui.stackedWidget.addWidget(FormularioVenta(self.ui,self.rut,str(i)))
 
     def config_user(self):
         self.nombre = unicode(controller.getUsuarioRut(self.rut)[0].nombre)+" "+unicode(controller.getUsuarioRut(self.rut)[0].apellido)

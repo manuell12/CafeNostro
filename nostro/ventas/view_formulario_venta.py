@@ -200,7 +200,6 @@ class FormularioVenta(QtGui.QWidget):
                 0].nombre, data.cantidad, c.monetaryFormat(str(data.precio_venta).split(".")[0])]
             subtotal = subtotal + (long(data.precio_venta) * data.cantidad)
             for j, field in enumerate(row):
-                print(row)
                 index = model.index(i, j, QtCore.QModelIndex())
                 if j is 5:
                     model.setData(index, self.__type_productos__[field])

@@ -200,7 +200,6 @@ class FormularioVenta(QtGui.QWidget):
                 0].nombre, data.cantidad, c.monetaryFormat(str(data.precio_venta).split(".")[0])]
             subtotal = subtotal + (long(data.precio_venta) * data.cantidad)
             for j, field in enumerate(row):
-                print(row)
                 index = model.index(i, j, QtCore.QModelIndex())
                 if j is 5:
                     model.setData(index, self.__type_productos__[field])
@@ -428,11 +427,6 @@ class FormularioVenta(QtGui.QWidget):
             tipo = "directa"
         else:
             tipo = "pedido por mesa"
-# =======
-#         fecha = datetime.date(y, m, d)
-#         num_documento = len(controller.getVentas())
-#         tipo = "directa"
-# >>>>>>> EditarVenta
         total_pago = self.ui.lcdNumber_total.value()
         id_pedido = int(self.id_pedido)
         id_usuario = int(controller_admin_user.getUsuarioRut(

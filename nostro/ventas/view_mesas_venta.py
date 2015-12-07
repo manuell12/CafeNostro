@@ -10,6 +10,8 @@ import ventas.controller_venta as controller_venta
 class MesasVenta(QtGui.QWidget):
     editable = False
     identificador = 0 # 0: borrar mesas, 1: unir mesas, 2: separar mesas
+    buttons_disabled = list()
+    buttons_enabled = list()
     def __init__(self,main,num_mesas,rut):
         'Constructor de la clase'
         QtGui.QWidget.__init__(self)
@@ -28,26 +30,46 @@ class MesasVenta(QtGui.QWidget):
         self.ui.pushButton_borrar.clicked.connect(self.borrar_mesa)
         self.ui.pushButton_aceptar.clicked.connect(self.aceptar)
         self.ui.pushButton_unir.clicked.connect(self.action_button_unir_mesas)
+        self.ui.pushButton_habilitar.clicked.connect(self.action_button_habilitar_mesas)
 
     def action_button_unir_mesas(self):
         self.ui.pushButton_aceptar.setVisible(True)
-        self.ui.label_info.setText("Selecciona las mesas que desea unir.")
+        self.ui.label_info.setText("Seleccione las mesas que desea unir.")
         self.editable = True
         for button in self.list_mesas:
             button.setCheckable(True)
         self.identificador = 1
 
+    def action_button_habilitar_mesas(self):
+        self.ui.pushButton_aceptar.setVisible(True)
+        self.ui.label_info.setText("Seleccione la/las mesa(s) que desea habilitar.")
+        self.editable = True
+        self.buttons_disabled = list()
+        self.buttons_enabled = list()
+        for button in self.list_mesas:
+            button.setCheckable(True)
+            if(not button.isEnabled()):
+                self.buttons_disabled.append(button)
+            button.setEnabled(True)
+        self.identificador = 2
+
     def unir_mesas(self, buttons_mesas):
         texto = ""
         num_mesa = buttons_mesas[0].mesa # número de la mesa a la que se van a unir las demás
+        buttons_mesas[0].unido = True # asignamos la mesa como "unido"
+
         pedidos_mesas = list()
-        for button in buttons_mesas:
-            texto = texto + " " + str(button.mesa)
-        for mesa,button in enumerate(buttons_mesas):
-            pedidos_mesas.append(self.main.stackedWidget.widget(button.mesa+6).id_pedido)
-            if (mesa == 0):
-                button.setText("Mesas:"+texto)
+        for i,button in enumerate(buttons_mesas):
+            if (i == 0):
+                texto = str(button.mesa)
             else:
+                texto = texto + ", " + str(button.mesa)
+        for i,button in enumerate(buttons_mesas):
+            pedidos_mesas.append(self.main.stackedWidget.widget(button.mesa+6).id_pedido) # guardamos en la lista "pedidos_mesas", el id_pedido de cada mesa.    
+            if (i == 0):
+                button.setText("Mesas: "+texto)
+            else:
+                buttons_mesas[0].unido_a.append(button)
                 button.setEnabled(False)
         productos = list() 
         for i,pedido in enumerate(pedidos_mesas):
@@ -56,7 +78,7 @@ class MesasVenta(QtGui.QWidget):
         for producto in productos:
             controller_venta.addDataVentaProducto(
                 pedidos_mesas[0], producto.id_producto, producto.precio_venta)
-        
+
         self.main.stackedWidget.widget(num_mesa+6).reload_data_table2()
 
     def aceptar(self):
@@ -74,8 +96,24 @@ class MesasVenta(QtGui.QWidget):
                     mesas_a_unir.append(button)
                 button.setCheckable(False)
             self.unir_mesas(mesas_a_unir)
-        else: # separar mesas
-            pass
+        else: # habilitar mesa
+            buttons_checked = list()
+            for button in self.list_mesas:
+                if(button.isChecked()):
+                    buttons_checked.append(button)
+                    id_pedido = controller_venta.addDataPedido(button.mesa)
+                    self.main.stackedWidget.widget(button.mesa+6).id_pedido = id_pedido
+                    self.main.stackedWidget.widget(button.mesa+6).reload_data_table2()
+                    for button_all in self.list_mesas:
+                        print button,button_all.unido_a
+                        if(button in button_all.unido_a):
+                            button_all.setText("Mesa "+str(button_all.mesa))
+                button.setCheckable(False)
+
+            for button in self.buttons_disabled:
+                button.setEnabled(False)
+            for button in buttons_checked:
+                button.setEnabled(True)
         self.editable = False
         self.ui.label_info.setText("")
         self.ui.pushButton_aceptar.setVisible(False)
@@ -83,7 +121,8 @@ class MesasVenta(QtGui.QWidget):
     def agregar_mesa(self):
         num_mesa = len(self.list_mesas)+1
         
-        pushButton_mesa = QtGui.QPushButton("Mesa "+str(num_mesa))
+        pushButton_mesa = controller_venta.PushButtonMesa("Mesa "+str(num_mesa))
+        pushButton_mesa.mesa = num_mesa
         pushButton_mesa.setMinimumSize(QtCore.QSize(120, 60))
         pushButton_mesa.clicked.connect(self.button_pressed)
         self.list_mesas.append(pushButton_mesa)

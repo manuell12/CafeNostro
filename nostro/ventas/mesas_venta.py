@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mesas_venta.ui'
 #
-# Created: Sun Dec 06 16:23:15 2015
+# Created: Sun Dec 06 20:18:22 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -63,10 +63,10 @@ class Ui_MesasVenta(object):
         self.pushButton_unir.setMinimumSize(QtCore.QSize(0, 50))
         self.pushButton_unir.setObjectName("pushButton_unir")
         self.verticalLayout.addWidget(self.pushButton_unir)
-        self.pushButton_separar = QtGui.QPushButton(self.groupBox_2)
-        self.pushButton_separar.setMinimumSize(QtCore.QSize(100, 50))
-        self.pushButton_separar.setObjectName("pushButton_separar")
-        self.verticalLayout.addWidget(self.pushButton_separar)
+        self.pushButton_habilitar = QtGui.QPushButton(self.groupBox_2)
+        self.pushButton_habilitar.setMinimumSize(QtCore.QSize(100, 50))
+        self.pushButton_habilitar.setObjectName("pushButton_habilitar")
+        self.verticalLayout.addWidget(self.pushButton_habilitar)
         spacerItem4 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem4)
         self.horizontalLayout.addWidget(self.groupBox_2)
@@ -82,5 +82,5 @@ class Ui_MesasVenta(object):
         self.pushButton_agregar.setText(QtGui.QApplication.translate("MesasVenta", "Agregar Mesa", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_borrar.setText(QtGui.QApplication.translate("MesasVenta", "Borrar Mesa", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_unir.setText(QtGui.QApplication.translate("MesasVenta", "Unir Mesas", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_separar.setText(QtGui.QApplication.translate("MesasVenta", "Separar Mesas", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_habilitar.setText(QtGui.QApplication.translate("MesasVenta", "Habilitar Mesa", None, QtGui.QApplication.UnicodeUTF8))
 

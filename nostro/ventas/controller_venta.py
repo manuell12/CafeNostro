@@ -218,9 +218,11 @@ def getIdVenta(id_pedido):
 
 class PushButtonMesa(QtGui.QPushButton):
     """
-    Un QPushButton especializado que almacena el número de la mesa.
+    Un QPushButton especializado que almacena el número de la mesa. Ademas posee un atributo para diferenciar las mesas unidas.
     """
     mesa = 0
+    unido = False
+    unido_a = list()
     def __init__(self, text, parent=None):
         super(PushButtonMesa, self).__init__(parent)
         self.setText(text)

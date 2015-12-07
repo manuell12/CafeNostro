@@ -427,11 +427,6 @@ class FormularioVenta(QtGui.QWidget):
             tipo = "directa"
         else:
             tipo = "pedido por mesa"
-# =======
-#         fecha = datetime.date(y, m, d)
-#         num_documento = len(controller.getVentas())
-#         tipo = "directa"
-# >>>>>>> EditarVenta
         total_pago = self.ui.lcdNumber_total.value()
         id_pedido = int(self.id_pedido)
         id_usuario = int(controller_admin_user.getUsuarioRut(

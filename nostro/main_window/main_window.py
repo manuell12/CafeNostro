@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main_window.ui'
 #
-# Created: Sun Dec 06 12:46:04 2015
+# Created: Mon Dec 07 21:08:00 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -23,6 +23,7 @@ class Ui_MainWindow(object):
         self.groupBox.setChecked(False)
         self.groupBox.setObjectName("groupBox")
         self.horizontalLayout_2 = QtGui.QHBoxLayout(self.groupBox)
+        self.horizontalLayout_2.setContentsMargins(-1, 20, -1, -1)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.horizontalLayout = QtGui.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")

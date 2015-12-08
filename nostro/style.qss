@@ -1,13 +1,54 @@
+QGroupBox {
+    background-color: white;
+    border: 2px solid white;
+    border-radius: 5px;
+}
+
+QGroupBox::title {
+    font: bold 14px "Calibri";
+    border-width: 10px;
+}
 QPushButton {
-    background-color: lightblue;
+    background-color: #99ff99;
     border-style: outset;
     border-width: 2px;
     border-radius: 7px;
-    border-color: white;
-    font: 14px;
+    border-color: #006600;
+    font: bold 14px "Calibri";
+    color: black(dark);
     padding: 6px;
 }
-QPushButton:pressed {
-    background-color: white;
+QPushButton:disabled {
+    background-color: #c9d1d1;
     border-style: inset;
+    border-width: 2px;
+    border-radius: 7px;
+    border-color: #006600;
+    color: white;
+    font: bold 14px;
+    padding: 6px;
+}
+QPushButton:checked{
+    background-color: #59bc41;
+    border-color: #006600;
+    border-style: inset;
+}
+QPushButton:hover{
+    background-color: #33ff33;
+}
+QPushButton:pressed{
+    background-color: #00b300;
+    border-style: inset;
+    color: white;
+}
+PushButtonMesa{
+    background-color: white;
+}
+QLabel#label_5{
+    color: black;
+    font: bold 30px "Calibri";
+}
+QLabel#label_info{
+    color: red;
+    font: bold 20px "Calibri";
 }

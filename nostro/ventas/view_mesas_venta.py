@@ -33,6 +33,8 @@ class MesasVenta(QtGui.QWidget):
         self.ui.pushButton_habilitar.clicked.connect(self.action_button_habilitar_mesas)
 
     def action_button_unir_mesas(self):
+        self.sender().setCheckable(True)
+        self.sender().setChecked(True)
         self.ui.pushButton_aceptar.setVisible(True)
         self.ui.label_info.setText("Seleccione las mesas que desea unir.")
         self.editable = True
@@ -41,6 +43,8 @@ class MesasVenta(QtGui.QWidget):
         self.identificador = 1
 
     def action_button_habilitar_mesas(self):
+        self.sender().setCheckable(True)
+        self.sender().setChecked(True)
         self.ui.pushButton_aceptar.setVisible(True)
         self.ui.label_info.setText("Seleccione la/las mesa(s) que desea habilitar.")
         self.editable = True
@@ -65,7 +69,7 @@ class MesasVenta(QtGui.QWidget):
             else:
                 texto = texto + ", " + str(button.mesa)
         for i,button in enumerate(buttons_mesas):
-            pedidos_mesas.append(self.main.stackedWidget.widget(button.mesa+6).id_pedido) # guardamos en la lista "pedidos_mesas", el id_pedido de cada mesa.    
+            pedidos_mesas.append(self.main.ui.stackedWidget.widget(button.mesa+6).id_pedido) # guardamos en la lista "pedidos_mesas", el id_pedido de cada mesa.    
             if (i == 0):
                 button.setText("Mesas: "+texto)
             else:
@@ -79,9 +83,12 @@ class MesasVenta(QtGui.QWidget):
             controller_venta.addDataVentaProducto(
                 pedidos_mesas[0], producto.id_producto, producto.precio_venta)
 
-        self.main.stackedWidget.widget(num_mesa+6).reload_data_table2()
+        self.main.ui.stackedWidget.widget(num_mesa+6).reload_data_table2()
 
     def aceptar(self):
+        for button in self.list_mesas:
+            self.main.ui.stackedWidget.widget(button.mesa+6).button = button
+
         if(self.identificador == 0): # borrar mesa
             for button in self.list_mesas:
                 num_mesa = int(button.text()[-2:])
@@ -102,10 +109,10 @@ class MesasVenta(QtGui.QWidget):
                 if(button.isChecked()):
                     buttons_checked.append(button)
                     id_pedido = controller_venta.addDataPedido(button.mesa)
-                    self.main.stackedWidget.widget(button.mesa+6).id_pedido = id_pedido
-                    self.main.stackedWidget.widget(button.mesa+6).reload_data_table2()
+                    self.main.ui.stackedWidget.widget(button.mesa+6).id_pedido = id_pedido
+                    self.main.ui.stackedWidget.widget(button.mesa+6).reload_data_table2()
                     for button_all in self.list_mesas:
-                        print button,button_all.unido_a
+                        # print button,button_all.unido_a
                         if(button in button_all.unido_a):
                             button_all.setText("Mesa "+str(button_all.mesa))
                 button.setCheckable(False)
@@ -114,27 +121,44 @@ class MesasVenta(QtGui.QWidget):
                 button.setEnabled(False)
             for button in buttons_checked:
                 button.setEnabled(True)
+            for button in buttons_checked:
+                self.main.stackedWidget_changed(button.mesa+6)
+                self.main.stackedWidget_changed(6)
         self.editable = False
         self.ui.label_info.setText("")
         self.ui.pushButton_aceptar.setVisible(False)
+        
+        self.ui.pushButton_unir.setCheckable(False)
+        self.ui.pushButton_unir.setChecked(False)
+        self.ui.pushButton_unir.setFocus()
+        self.ui.pushButton_habilitar.setCheckable(False)
+        self.ui.pushButton_habilitar.setChecked(False)
+        self.ui.pushButton_habilitar.setFocus()
+        self.ui.pushButton_borrar.setCheckable(False)
+        self.ui.pushButton_borrar.setChecked(False)
+        self.ui.pushButton_borrar.setFocus()
 
     def agregar_mesa(self):
         num_mesa = len(self.list_mesas)+1
         
-        pushButton_mesa = controller_venta.PushButtonMesa("Mesa "+str(num_mesa))
+        pushButton_mesa = controller_venta.PushButtonMesa("Mesa "+str(num_mesa),False)
         pushButton_mesa.mesa = num_mesa
         pushButton_mesa.setMinimumSize(QtCore.QSize(120, 60))
         pushButton_mesa.clicked.connect(self.button_pressed)
+        
         self.list_mesas.append(pushButton_mesa)
 
         self.ui.gridLayout_mesas.addWidget(pushButton_mesa,self.row,self.column)
-        self.main.stackedWidget.addWidget(FormularioVenta(self.main,self.rut,num_mesa))
+        self.main.ui.stackedWidget.addWidget(FormularioVenta(self.main.ui,self.rut,num_mesa))
+        self.main.ui.stackedWidget.widget(pushButton_mesa.mesa+6).button = pushButton_mesa
         self.column = self.column + 1
         if(num_mesa % 7 == 0):
             self.column = 0
             self.row = self.row +1
 
     def borrar_mesa(self):
+        self.sender().setCheckable(True)
+        self.sender().setChecked(True)
         self.ui.pushButton_aceptar.setVisible(True)
         self.ui.label_info.setText("Selecciona la/las mesa(s) que desea borrar.")
         self.editable = True
@@ -148,7 +172,7 @@ class MesasVenta(QtGui.QWidget):
         self.column = 0
         for mesa in range(self.num_mesas+1):
             if (mesa != 0):
-                pushButton_mesa = controller_venta.PushButtonMesa("Mesa "+str(mesa))
+                pushButton_mesa = controller_venta.PushButtonMesa("Mesa "+str(mesa),False)
                 pushButton_mesa.mesa = mesa
 
                 self.list_mesas.append(pushButton_mesa)
@@ -161,10 +185,45 @@ class MesasVenta(QtGui.QWidget):
                 self.row = self.row + 1
                 self.column = 0
 
+    def update_buttons(self):
+        self.row = 0
+        self.column = 0
+        lista = list()
+        self.clearLayout(self.ui.gridLayout_mesas)
+        for i,button in enumerate(self.list_mesas,1):
+            mesa = button.mesa
+            texto = button.text()
+            pushButton_mesa = controller_venta.PushButtonMesa(texto,button.ocupado,button.habilitado)
+            pushButton_mesa.mesa = mesa
+            self.main.ui.stackedWidget.widget(pushButton_mesa.mesa+6).button = pushButton_mesa
+
+            lista.append(pushButton_mesa)
+
+            pushButton_mesa.setMinimumSize(QtCore.QSize(120, 60))
+            pushButton_mesa.clicked.connect(self.button_pressed)
+            self.ui.gridLayout_mesas.addWidget(pushButton_mesa,self.row,self.column)
+
+            self.column = self.column + 1
+            if (i % 7 == 0):
+                self.row = self.row + 1
+                self.column = 0
+        self.list_mesas = lista
+
     def button_pressed(self):
         button_mesa = self.sender()
         num_mesa = button_mesa.mesa
         if (self.editable):
             pass
         else:
-            self.main.stackedWidget.setCurrentIndex(num_mesa+6)
+            self.main.ui.stackedWidget.widget(num_mesa+6).button = button_mesa
+            self.main.ui.stackedWidget.setCurrentIndex(num_mesa+6)
+
+    def clearLayout(self, layout):
+        if layout is not None:
+            while layout.count():
+                item = layout.takeAt(0)
+                widget = item.widget()
+                if widget is not None:
+                    widget.deleteLater()
+                else:
+                    self.clearLayout(item.layout())

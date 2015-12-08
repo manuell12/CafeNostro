@@ -27,6 +27,7 @@ class FormularioVenta(QtGui.QWidget):
 
     id_tablaP = 0
     id_tablaPd = 0
+    button = object()
 
     def __init__(self, main, rut_usuario, mesa):
         'Constructor de la clase'
@@ -78,6 +79,10 @@ class FormularioVenta(QtGui.QWidget):
             self.action_cerrar_venta)
         self.ui.lineEdit_buscar_codigo.textChanged.connect(
             self.lineEdit_buscar_codigo_changed)
+
+    def set_ocupado(self, ocupado):
+        self.button.ocupado = ocupado
+        self.main.stackedWidget.widget(6).update_buttons()
 
     def action_agregar(self):
         controller.addDataVentaProducto(
@@ -433,6 +438,7 @@ class FormularioVenta(QtGui.QWidget):
             self.rut_usuario)[0].id_usuario)
         controller.addDataVenta(fecha, num_documento,
                                 tipo, total_pago, id_usuario, id_pedido)
+        self.button.setText("Mesa: "+str(self.button.mesa))
 
     def editarVenta(self):
         print("-----Editar Venta-----")

@@ -1,0 +1,93 @@
+QGroupBox {
+    background-color: white;
+    border: 2px solid white;
+    border-radius: 5px;
+}
+QComboBox{
+    background-color: white;
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 7px;
+    /*#006600*/
+    border-color: blue;
+    font: bold 14px "Calibri";
+    color: black(dark);
+    padding: 6px;
+}
+QGroupBox::title {
+    font: bold 14px "Calibri";
+    border-width: 10px;
+}
+QLabel{
+    font: bold 14px "Calibri";
+}
+QPushButton {
+    background-color: white;
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 7px;
+    border-color: blue;
+    font: bold 14px "Calibri";
+    color: black(dark);
+    padding: 2px;
+}
+QPushButton:disabled {
+    background-color: white;
+    border-style: inset;
+    color: gray;
+}
+QPushButton:checked{
+    background-color: #4a46a4;
+    border-style: inset;
+}
+QPushButton:hover{
+    background-color: lightblue;
+}
+QPushButton:pressed{
+    background-color: #3333ff;
+    border-style: inset;
+    color: white;
+}
+
+PushButtonMesa{
+    border-color: #006600;
+    background-color: white;
+}
+PushButtonMesa:hover{
+    background-color: #33ff33;
+}
+PushButtonMesa:pressed{
+    background-color: #00b300;
+}
+PushButtonMesa:disabled{
+    border-color: gray;
+}
+PushButtonMesa:checked{
+    background-color: #59bc41;
+    border-style: inset;
+}
+PushButtonMesa[ocupado='true']{
+    border-color: red;
+    background-color: white;
+}
+PushButtonMesa:hover[ocupado='true']{
+    background-color: #ff9999;
+}
+PushButtonMesa:pressed[ocupado='true']{
+    background-color: #ff1a1a;
+}
+PushButtonMesa:disabled[ocupado='true']{
+    border-color: gray;
+}
+PushButtonMesa:checked[ocupado='true']{
+    background-color: #a44242;
+    border-style: inset;
+}
+QLabel#label_5{
+    color: black;
+    font: bold 30px "Calibri";
+}
+QLabel#label_info{
+    color: red;
+    font: bold 20px "Calibri";
+}

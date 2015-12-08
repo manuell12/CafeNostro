@@ -13,6 +13,7 @@ from admin_productos.view_admin_producto import AdminProductos
 from ventas.view_admin_venta import AdminVentas
 from ventas.view_formulario_venta import FormularioVenta
 from ventas.view_mesas_venta import MesasVenta
+import ventas.controller_venta as controller_venta
 import admin_usuarios.controller_admin_user as controller
 
 
@@ -25,6 +26,7 @@ class MainWindow(QtGui.QMainWindow):
 
     venta_directa_en_curso = False
     num_mesas = 14
+    id = False
 
     def __init__(self, tipo=None, rut=None):
         'Constructor de la clase'
@@ -41,7 +43,7 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.stackedWidget.addWidget(AdminProductos()) #3
         self.ui.stackedWidget.addWidget(FormularioVenta(self.ui,self.rut,"0")) #4
         self.ui.stackedWidget.addWidget(AdminVentas(self.ui)) #5
-        self.ui.stackedWidget.addWidget(MesasVenta(self.ui,self.num_mesas,self.rut)) #6
+        self.ui.stackedWidget.addWidget(MesasVenta(self,self.num_mesas,self.rut)) #6
         for i in range(self.num_mesas+1): #7 = primera mesa
             if(i != 0):
                 self.ui.stackedWidget.addWidget(FormularioVenta(self.ui,self.rut,str(i)))
@@ -64,6 +66,19 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.actionProductos.triggered.connect(self.admin_productos)
         self.ui.pushButton_compra_directa.clicked.connect(self.formulario_venta_directa)
         self.ui.pushButton_mesas.clicked.connect(self.mesas_venta)
+        self.ui.stackedWidget.currentChanged.connect(self.stackedWidget_changed)
+
+    def stackedWidget_changed(self,index):
+        if(index > 6):
+            self.id = True
+            self.index_pedido = index
+        if(self.id and index == 6):
+            pedido = self.ui.stackedWidget.widget(self.index_pedido).id_pedido
+            productos = controller_venta.getProductosPedido(pedido)
+            if(len(productos) == 0):
+                self.ui.stackedWidget.widget(self.index_pedido).set_ocupado(False)
+            else:
+                self.ui.stackedWidget.widget(self.index_pedido).set_ocupado(True)
 
     def mesas_venta(self):
         'Cambia a la interfaz de venta por mesas'

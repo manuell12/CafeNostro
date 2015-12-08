@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'formulario_venta.ui'
 #
-# Created: Mon Dec 07 21:16:21 2015
+# Created: Tue Dec 08 15:31:14 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -76,18 +76,18 @@ class Ui_FormularioVenta(object):
         self.label_2.setObjectName("label_2")
         self.verticalLayout_3.addWidget(self.label_2)
         self.pushButton_aumentar_cantidad = QtGui.QPushButton(self.groupBox)
-        self.pushButton_aumentar_cantidad.setMinimumSize(QtCore.QSize(51, 41))
-        self.pushButton_aumentar_cantidad.setMaximumSize(QtCore.QSize(51, 41))
+        self.pushButton_aumentar_cantidad.setMinimumSize(QtCore.QSize(60, 41))
+        self.pushButton_aumentar_cantidad.setMaximumSize(QtCore.QSize(60, 41))
         self.pushButton_aumentar_cantidad.setObjectName("pushButton_aumentar_cantidad")
         self.verticalLayout_3.addWidget(self.pushButton_aumentar_cantidad)
         self.pushButton_disminuir_cantidad = QtGui.QPushButton(self.groupBox)
-        self.pushButton_disminuir_cantidad.setMinimumSize(QtCore.QSize(51, 41))
-        self.pushButton_disminuir_cantidad.setMaximumSize(QtCore.QSize(51, 41))
+        self.pushButton_disminuir_cantidad.setMinimumSize(QtCore.QSize(60, 41))
+        self.pushButton_disminuir_cantidad.setMaximumSize(QtCore.QSize(60, 41))
         self.pushButton_disminuir_cantidad.setObjectName("pushButton_disminuir_cantidad")
         self.verticalLayout_3.addWidget(self.pushButton_disminuir_cantidad)
         self.pushButton_eliminar = QtGui.QPushButton(self.groupBox)
-        self.pushButton_eliminar.setMinimumSize(QtCore.QSize(51, 41))
-        self.pushButton_eliminar.setMaximumSize(QtCore.QSize(51, 51))
+        self.pushButton_eliminar.setMinimumSize(QtCore.QSize(60, 41))
+        self.pushButton_eliminar.setMaximumSize(QtCore.QSize(60, 51))
         self.pushButton_eliminar.setObjectName("pushButton_eliminar")
         self.verticalLayout_3.addWidget(self.pushButton_eliminar)
         spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)

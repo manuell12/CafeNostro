@@ -221,8 +221,22 @@ class PushButtonMesa(QtGui.QPushButton):
     Un QPushButton especializado que almacena el número de la mesa. Ademas posee un atributo para diferenciar las mesas unidas.
     """
     mesa = 0
+    ocupado = False
+    habilitado = True
     unido = False
     unido_a = list()
-    def __init__(self, text, parent=None):
+    def __init__(self, text, ocupado=False, habilitado=True, parent=None):
         super(PushButtonMesa, self).__init__(parent)
         self.setText(text)
+        self.ocupado = ocupado
+        self.habilitado = habilitado
+
+        self.setEnabled(habilitado)
+        if(self.ocupado):
+            self.setProperty("ocupado",True)
+        else:
+            self.setProperty("ocupado",False)
+
+    def setEnabled(self, enabled):
+        self.habilitado = enabled
+        QtGui.QPushButton.setEnabled(self,enabled)

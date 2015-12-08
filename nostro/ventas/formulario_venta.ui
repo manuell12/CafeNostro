@@ -166,13 +166,13 @@
              <widget class="QPushButton" name="pushButton_aumentar_cantidad">
               <property name="minimumSize">
                <size>
-                <width>51</width>
+                <width>60</width>
                 <height>41</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>51</width>
+                <width>60</width>
                 <height>41</height>
                </size>
               </property>
@@ -185,13 +185,13 @@
              <widget class="QPushButton" name="pushButton_disminuir_cantidad">
               <property name="minimumSize">
                <size>
-                <width>51</width>
+                <width>60</width>
                 <height>41</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>51</width>
+                <width>60</width>
                 <height>41</height>
                </size>
               </property>
@@ -204,13 +204,13 @@
              <widget class="QPushButton" name="pushButton_eliminar">
               <property name="minimumSize">
                <size>
-                <width>51</width>
+                <width>60</width>
                 <height>41</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>51</width>
+                <width>60</width>
                 <height>51</height>
                </size>
               </property>

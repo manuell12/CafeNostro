@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mesas_venta.ui'
 #
-# Created: Mon Dec 07 21:10:46 2015
+# Created: Tue Dec 08 15:31:02 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -74,7 +74,7 @@ class Ui_MesasVenta(object):
         self.pushButton_unir.setObjectName("pushButton_unir")
         self.verticalLayout.addWidget(self.pushButton_unir)
         self.pushButton_habilitar = QtGui.QPushButton(self.groupBox_2)
-        self.pushButton_habilitar.setMinimumSize(QtCore.QSize(100, 50))
+        self.pushButton_habilitar.setMinimumSize(QtCore.QSize(110, 50))
         self.pushButton_habilitar.setObjectName("pushButton_habilitar")
         self.verticalLayout.addWidget(self.pushButton_habilitar)
         spacerItem6 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)

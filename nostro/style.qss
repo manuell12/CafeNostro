@@ -8,7 +8,6 @@ QComboBox{
     border-style: outset;
     border-width: 2px;
     border-radius: 7px;
-    /*#006600*/
     border-color: blue;
     font: bold 14px "Calibri";
     color: black(dark);
@@ -47,6 +46,9 @@ QPushButton:pressed{
     background-color: #3333ff;
     border-style: inset;
     color: white;
+}
+QPushButton#pushButton_cerrar_venta{
+    font: bold 20px "Calibri"
 }
 
 PushButtonMesa{

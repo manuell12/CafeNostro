@@ -271,7 +271,7 @@ class FormularioVenta(QtGui.QWidget):
     """ ===================================================================== NUMERO DE PAGOS ============================================================ """
 
     def action_opciones(self):
-        self.n_pagos = self.ui.label_numero_pagos.text()
+        #self.n_pagos = self.ui.label_numero_pagos.text()
         self.nPagosDialog = self.createPagosWindow(1)
         self.nPagosDialog.exec_()
 

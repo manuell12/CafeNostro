@@ -38,7 +38,8 @@ class MainWindow(QtGui.QMainWindow):
         self.set_signals()
         self.showMaximized()
         self.config_user()
-        self.setVisible(False)
+
+        self.setVisible(False) # Se oculta la ventana principal mientras se cargan los componentes.
 
         # Se crea un QProgressDialog para notificar al usuario sobre las cargas del programa.
         progress = QtGui.QProgressDialog("Cargando modulos...", "", 0, self.num_mesas+5)

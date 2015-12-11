@@ -94,7 +94,7 @@ class FormularioUsuario(QtGui.QDialog):
         clave_ingresada = cr.encrypt(
             self.clave_ac, "fhfs8sdfkjshuif7yr4021934234233ihsidf89sssx")
         usuario = controller_admin_user.getUsuarioId(self.id)
-        clave_real = usuario[0][4]
+        clave_real = usuario[0].clave
         if(clave_ingresada == clave_real):
             self.ui.label_error_clave_actual.setText(u"<font color='green'><b>Contraseña ingresada correcta.</b></font>")
         else:
@@ -157,7 +157,7 @@ class FormularioUsuario(QtGui.QDialog):
                 clave_ingresada = crypt.encrypt(
                     self.clave_ac, "fhfs8sdfkjshuif7yr4021934234233ihsidf89sssx")
                 usuario = controller_admin_user.getUsuarioId(self.id)
-                clave_real = usuario[0][4]
+                clave_real = usuario[0].clave
                 if( clave_ingresada == clave_real):
                     if ( self.verif == self.clave):
                         self.valido = controller_admin_user.validarDatos(

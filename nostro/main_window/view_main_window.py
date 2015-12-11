@@ -37,16 +37,37 @@ class MainWindow(QtGui.QMainWindow):
         self.tipo = tipo
         self.set_signals()
         self.showMaximized()
-        self.show()
         self.config_user()
+
+        self.centralWidget().setEnabled(False)
+
+        progress = QtGui.QProgressDialog("Cargando modulos...", "", 0, self.num_mesas+5, self)
+        progress.setWindowModality(QtCore.Qt.WindowModal)
+        progress.setWindowFlags(QtCore.Qt.WindowTitleHint)
+        progress.setCancelButton(None)
+        progress.show()
+
+        progress.setValue(0)
         self.ui.stackedWidget.addWidget(AdminUsers()) #2
+        progress.setValue(1)
         self.ui.stackedWidget.addWidget(AdminProductos()) #3
+        progress.setValue(2)
         self.ui.stackedWidget.addWidget(FormularioVenta(self.ui,self.rut,"0")) #4
+        progress.setValue(3)
         self.ui.stackedWidget.addWidget(AdminVentas(self.ui)) #5
+        progress.setValue(4)
         self.ui.stackedWidget.addWidget(MesasVenta(self,self.num_mesas,self.rut)) #6
-        for i in range(self.num_mesas+1): #7 = primera mesa
-            if(i != 0):
-                self.ui.stackedWidget.addWidget(FormularioVenta(self.ui,self.rut,str(i)))
+        progress.setValue(5)
+
+        progress.setLabelText("Cargando mesas...")
+
+        for i in range(1,self.num_mesas+1): #7 = primera mesa
+            self.ui.stackedWidget.addWidget(FormularioVenta(self.ui,self.rut,str(i)))
+            progress.setValue(i+5)
+
+        progress.setValue(self.num_mesas+5)
+        self.centralWidget().setEnabled(True)
+        
 
     def config_user(self):
         self.nombre = unicode(controller.getUsuarioRut(self.rut)[0].nombre)+" "+unicode(controller.getUsuarioRut(self.rut)[0].apellido)

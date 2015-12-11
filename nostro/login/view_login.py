@@ -9,7 +9,7 @@ from mainwindow_login import Ui_Dialog
 from main_window.view_main_window import MainWindow
 import controller_login
 import model_login
-
+import time
 
 class Login(QtGui.QDialog):
 
@@ -48,13 +48,9 @@ class Login(QtGui.QDialog):
                 self.errorMessage(u"""Error inesperado, intente nuevamente.""")
             else:
                 if mensaje == True:
-                    # self.correctMessage(u"""Ingreso valido""")
                     self.close()
                     self.main = MainWindow(controller_login.obtenerTipoUsuario(
                         self.ui.lineEdit_user.text())[0][0],self.ui.lineEdit_user.text())
-                    self.main.show()
-                    # self.hide()
-                    # self.setVisible(False)
                 else:
                     self.errorMessage(u"Ingreso no valido")
             # self.reject()

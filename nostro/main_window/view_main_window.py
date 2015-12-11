@@ -38,12 +38,16 @@ class MainWindow(QtGui.QMainWindow):
         self.set_signals()
         self.showMaximized()
         self.config_user()
+        self.setVisible(False)
 
-        self.centralWidget().setEnabled(False)
-
-        progress = QtGui.QProgressDialog("Cargando modulos...", "", 0, self.num_mesas+5, self)
-        progress.setWindowModality(QtCore.Qt.WindowModal)
+        # Se crea un QProgressDialog para notificar al usuario sobre las cargas del programa.
+        progress = QtGui.QProgressDialog("Cargando modulos...", "", 0, self.num_mesas+5)
+        progress.setWindowTitle("Cargando...")
         progress.setWindowFlags(QtCore.Qt.WindowTitleHint)
+        label = QtGui.QLabel()
+        pixmap = QtGui.QPixmap('images/cafe_nostro_load_modulos.png')
+        label.setPixmap(pixmap)
+        progress.setLabel(label)
         progress.setCancelButton(None)
         progress.show()
 
@@ -59,14 +63,15 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.stackedWidget.addWidget(MesasVenta(self,self.num_mesas,self.rut)) #6
         progress.setValue(5)
 
-        progress.setLabelText("Cargando mesas...")
+        pixmap = QtGui.QPixmap('images/cafe_nostro_load_mesas.png')
+        label.setPixmap(pixmap)
 
         for i in range(1,self.num_mesas+1): #7 = primera mesa
             self.ui.stackedWidget.addWidget(FormularioVenta(self.ui,self.rut,str(i)))
             progress.setValue(i+5)
 
         progress.setValue(self.num_mesas+5)
-        self.centralWidget().setEnabled(True)
+        self.setVisible(True)
         
 
     def config_user(self):

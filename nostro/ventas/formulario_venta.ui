@@ -258,6 +258,13 @@
                </widget>
               </item>
               <item>
+               <widget class="QLabel" name="label_price">
+                <property name="text">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;$&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QLCDNumber" name="lcdNumber_subtotal">
                 <property name="minimumSize">
                  <size>
@@ -325,6 +332,13 @@
                </widget>
               </item>
               <item>
+               <widget class="QLabel" name="label_price_2">
+                <property name="text">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;$&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QLCDNumber" name="lcdNumber_propina">
                 <property name="minimumSize">
                  <size>
@@ -379,6 +393,13 @@
                 </property>
                 <property name="text">
                  <string>Total:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_price_3">
+                <property name="text">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;$&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                </widget>
               </item>

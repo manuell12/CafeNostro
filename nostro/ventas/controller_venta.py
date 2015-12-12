@@ -98,6 +98,14 @@ def getProductosPedido(id_pedido):
     venta_producto.id_pedido = id_pedido
     return VentaProducto.getProductosPedido(venta_producto)
 
+def getProductosPedidoRepetidosPorCantidad(id_pedido):
+    productos_normal = getProductosPedido(id_pedido)
+    productos_repetidos = list()
+    for producto in productos_normal:
+        for i in range(int(producto.cantidad)):
+            productos_repetidos.append(producto)
+    return productos_repetidos
+
 
 def hayProductoPedido(id_pedido, id_producto):
     """Retorna True si existe un producto en un pedido"""

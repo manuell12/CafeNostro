@@ -23,42 +23,75 @@ class NumeroPagos(QtGui.QDialog):
         self.ventaForm = ventaForm
         self.subtotal = subtotal
         self.ui.lcdNumber_subtotal.display(subtotal)
-        self.ui.lcdNumber_propina.display(subtotal * 0.1)
-        self.ui.lcdNumber_total.display(subtotal * 1.1)
         self.show()
         self.ui.spinBox_numero_pagos.setRange(1,20)
         self.n_pagos = self.ui.spinBox_numero_pagos.value()
         self.ui.spinBox_numero_pagos.valueChanged.connect(self.spinBox_numero_pagos_changed)
         self.ui.pushButton_pagar.clicked.connect(self.action_pagar)
 
-        self.label_pagos = list()
-
-        for i in range(self.n_pagos):
-            label = QtGui.QLabel("Pago " + str(i + 1) + ": ")
-            label_pagos = QtGui.QLabel()
-            self.label_pagos.append(label_pagos)
-            horizontalLayout = QtGui.QHBoxLayout()
-            horizontalLayout.addWidget(label)
-            horizontalLayout.addWidget(label_pagos)
-            self.ui.verticalLayout_numero_pagos.addLayout(horizontalLayout)
+        self.crear_pagos()
 
         self.load_data_table()
+
+    def crear_pagos(self):
+        __type_pay__ = ((u"EFECTIVO"),
+                        (u"TARJETA"))
+
+        self.label_pagos = list()
+        self.label_pagos_propina = list()
+        self.combobox_tipo_pagos = list()
+
+        for i in range(self.n_pagos):
+
+            model = QtGui.QStandardItemModel()
+            for text in __type_pay__:
+                text_item = QtGui.QStandardItem(text)
+                text_item.setSizeHint(QtCore.QSize(100, 50))
+                text_item.setTextAlignment(QtCore.Qt.AlignHCenter)
+                text_item.setTextAlignment(QtCore.Qt.AlignVCenter)
+                model.appendRow(text_item)
+            view = QtGui.QTreeView()
+            view.header().hide()
+            view.setRootIsDecorated(False)
+            combobox = QtGui.QComboBox()
+            combobox.setView(view)
+            combobox.setModel(model)
+
+            label = QtGui.QLabel("Pago " + str(i + 1) + ": ")
+            label_sep = QtGui.QLabel("    ")
+            label_aux_1 = QtGui.QLabel("Subtotal:")
+            label_aux_1a = QtGui.QLabel("$")
+            lineEdit_pagos = QtGui.QLineEdit()
+            label_sep1 = QtGui.QLabel("    ")
+            label_aux_2 = QtGui.QLabel("Propina:")
+            label_aux_2a = QtGui.QLabel("$")
+            label_pagos_propina = QtGui.QLabel()
+            label_sep2 = QtGui.QLabel("    ")
+
+            self.label_pagos.append(lineEdit_pagos)
+            self.label_pagos_propina.append(label_pagos_propina)
+            self.combobox_tipo_pagos.append(combobox)
+
+            horizontalLayout = QtGui.QHBoxLayout()
+            horizontalLayout.addWidget(label)
+            horizontalLayout.addWidget(label_sep)
+            horizontalLayout.addWidget(label_aux_1)
+            horizontalLayout.addWidget(label_aux_1a)
+            horizontalLayout.addWidget(lineEdit_pagos)
+            horizontalLayout.addWidget(label_sep1)
+            horizontalLayout.addWidget(label_aux_2)
+            horizontalLayout.addWidget(label_aux_2a)
+            horizontalLayout.addWidget(label_pagos_propina)
+            horizontalLayout.addWidget(label_sep2)
+            horizontalLayout.addWidget(combobox)
+
+            self.ui.verticalLayout_numero_pagos.addLayout(horizontalLayout)
 
     def spinBox_numero_pagos_changed(self,index):
         self.n_pagos = self.ui.spinBox_numero_pagos.value()
 
         self.clearLayout(self.ui.verticalLayout_numero_pagos)
-        self.label_pagos = list()
-        
-        for i in range(self.n_pagos):
-            label = QtGui.QLabel("Pago " + str(i + 1) + ": ")
-            label_pagos = QtGui.QLabel()
-            self.label_pagos.append(label_pagos)
-            horizontalLayout = QtGui.QHBoxLayout()
-            horizontalLayout.addWidget(label)
-            horizontalLayout.addWidget(label_pagos)
-            self.ui.verticalLayout_numero_pagos.addLayout(horizontalLayout)
-
+        self.crear_pagos()
         self.reload_data_table()
 
     def clearLayout(self, layout):
@@ -83,7 +116,7 @@ class NumeroPagos(QtGui.QDialog):
         self.ui.tableWidget_resumen.setColumnCount(5)
         self.ui.tableWidget_resumen.setHorizontalHeaderLabels(self.__header_table__)
 
-        productos = controller.getProductosPedido(self.id_pedido)
+        productos = controller.getProductosPedidoRepetidosPorCantidad(self.id_pedido)
         self.cantidad_productos = len(productos)
         self.ui.tableWidget_resumen.setRowCount(self.cantidad_productos)
 
@@ -124,7 +157,7 @@ class NumeroPagos(QtGui.QDialog):
                 else:
                     self.ui.tableWidget_resumen.setItem(i,j,cell)
 
-        self.ui.tableWidget_resumen.sortItems(0, QtCore.Qt.DescendingOrder)
+        self.ui.tableWidget_resumen.sortItems(0, QtCore.Qt.AscendingOrder)
         self.ui.tableWidget_resumen.setColumnHidden(0, True)
         self.ui.tableWidget_resumen.resizeColumnsToContents()
         self.ui.tableWidget_resumen.resizeColumnsToContents()
@@ -152,6 +185,7 @@ class NumeroPagos(QtGui.QDialog):
 
         for i,suma in enumerate(lista_suma):
             self.label_pagos[i].setText(str(suma))
+            self.label_pagos_propina[i].setText(str(suma*0.1))
 
     def action_pagar(self):
         msgBox = QtGui.QMessageBox()
@@ -164,18 +198,22 @@ class NumeroPagos(QtGui.QDialog):
         press = msgBox.exec_()
         if press == QtGui.QMessageBox.Ok:
             self.ventaForm.agregarVenta()
-            for i, precio in enumerate(self.list_precio):
-                if(i != 0):
-                    total_pago = precio
-                    efectivo = precio
+            for i, line_precio in enumerate(self.label_pagos):
+                print "hola"
+                total_pago = int(line_precio.text())
+                if(self.combobox_tipo_pagos[i].currentIndex() == 0): 
+                    efectivo = int(line_precio.text())
                     tarjeta = 0
-                    id_pedido = int(self.id_pedido)
-                    propina = self.ui.lcdNumber_propina.value()
-                    id_venta = controller.getVentaPedidoId(id_pedido)[
-                        0].id_venta
-                    controller.addDataPago(
-                        total_pago, efectivo, tarjeta, propina, id_venta)
-                    self.close()
+                else:
+                    efectivo = 0
+                    tarjeta = int(line_precio.text())
+                id_pedido = int(self.id_pedido)
+                propina = int(line_precio.text())*0.1
+                id_venta = controller.getVentaPedidoId(id_pedido)[
+                    0].id_venta
+                controller.addDataPago(
+                    total_pago, efectivo, tarjeta, propina, id_venta)
+                self.close()
             self.ventaForm.main.stackedWidget.widget(5).reload_data_table()
             self.ventaForm.id_pedido = controller.addDataPedido(self.ventaForm.mesa)
             self.ventaForm.reload_data_table2()

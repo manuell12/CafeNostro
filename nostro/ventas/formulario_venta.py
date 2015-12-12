@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'formulario_venta.ui'
 #
-# Created: Fri Dec 11 15:27:24 2015
+# Created: Sat Dec 12 12:20:08 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -102,6 +102,9 @@ class Ui_FormularioVenta(object):
         self.label_3.setMaximumSize(QtCore.QSize(100, 16777215))
         self.label_3.setObjectName("label_3")
         self.horizontalLayout.addWidget(self.label_3)
+        self.label_price = QtGui.QLabel(self.groupBox)
+        self.label_price.setObjectName("label_price")
+        self.horizontalLayout.addWidget(self.label_price)
         self.lcdNumber_subtotal = QtGui.QLCDNumber(self.groupBox)
         self.lcdNumber_subtotal.setMinimumSize(QtCore.QSize(76, 0))
         self.lcdNumber_subtotal.setFrameShape(QtGui.QFrame.NoFrame)
@@ -122,6 +125,9 @@ class Ui_FormularioVenta(object):
         self.label_4.setMaximumSize(QtCore.QSize(100, 16777215))
         self.label_4.setObjectName("label_4")
         self.horizontalLayout_2.addWidget(self.label_4)
+        self.label_price_2 = QtGui.QLabel(self.groupBox)
+        self.label_price_2.setObjectName("label_price_2")
+        self.horizontalLayout_2.addWidget(self.label_price_2)
         self.lcdNumber_propina = QtGui.QLCDNumber(self.groupBox)
         self.lcdNumber_propina.setMinimumSize(QtCore.QSize(76, 0))
         self.lcdNumber_propina.setFrameShape(QtGui.QFrame.NoFrame)
@@ -139,6 +145,9 @@ class Ui_FormularioVenta(object):
         self.label.setMaximumSize(QtCore.QSize(100, 16777215))
         self.label.setObjectName("label")
         self.horizontalLayout_3.addWidget(self.label)
+        self.label_price_3 = QtGui.QLabel(self.groupBox)
+        self.label_price_3.setObjectName("label_price_3")
+        self.horizontalLayout_3.addWidget(self.label_price_3)
         self.lcdNumber_total = QtGui.QLCDNumber(self.groupBox)
         self.lcdNumber_total.setMinimumSize(QtCore.QSize(76, 0))
         self.lcdNumber_total.setFrameShape(QtGui.QFrame.NoFrame)
@@ -242,8 +251,11 @@ class Ui_FormularioVenta(object):
         self.pushButton_disminuir_cantidad.setText(QtGui.QApplication.translate("FormularioVenta", "-", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_eliminar.setText(QtGui.QApplication.translate("FormularioVenta", "Eliminar", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("FormularioVenta", "Subtotal:", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_price.setText(QtGui.QApplication.translate("FormularioVenta", "<html><head/><body><p><span style=\" font-size:20pt;\">$</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.label_4.setText(QtGui.QApplication.translate("FormularioVenta", "Propina (10%):", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_price_2.setText(QtGui.QApplication.translate("FormularioVenta", "<html><head/><body><p><span style=\" font-size:20pt;\">$</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("FormularioVenta", "Total:", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_price_3.setText(QtGui.QApplication.translate("FormularioVenta", "<html><head/><body><p><span style=\" font-size:20pt;\">$</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_agregar.setText(QtGui.QApplication.translate("FormularioVenta", "AGREGAR\n"
 "-->", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_opciones.setText(QtGui.QApplication.translate("FormularioVenta", "Mas opciones", None, QtGui.QApplication.UnicodeUTF8))

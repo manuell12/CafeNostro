@@ -106,6 +106,12 @@ class FormularioProducto(QtGui.QDialog):
                 msgBox.setText("Producto editado correctamente.")
                 msgBox.exec_()
                 self.setVisible(False)
+            else:
+                msgBox = QtGui.QMessageBox()
+                msgBox.setIcon(QtGui.QMessageBox.Critical)
+                msgBox.setWindowTitle("Error")
+                msgBox.setText("Revise los campos obligatorios.")
+                msgBox.exec_()
         else:
             validar = controller_admin_producto.validarDatos(
                 self.ui.label_error_nombre.text(),
@@ -121,6 +127,12 @@ class FormularioProducto(QtGui.QDialog):
                 msgBox.setText("Producto creado correctamente.")
                 msgBox.exec_()
                 self.setVisible(False)
+            else:
+                msgBox = QtGui.QMessageBox()
+                msgBox.setIcon(QtGui.QMessageBox.Critical)
+                msgBox.setWindowTitle("Error")
+                msgBox.setText("Revise los campos obligatorios.")
+                msgBox.exec_()
         self.reloadT.emit()
 
 if __name__ == '__main__':

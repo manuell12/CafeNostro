@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'formulario_producto.ui'
 #
-# Created: Thu Nov 26 04:02:52 2015
+# Created: Sat Dec 12 12:05:26 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -13,12 +13,15 @@ class Ui_FormularioProducto(object):
     def setupUi(self, FormularioProducto):
         FormularioProducto.setObjectName("FormularioProducto")
         FormularioProducto.setEnabled(True)
-        FormularioProducto.resize(586, 277)
+        FormularioProducto.resize(750, 300)
+        FormularioProducto.setMinimumSize(QtCore.QSize(750, 300))
+        FormularioProducto.setMaximumSize(QtCore.QSize(750, 300))
         self.verticalLayout_3 = QtGui.QVBoxLayout(FormularioProducto)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.groupBox = QtGui.QGroupBox(FormularioProducto)
         self.groupBox.setObjectName("groupBox")
         self.horizontalLayout = QtGui.QHBoxLayout(self.groupBox)
+        self.horizontalLayout.setContentsMargins(-1, 20, -1, 20)
         self.horizontalLayout.setObjectName("horizontalLayout")
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
@@ -71,7 +74,7 @@ class Ui_FormularioProducto(object):
         self.lineEdit_codigo.setObjectName("lineEdit_codigo")
         self.gridLayout.addWidget(self.lineEdit_codigo, 1, 1, 1, 1)
         self.label_error_codigo = QtGui.QLabel(self.groupBox)
-        self.label_error_codigo.setText("")
+        self.label_error_codigo.setMinimumSize(QtCore.QSize(240, 0))
         self.label_error_codigo.setObjectName("label_error_codigo")
         self.gridLayout.addWidget(self.label_error_codigo, 1, 2, 1, 1)
         self.horizontalLayout.addLayout(self.gridLayout)
@@ -81,6 +84,7 @@ class Ui_FormularioProducto(object):
         self.buttonBox = QtGui.QDialogButtonBox(FormularioProducto)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
+        self.buttonBox.setCenterButtons(False)
         self.buttonBox.setObjectName("buttonBox")
         self.verticalLayout_3.addWidget(self.buttonBox)
 
@@ -100,8 +104,9 @@ class Ui_FormularioProducto(object):
         self.label_error_nombre.setText(QtGui.QApplication.translate("FormularioProducto", "<html><head/><body><p><span style=\" font-weight:600; color:#ff0000;\">No puede estar vacío</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("FormularioProducto", "Nombre", None, QtGui.QApplication.UnicodeUTF8))
         self.label_5.setText(QtGui.QApplication.translate("FormularioProducto", "Categoría", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("FormularioProducto", "Descripción", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("FormularioProducto", "<html><head/><body><p>Descripción</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.label_error_precio.setText(QtGui.QApplication.translate("FormularioProducto", "<html><head/><body><p><span style=\" font-weight:600; color:#ff0000;\">Valor entre 0 y 99999</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.label_error_categoria.setText(QtGui.QApplication.translate("FormularioProducto", "<html><head/><body><p><span style=\" font-weight:600; color:#ff0000;\">Debe seleccionar una categoría</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("FormularioProducto", "Código", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_error_codigo.setText(QtGui.QApplication.translate("FormularioProducto", "<html><head/><body><p><span style=\" font-weight:600; color:#ff0000;\">No puede estar vacío</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
 

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'formulario_usuario.ui'
 #
-# Created: Thu Nov 26 04:02:55 2015
+# Created: Sat Dec 12 12:01:24 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -13,14 +13,17 @@ class Ui_FormularioUsuario(object):
     def setupUi(self, FormularioUsuario):
         FormularioUsuario.setObjectName("FormularioUsuario")
         FormularioUsuario.setEnabled(True)
-        FormularioUsuario.resize(579, 287)
+        FormularioUsuario.resize(750, 300)
+        FormularioUsuario.setMinimumSize(QtCore.QSize(750, 300))
+        FormularioUsuario.setMaximumSize(QtCore.QSize(750, 300))
         self.verticalLayout_3 = QtGui.QVBoxLayout(FormularioUsuario)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.groupBox = QtGui.QGroupBox(FormularioUsuario)
         self.groupBox.setObjectName("groupBox")
         self.horizontalLayout = QtGui.QHBoxLayout(self.groupBox)
+        self.horizontalLayout.setContentsMargins(-1, 20, -1, 20)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
         self.gridLayout = QtGui.QGridLayout()
         self.gridLayout.setObjectName("gridLayout")
@@ -70,6 +73,11 @@ class Ui_FormularioUsuario(object):
         self.label.setObjectName("label")
         self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
         self.lineEdit_apellido = QtGui.QLineEdit(self.groupBox)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.lineEdit_apellido.sizePolicy().hasHeightForWidth())
+        self.lineEdit_apellido.setSizePolicy(sizePolicy)
         self.lineEdit_apellido.setObjectName("lineEdit_apellido")
         self.gridLayout.addWidget(self.lineEdit_apellido, 1, 1, 1, 1)
         self.label_error_nombre = QtGui.QLabel(self.groupBox)
@@ -100,7 +108,7 @@ class Ui_FormularioUsuario(object):
         self.label_error_rut.setObjectName("label_error_rut")
         self.gridLayout.addWidget(self.label_error_rut, 6, 2, 1, 1)
         self.horizontalLayout.addLayout(self.gridLayout)
-        spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem1)
         self.verticalLayout_3.addWidget(self.groupBox)
         self.buttonBox = QtGui.QDialogButtonBox(FormularioUsuario)

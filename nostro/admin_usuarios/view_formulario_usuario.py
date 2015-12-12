@@ -151,6 +151,12 @@ class FormularioUsuario(QtGui.QDialog):
                     msgBox.setText("Usuario editado correctamente.")
                     msgBox.exec_()
                     self.setVisible(False)
+                else:
+                    msgBox = QtGui.QMessageBox()
+                    msgBox.setIcon(QtGui.QMessageBox.Critical)
+                    msgBox.setWindowTitle("Error")
+                    msgBox.setText("Revise los campos obligatorios.")
+                    msgBox.exec_()
             else:
                 self.clave_ac = unicode(self.ui.lineEdit_clave_actual.text())
                 crypt = c.CryptoRAF()
@@ -175,6 +181,12 @@ class FormularioUsuario(QtGui.QDialog):
                             msgBox.setText("Usuario editado correctamente.")
                             msgBox.exec_()
                             self.setVisible(False)
+                        else:
+                            msgBox = QtGui.QMessageBox()
+                            msgBox.setIcon(QtGui.QMessageBox.Critical)
+                            msgBox.setWindowTitle("Error")
+                            msgBox.setText("Revise los campos obligatorios.")
+                            msgBox.exec_()
         else:
             if self.verif == self.clave:
                 self.valido = controller_admin_user.validarDatos(

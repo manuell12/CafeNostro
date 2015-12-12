@@ -85,7 +85,7 @@ PushButtonMesa:checked[ocupado='true']{
     background-color: #a44242;
     border-style: inset;
 }
-QLabel#label_5{
+QLabel#label_login{
     color: black;
     font: bold 30px "Calibri";
 }

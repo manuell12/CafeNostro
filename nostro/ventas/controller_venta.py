@@ -189,7 +189,6 @@ class TotalProductosModel(QtGui.QSortFilterProxyModel):
 
         self.setSourceModel(self.model)
 
-
 # def set_headers(header)
 
 def editDataVenta(id_venta, fecha, total_pago, id_usuario):

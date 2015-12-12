@@ -213,8 +213,6 @@ def validaRut(rut):
                 dig_r = 'k'
             else:
                 dig_r = resta
-            print dig_r
-            print dig
             if(str(dig_r) != str(dig)):
                 valido = False
             else:

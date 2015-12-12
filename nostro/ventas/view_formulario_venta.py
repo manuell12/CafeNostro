@@ -8,6 +8,7 @@ import controller_venta as controller
 import admin_productos.controller_admin_producto as c
 import admin_usuarios.controller_admin_user as controller_admin_user
 from ventas.view_admin_venta import AdminVentas
+from ventas.view_numero_pagos import NumeroPagos
 import datetime
 import time
 
@@ -271,113 +272,8 @@ class FormularioVenta(QtGui.QWidget):
     """ ===================================================================== NUMERO DE PAGOS ============================================================ """
 
     def action_opciones(self):
-        #self.n_pagos = self.ui.label_numero_pagos.text()
-        self.nPagosDialog = self.createPagosWindow(1)
-        self.nPagosDialog.exec_()
-
-    def action_numero_pagos(self):
-        self.n_pagos = int(self.lineEdit_pagos[0].text())
-        aux = self.lineEdit_pagos[0]
-        self.clearLayout(self.groupBox.layout())
-        self.lineEdit_pagos = list()
-        self.lineEdit_pagos.append(aux)
-
-        for i in range(self.n_pagos):
-            label = QtGui.QLabel("Pago " + str(i + 1) + ": ")
-            line_edit = QtGui.QLineEdit()
-            self.lineEdit_pagos.append(line_edit)
-            horizontalLayout = QtGui.QHBoxLayout()
-            horizontalLayout.addWidget(label)
-            horizontalLayout.addWidget(line_edit)
-            self.verticalLayout2.addLayout(horizontalLayout)
-
-        for i, lineEdit in enumerate(self.lineEdit_pagos):
-            if(i == 0):
-                lineEdit.setText(str(self.n_pagos))
-            else:
-                lineEdit.setText(
-                    str(int(self.ui.lcdNumber_total.value() / self.n_pagos)))
-
-    def action_guardar_pagos(self):
-        msgBox = QtGui.QMessageBox()
-        msgBox.setIcon(QtGui.QMessageBox.Warning)
-        msgBox.setStandardButtons(
-            QtGui.QMessageBox.Ok | QtGui.QMessageBox.Cancel)
-        msgBox.setWindowTitle(u"Advertencia")
-        msgBox.setText(
-            u"Confirme para realizar venta")
-        press = msgBox.exec_()
-        if press == QtGui.QMessageBox.Ok:
-            self.agregarVenta()
-            for i, lineEdit in enumerate(self.lineEdit_pagos):
-                if(i != 0):
-                    total_pago = int(lineEdit.text())
-                    efectivo = int(lineEdit.text())
-                    tarjeta = 0
-                    id_pedido = int(self.id_pedido)
-                    propina = self.ui.lcdNumber_propina.value()
-                    id_venta = controller.getVentaPedidoId(id_pedido)[
-                        0].id_venta
-                    controller.addDataPago(
-                        total_pago, efectivo, tarjeta, propina, id_venta)
-                    self.nPagosDialog.close()
-            self.main.stackedWidget.widget(5).reload_data_table()
-            self.id_pedido = controller.addDataPedido(self.mesa)
-            self.reload_data_table2()
-        else:
-            return False
-
-    def createPagosWindow(self, pagos):
-        self.n_pagos = pagos
-        w = QtGui.QDialog()
-        w.resize(400, 100)
-        w.setWindowTitle("Gestionar pagos")
-
-        self.groupBox = QtGui.QGroupBox()
-        self.groupBox.setTitle("Pagos")
-
-        verticalLayout1 = QtGui.QVBoxLayout()
-
-        label = QtGui.QLabel(u"Número de pagos: ")
-        lineEdit_numero_pagos = QtGui.QLineEdit(str(self.n_pagos))
-        pushButton_numero_pagos = QtGui.QPushButton("Aceptar")
-        pushButton_guardar_pagos = QtGui.QPushButton("Pagar")
-        horizontalLayout = QtGui.QHBoxLayout()
-        horizontalLayout.addWidget(label)
-        horizontalLayout.addWidget(lineEdit_numero_pagos)
-        horizontalLayout.addWidget(pushButton_numero_pagos)
-        verticalLayout1.addLayout(horizontalLayout)
-
-        self.verticalLayout2 = QtGui.QVBoxLayout(self.groupBox)
-
-        self.lineEdit_pagos = list()
-        self.lineEdit_pagos.append(lineEdit_numero_pagos)
-
-        for i in range(self.n_pagos):
-            label = QtGui.QLabel("Pago " + str(i + 1) + ": ")
-            line_edit = QtGui.QLineEdit()
-            self.lineEdit_pagos.append(line_edit)
-            horizontalLayout = QtGui.QHBoxLayout()
-            horizontalLayout.addWidget(label)
-            horizontalLayout.addWidget(line_edit)
-            self.verticalLayout2.addLayout(horizontalLayout)
-
-        self.lineEdit_pagos[1].setText(
-            str(int(self.ui.lcdNumber_total.value())))
-
-        mainVLayout = QtGui.QVBoxLayout()
-        mainVLayout.addLayout(verticalLayout1)
-        mainVLayout.addWidget(self.groupBox)
-        mainVLayout.addWidget(pushButton_guardar_pagos)
-
-        mainHLayout = QtGui.QHBoxLayout()
-        mainHLayout.addLayout(mainVLayout)
-
-        w.setLayout(mainHLayout)
-
-        pushButton_numero_pagos.clicked.connect(self.action_numero_pagos)
-        pushButton_guardar_pagos.clicked.connect(self.action_guardar_pagos)
-        return w
+        self.pagos = NumeroPagos(self.id_pedido,self,self.ui.lcdNumber_subtotal.value())
+        self.pagos.show()
 
     def clearLayout(self, layout):
         if layout is not None:
@@ -438,7 +334,10 @@ class FormularioVenta(QtGui.QWidget):
             self.rut_usuario)[0].id_usuario)
         controller.addDataVenta(fecha, num_documento,
                                 tipo, total_pago, id_usuario, id_pedido)
-        self.button.setText("Mesa: "+str(self.button.mesa))
+        try:
+            self.button.setText("Mesa: "+str(self.button.mesa))
+        except:
+            pass
 
     def editarVenta(self):
         print("-----Editar Venta-----")

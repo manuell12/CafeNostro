@@ -71,6 +71,25 @@
           </item>
           <item>
            <layout class="QGridLayout" name="gridLayout">
+            <item row="1" column="0">
+             <widget class="QPushButton" name="pushButton_filtrar_bebidas_frias">
+              <property name="minimumSize">
+               <size>
+                <width>101</width>
+                <height>41</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Bebidas Frias</string>
+              </property>
+             </widget>
+            </item>
             <item row="0" column="1">
              <widget class="QPushButton" name="pushButton_filtrar_cocina">
               <property name="minimumSize">
@@ -91,7 +110,7 @@
              </widget>
             </item>
             <item row="0" column="0">
-             <widget class="QPushButton" name="pushButton_filtrar_cafeteria">
+             <widget class="QPushButton" name="pushButton_filtrar_bebidas_calientes">
               <property name="minimumSize">
                <size>
                 <width>101</width>
@@ -105,26 +124,7 @@
                </size>
               </property>
               <property name="text">
-               <string>Cafeteria</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QPushButton" name="pushButton_filtrar_bebidas">
-              <property name="minimumSize">
-               <size>
-                <width>101</width>
-                <height>41</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>Bebidas</string>
+               <string>Bebidas Calientes</string>
               </property>
              </widget>
             </item>
@@ -144,6 +144,32 @@
               </property>
               <property name="text">
                <string>Helados</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QPushButton" name="pushButton_filtrar_reposteria">
+              <property name="minimumSize">
+               <size>
+                <width>101</width>
+                <height>41</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Respostería</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QPushButton" name="pushButton_filtrar_otros">
+              <property name="minimumSize">
+               <size>
+                <width>101</width>
+                <height>41</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Otros</string>
               </property>
              </widget>
             </item>

@@ -71,11 +71,14 @@ class FormularioVenta(QtGui.QWidget):
             self.action_aumentar)
         self.ui.pushButton_disminuir_cantidad.clicked.connect(
             self.action_disminuir)
-        self.ui.pushButton_filtrar_cafeteria.clicked.connect(
-            self.action_cafeteria)
+
+        self.ui.pushButton_filtrar_bebidas_calientes.clicked.connect(self.action_bebidas_calientes)
         self.ui.pushButton_filtrar_cocina.clicked.connect(self.action_cocina)
-        self.ui.pushButton_filtrar_bebidas.clicked.connect(self.action_bebidas)
+        self.ui.pushButton_filtrar_bebidas_frias.clicked.connect(self.action_bebidas_frias)
         self.ui.pushButton_filtrar_helados.clicked.connect(self.action_helados)
+        self.ui.pushButton_filtrar_reposteria.clicked.connect(self.action_reposteria)
+        self.ui.pushButton_filtrar_otros.clicked.connect(self.action_otros)
+
         self.ui.pushButton_cerrar_venta.clicked.connect(
             self.action_cerrar_venta)
         self.ui.lineEdit_buscar_codigo.textChanged.connect(
@@ -113,20 +116,28 @@ class FormularioVenta(QtGui.QWidget):
 
     """" ================================ FILTROS TABLA TOTAL PRODUCTOS =================================== """
 
-    def action_cafeteria(self):
-        productos = controller.getProductoCategoria(3)
-        self.load_model_total_productos(productos)
-
     def action_cocina(self):
         productos = controller.getProductoCategoria(1)
         self.load_model_total_productos(productos)
 
-    def action_bebidas(self):
+    def action_helados(self):
+        productos = controller.getProductoCategoria(2)
+        self.load_model_total_productos(productos)
+
+    def action_bebidas_calientes(self):
+        productos = controller.getProductoCategoria(3)
+        self.load_model_total_productos(productos)
+
+    def action_bebidas_frias(self):
         productos = controller.getProductoCategoria(4)
         self.load_model_total_productos(productos)
 
-    def action_helados(self):
-        productos = controller.getProductoCategoria(2)
+    def action_reposteria(self):
+        productos = controller.getProductoCategoria(5)
+        self.load_model_total_productos(productos)
+
+    def action_otros(self):
+        productos = controller.getProductoCategoria(6)
         self.load_model_total_productos(productos)
 
     def lineEdit_buscar_codigo_changed(self, text):

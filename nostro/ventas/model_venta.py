@@ -43,6 +43,16 @@ def obtenerObjetoVentas(data):
                            row[3], row[4], row[5], row[6]))
     return lista
 
+def obtenerObjetoPagos(data):
+    """
+    Recibe como parametro la tupla recibida desde la BD y retorna una lista de objetos con todos los datos de los productos.
+    """
+    lista = list()
+    for i, row in enumerate(data):
+        lista.append(Pago(row[0], row[1], row[2],
+                           row[3], row[4], row[5]))
+    return lista
+
 
 class Pedido(object):
     """
@@ -419,7 +429,7 @@ class Pago(object):
     Una instancia de esta clase representa una fila.
     La instancia (objeto) puede estar en la BD o no.
     """
-    __tablename__ = "venta"
+    __tablename__ = "pago"
     id_pago = None  # Primary Key
     pago_total = 0
     efectivo = 0
@@ -446,13 +456,40 @@ class Pago(object):
     def addDataPago(cls):
         conex = connect()
         conn = conex.cursor()
-        query = "INSERT INTO pago(pago_total, efectivo, tarjeta, propina, idVenta) VALUES(%s, %s, %s, %s, %s)"
+        query = "INSERT INTO pago(idPago, pago_total, efectivo, tarjeta, propina, idVenta) VALUES(%s,%s, %s, %s, %s, %s)"
         conn.execute(query,
-                     (cls.pago_total,
+                     (cls.id_pago,
+                      cls.pago_total,
                       cls.efectivo,
                       cls.tarjeta,
                       cls.propina,
                       cls.id_venta))
         conex.commit()
         conn.close()
+
+    @classmethod
+    def all(cls):
+        """
+        Método utlizado para obtener la colección completa de filas
+        en la tabla pedido
+        Este método al ser de clase no necesita una instancia (objeto)
+        Sólo basta con invocarlo desde la clase
+        """
+        query = "SELECT * FROM {}".format(
+            cls.__tablename__)
+
+        try:
+            conex = connect()
+            conn = conex.cursor()
+            conn.execute(query)
+            data = conn.fetchall()
+            conn.close()
+            return obtenerObjetoPagos(data)
+
+        except MySQLdb.Error as e:
+            print "Error al obtener los pagos:", e.args[0]
+            conn.close()
+            return None
+
+        
 

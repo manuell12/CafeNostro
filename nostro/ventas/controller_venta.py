@@ -17,15 +17,17 @@ def Productos():
     """Retorna todos los Productos de la base de datos"""
     return Producto.all()
 
-
 def getPedidos():
     """Retorna todos los pedidos"""
     return Pedido.all()
 
-
 def getVentas():
     """Retorna todos los pedidos"""
     return Venta.all()
+
+def getPagos():
+    """Retorna todos los pagos"""
+    return Pago.all()
 
 
 def getVentaPedidoId(id_pedido):
@@ -65,7 +67,10 @@ def getProductoId(id_producto):
 
 def addDataPedido(mesa,en_curso=1):
     """Agrega un pedido a la base de datos y retorna el id"""
-    pedidos = len(getPedidos())
+    try:
+        pedidos = getPedidos()[-1].id_pedido + 1
+    except:
+        pedidos = 0
     pedido = Pedido(pedidos, mesa, en_curso)
     Pedido.addDataPedido(pedido)
     return pedidos
@@ -87,7 +92,11 @@ def getPedidoActivoPorMesa(mesa):
 
 def addDataPago(pago_total, efectivo, tarjeta, propina, id_venta):
     """Agrega un pedido a la base de datos y retorna el id"""
-    pago = Pago(None, pago_total, efectivo, tarjeta, propina, id_venta)
+    try:
+        pagos = getPagos()[-1].id_pago + 1
+    except:
+        pagos = 0
+    pago = Pago(pagos, pago_total, efectivo, tarjeta, propina, id_venta)
     Pago.addDataPago(pago)
 
 

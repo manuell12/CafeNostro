@@ -199,7 +199,6 @@ class NumeroPagos(QtGui.QDialog):
         if press == QtGui.QMessageBox.Ok:
             self.ventaForm.agregarVenta()
             for i, line_precio in enumerate(self.label_pagos):
-                print "hola"
                 total_pago = int(line_precio.text())
                 if(self.combobox_tipo_pagos[i].currentIndex() == 0): 
                     efectivo = int(line_precio.text())
@@ -215,7 +214,8 @@ class NumeroPagos(QtGui.QDialog):
                     total_pago, efectivo, tarjeta, propina, id_venta)
                 self.close()
             self.ventaForm.main.stackedWidget.widget(5).reload_data_table()
-            self.ventaForm.id_pedido = controller.addDataPedido(self.ventaForm.mesa)
-            self.ventaForm.reload_data_table2()
+            controller.finalizarPedido(self.id_pedido)
+            self.ventaForm.crear_pagos = True
+            self.ventaForm.vaciar_table2()
         else:
             return False

@@ -12,6 +12,7 @@ class MesasVenta(QtGui.QWidget):
     identificador = 0 # 0: borrar mesas, 1: unir mesas, 2: separar mesas
     buttons_disabled = list()
     buttons_enabled = list()
+
     def __init__(self,main,num_mesas,rut):
         'Constructor de la clase'
         QtGui.QWidget.__init__(self)
@@ -215,7 +216,6 @@ class MesasVenta(QtGui.QWidget):
         if (self.editable):
             pass
         else:
-            self.main.ui.stackedWidget.widget(num_mesa+6).button = button_mesa
             self.main.ui.stackedWidget.setCurrentIndex(num_mesa+6)
 
     def clearLayout(self, layout):

@@ -26,7 +26,6 @@ class MainWindow(QtGui.QMainWindow):
 
     venta_directa_en_curso = False
     num_mesas = 14
-    id = False
 
     def __init__(self, tipo=None, rut=None):
         'Constructor de la clase'
@@ -96,16 +95,16 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.stackedWidget.currentChanged.connect(self.stackedWidget_changed)
 
     def stackedWidget_changed(self,index):
-        if(index > 6):
-            self.id = True
-            self.index_pedido = index
-        if(self.id and index == 6):
-            pedido = self.ui.stackedWidget.widget(self.index_pedido).id_pedido
-            productos = controller_venta.getProductosPedido(pedido)
-            if(len(productos) == 0):
-                self.ui.stackedWidget.widget(self.index_pedido).set_ocupado(False)
-            else:
-                self.ui.stackedWidget.widget(self.index_pedido).set_ocupado(True)
+        for i in range(7,self.num_mesas+8):
+            try:
+                id_pedido = self.ui.stackedWidget.widget(i).id_pedido
+                pedido = controller_venta.getPedido(id_pedido)
+                if(pedido[0].en_curso == 0):
+                    self.ui.stackedWidget.widget(i).set_ocupado(False)
+                else:
+                    self.ui.stackedWidget.widget(i).set_ocupado(True)
+            except:
+                pass
 
     def mesas_venta(self):
         'Cambia a la interfaz de venta por mesas'

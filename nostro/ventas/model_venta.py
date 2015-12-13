@@ -76,6 +76,48 @@ class Pedido(object):
         conex.commit()
         conn.close()
 
+    def finalizarPedido(cls):
+        conex = connect()
+        conn = conex.cursor()
+        query = "UPDATE pedido SET en_curso = 0 WHERE idPedido = {0}".format(cls.id_pedido)
+        conn.execute(query)
+        conex.commit()
+        conn.close()
+
+    def getPedido(cls):
+        query = "SELECT * FROM pedido WHERE idPedido = {0}".format(
+            cls.id_pedido)
+
+        try:
+            conex = connect()
+            conn = conex.cursor()
+            conn.execute(query)
+            data = conn.fetchall()
+            conn.close()
+            return obtenerObjetoPedidos(data)
+
+        except MySQLdb.Error as e:
+            conn.close()
+            print "Error al obtener los Productos:", e.args[0]
+            return None
+
+    def getPedidoActivoPorMesa(cls):
+        query = "SELECT * FROM pedido WHERE mesa = {0} and en_curso = 1".format(
+            cls.mesa)
+
+        try:
+            conex = connect()
+            conn = conex.cursor()
+            conn.execute(query)
+            data = conn.fetchall()
+            conn.close()
+            return obtenerObjetoPedidos(data)
+
+        except MySQLdb.Error as e:
+            conn.close()
+            print "Error al obtener los Productos:", e.args[0]
+            return None
+
     @classmethod
     def all(cls):
         """

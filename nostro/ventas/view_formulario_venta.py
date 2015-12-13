@@ -28,7 +28,7 @@ class FormularioVenta(QtGui.QWidget):
 
     id_tablaP = 0
     id_tablaPd = 0
-    button = object()
+    crear_pedido = True
 
     def __init__(self, main, rut_usuario, mesa):
         'Constructor de la clase'
@@ -39,11 +39,20 @@ class FormularioVenta(QtGui.QWidget):
         self.connect_actions()
         self.main = main
         self.mesa = mesa
-        self.id_pedido = controller.addDataPedido(self.mesa)
-        self.rut_usuario = rut_usuario
+        
+        if(int(self.mesa) != 0): #asignar un boton a la mesa
+            self.button = self.main.stackedWidget.widget(6).list_mesas[int(mesa)-1] 
 
+        pedido = controller.getPedidoActivoPorMesa(self.mesa)
+        try:
+            self.id_pedido = pedido[0].id_pedido
+            self.crear_pedido = False
+            self.reload_data_table2()
+        except:
+            pass
+
+        self.rut_usuario = rut_usuario
         self.load_model_total_productos(controller.getProductoStatus(1))
-        self.reload_data_table2()
         self.set_combobox_tipo_pago()
 
     def set_combobox_tipo_pago(self):
@@ -89,6 +98,9 @@ class FormularioVenta(QtGui.QWidget):
         self.main.stackedWidget.widget(6).update_buttons()
 
     def action_agregar(self):
+        if(self.crear_pedido):
+            self.id_pedido = controller.addDataPedido(self.mesa)
+            self.crear_pedido = False
         controller.addDataVentaProducto(
             self.id_pedido, self.id_tablaP, self.precio_tablaP)
         self.reload_data_table2()
@@ -280,6 +292,10 @@ class FormularioVenta(QtGui.QWidget):
         self.ui.tableView_pedido.sortByColumn(0, QtCore.Qt.AscendingOrder)
         self.ui.tableView_pedido.setColumnHidden(0, True)
 
+    def vaciar_table2(self):
+        empty_model = QtGui.QSortFilterProxyModel()
+        self.ui.tableView_pedido.setModel(empty_model)
+
     """ ===================================================================== NUMERO DE PAGOS ============================================================ """
 
     def action_opciones(self):
@@ -315,14 +331,15 @@ class FormularioVenta(QtGui.QWidget):
                     self.agregarVenta()
                     self.agregarPedido()
                     self.main.stackedWidget.widget(5).reload_data_table()
-                    self.id_pedido = controller.addDataPedido(self.mesa)
-                    self.reload_data_table2()
+                    self.crear_pedido = True
+                    self.vaciar_table2()
             except:
                 self.agregarVenta()
                 self.agregarPedido()
                 self.main.stackedWidget.widget(5).reload_data_table()
-                self.id_pedido = controller.addDataPedido(self.mesa)
-                self.reload_data_table2()
+                self.crear_pedido = True
+                self.vaciar_table2()
+                
         else:
             return False
 
@@ -356,8 +373,6 @@ class FormularioVenta(QtGui.QWidget):
         m = int(time.strftime("%m"))
         d = int(time.strftime("%d"))
         fecha = datetime.date(y, m, d)
-        # num_documento = len(controller.getVentas())
-        # tipo = "directa"
         total_pago = self.ui.lcdNumber_total.value()
         id_venta = controller.getIdVenta(int(self.id_pedido))
         id_usuario = int(controller_admin_user.getUsuarioRut(
@@ -378,6 +393,7 @@ class FormularioVenta(QtGui.QWidget):
         id_venta = controller.getVentaPedidoId(id_pedido)[0].id_venta
         controller.addDataPago(total_pago, efectivo,
                                tarjeta, propina, id_venta)
+        controller.finalizarPedido(id_pedido)
 
 
 if __name__ == "__main__":

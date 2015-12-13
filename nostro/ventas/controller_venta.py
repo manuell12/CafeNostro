@@ -63,14 +63,27 @@ def getProductoId(id_producto):
     return Producto.getProductoId(producto)
 
 
-def addDataPedido(mesa):
+def addDataPedido(mesa,en_curso=1):
     """Agrega un pedido a la base de datos y retorna el id"""
-    en_curso = 1
     pedidos = len(getPedidos())
     pedido = Pedido(pedidos, mesa, en_curso)
     Pedido.addDataPedido(pedido)
     return pedidos
 
+def finalizarPedido(id_pedido):
+    pedido = Pedido()
+    pedido.id_pedido = id_pedido
+    Pedido.finalizarPedido(pedido)
+
+def getPedido(id_pedido):
+    pedido = Pedido()
+    pedido.id_pedido = id_pedido
+    return Pedido.getPedido(pedido)
+
+def getPedidoActivoPorMesa(mesa):
+    pedido = Pedido()
+    pedido.mesa = mesa
+    return Pedido.getPedidoActivoPorMesa(pedido)
 
 def addDataPago(pago_total, efectivo, tarjeta, propina, id_venta):
     """Agrega un pedido a la base de datos y retorna el id"""

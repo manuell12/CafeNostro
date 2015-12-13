@@ -15,6 +15,7 @@ from ventas.view_formulario_venta import FormularioVenta
 from ventas.view_mesas_venta import MesasVenta
 import ventas.controller_venta as controller_venta
 import admin_usuarios.controller_admin_user as controller
+from estadisticas.view_estadistica import Estadistica
 
 
 class MainWindow(QtGui.QMainWindow):
@@ -72,6 +73,8 @@ class MainWindow(QtGui.QMainWindow):
 
         progress.setValue(self.num_mesas+5)
         self.setVisible(True)
+
+        self.ui.stackedWidget.insertWidget(1,Estadistica())
         
 
     def config_user(self):
@@ -90,6 +93,8 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.actionVentas.triggered.connect(self.admin_ventas)
         self.ui.actionUsuarios.triggered.connect(self.admin_users)
         self.ui.actionProductos.triggered.connect(self.admin_productos)
+        self.ui.actionEstadisticas.triggered.connect(self.admin_estadisticas)
+
         self.ui.pushButton_compra_directa.clicked.connect(self.formulario_venta_directa)
         self.ui.pushButton_mesas.clicked.connect(self.mesas_venta)
         self.ui.stackedWidget.currentChanged.connect(self.stackedWidget_changed)
@@ -105,6 +110,10 @@ class MainWindow(QtGui.QMainWindow):
                     self.ui.stackedWidget.widget(i).set_ocupado(True)
             except:
                 pass
+
+    def admin_estadisticas(self):
+        'Cambia a la interfaz de venta por mesas'
+        self.ui.stackedWidget.setCurrentIndex(1)
 
     def mesas_venta(self):
         'Cambia a la interfaz de venta por mesas'

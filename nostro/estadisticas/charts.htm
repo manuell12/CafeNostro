@@ -1,0 +1,75 @@
+
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Highcharts Example</title>
+
+        <script type="text/javascript" src="js/jquery.min.js"></script><script type="text/javascript">$(function () {
+    $('#chart-unit-product').highcharts({
+        chart: {
+            type: 'area',
+            zoomType: 'x'
+        },
+        title: {
+            text: 'Unidades Vendidas por Producto'
+        },
+        xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: {
+                day: '%e of %b'
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'Unidades'
+            },
+            min: 0
+        },
+        plotOptions: {
+            line: {
+                marker: {
+                    radius: 2
+                },
+                lineWidth: 1,
+                states: {
+                    hover: {
+                        lineWidth: 1
+                    }
+                },
+                threshold: null
+            },
+            column: {
+                animation: false
+            }
+        },
+        tooltip: {
+            crosshairs: [true],
+            shared: true,
+            formatter: function () {
+                var ind = '<span style="font-size: 75%">' + Highcharts.dateFormat('%A, %b %e', this.x) + '</span><br>',
+                    sum = 0;
+
+                $.each(this.points, function (i, point) {
+                    ind += '<span style="color:' + point.series.color + '">\u25CF</span> ' + point.series.name + ': <b>' + point.y + '</b><br/>';
+                });
+
+                ind += '<br/>Total: <b>' + this.points[0].total + '</b>'
+
+                console.log(this);
+                return ind;
+            }
+        },
+        series: [{name:" Espresso ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,13),data:[7,2]},{name:" Espresso doble ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,13),data:[3,5]},{name:" Americano ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,13),data:[4,37]},{name:" Macchiato ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,13),data:[2,4]},{name:" Macchiato doble ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,13),data:[1,2]},{name:" Bebida ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,13),data:[0,1]},{name:" Agua mineral ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,13),data:[0,2]},{name:" helado2 ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,13),data:[0,1]},{name:" Capuccino ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,13),data:[0,1]},{name:" Latte macchiato ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,13),data:[0,1]},{name:" Mokaccino ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,13),data:[0,3]},{name:" Chocolate helado ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,13),data:[0,1]},{name:" Té selección ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,13),data:[0,1]},{name:" Tetera té gourmet ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,13),data:[0,1]},{name:" Jugo natural ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,13),data:[0,1]},{name:" Panini queso, jamón, dijon ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,13),data:[0,1]},{name:" Panini queso, chorizo, morrón ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,13),data:[0,1]},{name:" Panini queso, jamón, verduras ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,13),data:[0,1]}]
+    });
+}); 
+    </script>
+    </head>
+    <body>
+<script src="js/highcharts.js"></script>
+<script src="js/modules/exporting.js"></script>
+
+<div id="chart-unit-product" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+    </body>
+</html>

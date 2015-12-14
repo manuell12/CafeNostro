@@ -71,10 +71,11 @@ class MainWindow(QtGui.QMainWindow):
             self.ui.stackedWidget.addWidget(FormularioVenta(self.ui,self.rut,str(i)))
             progress.setValue(i+5)
 
+        self.ui.stackedWidget.addWidget(Estadistica()) # self.num_mesas+5
         progress.setValue(self.num_mesas+5)
         self.setVisible(True)
 
-        self.ui.stackedWidget.insertWidget(1,Estadistica())
+        
         
 
     def config_user(self):
@@ -113,7 +114,8 @@ class MainWindow(QtGui.QMainWindow):
 
     def admin_estadisticas(self):
         'Cambia a la interfaz de venta por mesas'
-        self.ui.stackedWidget.setCurrentIndex(1)
+        self.ui.stackedWidget.setCurrentIndex(self.num_mesas+7)
+        self.ui.stackedWidget.widget(self.num_mesas+7).actualizar_productos()
 
     def mesas_venta(self):
         'Cambia a la interfaz de venta por mesas'

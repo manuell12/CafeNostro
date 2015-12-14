@@ -112,6 +112,29 @@ class Venta(object):
         self.id_pedido = id_pedido
 
     @classmethod
+    def getVentasPorFecha(cls, fecha_inicio, fecha_fin):
+        """
+        Método utlizado para obtener la colección de filas en la tabla venta comprendidas entre las fechas dadas 
+        Este método al ser de clase no necesita una instancia (objeto)
+        Sólo basta con invocarlo desde la clase
+        """
+        query = "SELECT * FROM venta WHERE fecha >= %s and fecha <= %s"
+
+        try:
+            conex = connect()
+            conn = conex.cursor()
+            conn.execute(query,(fecha_inicio,fecha_fin))
+            data = conn.fetchall()
+            conn.close()
+            return obtenerObjetoVentas(data)
+
+        except MySQLdb.Error as e:
+            print "Error al obtener las ventas:", e.args[0]
+            conn.close()
+            return None
+
+
+    @classmethod
     def all(cls):
         """
         Método utlizado para obtener la colección completa de filas

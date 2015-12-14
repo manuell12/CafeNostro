@@ -14,8 +14,8 @@
    <string>CaféNostro</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
      <widget class="QGroupBox" name="groupBox">
       <property name="autoFillBackground">
        <bool>true</bool>
@@ -114,7 +114,7 @@
       </layout>
      </widget>
     </item>
-    <item>
+    <item row="1" column="0">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
        <number>0</number>
@@ -146,6 +146,7 @@
     <addaction name="actionUsuarios"/>
     <addaction name="actionProductos"/>
     <addaction name="actionVentas"/>
+    <addaction name="actionEstadisticas"/>
    </widget>
    <widget class="QMenu" name="menuArchivo">
     <property name="title">
@@ -218,6 +219,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+4</string>
+   </property>
+  </action>
+  <action name="actionEstadisticas">
+   <property name="text">
+    <string>Estadísticas</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+5</string>
    </property>
   </action>
  </widget>

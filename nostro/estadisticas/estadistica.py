@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'estadistica.ui'
 #
-# Created: Sun Dec 13 21:53:27 2015
+# Created: Mon Dec 14 15:41:13 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,7 +12,7 @@ from PySide import QtCore, QtGui
 class Ui_Estadistica(object):
     def setupUi(self, Estadistica):
         Estadistica.setObjectName("Estadistica")
-        Estadistica.resize(1100, 547)
+        Estadistica.resize(1049, 466)
         self.horizontalLayout_3 = QtGui.QHBoxLayout(Estadistica)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.verticalLayout_4 = QtGui.QVBoxLayout()
@@ -41,21 +41,40 @@ class Ui_Estadistica(object):
         self.calendarWidget_fin.setObjectName("calendarWidget_fin")
         self.verticalLayout_3.addWidget(self.calendarWidget_fin)
         self.horizontalLayout_2.addLayout(self.verticalLayout_3)
-        self.verticalLayout = QtGui.QVBoxLayout()
+        self.groupBox = QtGui.QGroupBox(Estadistica)
+        self.groupBox.setMaximumSize(QtCore.QSize(16777215, 200))
+        self.groupBox.setObjectName("groupBox")
+        self.verticalLayout = QtGui.QVBoxLayout(self.groupBox)
+        self.verticalLayout.setContentsMargins(-1, 20, -1, -1)
         self.verticalLayout.setObjectName("verticalLayout")
+        self.horizontalLayout_4 = QtGui.QHBoxLayout()
+        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+        self.label_4 = QtGui.QLabel(self.groupBox)
+        self.label_4.setMinimumSize(QtCore.QSize(170, 0))
+        self.label_4.setObjectName("label_4")
+        self.horizontalLayout_4.addWidget(self.label_4)
+        self.label_total_productos = QtGui.QLabel(self.groupBox)
+        self.label_total_productos.setObjectName("label_total_productos")
+        self.horizontalLayout_4.addWidget(self.label_total_productos)
+        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout_4.addItem(spacerItem)
+        self.verticalLayout.addLayout(self.horizontalLayout_4)
         self.horizontalLayout = QtGui.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.label = QtGui.QLabel(Estadistica)
-        self.label.setMinimumSize(QtCore.QSize(0, 10))
-        self.label.setMaximumSize(QtCore.QSize(16777215, 20))
+        self.label = QtGui.QLabel(self.groupBox)
+        self.label.setMinimumSize(QtCore.QSize(170, 0))
         self.label.setObjectName("label")
         self.horizontalLayout.addWidget(self.label)
-        self.label_ingreso_total = QtGui.QLabel(Estadistica)
+        self.label_ingreso_total = QtGui.QLabel(self.groupBox)
         self.label_ingreso_total.setMaximumSize(QtCore.QSize(16777215, 20))
         self.label_ingreso_total.setObjectName("label_ingreso_total")
         self.horizontalLayout.addWidget(self.label_ingreso_total)
+        spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem1)
         self.verticalLayout.addLayout(self.horizontalLayout)
-        self.horizontalLayout_2.addLayout(self.verticalLayout)
+        spacerItem2 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout.addItem(spacerItem2)
+        self.horizontalLayout_2.addWidget(self.groupBox)
         self.verticalLayout_4.addLayout(self.horizontalLayout_2)
         self.tableView = QtGui.QTableView(Estadistica)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
@@ -82,7 +101,10 @@ class Ui_Estadistica(object):
         Estadistica.setWindowTitle(QtGui.QApplication.translate("Estadistica", "Form", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("Estadistica", "Inicio", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("Estadistica", "Fin", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("Estadistica", "Ingreso Total:   $", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox.setTitle(QtGui.QApplication.translate("Estadistica", "Datos Generales", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_4.setText(QtGui.QApplication.translate("Estadistica", "Total Productos Vendidos:", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_total_productos.setText(QtGui.QApplication.translate("Estadistica", "0", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("Estadistica", "Ingreso Total:                $", None, QtGui.QApplication.UnicodeUTF8))
         self.label_ingreso_total.setText(QtGui.QApplication.translate("Estadistica", "0", None, QtGui.QApplication.UnicodeUTF8))
 
 from PySide import QtWebKit

@@ -78,6 +78,25 @@ class VentaProducto(object):
 
         conn.close()
 
+    @classmethod
+    def getProductosPorFecha(cls,fecha):
+        """
+        Método utlizado para obtener la cantidad vendida de un producto en un dia especificado.
+        """
+        query = "SELECT VP.idPedido,VP.idProducto,SUM(VP.cantidad) as cantidad,VP.precio_venta,VP.porcentaje_descuento FROM venta_has_producto VP, venta V WHERE V.idPedido = VP.idPedido and V.fecha = '{0}' GROUP by VP.idProducto".format(fecha)
+        try:
+            conex = connect()
+            conn = conex.cursor()
+            conn.execute(query)
+            data = conn.fetchall()
+            return obtenerObjetoVentaProductos(data)
+
+        except MySQLdb.Error as e:
+            print "Error al obtener los Productos:", e.args[0]
+            return None
+
+        conn.close()
+
 class Venta(object):
     """
     Clase que representa a la tabla Pedido.

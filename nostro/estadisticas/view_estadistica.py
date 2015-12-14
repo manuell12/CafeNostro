@@ -13,8 +13,7 @@ class Estadistica(QtGui.QWidget):
                         (u"Nombre", 200),
                         (u"Cantidad", 60),
                         (u"Precio/unidad", 100),
-                        (u"Total", 60),
-                        (u"Fecha", 100))
+                        (u"Total", 60))
     def __init__(self):
         'Constructor de la clase'
         QtGui.QWidget.__init__(self)
@@ -65,9 +64,12 @@ class Estadistica(QtGui.QWidget):
                     self.lista_ProductoVenta.append(objeto_producto_venta)
 
         ingreso_total = 0
+        productos_totales = 0
         for producto_venta in self.lista_ProductoVenta:
             ingreso_total = ingreso_total + (producto_venta.cantidad * producto_venta.precio)
+            productos_totales = productos_totales + producto_venta.cantidad
         self.ui.label_ingreso_total.setText(str(ingreso_total))
+        self.ui.label_total_productos.setText(str(productos_totales))
 
         self.load_model_total_productos(self.lista_ProductoVenta)
 
@@ -88,7 +90,7 @@ class Estadistica(QtGui.QWidget):
             self.ui.tableView.setColumnWidth(col, h[1])
 
         self.ui.tableView.sortByColumn(
-            0, QtCore.Qt.AscendingOrder)
+            2, QtCore.Qt.DescendingOrder)
         #self.ui.tableView.setColumnHidden(0, True)
 
         #modelSel = self.ui.tableView_total_productos.selectionModel()

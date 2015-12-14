@@ -23,6 +23,9 @@ def getVentas():
 def getVentasPorFecha(fecha_inicio,fecha_fin):
     return Venta.getVentasPorFecha(fecha_inicio,fecha_fin)
 
+def getProductosPorFecha(fecha):
+    return VentaProducto.getProductosPorFecha(fecha)
+
 class ProductoVenta(object):
     producto = Producto()
     fecha = ""
@@ -57,7 +60,7 @@ class TotalProductosModel(QtGui.QSortFilterProxyModel):
         self.model = QtGui.QStandardItemModel(row, len(header))
 
         for i, data in enumerate(datos):
-            row = [data.producto.codigo,data.producto.nombre,str(data.cantidad),str(data.precio),str(data.precio*data.cantidad),str(data.fecha)]
+            row = [data.producto.codigo,data.producto.nombre,str(data.cantidad),str(data.precio),str(data.precio*data.cantidad)]
             for j, field in enumerate(row):
                 item = QtGui.QStandardItem(field)
                 self.model.setItem(i, j, item)
@@ -71,8 +74,8 @@ class TotalProductosModel(QtGui.QSortFilterProxyModel):
 def crear_html(lista_productos,fecha_inicio,fecha_fin):
     """=======================================================OPTIMIZAR!!!!===================================================="""
     # Se crea un QProgressDialog para notificar al usuario sobre las cargas del programa.
-    progress = QtGui.QProgressDialog("Cargando productos...", "", 0, len(lista_productos))
-    progress.setWindowTitle("Cargando...")
+    progress = QtGui.QProgressDialog("Cargando graficos...", "", 0, len(lista_productos))
+    progress.setWindowTitle("Aviso")
     progress.setWindowFlags(QtCore.Qt.WindowTitleHint)
     progress.setCancelButton(None)
     progress.show()
@@ -80,42 +83,33 @@ def crear_html(lista_productos,fecha_inicio,fecha_fin):
 
     distancia_dias = fecha_inicio.daysTo(fecha_fin)
     series = "series: ["
+    series2 = "series: ["
     date = fecha_inicio.addMonths(-1).toString("yyyy,MM,dd")
     for i,producto_venta in enumerate(lista_productos):
         progress.setValue(i)
         fecha = fecha_inicio
         series = series + '{name:" '+ str(producto_venta.producto.nombre).decode('cp1252')+' ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC('+date+'),data:['
+        series2 = series2 + '{name:" '+ str(producto_venta.producto.nombre).decode('cp1252')+' ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC('+date+'),data:['
 
         for i in range(distancia_dias+1):
             encontro_producto = False
-            ventas = getVentasPorFecha(fecha.toString("yyyy-MM-dd"),fecha.toString("yyyy-MM-dd"))
-            lista_ProductoVenta = list()
-            for venta in ventas:
-                venta_productos = getProductosPedido(venta.id_pedido)
-                for ventaProducto in venta_productos:
-                    agregar = True
-                    for producto in lista_ProductoVenta:
-                        if(ventaProducto.id_producto == producto.producto.id_producto):
-                            producto.cantidad = producto.cantidad + ventaProducto.cantidad
-                            agregar = False
-                    if(agregar):
-                        objeto_producto_venta = ProductoVenta(
-                            controller_admin_producto.getProductoId(ventaProducto.id_producto)[0],
-                            ventaProducto.cantidad,
-                            ventaProducto.precio_venta,
-                            venta.fecha)
-                        lista_ProductoVenta.append(objeto_producto_venta)
-            for ventaProducto in lista_ProductoVenta:
-                if(ventaProducto.producto.id_producto == producto_venta.producto.id_producto):
-                    series = series + str(ventaProducto.cantidad) + ","
+            productos_venta = getProductosPorFecha(fecha.toString("yyyy-MM-dd"))
+            for producto in productos_venta:
+                if(producto_venta.producto.id_producto == producto.id_producto):
+                    series = series + str(producto.cantidad) + ","
+                    series2 = series2 + str(producto.cantidad*producto.precio_venta) + ","
                     encontro_producto = True
             if(not encontro_producto):
                 series = series + "0" + ","
+                series2 = series2 + "0" + ","
             fecha = fecha.addDays(1)
         series = series[:-1] + "]"
         series = series + "},"
+        series2 = series2[:-1] + "]"
+        series2 = series2 + "},"
     progress.setValue(len(lista_productos))
     series = series[:-1] + "]"
+    series2 = series2[:-1] + "]"
     html = """
 <!DOCTYPE HTML>
 <html>
@@ -123,7 +117,15 @@ def crear_html(lista_productos,fecha_inicio,fecha_fin):
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <title>Highcharts Example</title>
 
-        <script type="text/javascript" src="js/jquery.min.js"></script><script type="text/javascript">$(function () {
+        <script type="text/javascript" src="js/jquery.min.js"></script><script type="text/javascript">
+        function isArray(obj) {
+            return Object.prototype.toString.call(obj) === '[object Array]';
+        }
+
+        function splat(obj) {
+            return isArray(obj) ? obj : [obj];
+        }
+        $(function () {
     $('#chart-unit-product').highcharts({
         chart: {
             type: 'area',
@@ -134,8 +136,8 @@ def crear_html(lista_productos,fecha_inicio,fecha_fin):
         },
         xAxis: {
             type: 'datetime',
-            dateTimeLabelFormats: {
-                day: '%e of %b'
+            title: {
+                text: 'Fecha'
             }
         },
         yAxis: {
@@ -161,24 +163,84 @@ def crear_html(lista_productos,fecha_inicio,fecha_fin):
                 animation: false
             }
         },
+        legend: {
+            enabled: false
+        },
         tooltip: {
-            crosshairs: [true],
-            shared: true,
-            formatter: function () {
-                var ind = '<span style="font-size: 75%">' + Highcharts.dateFormat('%A, %b %e', this.x) + '</span><br>',
-                    sum = 0;
+            formatter: function (tooltip) {
+                var items = this.points || splat(this),
+                    series = items[0].series,
+                    s;
 
-                $.each(this.points, function (i, point) {
-                    ind += '<span style="color:' + point.series.color + '">\u25CF</span> ' + point.series.name + ': <b>' + point.y + '</b><br/>';
+                // sort the values
+                items.sort(function(a, b){
+                    return ((a.y < b.y) ? -1 : ((a.y > b.y) ? 1 : 0));
                 });
+                items.reverse();
 
-                ind += '<br/>Total: <b>' + this.points[0].total + '</b>'
-
-                console.log(this);
-                return ind;
-            }
+                return tooltip.defaultFormatter.call(this, tooltip);
+            },
+            shared: true
         },
         """+series+"""
+    });
+    $('#chart-price-product').highcharts({
+        chart: {
+            type: 'area',
+            zoomType: 'x'
+        },
+        title: {
+            text: 'Ingreso Total por Producto'
+        },
+        xAxis: {
+            type: 'datetime',
+            title: {
+                text: 'Fecha'
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'Unidades'
+            },
+            min: 0
+        },
+        plotOptions: {
+            line: {
+                marker: {
+                    radius: 2
+                },
+                lineWidth: 1,
+                states: {
+                    hover: {
+                        lineWidth: 1
+                    }
+                },
+                threshold: null
+            },
+            column: {
+                animation: false
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            formatter: function (tooltip) {
+                var items = this.points || splat(this),
+                    series = items[0].series,
+                    s;
+
+                // sort the values
+                items.sort(function(a, b){
+                    return ((a.y < b.y) ? -1 : ((a.y > b.y) ? 1 : 0));
+                });
+                items.reverse();
+
+                return tooltip.defaultFormatter.call(this, tooltip);
+            },
+            shared: true
+        },
+        """+series2+"""
     });
 }); 
     </script>
@@ -187,7 +249,8 @@ def crear_html(lista_productos,fecha_inicio,fecha_fin):
 <script src="js/highcharts.js"></script>
 <script src="js/modules/exporting.js"></script>
 
-<div id="chart-unit-product" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<div id="chart-unit-product" style="min-width: 310px; height: 350px; margin: 0 auto"></div>
+<div id="chart-price-product" style="min-width: 310px; height: 350px; margin: 0 auto"></div>
 
     </body>
 </html>

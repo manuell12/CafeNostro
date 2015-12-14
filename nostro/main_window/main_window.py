@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main_window.ui'
 #
-# Created: Mon Dec 07 21:08:00 2015
+# Created: Sun Dec 13 18:07:51 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -15,8 +15,8 @@ class Ui_MainWindow(object):
         MainWindow.resize(643, 462)
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.verticalLayout = QtGui.QVBoxLayout(self.centralwidget)
-        self.verticalLayout.setObjectName("verticalLayout")
+        self.gridLayout = QtGui.QGridLayout(self.centralwidget)
+        self.gridLayout.setObjectName("gridLayout")
         self.groupBox = QtGui.QGroupBox(self.centralwidget)
         self.groupBox.setAutoFillBackground(True)
         self.groupBox.setCheckable(False)
@@ -51,7 +51,7 @@ class Ui_MainWindow(object):
         spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem1)
         self.horizontalLayout_2.addLayout(self.horizontalLayout)
-        self.verticalLayout.addWidget(self.groupBox)
+        self.gridLayout.addWidget(self.groupBox, 0, 0, 1, 1)
         self.stackedWidget = QtGui.QStackedWidget(self.centralwidget)
         self.stackedWidget.setObjectName("stackedWidget")
         self.page_3 = QtGui.QWidget()
@@ -60,7 +60,7 @@ class Ui_MainWindow(object):
         self.page_4 = QtGui.QWidget()
         self.page_4.setObjectName("page_4")
         self.stackedWidget.addWidget(self.page_4)
-        self.verticalLayout.addWidget(self.stackedWidget)
+        self.gridLayout.addWidget(self.stackedWidget, 1, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 643, 21))
@@ -83,9 +83,12 @@ class Ui_MainWindow(object):
         self.actionCambiar_Usuario.setObjectName("actionCambiar_Usuario")
         self.actionVentas = QtGui.QAction(MainWindow)
         self.actionVentas.setObjectName("actionVentas")
+        self.actionEstadisticas = QtGui.QAction(MainWindow)
+        self.actionEstadisticas.setObjectName("actionEstadisticas")
         self.menuAdministraci_n.addAction(self.actionUsuarios)
         self.menuAdministraci_n.addAction(self.actionProductos)
         self.menuAdministraci_n.addAction(self.actionVentas)
+        self.menuAdministraci_n.addAction(self.actionEstadisticas)
         self.menuArchivo.addAction(self.actionCambiar_Usuario)
         self.menuArchivo.addAction(self.actionSalir)
         self.menubar.addAction(self.menuArchivo.menuAction())
@@ -120,4 +123,6 @@ class Ui_MainWindow(object):
         self.actionCambiar_Usuario.setStatusTip(QtGui.QApplication.translate("MainWindow", "Regresa a la ventan Login para poder cambiar el usuario", None, QtGui.QApplication.UnicodeUTF8))
         self.actionVentas.setText(QtGui.QApplication.translate("MainWindow", "&Ventas", None, QtGui.QApplication.UnicodeUTF8))
         self.actionVentas.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+4", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionEstadisticas.setText(QtGui.QApplication.translate("MainWindow", "Estadísticas", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionEstadisticas.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+5", None, QtGui.QApplication.UnicodeUTF8))
 

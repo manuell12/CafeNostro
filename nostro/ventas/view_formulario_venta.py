@@ -97,6 +97,13 @@ class FormularioVenta(QtGui.QWidget):
         self.button.ocupado = ocupado
         self.main.stackedWidget.widget(6).update_buttons()
 
+    def borrar_pedido(self):
+        controller.finalizarPedido(self.id_pedido)
+        controller.deletePedido(self.id_pedido)
+        self.vaciar_table2()
+        self.set_ocupado(False)
+        self.crear_pedido = True
+
     def action_agregar(self):
         if(self.crear_pedido):
             self.id_pedido = controller.addDataPedido(self.mesa)
@@ -368,8 +375,7 @@ class FormularioVenta(QtGui.QWidget):
         try:
             self.button.setText("Mesa "+str(self.button.mesa))
             for button in self.button.unido_a:
-                self.main.stackedWidget.widget(button.mesa+6).button.habilitado = True
-                self.main.stackedWidget.widget(button.mesa+6).button.setText("Mesa "+str(button.mesa))
+                self.main.stackedWidget.widget(button.mesa+6).button.reset()
         except:
             pass
 

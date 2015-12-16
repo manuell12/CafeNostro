@@ -89,7 +89,6 @@ class MesasVenta(QtGui.QWidget):
                 buttons_mesas[0].unido_a.append(button)
                 button.habilitado = False
         productos = list() 
-        for button in buttons_mesas[0].unido_a:
         for i,pedido in enumerate(pedidos_mesas):
             if(i != 0):
                 productos = productos + controller_venta.getProductosPedido(pedido)

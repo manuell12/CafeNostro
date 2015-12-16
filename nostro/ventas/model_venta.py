@@ -94,6 +94,15 @@ class Pedido(object):
         conex.commit()
         conn.close()
 
+    def deletePedido(cls):
+        conex = connect()
+        conn = conex.cursor()
+        query = "DELETE FROM pedido WHERE idPedido = {0}".format(
+            cls.id_pedido)
+        conn.execute(query)
+        conex.commit()
+        conn.close()
+
     def getPedido(cls):
         query = "SELECT * FROM pedido WHERE idPedido = {0}".format(
             cls.id_pedido)
@@ -222,6 +231,18 @@ class VentaProducto(object):
         conn = conex.cursor()
         query = "DELETE FROM venta_has_producto WHERE idProducto = {0} and idPedido = {1}".format(
             cls.id_producto, cls.id_pedido)
+        conn.execute(query)
+        conex.commit()
+        conn.close()
+
+    def deleteProductosPedido(cls):
+        """
+        Método que elimina todos los productos de un pedido.
+        """
+        conex = connect()
+        conn = conex.cursor()
+        query = "DELETE FROM venta_has_producto WHERE idPedido = {0}".format(
+            cls.id_pedido)
         conn.execute(query)
         conex.commit()
         conn.close()

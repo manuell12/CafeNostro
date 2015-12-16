@@ -49,12 +49,8 @@ class MesasVenta(QtGui.QWidget):
         self.ui.pushButton_aceptar.setVisible(True)
         self.ui.label_info.setText("Seleccione la/las mesa(s) que desea habilitar.")
         self.editable = True
-        self.buttons_disabled = list()
-        self.buttons_enabled = list()
         for button in self.list_mesas:
             button.setCheckable(True)
-            if(not button.isEnabled()):
-                self.buttons_disabled.append(button)
             button.setEnabled(True)
         self.identificador = 2
 
@@ -62,6 +58,12 @@ class MesasVenta(QtGui.QWidget):
         texto = ""
         num_mesa = buttons_mesas[0].mesa # número de la mesa a la que se van a unir las demás
         buttons_mesas[0].unido = True # asignamos la mesa como "unido"
+        try:
+            id_pedido = self.main.ui.stackedWidget.widget(buttons_mesas[0].mesa+6).id_pedido
+        except:
+            form_venta = self.main.ui.stackedWidget.widget(buttons_mesas[0].mesa+6)
+            form_venta.id_pedido = controller_venta.addDataPedido(form_venta.mesa)
+            form_venta.crear_pedido = False
 
         pedidos_mesas = list()
         for i,button in enumerate(buttons_mesas):
@@ -70,21 +72,38 @@ class MesasVenta(QtGui.QWidget):
             else:
                 texto = texto + ", " + str(button.mesa)
         for i,button in enumerate(buttons_mesas):
-            pedidos_mesas.append(self.main.ui.stackedWidget.widget(button.mesa+6).id_pedido) # guardamos en la lista "pedidos_mesas", el id_pedido de cada mesa.    
             if (i == 0):
+                pedidos_mesas.append(self.main.ui.stackedWidget.widget(button.mesa+6).id_pedido)
                 button.setText("Mesas: "+texto)
+                button.ocupado = True
             else:
+                if(button.ocupado):
+                    pedidos_mesas.append(self.main.ui.stackedWidget.widget(button.mesa+6).id_pedido) # guardamos en la lista "pedidos_mesas", el id_pedido de cada mesa.    
+                    if(i > 0):
+                        controller_venta.finalizarPedido(self.main.ui.stackedWidget.widget(button.mesa+6).id_pedido)
+                        self.main.ui.stackedWidget.widget(button.mesa+6).crear_pedido = True
+                        button.ocupado = False
+                        self.main.ui.stackedWidget.widget(button.mesa+6).vaciar_table2()
+                else:
+                    pedidos_mesas.append("NULL")
                 buttons_mesas[0].unido_a.append(button)
-                button.setEnabled(False)
+                button.habilitado = False
         productos = list() 
+        for button in buttons_mesas[0].unido_a:
         for i,pedido in enumerate(pedidos_mesas):
             if(i != 0):
-                productos = productos + controller_venta.getProductosPedido(int(pedido))
+                productos = productos + controller_venta.getProductosPedido(pedido)
+                controller_venta.deletePedido(pedido)
         for producto in productos:
-            controller_venta.addDataVentaProducto(
-                pedidos_mesas[0], producto.id_producto, producto.precio_venta)
-
-        self.main.ui.stackedWidget.widget(num_mesa+6).reload_data_table2()
+            try:
+                controller_venta.addDataVentaProducto(
+                    pedidos_mesas[0], producto.id_producto, producto.precio_venta)
+            except:
+                pass
+        try:
+            self.main.ui.stackedWidget.widget(num_mesa+6).reload_data_table2()
+        except:
+            pass
 
     def aceptar(self):
         for button in self.list_mesas:
@@ -92,39 +111,25 @@ class MesasVenta(QtGui.QWidget):
 
         if(self.identificador == 0): # borrar mesa
             for button in self.list_mesas:
-                num_mesa = int(button.text()[-2:])
-                if (button.isChecked() == True):
-                    button.setEnabled(False)
+                if (button.isChecked()):
+                    button.habilitado = False
                 button.setCheckable(False)
         elif(self.identificador == 1): # unir mesas
             mesas_a_unir = list() # lista de botones a unir
             for button in self.list_mesas:
-                num_mesa = int(button.text()[-2:])
                 if (button.isChecked() == True):
                     mesas_a_unir.append(button)
                 button.setCheckable(False)
-            self.unir_mesas(mesas_a_unir)
+            if(len(mesas_a_unir)!=0):
+                self.unir_mesas(mesas_a_unir)
         else: # habilitar mesa
-            buttons_checked = list()
             for button in self.list_mesas:
                 if(button.isChecked()):
-                    buttons_checked.append(button)
-                    id_pedido = controller_venta.addDataPedido(button.mesa)
-                    self.main.ui.stackedWidget.widget(button.mesa+6).id_pedido = id_pedido
-                    self.main.ui.stackedWidget.widget(button.mesa+6).reload_data_table2()
-                    for button_all in self.list_mesas:
-                        # print button,button_all.unido_a
-                        if(button in button_all.unido_a):
-                            button_all.setText("Mesa "+str(button_all.mesa))
+                    button.habilitado = True
                 button.setCheckable(False)
 
-            for button in self.buttons_disabled:
-                button.setEnabled(False)
-            for button in buttons_checked:
-                button.setEnabled(True)
-            for button in buttons_checked:
-                self.main.stackedWidget_changed(button.mesa+6)
-                self.main.stackedWidget_changed(6)
+        self.update_buttons()
+
         self.editable = False
         self.ui.label_info.setText("")
         self.ui.pushButton_aceptar.setVisible(False)

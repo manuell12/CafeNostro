@@ -295,6 +295,9 @@ class FormularioVenta(QtGui.QWidget):
     def vaciar_table2(self):
         empty_model = QtGui.QSortFilterProxyModel()
         self.ui.tableView_pedido.setModel(empty_model)
+        self.ui.lcdNumber_propina.display(0)
+        self.ui.lcdNumber_subtotal.display(0)
+        self.ui.lcdNumber_total.display(0)
 
     """ ===================================================================== NUMERO DE PAGOS ============================================================ """
 
@@ -321,7 +324,7 @@ class FormularioVenta(QtGui.QWidget):
             QtGui.QMessageBox.Ok | QtGui.QMessageBox.Cancel)
         msgBox.setWindowTitle(u"Advertencia")
         msgBox.setText(
-            u"Confirme para realizar venta")
+            u"Confirme para realizar venta.")
         press = msgBox.exec_()
         if press == QtGui.QMessageBox.Ok:
             try:
@@ -363,7 +366,10 @@ class FormularioVenta(QtGui.QWidget):
         controller.addDataVenta(fecha, num_documento,
                                 tipo, total_pago, id_usuario, id_pedido)
         try:
-            self.button.setText("Mesa: "+str(self.button.mesa))
+            self.button.setText("Mesa "+str(self.button.mesa))
+            for button in self.button.unido_a:
+                self.main.stackedWidget.widget(button.mesa+6).button.habilitado = True
+                self.main.stackedWidget.widget(button.mesa+6).button.setText("Mesa "+str(button.mesa))
         except:
             pass
 

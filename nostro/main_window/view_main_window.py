@@ -26,7 +26,7 @@ class MainWindow(QtGui.QMainWindow):
     """
 
     venta_directa_en_curso = False
-    num_mesas = 14
+    num_mesas = 17
 
     def __init__(self, tipo=None, rut=None):
         'Constructor de la clase'
@@ -74,9 +74,6 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.stackedWidget.addWidget(Estadistica()) # self.num_mesas+5
         progress.setValue(self.num_mesas+5)
         self.setVisible(True)
-
-        
-        
 
     def config_user(self):
         self.nombre = unicode(controller.getUsuarioRut(self.rut)[0].nombre)+" "+unicode(controller.getUsuarioRut(self.rut)[0].apellido)

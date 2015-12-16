@@ -51,6 +51,9 @@ class FormularioProducto(QtGui.QDialog):
                     int(self.id_categoria))
 
     def connect_actions(self):
+        """
+        Método que conecta los slots de los widgets de la interfaz grafica con las funciones de FormularioProducto
+        """
         self.ui.lineEdit_nombre.textChanged.connect(
             self.lineEdit_nombre_changed)
         self.ui.lineEdit_codigo.textChanged.connect(

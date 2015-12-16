@@ -9,6 +9,9 @@ import datetime
 import os
 
 class Estadistica(QtGui.QWidget):
+    """
+    Clase que genera un widget donde se muestran graficos y tablas con estadisticas sobre el local.
+    """
     __header_table__ = ((u"Código", 50),
                         (u"Nombre", 200),
                         (u"Cantidad", 60),
@@ -23,8 +26,10 @@ class Estadistica(QtGui.QWidget):
         self.connect_actions()
         #self.actualizar_productos()
 
-
     def crearymostrar_html(self):
+        """
+        Método que crea el html 'charts.htm', donde se muestran los graficos.
+        """
         fecha_inicio = self.ui.calendarWidget_inicio.selectedDate()
         fecha_fin = self.ui.calendarWidget_fin.selectedDate()
 
@@ -36,11 +41,16 @@ class Estadistica(QtGui.QWidget):
         self.ui.webView.show()
 
     def connect_actions(self):
+        """
+        Método que accede a los slots de los widgets de la interfaz gráfica y los conecta con metodos de la clase Estadistica
+        """
         self.ui.calendarWidget_inicio.selectionChanged.connect(self.actualizar_productos)
         self.ui.calendarWidget_fin.selectionChanged.connect(self.actualizar_productos)
 
     def actualizar_productos(self):
-
+        """
+        Método que realiza consultas a la base de datos sobre productos vendidos y los carga en la interfaz
+        """
         self.lista_ProductoVenta = list()
 
         fecha_inicio = self.ui.calendarWidget_inicio.selectedDate().toString("yyyy-MM-dd")
@@ -76,6 +86,9 @@ class Estadistica(QtGui.QWidget):
         self.crearymostrar_html()
 
     def load_model_total_productos(self, data=""):
+        """
+        Método que carga en la tabla 'tableView' la información pasada en el atributo 'data', debe ser una lista de objetos
+        """
         model = controller.TotalProductosModel()
         self.ui.tableView.setModel(model)
         model.load_data(data, self.__header_table__)
@@ -83,6 +96,9 @@ class Estadistica(QtGui.QWidget):
         self.set_columns_total_productos()
 
     def set_columns_total_productos(self):
+        """
+        Método que ajusta el tamaño de las columnas de la tabla al especificado en '__header_table__'
+        """
         self.ui.tableView.horizontalHeader().setResizeMode(
             1, self.ui.tableView.horizontalHeader().Stretch)
 
@@ -91,8 +107,4 @@ class Estadistica(QtGui.QWidget):
 
         self.ui.tableView.sortByColumn(
             2, QtCore.Qt.DescendingOrder)
-        #self.ui.tableView.setColumnHidden(0, True)
-
-        #modelSel = self.ui.tableView_total_productos.selectionModel()
-        #modelSel.currentChanged.connect(self.cell_selected_table1)
             

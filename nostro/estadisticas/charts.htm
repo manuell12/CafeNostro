@@ -16,7 +16,7 @@
         $(function () {
     $('#chart-unit-product').highcharts({
         chart: {
-            type: 'area',
+            type: 'line',
             zoomType: 'x'
         },
         title: {
@@ -37,12 +37,12 @@
         plotOptions: {
             line: {
                 marker: {
-                    radius: 2
+                    radius: 4
                 },
-                lineWidth: 1,
+                lineWidth: 2,
                 states: {
                     hover: {
-                        lineWidth: 1
+                        lineWidth: 3
                     }
                 },
                 threshold: null
@@ -70,11 +70,11 @@
             },
             shared: true
         },
-        series: [{name:" Espresso ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,7,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Espresso doble ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,3,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Americano ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,4,37,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Macchiato ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,2,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Macchiato doble ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Bebida ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Agua mineral ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" helado2 ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Capuccino ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Latte macchiato ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Mokaccino ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Chocolate helado ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Té selección ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Tetera té gourmet ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Jugo natural ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Panini queso, jamón, dijon ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Panini queso, chorizo, morrón ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Panini queso, jamón, verduras ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Soda italiana ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Panini queso, jamón, tomate, pesto ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]
+        series: [{name:" Espresso ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[4]},{name:" Macchiato ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[27]},{name:" Panini queso, tomate, orégano ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[1]},{name:" Espresso doble ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[1]},{name:" Panini queso, jamón, dijon ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[24]},{name:" Panini queso, chorizo, morrón ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[26]},{name:" Panini queso, jamón, tomate, pesto ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[22]},{name:" Panini queso, jamón, verduras ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[23]},{name:" Milk shake ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[40]},{name:" Americano ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[54]},{name:" Descafeinado ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[1]},{name:" helado2 ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[1]},{name:" Chocolate helado ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[25]},{name:" Nutelatte ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[40]},{name:" Ristretto ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[1]},{name:" Lungo ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[1]}]
     });
     $('#chart-price-product').highcharts({
         chart: {
-            type: 'area',
+            type: 'line',
             zoomType: 'x'
         },
         title: {
@@ -88,19 +88,19 @@
         },
         yAxis: {
             title: {
-                text: 'Unidades'
+                text: '$ Pesos Chilenos (CLP)'
             },
             min: 0
         },
         plotOptions: {
             line: {
                 marker: {
-                    radius: 2
+                    radius: 4
                 },
-                lineWidth: 1,
+                lineWidth: 2,
                 states: {
                     hover: {
-                        lineWidth: 1
+                        lineWidth: 3
                     }
                 },
                 threshold: null
@@ -128,7 +128,7 @@
             },
             shared: true
         },
-        series: [{name:" Espresso ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,9100.00000,2600.00000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Espresso doble ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,5400.00000,9000.00000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Americano ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,5400.00000,49950.00000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Macchiato ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,3000.00000,6000.00000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Macchiato doble ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,1950.00000,3900.00000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Bebida ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,0,3000.00000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Agua mineral ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,0,2900.00000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" helado2 ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,0,2000.00000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Capuccino ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,0,1850.00000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Latte macchiato ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,0,2000.00000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Mokaccino ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,0,7650.00000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Chocolate helado ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,0,2850.00000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Té selección ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,0,1390.00000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Tetera té gourmet ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,0,2550.00000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Jugo natural ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,0,2100.00000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Panini queso, jamón, dijon ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,0,2650.00000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Panini queso, chorizo, morrón ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,0,5400.00000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Panini queso, jamón, verduras ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,0,2950.00000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Soda italiana ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,0,1500.00000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{name:" Panini queso, jamón, tomate, pesto ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,01),data:[0,0,0,0,0,0,0,0,0,0,0,0,0,2850.00000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]
+        series: [{name:" Espresso ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[5200.00000]},{name:" Macchiato ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[40500.00000]},{name:" Panini queso, tomate, orégano ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[2650.00000]},{name:" Espresso doble ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[1800.00000]},{name:" Panini queso, jamón, dijon ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[63600.00000]},{name:" Panini queso, chorizo, morrón ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[70200.00000]},{name:" Panini queso, jamón, tomate, pesto ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[62700.00000]},{name:" Panini queso, jamón, verduras ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[67850.00000]},{name:" Milk shake ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[102000.00000]},{name:" Americano ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[72900.00000]},{name:" Descafeinado ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[250.00000]},{name:" helado2 ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[2000.00000]},{name:" Chocolate helado ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[71250.00000]},{name:" Nutelatte ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[102000.00000]},{name:" Ristretto ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[1300.00000]},{name:" Lungo ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,16),data:[1300.00000]}]
     });
 }); 
     </script>

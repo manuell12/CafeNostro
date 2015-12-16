@@ -85,6 +85,14 @@ def getPedido(id_pedido):
     pedido.id_pedido = id_pedido
     return Pedido.getPedido(pedido)
 
+def deletePedido(id_pedido):
+    producto_pedido = VentaProducto()
+    producto_pedido.id_pedido = id_pedido
+    VentaProducto.deleteProductosPedido(producto_pedido)
+    pedido = Pedido()
+    pedido.id_pedido = id_pedido
+    Pedido.deletePedido(pedido)
+
 def getPedidoActivoPorMesa(mesa):
     pedido = Pedido()
     pedido.mesa = mesa
@@ -266,6 +274,7 @@ class PushButtonMesa(QtGui.QPushButton):
         else:
             self.setProperty("ocupado",False)
 
-    def setEnabled(self, enabled):
-        self.habilitado = enabled
-        QtGui.QPushButton.setEnabled(self,enabled)
+    def reset():
+        self.habilitado = True
+        self.setEnabled(True)
+        self.setText("Mesa "+str(mesa))

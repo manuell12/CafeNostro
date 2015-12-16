@@ -60,7 +60,7 @@ class TotalProductosModel(QtGui.QSortFilterProxyModel):
         self.model = QtGui.QStandardItemModel(row, len(header))
 
         for i, data in enumerate(datos):
-            row = [data.producto.codigo,data.producto.nombre,str(data.cantidad),str(data.precio),str(data.precio*data.cantidad)]
+            row = [data.producto.codigo,data.producto.nombre,str(controller_admin_producto.zerosAtLeft(data.cantidad,3)),str(data.precio),str(data.precio*data.cantidad)]
             for j, field in enumerate(row):
                 item = QtGui.QStandardItem(field)
                 self.model.setItem(i, j, item)
@@ -128,7 +128,7 @@ def crear_html(lista_productos,fecha_inicio,fecha_fin):
         $(function () {
     $('#chart-unit-product').highcharts({
         chart: {
-            type: 'area',
+            type: 'line',
             zoomType: 'x'
         },
         title: {
@@ -149,12 +149,12 @@ def crear_html(lista_productos,fecha_inicio,fecha_fin):
         plotOptions: {
             line: {
                 marker: {
-                    radius: 2
+                    radius: 4
                 },
-                lineWidth: 1,
+                lineWidth: 2,
                 states: {
                     hover: {
-                        lineWidth: 1
+                        lineWidth: 3
                     }
                 },
                 threshold: null
@@ -186,7 +186,7 @@ def crear_html(lista_productos,fecha_inicio,fecha_fin):
     });
     $('#chart-price-product').highcharts({
         chart: {
-            type: 'area',
+            type: 'line',
             zoomType: 'x'
         },
         title: {
@@ -200,19 +200,19 @@ def crear_html(lista_productos,fecha_inicio,fecha_fin):
         },
         yAxis: {
             title: {
-                text: 'Unidades'
+                text: '$ Pesos Chilenos (CLP)'
             },
             min: 0
         },
         plotOptions: {
             line: {
                 marker: {
-                    radius: 2
+                    radius: 4
                 },
-                lineWidth: 1,
+                lineWidth: 2,
                 states: {
                     hover: {
-                        lineWidth: 1
+                        lineWidth: 3
                     }
                 },
                 threshold: null

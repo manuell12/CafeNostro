@@ -83,6 +83,7 @@ class AdminVentas(QtGui.QWidget):
             #             producto.precio_venta)
 
             self.mainwindow.stackedWidget.setCurrentIndex(4)
+            self.mainwindow.stackedWidget.currentWidget().id_pedido = id_pedido
             self.mainwindow.stackedWidget.currentWidget().reload_data_table2()
             self.mainwindow.stackedWidget.currentWidget().load_productos_table2(id_pedido)
             self.set_source_model(self.load_ventas(self))

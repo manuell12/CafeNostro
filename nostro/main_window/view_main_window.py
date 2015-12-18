@@ -26,7 +26,7 @@ class MainWindow(QtGui.QMainWindow):
     """
 
     venta_directa_en_curso = False
-    num_mesas = 17
+    num_mesas = controller_venta.getEmpresa(1)[0].num_mesas
 
     def __init__(self, tipo=None, rut=None):
         'Constructor de la clase'

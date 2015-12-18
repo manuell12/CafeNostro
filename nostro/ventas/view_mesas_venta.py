@@ -99,10 +99,14 @@ class MesasVenta(QtGui.QWidget):
                     pedidos_mesas[0], producto.id_producto, producto.precio_venta)
             except:
                 pass
-        try:
+        if(len(productos)>0):
             self.main.ui.stackedWidget.widget(num_mesa+6).reload_data_table2()
-        except:
-            pass
+        else:
+            controller_venta.finalizarPedido(self.main.ui.stackedWidget.widget(num_mesa+6).id_pedido)
+            controller_venta.deletePedido(self.main.ui.stackedWidget.widget(num_mesa+6).id_pedido)
+            self.main.ui.stackedWidget.widget(num_mesa+6).crear_pedido = True
+            self.main.ui.stackedWidget.widget(num_mesa+6).button.ocupado = False
+            self.main.ui.stackedWidget.widget(num_mesa+6).vaciar_table2()
 
     def aceptar(self):
         for button in self.list_mesas:
@@ -144,7 +148,9 @@ class MesasVenta(QtGui.QWidget):
         self.ui.pushButton_borrar.setFocus()
 
     def agregar_mesa(self):
-        num_mesa = len(self.list_mesas)+1
+        num_mesa = controller_venta.getEmpresa(1)[0].num_mesas+1
+
+        controller_venta.editNumMesasEmpresa(num_mesa)
         
         pushButton_mesa = controller_venta.PushButtonMesa("Mesa "+str(num_mesa),False)
         pushButton_mesa.mesa = num_mesa

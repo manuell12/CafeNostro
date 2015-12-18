@@ -17,13 +17,16 @@ def Productos():
     """Retorna todos los Productos de la base de datos"""
     return Producto.all()
 
+
 def getPedidos():
     """Retorna todos los pedidos"""
     return Pedido.all()
 
+
 def getVentas():
     """Retorna todos los pedidos"""
     return Venta.all()
+
 
 def getPagos():
     """Retorna todos los pagos"""
@@ -65,7 +68,7 @@ def getProductoId(id_producto):
     return Producto.getProductoId(producto)
 
 
-def addDataPedido(mesa,en_curso=1):
+def addDataPedido(mesa, en_curso=1):
     """Agrega un pedido a la base de datos y retorna el id"""
     try:
         pedidos = getPedidos()[-1].id_pedido + 1
@@ -75,15 +78,18 @@ def addDataPedido(mesa,en_curso=1):
     Pedido.addDataPedido(pedido)
     return pedidos
 
+
 def finalizarPedido(id_pedido):
     pedido = Pedido()
     pedido.id_pedido = id_pedido
     Pedido.finalizarPedido(pedido)
 
+
 def getPedido(id_pedido):
     pedido = Pedido()
     pedido.id_pedido = id_pedido
     return Pedido.getPedido(pedido)
+
 
 def deletePedido(id_pedido):
     producto_pedido = VentaProducto()
@@ -93,10 +99,26 @@ def deletePedido(id_pedido):
     pedido.id_pedido = id_pedido
     Pedido.deletePedido(pedido)
 
+
+def delete_venta(id_venta, id_pedido):
+    """Elimina los registros relacionados a una venta"""
+    pago = Pago()
+    pago.id_venta = id_venta
+    pago.delete_pago()
+    venta = Venta(id_venta)
+    venta.delete_venta()
+    pedido = Pedido()
+    pedido.id_pedido = id_pedido
+    mensaje = Pedido.deletePedido(pedido)
+    if mensaje == "Error":
+        return mensaje
+
+
 def getPedidoActivoPorMesa(mesa):
     pedido = Pedido()
     pedido.mesa = mesa
     return Pedido.getPedidoActivoPorMesa(pedido)
+
 
 def addDataPago(pago_total, efectivo, tarjeta, propina, id_venta):
     """Agrega un pedido a la base de datos y retorna el id"""
@@ -127,6 +149,7 @@ def getProductosPedido(id_pedido):
     venta_producto = VentaProducto()
     venta_producto.id_pedido = id_pedido
     return VentaProducto.getProductosPedido(venta_producto)
+
 
 def getProductosPedidoRepetidosPorCantidad(id_pedido):
     productos_normal = getProductosPedido(id_pedido)
@@ -229,6 +252,7 @@ class TotalProductosModel(QtGui.QSortFilterProxyModel):
 
 # def set_headers(header)
 
+
 def editDataVenta(id_venta, fecha, total_pago, id_usuario):
     """ Modifica una venta finalizada """
     print("-----Edit Data Venta-------")
@@ -253,6 +277,7 @@ def getIdVenta(id_pedido):
     id_venta = Venta.get_id_venta(id_pedido)
     return id_venta
 
+
 class PushButtonMesa(QtGui.QPushButton):
     """
     Un QPushButton especializado que almacena el número de la mesa. Ademas posee un atributo para diferenciar las mesas unidas.
@@ -262,6 +287,7 @@ class PushButtonMesa(QtGui.QPushButton):
     habilitado = True
     unido = False
     unido_a = list()
+
     def __init__(self, text, ocupado=False, habilitado=True, parent=None):
         super(PushButtonMesa, self).__init__(parent)
         self.setText(text)
@@ -270,11 +296,11 @@ class PushButtonMesa(QtGui.QPushButton):
 
         self.setEnabled(habilitado)
         if(self.ocupado):
-            self.setProperty("ocupado",True)
+            self.setProperty("ocupado", True)
         else:
-            self.setProperty("ocupado",False)
+            self.setProperty("ocupado", False)
 
     def reset():
         self.habilitado = True
         self.setEnabled(True)
-        self.setText("Mesa "+str(mesa))
+        self.setText("Mesa " + str(mesa))

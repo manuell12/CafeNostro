@@ -43,6 +43,7 @@ def obtenerObjetoVentas(data):
                            row[3], row[4], row[5], row[6]))
     return lista
 
+
 def obtenerObjetoPagos(data):
     """
     Recibe como parametro la tupla recibida desde la BD y retorna una lista de objetos con todos los datos de los productos.
@@ -50,7 +51,7 @@ def obtenerObjetoPagos(data):
     lista = list()
     for i, row in enumerate(data):
         lista.append(Pago(row[0], row[1], row[2],
-                           row[3], row[4], row[5]))
+                          row[3], row[4], row[5]))
     return lista
 
 
@@ -89,19 +90,24 @@ class Pedido(object):
     def finalizarPedido(cls):
         conex = connect()
         conn = conex.cursor()
-        query = "UPDATE pedido SET en_curso = 0 WHERE idPedido = {0}".format(cls.id_pedido)
+        query = "UPDATE pedido SET en_curso = 0 WHERE idPedido = {0}".format(
+            cls.id_pedido)
         conn.execute(query)
         conex.commit()
         conn.close()
 
     def deletePedido(cls):
-        conex = connect()
-        conn = conex.cursor()
-        query = "DELETE FROM pedido WHERE idPedido = {0}".format(
-            cls.id_pedido)
-        conn.execute(query)
-        conex.commit()
-        conn.close()
+        try:
+            conex = connect()
+            conn = conex.cursor()
+            query = "DELETE FROM pedido WHERE idPedido = {0}".format(
+                cls.id_pedido)
+            conn.execute(query)
+            conex.commit()
+            conn.close()
+        except MySQLdb.Error as e:
+            conn.close()
+            return "Error"
 
     def getPedido(cls):
         query = "SELECT * FROM pedido WHERE idPedido = {0}".format(
@@ -205,7 +211,7 @@ class VentaProducto(object):
 
     def getProductosPedido(cls):
         """
-        Método utlizado para obtener los productos de un pedido espedifico.
+        Método utlizado para obtener los productos de un pedido especifico.
         """
         query = "SELECT * FROM venta_has_producto WHERE idPedido = {}".format(
             cls.id_pedido)
@@ -392,6 +398,15 @@ class Venta(object):
 
         conn.close()
 
+    def delete_venta(cls):
+        """Método que se encarga de eliminar un venta identificandola con su PK"""
+        conex = connect()
+        conn = conex.cursor()
+        query = "DELETE FROM venta WHERE idVenta = {}".format(cls.id_venta)
+        conn.execute(query)
+        conex.commit()
+        conn.close()
+
     @classmethod
     def getIdPedido(cls, id_venta):
         conex = connect()
@@ -488,6 +503,14 @@ class Pago(object):
         conex.commit()
         conn.close()
 
+    def delete_pago(cls):
+        conex = connect()
+        conn = conex.cursor()
+        query = "DELETE FROM pago WHERE idVenta = {}".format(cls.id_venta)
+        conn.execute(query)
+        conex.commit()
+        conn.close()
+
     @classmethod
     def all(cls):
         """
@@ -511,6 +534,3 @@ class Pago(object):
             print "Error al obtener los pagos:", e.args[0]
             conn.close()
             return None
-
-        
-

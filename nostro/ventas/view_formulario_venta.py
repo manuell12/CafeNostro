@@ -368,8 +368,8 @@ class FormularioVenta(QtGui.QWidget):
         try:
             self.button.setText("Mesa "+str(self.button.mesa))
             for button in self.button.unido_a:
-                self.main.stackedWidget.widget(button.mesa+6).button.habilitado = True
-                self.main.stackedWidget.widget(button.mesa+6).button.setText("Mesa "+str(button.mesa))
+                self.main.stackedWidget.widget(button.mesa+7).button.habilitado = True
+                self.main.stackedWidget.widget(button.mesa+7).button.setText("Mesa "+str(button.mesa))
         except:
             pass
 

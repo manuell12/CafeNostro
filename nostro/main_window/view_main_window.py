@@ -63,15 +63,17 @@ class MainWindow(QtGui.QMainWindow):
         progress.setValue(4)
         self.ui.stackedWidget.addWidget(MesasVenta(self,self.num_mesas,self.rut)) #6
         progress.setValue(5)
+        self.ui.stackedWidget.addWidget(Estadistica()) # 7
+        progress.setValue(6)
 
         pixmap = QtGui.QPixmap('images/cafe_nostro_load_mesas.png')
         label.setPixmap(pixmap)
 
-        for i in range(1,self.num_mesas+1): #7 = primera mesa
+        for i in range(1,self.num_mesas+1): #8 = primera mesa
             self.ui.stackedWidget.addWidget(FormularioVenta(self.ui,self.rut,str(i)))
             progress.setValue(i+5)
 
-        self.ui.stackedWidget.addWidget(Estadistica()) # self.num_mesas+5
+        
         progress.setValue(self.num_mesas+5)
         self.setVisible(True)
 
@@ -98,7 +100,7 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.stackedWidget.currentChanged.connect(self.stackedWidget_changed)
 
     def stackedWidget_changed(self,index):
-        for i in range(7,self.num_mesas+8):
+        for i in range(8,self.num_mesas+9):
             try:
                 id_pedido = self.ui.stackedWidget.widget(i).id_pedido
                 pedido = controller_venta.getPedido(id_pedido)
@@ -111,8 +113,8 @@ class MainWindow(QtGui.QMainWindow):
 
     def admin_estadisticas(self):
         'Cambia a la interfaz de venta por mesas'
-        self.ui.stackedWidget.setCurrentIndex(self.num_mesas+7)
-        self.ui.stackedWidget.widget(self.num_mesas+7).actualizar_productos()
+        self.ui.stackedWidget.setCurrentIndex(7)
+        self.ui.stackedWidget.widget(7).actualizar_productos()
 
     def mesas_venta(self):
         'Cambia a la interfaz de venta por mesas'

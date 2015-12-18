@@ -44,7 +44,7 @@ class MainWindow(QtGui.QMainWindow):
         # Se crea un QProgressDialog para notificar al usuario sobre las cargas del programa.
         progress = QtGui.QProgressDialog("Cargando modulos...", "", 0, self.num_mesas+5)
         progress.setWindowTitle("Cargando...")
-        progress.setWindowFlags(QtCore.Qt.WindowTitleHint)
+        progress.setWindowFlags(QtCore.Qt.FramelessWindowHint)
         label = QtGui.QLabel()
         pixmap = QtGui.QPixmap('images/cafe_nostro_load_modulos.png')
         label.setPixmap(pixmap)

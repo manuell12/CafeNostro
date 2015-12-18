@@ -17,7 +17,7 @@ class Login(QtGui.QDialog):
         super(Login, self).__init__()
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
-        self.setWindowFlags(QtCore.Qt.WindowTitleHint)
+        
 
         self.setSignals()
         self.centerWindow()

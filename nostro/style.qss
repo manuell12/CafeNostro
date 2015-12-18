@@ -1,3 +1,6 @@
+QDialog#Dialog {
+    border-image: url(images/login.png);
+}
 QGroupBox {
     background-color: white;
     border: 2px solid white;
@@ -49,6 +52,17 @@ QPushButton:pressed{
 }
 QPushButton#pushButton_cerrar_venta{
     font: bold 20px "Calibri"
+}
+QPushButton#pushButton_salir{
+    border-color: red;
+}
+QPushButton#pushButton_salir:hover{
+    background-color: #ff9999;
+}
+QPushButton#pushButton_salir:pressed{
+    background-color: red;
+    border-style: inset;
+    color: white;
 }
 
 PushButtonMesa{

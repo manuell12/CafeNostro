@@ -81,7 +81,7 @@ class MainWindow(QtGui.QMainWindow):
         self.nombre = unicode(controller.getUsuarioRut(self.rut)[0].nombre)+" "+unicode(controller.getUsuarioRut(self.rut)[0].apellido)
         if(controller.getUsuarioRut(self.rut)[0].nombre == "root"):
             self.nombre = "ROOT"
-        self.ui.label_usuario.setText(u"<font color='black' size='5'><b>"+self.nombre+"</b></font>")
+        self.ui.label_usuario.setText(u"<font color='white' size='5'><b>"+self.nombre+"</b></font>")
         if(self.tipo != None):
             if(self.tipo == 1):
                 self.ui.actionUsuarios.setEnabled(False)

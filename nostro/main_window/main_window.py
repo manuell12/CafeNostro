@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main_window.ui'
 #
-# Created: Sun Dec 13 18:07:51 2015
+# Created: Fri Dec 18 17:02:07 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,37 +12,30 @@ from PySide import QtCore, QtGui
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(643, 462)
+        MainWindow.resize(642, 462)
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.gridLayout = QtGui.QGridLayout(self.centralwidget)
-        self.gridLayout.setObjectName("gridLayout")
-        self.groupBox = QtGui.QGroupBox(self.centralwidget)
-        self.groupBox.setAutoFillBackground(True)
-        self.groupBox.setCheckable(False)
-        self.groupBox.setChecked(False)
-        self.groupBox.setObjectName("groupBox")
-        self.horizontalLayout_2 = QtGui.QHBoxLayout(self.groupBox)
-        self.horizontalLayout_2.setContentsMargins(-1, 20, -1, -1)
-        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.verticalLayout = QtGui.QVBoxLayout(self.centralwidget)
+        self.verticalLayout.setObjectName("verticalLayout")
         self.horizontalLayout = QtGui.QHBoxLayout()
+        self.horizontalLayout.setContentsMargins(-1, 30, -1, -1)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.pushButton_compra_directa = QtGui.QPushButton(self.groupBox)
+        self.pushButton_compra_directa = QtGui.QPushButton(self.centralwidget)
         self.pushButton_compra_directa.setMinimumSize(QtCore.QSize(100, 40))
         self.pushButton_compra_directa.setObjectName("pushButton_compra_directa")
         self.horizontalLayout.addWidget(self.pushButton_compra_directa)
-        self.line = QtGui.QFrame(self.groupBox)
+        self.line = QtGui.QFrame(self.centralwidget)
         self.line.setFrameShape(QtGui.QFrame.VLine)
         self.line.setFrameShadow(QtGui.QFrame.Sunken)
         self.line.setObjectName("line")
         self.horizontalLayout.addWidget(self.line)
-        self.pushButton_mesas = QtGui.QPushButton(self.groupBox)
+        self.pushButton_mesas = QtGui.QPushButton(self.centralwidget)
         self.pushButton_mesas.setMinimumSize(QtCore.QSize(100, 40))
         self.pushButton_mesas.setObjectName("pushButton_mesas")
         self.horizontalLayout.addWidget(self.pushButton_mesas)
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
-        self.label_usuario = QtGui.QLabel(self.groupBox)
+        self.label_usuario = QtGui.QLabel(self.centralwidget)
         font = QtGui.QFont()
         font.setFamily("Calibri")
         self.label_usuario.setFont(font)
@@ -50,8 +43,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addWidget(self.label_usuario)
         spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem1)
-        self.horizontalLayout_2.addLayout(self.horizontalLayout)
-        self.gridLayout.addWidget(self.groupBox, 0, 0, 1, 1)
+        self.verticalLayout.addLayout(self.horizontalLayout)
         self.stackedWidget = QtGui.QStackedWidget(self.centralwidget)
         self.stackedWidget.setObjectName("stackedWidget")
         self.page_3 = QtGui.QWidget()
@@ -60,10 +52,10 @@ class Ui_MainWindow(object):
         self.page_4 = QtGui.QWidget()
         self.page_4.setObjectName("page_4")
         self.stackedWidget.addWidget(self.page_4)
-        self.gridLayout.addWidget(self.stackedWidget, 1, 0, 1, 1)
+        self.verticalLayout.addWidget(self.stackedWidget)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 643, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 642, 21))
         self.menubar.setObjectName("menubar")
         self.menuAdministraci_n = QtGui.QMenu(self.menubar)
         self.menuAdministraci_n.setObjectName("menuAdministraci_n")
@@ -100,7 +92,6 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "CaféNostro", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox.setTitle(QtGui.QApplication.translate("MainWindow", "Inicio", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_compra_directa.setText(QtGui.QApplication.translate("MainWindow", "Compra Directa", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_mesas.setText(QtGui.QApplication.translate("MainWindow", "Pedido por Mesas", None, QtGui.QApplication.UnicodeUTF8))
         self.label_usuario.setText(QtGui.QApplication.translate("MainWindow", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))

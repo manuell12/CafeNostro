@@ -59,7 +59,7 @@ class MesasVenta(QtGui.QWidget):
         num_mesa = buttons_mesas[0].mesa # número de la mesa a la que se van a unir las demás
         buttons_mesas[0].unido = True # asignamos la mesa como "unido"
         try:
-            id_pedido = self.main.ui.stackedWidget.widget(num_mesa+6).id_pedido
+            id_pedido = self.main.ui.stackedWidget.widget(buttons_mesas[0].mesa+6).id_pedido
         except:
             form_venta = self.main.ui.stackedWidget.widget(buttons_mesas[0].mesa+6)
             form_venta.id_pedido = controller_venta.addDataPedido(form_venta.mesa)
@@ -71,8 +71,6 @@ class MesasVenta(QtGui.QWidget):
                 texto = str(button.mesa)
             else:
                 texto = texto + ", " + str(button.mesa)
-        for button in buttons_mesas[0].unido_a:
-            texto = texto + ", " + str(button.mesa)
         for i,button in enumerate(buttons_mesas):
             if (i == 0):
                 pedidos_mesas.append(self.main.ui.stackedWidget.widget(button.mesa+6).id_pedido)
@@ -90,7 +88,7 @@ class MesasVenta(QtGui.QWidget):
                     pedidos_mesas.append("NULL")
                 buttons_mesas[0].unido_a.append(button)
                 button.habilitado = False
-        productos = list()
+        productos = list() 
         for i,pedido in enumerate(pedidos_mesas):
             if(i != 0):
                 productos = productos + controller_venta.getProductosPedido(pedido)
@@ -101,10 +99,10 @@ class MesasVenta(QtGui.QWidget):
                     pedidos_mesas[0], producto.id_producto, producto.precio_venta)
             except:
                 pass
-        if(len(productos) == 0):
-            self.main.ui.stackedWidget.widget(buttons_mesas[0].mesa+6).borrar_pedido()
-        else:
-            self.main.ui.stackedWidget.widget(buttons_mesas[0].mesa+6).reload_data_table2()
+        try:
+            self.main.ui.stackedWidget.widget(num_mesa+6).reload_data_table2()
+        except:
+            pass
 
     def aceptar(self):
         for button in self.list_mesas:
@@ -126,7 +124,7 @@ class MesasVenta(QtGui.QWidget):
         else: # habilitar mesa
             for button in self.list_mesas:
                 if(button.isChecked()):
-                    button.reset()
+                    button.habilitado = True
                 button.setCheckable(False)
 
         self.update_buttons()

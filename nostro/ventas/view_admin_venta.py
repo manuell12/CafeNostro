@@ -46,6 +46,11 @@ class AdminVentas(QtGui.QWidget):
         self.reload_data_table()
 
     def action_btn_editar(self):
+        """
+        Luego de seleccionar una venta de la lista cambia a  la ventana
+        de venta con los datos de la venta seleccionada para poder realizar
+        cambios en ella.
+        """
         index = self.ui.tableView_ventas.currentIndex()
         if index.row() == -1:  # No se ha seleccionado venta
             msgBox = QtGui.QMessageBox()
@@ -80,10 +85,43 @@ class AdminVentas(QtGui.QWidget):
             self.mainwindow.stackedWidget.setCurrentIndex(4)
             self.mainwindow.stackedWidget.currentWidget().reload_data_table2()
             self.mainwindow.stackedWidget.currentWidget().load_productos_table2(id_pedido)
+            self.set_source_model(self.load_ventas(self))
 
     def action_btn_eliminar(self):
         """Accion a realizar al presionar el boton eliminar"""
-        pass
+        index = self.ui.tableView_ventas.currentIndex()
+        if index.row() == -1:  # No se ha seleccionado venta
+            msgBox = QtGui.QMessageBox()
+            msgBox.setIcon(QtGui.QMessageBox.Critical)
+            msgBox.setWindowTitle("Error")
+            msgBox.setText("Debe seleccionar un venta.")
+            msgBox.exec_()
+            return False
+        else:
+            msgBox = QtGui.QMessageBox()
+            msgBox.setIcon(QtGui.QMessageBox.Warning)
+            msgBox.setStandardButtons(
+                QtGui.QMessageBox.Ok | QtGui.QMessageBox.Cancel)
+            msgBox.setWindowTitle(u"Advertencia")
+            msgBox.setText(
+                u"¿Esta seguro de querer eliminar la venta seleccionada?")
+            press = msgBox.exec_()
+            if press == QtGui.QMessageBox.Ok:
+                model = self.ui.tableView_ventas.model()
+                id_venta = model.index(
+                    index.row(), 0, QtCore.QModelIndex()).data()
+                id_pedido = controller_venta.getIdPedido(id_venta)
+                mensaje = controller_venta.delete_venta(id_venta, id_pedido)
+                if mensaje == "Error":
+                    msgBox = QtGui.QMessageBox()
+                    msgBox.setIcon(QtGui.QMessageBox.Critical)
+                    msgBox.setWindowTitle("Error")
+                    msgBox.setText("Esta venta no puede ser eliminada por tener productos asociados.")
+                    msgBox.exec_()
+                else:
+                    self.set_source_model(self.load_ventas(self))
+            else:
+                return False
 
     def load_ventas(self, parent):
         """

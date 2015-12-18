@@ -98,7 +98,7 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.stackedWidget.currentChanged.connect(self.stackedWidget_changed)
 
     def stackedWidget_changed(self,index):
-        for i in range(7,self.num_mesas+5):
+        for i in range(7,self.num_mesas+8):
             try:
                 id_pedido = self.ui.stackedWidget.widget(i).id_pedido
                 pedido = controller_venta.getPedido(id_pedido)
@@ -106,11 +106,9 @@ class MainWindow(QtGui.QMainWindow):
                     self.ui.stackedWidget.widget(i).set_ocupado(False)
                 else:
                     self.ui.stackedWidget.widget(i).set_ocupado(True)
-                productos = controller_venta.getProductosPedido(id_pedido)
-                if(len(productos) == 0):
-                    self.ui.stackedWidget.widget(i).borrar_pedido()
             except:
                 pass
+
     def admin_estadisticas(self):
         'Cambia a la interfaz de venta por mesas'
         self.ui.stackedWidget.setCurrentIndex(self.num_mesas+7)

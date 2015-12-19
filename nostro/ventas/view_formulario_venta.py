@@ -423,7 +423,7 @@ class FormularioVenta(QtGui.QWidget):
         num_productos = len(productos)
         espacio_productos = num_productos*15
 
-        c = canvas.Canvas("PDF_detalles/detalle_mesa_"+str(self.button.mesa)+"_documento_"+controller_admin_producto.zerosAtLeft(self.num_documento,8)+".pdf")
+        c = canvas.Canvas("PDF_detalles/detalle_mesa_"+str(self.mesa)+"_documento_"+controller_admin_producto.zerosAtLeft(self.num_documento,8)+".pdf")
         ancho = 270
         alto = 390+espacio_productos
         c.setPageSize((ancho, alto))
@@ -434,7 +434,7 @@ class FormularioVenta(QtGui.QWidget):
         c.drawString(10,alto-125,"GARZON: "+nombre_usuario)
         c.drawString(10,alto-140,"NUM. CUENTA: "+controller_admin_producto.zerosAtLeft(self.num_documento,8))
         c.drawString(10,alto-155,"---------------------------------------------------------")
-        c.drawString(10,alto-170,"MESA: "+str(self.button.mesa))
+        c.drawString(10,alto-170,"MESA: "+str(self.mesa))
         c.drawString(10,alto-185,"CUENTA: "+controller_admin_producto.zerosAtLeft(self.num_documento,8))
         c.drawString(10,alto-200,"---------------------------------------------------------")
         alto_productos = alto-215
@@ -468,7 +468,7 @@ class FormularioVenta(QtGui.QWidget):
 
 
         c.save()
-        os.startfile(os.getcwd() + "/PDF_detalles/detalle_mesa_"+str(self.button.mesa)+"_documento_"+controller_admin_producto.zerosAtLeft(self.num_documento,8)+".pdf")
+        os.startfile(os.getcwd() + "/PDF_detalles/detalle_mesa_"+str(self.mesa)+"_documento_"+controller_admin_producto.zerosAtLeft(self.num_documento,8)+".pdf")
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)

@@ -17,8 +17,14 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="leftMargin">
+       <number>150</number>
+      </property>
       <property name="topMargin">
        <number>30</number>
+      </property>
+      <property name="bottomMargin">
+       <number>20</number>
       </property>
       <item>
        <widget class="QPushButton" name="pushButton_compra_directa">
@@ -30,13 +36,6 @@
         </property>
         <property name="text">
          <string>Compra Directa</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="Line" name="line">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
         </property>
        </widget>
       </item>

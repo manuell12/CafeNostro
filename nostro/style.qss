@@ -2,7 +2,10 @@ QDialog#Dialog {
     border-image: url(images/login.png);
 }
 QMainWindow {
-    border-image: url(images/login.png);
+    border-image: url(images/main.png);
+}
+QProgressDialog{
+    border-image: url(images/fondoHD.png);
 }
 QGroupBox {
     background-color: white;
@@ -34,7 +37,7 @@ QPushButton {
     border-color: blue;
     font: bold 14px "Calibri";
     color: black(dark);
-    padding: 2px;
+    padding: 5px;
 }
 QPushButton:disabled {
     background-color: white;

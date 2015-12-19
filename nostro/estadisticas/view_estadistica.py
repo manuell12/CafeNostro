@@ -78,8 +78,8 @@ class Estadistica(QtGui.QWidget):
         for producto_venta in self.lista_ProductoVenta:
             ingreso_total = ingreso_total + (producto_venta.cantidad * producto_venta.precio)
             productos_totales = productos_totales + producto_venta.cantidad
-        self.ui.label_ingreso_total.setText(str(ingreso_total))
-        self.ui.label_total_productos.setText(str(productos_totales))
+        self.ui.label_ingreso_total.setText(controller_admin_producto.monetaryFormat(ingreso_total))
+        self.ui.label_total_productos.setText(controller_admin_producto.monetaryFormat(productos_totales))
 
         self.load_model_total_productos(self.lista_ProductoVenta)
 

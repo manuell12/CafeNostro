@@ -51,6 +51,7 @@ class Login(QtGui.QDialog):
                     self.close()
                     self.main = MainWindow(controller_login.obtenerTipoUsuario(
                         self.ui.lineEdit_user.text())[0][0],self.ui.lineEdit_user.text())
+                    #self.main.setWindowFlags( QtCore.Qt.WindowTitleHint )
                 else:
                     self.errorMessage(u"Ingreso no valido")
             # self.reject()

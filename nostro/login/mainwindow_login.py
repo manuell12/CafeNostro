@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'login.ui'
 #
-# Created: Wed Dec 16 11:17:27 2015
+# Created: Sat Dec 19 04:44:09 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -20,9 +20,9 @@ class Ui_Dialog(object):
         self.gridLayout.setObjectName("gridLayout")
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem, 1, 2, 1, 1)
-        spacerItem1 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        spacerItem1 = QtGui.QSpacerItem(20, 50, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.gridLayout.addItem(spacerItem1, 5, 1, 1, 1)
-        spacerItem2 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        spacerItem2 = QtGui.QSpacerItem(20, 300, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.gridLayout.addItem(spacerItem2, 0, 1, 1, 1)
         spacerItem3 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem3, 1, 0, 1, 1)
@@ -35,7 +35,7 @@ class Ui_Dialog(object):
         self.formLayout.setWidget(3, QtGui.QFormLayout.FieldRole, self.lineEdit_pass)
         self.pushButton_login = QtGui.QPushButton(Dialog)
         self.pushButton_login.setObjectName("pushButton_login")
-        self.formLayout.setWidget(4, QtGui.QFormLayout.FieldRole, self.pushButton_login)
+        self.formLayout.setWidget(5, QtGui.QFormLayout.FieldRole, self.pushButton_login)
         self.lineEdit_user = QtGui.QLineEdit(Dialog)
         self.lineEdit_user.setObjectName("lineEdit_user")
         self.formLayout.setWidget(1, QtGui.QFormLayout.FieldRole, self.lineEdit_user)
@@ -53,11 +53,11 @@ class Ui_Dialog(object):
         self.label_pass.setFont(font)
         self.label_pass.setObjectName("label_pass")
         self.formLayout.setWidget(2, QtGui.QFormLayout.FieldRole, self.label_pass)
+        spacerItem4 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.formLayout.setItem(4, QtGui.QFormLayout.FieldRole, spacerItem4)
         self.gridLayout.addLayout(self.formLayout, 1, 1, 1, 1)
         self.verticalLayout = QtGui.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
-        spacerItem4 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
-        self.verticalLayout.addItem(spacerItem4)
         self.pushButton_salir = QtGui.QPushButton(Dialog)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -80,7 +80,7 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Cafe Nostro", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_login.setText(QtGui.QApplication.translate("Dialog", "Ingresar", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_usuario.setText(QtGui.QApplication.translate("Dialog", "<html><head/><body><p><span style=\" font-size:11pt; font-weight:600; color:#000000;\">Usuario</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_pass.setText(QtGui.QApplication.translate("Dialog", "<html><head/><body><p><span style=\" font-size:11pt; font-weight:600; color:#000000;\">Contraseña</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_usuario.setText(QtGui.QApplication.translate("Dialog", "<html><head/><body><p><span style=\" font-size:11pt; font-weight:600; color:#ffffff;\">Usuario</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_pass.setText(QtGui.QApplication.translate("Dialog", "<html><head/><body><p><span style=\" font-size:11pt; font-weight:600; color:#ffffff;\">Contraseña</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_salir.setText(QtGui.QApplication.translate("Dialog", "Salir", None, QtGui.QApplication.UnicodeUTF8))
 

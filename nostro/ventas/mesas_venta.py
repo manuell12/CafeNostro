@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mesas_venta.ui'
 #
-# Created: Tue Dec 08 15:31:02 2015
+# Created: Sat Dec 19 04:51:52 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -16,6 +16,7 @@ class Ui_MesasVenta(object):
         self.horizontalLayout = QtGui.QHBoxLayout(MesasVenta)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.groupBox = QtGui.QGroupBox(MesasVenta)
+        self.groupBox.setTitle("")
         self.groupBox.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.groupBox.setFlat(False)
         self.groupBox.setCheckable(False)
@@ -48,12 +49,19 @@ class Ui_MesasVenta(object):
         self.gridLayout.addItem(spacerItem4, 3, 4, 1, 1)
         spacerItem5 = QtGui.QSpacerItem(100, 20, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem5, 3, 0, 1, 1)
+        self.label_2 = QtGui.QLabel(self.groupBox)
+        self.label_2.setObjectName("label_2")
+        self.gridLayout.addWidget(self.label_2, 0, 2, 1, 1)
         self.horizontalLayout.addWidget(self.groupBox)
         self.groupBox_2 = QtGui.QGroupBox(MesasVenta)
+        self.groupBox_2.setTitle("")
         self.groupBox_2.setObjectName("groupBox_2")
         self.verticalLayout = QtGui.QVBoxLayout(self.groupBox_2)
-        self.verticalLayout.setContentsMargins(-1, 20, -1, -1)
+        self.verticalLayout.setContentsMargins(-1, 9, -1, -1)
         self.verticalLayout.setObjectName("verticalLayout")
+        self.label = QtGui.QLabel(self.groupBox_2)
+        self.label.setObjectName("label")
+        self.verticalLayout.addWidget(self.label)
         self.pushButton_agregar = QtGui.QPushButton(self.groupBox_2)
         self.pushButton_agregar.setMinimumSize(QtCore.QSize(100, 50))
         self.pushButton_agregar.setCheckable(False)
@@ -86,9 +94,9 @@ class Ui_MesasVenta(object):
 
     def retranslateUi(self, MesasVenta):
         MesasVenta.setWindowTitle(QtGui.QApplication.translate("MesasVenta", "Form", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox.setTitle(QtGui.QApplication.translate("MesasVenta", "Mesas", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_aceptar.setText(QtGui.QApplication.translate("MesasVenta", "Aceptar", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_2.setTitle(QtGui.QApplication.translate("MesasVenta", "Configuracion", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("MesasVenta", "<html><head/><body><p align=\"center\"><span style=\" font-size:18pt; font-weight:600;\">Vista de mesas</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("MesasVenta", "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600;\">Configuración</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_agregar.setText(QtGui.QApplication.translate("MesasVenta", "Agregar Mesa", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_borrar.setText(QtGui.QApplication.translate("MesasVenta", "Borrar Mesa", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_unir.setText(QtGui.QApplication.translate("MesasVenta", "Unir Mesas", None, QtGui.QApplication.UnicodeUTF8))

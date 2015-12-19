@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main_window.ui'
 #
-# Created: Fri Dec 18 17:02:07 2015
+# Created: Sat Dec 19 04:13:34 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -18,17 +18,12 @@ class Ui_MainWindow(object):
         self.verticalLayout = QtGui.QVBoxLayout(self.centralwidget)
         self.verticalLayout.setObjectName("verticalLayout")
         self.horizontalLayout = QtGui.QHBoxLayout()
-        self.horizontalLayout.setContentsMargins(-1, 30, -1, -1)
+        self.horizontalLayout.setContentsMargins(150, 30, -1, 20)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.pushButton_compra_directa = QtGui.QPushButton(self.centralwidget)
         self.pushButton_compra_directa.setMinimumSize(QtCore.QSize(100, 40))
         self.pushButton_compra_directa.setObjectName("pushButton_compra_directa")
         self.horizontalLayout.addWidget(self.pushButton_compra_directa)
-        self.line = QtGui.QFrame(self.centralwidget)
-        self.line.setFrameShape(QtGui.QFrame.VLine)
-        self.line.setFrameShadow(QtGui.QFrame.Sunken)
-        self.line.setObjectName("line")
-        self.horizontalLayout.addWidget(self.line)
         self.pushButton_mesas = QtGui.QPushButton(self.centralwidget)
         self.pushButton_mesas.setMinimumSize(QtCore.QSize(100, 40))
         self.pushButton_mesas.setObjectName("pushButton_mesas")

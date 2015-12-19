@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'formulario_venta.ui'
 #
-# Created: Sun Dec 13 01:46:02 2015
+# Created: Sat Dec 19 04:49:59 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -16,6 +16,7 @@ class Ui_FormularioVenta(object):
         self.verticalLayout_6 = QtGui.QVBoxLayout(FormularioVenta)
         self.verticalLayout_6.setObjectName("verticalLayout_6")
         self.groupBox = QtGui.QGroupBox(FormularioVenta)
+        self.groupBox.setTitle("")
         self.groupBox.setObjectName("groupBox")
         self.verticalLayout_4 = QtGui.QVBoxLayout(self.groupBox)
         self.verticalLayout_4.setContentsMargins(-1, 20, -1, -1)
@@ -248,7 +249,6 @@ class Ui_FormularioVenta(object):
 
     def retranslateUi(self, FormularioVenta):
         FormularioVenta.setWindowTitle(QtGui.QApplication.translate("FormularioVenta", "Form", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox.setTitle(QtGui.QApplication.translate("FormularioVenta", "Formulario de Venta", None, QtGui.QApplication.UnicodeUTF8))
         self.label_buscar_codigo.setText(QtGui.QApplication.translate("FormularioVenta", "Buscar producto por código:", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_filtrar_bebidas_frias.setText(QtGui.QApplication.translate("FormularioVenta", "Bebidas Frias", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_filtrar_cocina.setText(QtGui.QApplication.translate("FormularioVenta", "Cocina", None, QtGui.QApplication.UnicodeUTF8))
@@ -256,7 +256,7 @@ class Ui_FormularioVenta(object):
         self.pushButton_filtrar_helados.setText(QtGui.QApplication.translate("FormularioVenta", "Helados", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_filtrar_reposteria.setText(QtGui.QApplication.translate("FormularioVenta", "Respostería", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_filtrar_otros.setText(QtGui.QApplication.translate("FormularioVenta", "Otros", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("FormularioVenta", "Cantidad", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("FormularioVenta", "<html><head/><body><p align=\"center\"><span style=\" font-weight:600;\">Cantidad</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_aumentar_cantidad.setText(QtGui.QApplication.translate("FormularioVenta", "+", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_disminuir_cantidad.setText(QtGui.QApplication.translate("FormularioVenta", "-", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_eliminar.setText(QtGui.QApplication.translate("FormularioVenta", "Eliminar", None, QtGui.QApplication.UnicodeUTF8))

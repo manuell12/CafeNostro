@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'numero_pagos.ui'
 #
-# Created: Sat Dec 12 12:23:57 2015
+# Created: Fri Dec 18 19:14:58 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -78,9 +78,9 @@ class Ui_NumeroPagos(object):
         QtCore.QMetaObject.connectSlotsByName(NumeroPagos)
 
     def retranslateUi(self, NumeroPagos):
-        NumeroPagos.setWindowTitle(QtGui.QApplication.translate("NumeroPagos", "Form", None, QtGui.QApplication.UnicodeUTF8))
+        NumeroPagos.setWindowTitle(QtGui.QApplication.translate("NumeroPagos", "Administrar Pagos", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("NumeroPagos", "Ingresa número de pagos:", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("NumeroPagos", "Subtotal:", None, QtGui.QApplication.UnicodeUTF8))
         self.label_price.setText(QtGui.QApplication.translate("NumeroPagos", "<html><head/><body><p><span style=\" font-size:20pt;\">$</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_pagar.setText(QtGui.QApplication.translate("NumeroPagos", "Pagar", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_pagar.setText(QtGui.QApplication.translate("NumeroPagos", "Pagar / Cerrar Mesa", None, QtGui.QApplication.UnicodeUTF8))
 

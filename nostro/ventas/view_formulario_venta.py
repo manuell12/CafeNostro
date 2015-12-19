@@ -3,15 +3,16 @@
 
 from PySide import QtCore, QtGui
 from formulario_venta import Ui_FormularioVenta
-import sys
+import sys,os
 import controller_venta as controller
-import admin_productos.controller_admin_producto as c
+import admin_productos.controller_admin_producto as controller_admin_producto
 import admin_usuarios.controller_admin_user as controller_admin_user
 from ventas.view_admin_venta import AdminVentas
 from ventas.view_numero_pagos import NumeroPagos
 import datetime
 import time
-
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
 
 class FormularioVenta(QtGui.QWidget):
 
@@ -29,6 +30,7 @@ class FormularioVenta(QtGui.QWidget):
     id_tablaP = 0
     id_tablaPd = 0
     crear_pedido = True
+    crear_documento = True
 
     def __init__(self, main, rut_usuario, mesa):
         'Constructor de la clase'
@@ -76,6 +78,8 @@ class FormularioVenta(QtGui.QWidget):
         self.ui.pushButton_agregar.clicked.connect(self.action_agregar)
         self.ui.pushButton_eliminar.clicked.connect(self.action_eliminar)
         self.ui.pushButton_opciones.clicked.connect(self.action_opciones)
+        self.ui.pushButton_imprimir_comandas.clicked.connect(self.action_imprimir)
+
         self.ui.pushButton_aumentar_cantidad.clicked.connect(
             self.action_aumentar)
         self.ui.pushButton_disminuir_cantidad.clicked.connect(
@@ -226,7 +230,7 @@ class FormularioVenta(QtGui.QWidget):
 
         for i, data in enumerate(productos):
             row = [data.id_producto, controller.getProductoId(data.id_producto)[0].codigo, controller.getProductoId(data.id_producto)[
-                0].nombre, data.cantidad, c.monetaryFormat(str(data.precio_venta).split(".")[0])]
+                0].nombre, data.cantidad, controller_admin_producto.monetaryFormat(str(data.precio_venta).split(".")[0])]
             subtotal = subtotal + (long(data.precio_venta) * data.cantidad)
             for j, field in enumerate(row):
                 index = model.index(i, j, QtCore.QModelIndex())
@@ -335,12 +339,14 @@ class FormularioVenta(QtGui.QWidget):
                     self.agregarPedido()
                     self.main.stackedWidget.widget(5).reload_data_table()
                     self.crear_pedido = True
+                    self.crear_documento = True
                     self.vaciar_table2()
             except:
                 self.agregarVenta()
                 self.agregarPedido()
                 self.main.stackedWidget.widget(5).reload_data_table()
                 self.crear_pedido = True
+                self.crear_documento = True
                 self.vaciar_table2()
                 
         else:
@@ -351,10 +357,8 @@ class FormularioVenta(QtGui.QWidget):
         m = int(time.strftime("%m"))
         d = int(time.strftime("%d"))
         fecha = datetime.date(y, m, d)
-        try:
-            num_documento = controller.getVentas()[-1].num_documento + 1
-        except:
-            num_documento = 0
+        self.crear_o_asignar_num_documento()
+
         if(self.mesa == "0"):
             tipo = "directa"
         else:
@@ -363,7 +367,7 @@ class FormularioVenta(QtGui.QWidget):
         id_pedido = int(self.id_pedido)
         id_usuario = int(controller_admin_user.getUsuarioRut(
             self.rut_usuario)[0].id_usuario)
-        controller.addDataVenta(fecha, num_documento,
+        controller.addDataVenta(fecha, self.num_documento,
                                 tipo, total_pago, id_usuario, id_pedido)
         try:
             self.button.setText("Mesa "+str(self.button.mesa))
@@ -401,6 +405,70 @@ class FormularioVenta(QtGui.QWidget):
                                tarjeta, propina, id_venta)
         controller.finalizarPedido(id_pedido)
 
+    """============================================================== IMPRIMIR BOLETA =============================================="""
+    def crear_o_asignar_num_documento(self):
+        if(self.crear_documento): # Verifica si se creo un numero de documento
+            try: # Si hay ventas registradas, obtiene el numero del último documento y le suma una unidad.
+                self.num_documento = controller.getVentas()[-1].num_documento + 1
+            except: # Si no hay ventas registradas, comienza con 0
+                self.num_documento = 0
+            self.crear_documento = False
+
+    def action_imprimir(self):
+        # Obtener datos
+        nombre_usuario = str(controller_admin_user.getUsuarioRut(self.rut_usuario)[0].nombre).upper()+" "+str(controller_admin_user.getUsuarioRut(self.rut_usuario)[0].apellido).upper()
+        fecha_hora = time.strftime("Fecha: %d-%m-%Y       Hora: %H:%M:%S")
+        self.crear_o_asignar_num_documento()
+        productos = controller.getProductosPedido(self.id_pedido)
+        num_productos = len(productos)
+        espacio_productos = num_productos*15
+
+        c = canvas.Canvas("PDF_detalles/detalle_mesa_"+str(self.button.mesa)+"_documento_"+controller_admin_producto.zerosAtLeft(self.num_documento,8)+".pdf")
+        ancho = 270
+        alto = 390+espacio_productos
+        c.setPageSize((ancho, alto))
+        c.drawString(10,alto-50,"Cafe Nostro")
+        c.drawString(10,alto-65,"Bernardo Ohiggins 1240")
+        c.drawString(10,alto-80,"FONO: ")
+        c.drawString(10,alto-110,fecha_hora)
+        c.drawString(10,alto-125,"GARZON: "+nombre_usuario)
+        c.drawString(10,alto-140,"NUM. CUENTA: "+controller_admin_producto.zerosAtLeft(self.num_documento,8))
+        c.drawString(10,alto-155,"---------------------------------------------------------")
+        c.drawString(10,alto-170,"MESA: "+str(self.button.mesa))
+        c.drawString(10,alto-185,"CUENTA: "+controller_admin_producto.zerosAtLeft(self.num_documento,8))
+        c.drawString(10,alto-200,"---------------------------------------------------------")
+        alto_productos = alto-215
+        for i,producto in enumerate(productos):
+            c.drawString(10,alto_productos-15*i,str(producto.cantidad))
+            c.drawString(30,alto_productos-15*i,str(controller.getProductoId(producto.id_producto)[0].nombre).decode('cp1252'))
+            c.drawString(200,alto_productos-15*i,"$")
+            c.drawRightString(250,alto_productos-15*i,str(controller_admin_producto.monetaryFormat(int(producto.precio_venta*producto.cantidad))))
+            fin_alto_productos = alto_productos-15*i
+        try:
+            fin_alto_productos
+        except:
+            fin_alto_productos = alto_productos
+        c.drawString(10,fin_alto_productos-15,"---------------------------------------------------------")
+        fin_alto_productos = fin_alto_productos - 30
+
+        c.drawString(120,fin_alto_productos-15,"CONSUMO: ")
+        c.drawString(200,fin_alto_productos-15,"$")
+        c.drawRightString(250,fin_alto_productos-15,str(controller_admin_producto.monetaryFormat(int(self.ui.lcdNumber_subtotal.value()))))
+        c.drawString(120,fin_alto_productos-30,"TOTAL: ")
+        c.drawString(200,fin_alto_productos-30,"$")
+        c.drawRightString(250,fin_alto_productos-30,str(controller_admin_producto.monetaryFormat(int(self.ui.lcdNumber_subtotal.value()))))
+        c.drawString(35,fin_alto_productos-60,"PROPINA SUGERIDA 10%: ")
+        c.drawString(200,fin_alto_productos-60,"$")
+        c.drawRightString(250,fin_alto_productos-60,str(controller_admin_producto.monetaryFormat(int(self.ui.lcdNumber_propina.value()))))
+        c.drawString(35,fin_alto_productos-75,"TOTAL + PROPINA: ")
+        c.drawString(200,fin_alto_productos-75,"$")
+        c.drawRightString(250,fin_alto_productos-75,str(controller_admin_producto.monetaryFormat(int(self.ui.lcdNumber_total.value()))))
+
+        c.drawString(10,fin_alto_productos-115,"Gracias por su visita.")
+
+
+        c.save()
+        os.startfile(os.getcwd() + "/PDF_detalles/detalle_mesa_"+str(self.button.mesa)+"_documento_"+controller_admin_producto.zerosAtLeft(self.num_documento,8)+".pdf")
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)

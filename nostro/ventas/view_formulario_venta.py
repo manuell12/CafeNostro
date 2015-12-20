@@ -14,6 +14,9 @@ import time
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 
+import _winreg as winreg  
+import subprocess
+
 class FormularioVenta(QtGui.QWidget):
 
     __header_table__ = ((u"ID", 20),
@@ -44,6 +47,13 @@ class FormularioVenta(QtGui.QWidget):
         
         if(int(self.mesa) != 0): #asignar un boton a la mesa
             self.button = self.main.stackedWidget.widget(6).list_mesas[int(mesa)-1] 
+        else:
+            self.ui.lcdNumber_propina.setVisible(False)
+            self.ui.lcdNumber_total.setVisible(False)
+            self.ui.label.setVisible(False)
+            self.ui.label_4.setVisible(False)
+            self.ui.label_price_2.setVisible(False)
+            self.ui.label_price_3.setVisible(False)
 
         pedido = controller.getPedidoActivoPorMesa(self.mesa)
         try:
@@ -422,27 +432,32 @@ class FormularioVenta(QtGui.QWidget):
         productos = controller.getProductosPedido(self.id_pedido)
         num_productos = len(productos)
         espacio_productos = num_productos*15
+        empresa = controller.getEmpresa(1)[0]
 
         c = canvas.Canvas("PDF_detalles/detalle_mesa_"+str(self.mesa)+"_documento_"+controller_admin_producto.zerosAtLeft(self.num_documento,8)+".pdf")
-        ancho = 270
+        ancho = 300
         alto = 390+espacio_productos
-        c.setPageSize((ancho, alto))
-        c.drawString(10,alto-50,"Cafe Nostro")
-        c.drawString(10,alto-65,"Bernardo Ohiggins 1240")
-        c.drawString(10,alto-80,"FONO: ")
+        c.setPageSize((ancho, alto+50))
+        c.drawImage("images/logo_nombre.jpg",40,alto-30,220,66)
+        c.drawString(10,alto-50,empresa.nombre)
+        c.drawString(10,alto-65,empresa.direccion)
+        c.drawString(10,alto-80,"FONO: "+empresa.fono)
         c.drawString(10,alto-110,fecha_hora)
-        c.drawString(10,alto-125,"GARZON: "+nombre_usuario)
+        c.drawString(10,alto-125,"CREADOR: "+nombre_usuario)
         c.drawString(10,alto-140,"NUM. CUENTA: "+controller_admin_producto.zerosAtLeft(self.num_documento,8))
         c.drawString(10,alto-155,"---------------------------------------------------------")
-        c.drawString(10,alto-170,"MESA: "+str(self.mesa))
+        if(int(self.mesa) == 0):
+            c.drawString(10,alto-170,"COMPRA DIRECTA")
+        else:
+            c.drawString(10,alto-170,"MESA: "+str(self.mesa))
         c.drawString(10,alto-185,"CUENTA: "+controller_admin_producto.zerosAtLeft(self.num_documento,8))
         c.drawString(10,alto-200,"---------------------------------------------------------")
         alto_productos = alto-215
         for i,producto in enumerate(productos):
             c.drawString(10,alto_productos-15*i,str(producto.cantidad))
             c.drawString(30,alto_productos-15*i,str(controller.getProductoId(producto.id_producto)[0].nombre).decode('cp1252'))
-            c.drawString(200,alto_productos-15*i,"$")
-            c.drawRightString(250,alto_productos-15*i,str(controller_admin_producto.monetaryFormat(int(producto.precio_venta*producto.cantidad))))
+            c.drawString(230,alto_productos-15*i,"$")
+            c.drawRightString(280,alto_productos-15*i,str(controller_admin_producto.monetaryFormat(int(producto.precio_venta*producto.cantidad))))
             fin_alto_productos = alto_productos-15*i
         try:
             fin_alto_productos
@@ -457,18 +472,47 @@ class FormularioVenta(QtGui.QWidget):
         c.drawString(120,fin_alto_productos-30,"TOTAL: ")
         c.drawString(200,fin_alto_productos-30,"$")
         c.drawRightString(250,fin_alto_productos-30,str(controller_admin_producto.monetaryFormat(int(self.ui.lcdNumber_subtotal.value()))))
-        c.drawString(35,fin_alto_productos-60,"PROPINA SUGERIDA 10%: ")
-        c.drawString(200,fin_alto_productos-60,"$")
-        c.drawRightString(250,fin_alto_productos-60,str(controller_admin_producto.monetaryFormat(int(self.ui.lcdNumber_propina.value()))))
-        c.drawString(35,fin_alto_productos-75,"TOTAL + PROPINA: ")
-        c.drawString(200,fin_alto_productos-75,"$")
-        c.drawRightString(250,fin_alto_productos-75,str(controller_admin_producto.monetaryFormat(int(self.ui.lcdNumber_total.value()))))
+        if(int(self.mesa) != 0):
+            c.drawString(35,fin_alto_productos-60,"PROPINA SUGERIDA 10%: ")
+            c.drawString(200,fin_alto_productos-60,"$")
+            c.drawRightString(250,fin_alto_productos-60,str(controller_admin_producto.monetaryFormat(int(self.ui.lcdNumber_propina.value()))))
+            c.drawString(35,fin_alto_productos-75,"TOTAL + PROPINA: ")
+            c.drawString(200,fin_alto_productos-75,"$")
+            c.drawRightString(250,fin_alto_productos-75,str(controller_admin_producto.monetaryFormat(int(self.ui.lcdNumber_total.value()))))
 
-        c.drawString(10,fin_alto_productos-115,"Gracias por su visita.")
+            c.drawString(10,fin_alto_productos-115,"Gracias por su visita.")
+        else:
+            c.drawString(10,fin_alto_productos-75,"Gracias por su visita.")
 
 
         c.save()
-        os.startfile(os.getcwd() + "/PDF_detalles/detalle_mesa_"+str(self.mesa)+"_documento_"+controller_admin_producto.zerosAtLeft(self.num_documento,8)+".pdf")
+        #os.startfile(os.getcwd() + "/PDF_detalles/detalle_mesa_"+str(self.mesa)+"_documento_"+controller_admin_producto.zerosAtLeft(self.num_documento,8)+".pdf")
+        self.imprimir_pdf(os.getcwd() + "/PDF_detalles/detalle_mesa_"+str(self.mesa)+"_documento_"+controller_admin_producto.zerosAtLeft(self.num_documento,8)+".pdf")
+
+    def imprimir_pdf(self,pdf):
+          
+        # Dynamically get path to AcroRD32.exe  
+        AcroRD32Path = winreg.QueryValue(winreg.HKEY_CLASSES_ROOT,'Software\\Adobe\\Acrobat\Exe')  
+          
+        acroread = AcroRD32Path  
+          
+        #print('variable acroread is : {0}'.format(acroread))  
+          
+        # The last set of double quotes leaves the printer blank, basically defaulting to the default printer for the system.  
+        cmd= '{0} /N /T "{1}" ""'.format(acroread,pdf)  
+          
+        # Open command line in a different process other than ArcMap  
+        proc = subprocess.Popen(cmd)  
+          
+        # 2 lines below would not close adobe reader and locked ArcMap.  
+        #stdout,stderr=proc.communicate()  
+        #exit_code=proc.wait()  
+          
+        # Needed to put a sleep in here so the command line had time to open the pdf and spool the job to the printer.  
+        time.sleep(5)  
+          
+        # Kill AcroRD32.exe from Task Manager  
+        os.system("TASKKILL /F /IM AcroRD32.exe")  
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)

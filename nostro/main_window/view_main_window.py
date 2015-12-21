@@ -80,7 +80,7 @@ class MainWindow(QtGui.QMainWindow):
         self.setVisible(True)
 
     def config_user(self):
-        self.nombre = unicode(controller.getUsuarioRut(self.rut)[0].nombre)+" "+unicode(controller.getUsuarioRut(self.rut)[0].apellido)
+        self.nombre = unicode(controller.getUsuarioRut(self.rut)[0].nombre.decode('cp1252'))+" "+unicode(controller.getUsuarioRut(self.rut)[0].apellido.decode('cp1252'))
         if(controller.getUsuarioRut(self.rut)[0].nombre == "root"):
             self.nombre = "ROOT"
         self.ui.label_usuario.setText(u"<font color='white' size='5'><b>"+self.nombre+"</b></font>")

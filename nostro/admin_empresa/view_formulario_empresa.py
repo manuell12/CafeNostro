@@ -17,6 +17,7 @@ class FormularioEmpresa(QtGui.QDialog):
 
         self.vista_mesas = vista_mesas
         self.ui.lineEdit_fono.setInputMask("999 9 999999")
+        self.ui.lineEdit_nombre.setFocus()
 
     def load_data(self):
         empresa = controller_empresa.getEmpresa(1)[0]

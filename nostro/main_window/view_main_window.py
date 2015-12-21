@@ -14,8 +14,10 @@ from ventas.view_admin_venta import AdminVentas
 from ventas.view_formulario_venta import FormularioVenta
 from ventas.view_mesas_venta import MesasVenta
 import ventas.controller_venta as controller_venta
+import admin_empresa.controller_empresa as controller_empresa
 import admin_usuarios.controller_admin_user as controller
 from estadisticas.view_estadistica import Estadistica
+from admin_empresa.view_formulario_empresa import FormularioEmpresa
 
 
 class MainWindow(QtGui.QMainWindow):
@@ -26,7 +28,7 @@ class MainWindow(QtGui.QMainWindow):
     """
 
     venta_directa_en_curso = False
-    num_mesas = controller_venta.getEmpresa(1)[0].num_mesas
+    num_mesas = controller_empresa.getEmpresa(1)[0].num_mesas
 
     def __init__(self, tipo=None, rut=None):
         'Constructor de la clase'
@@ -94,6 +96,7 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.actionUsuarios.triggered.connect(self.admin_users)
         self.ui.actionProductos.triggered.connect(self.admin_productos)
         self.ui.actionEstadisticas.triggered.connect(self.admin_estadisticas)
+        self.ui.actionDatos_empresa.triggered.connect(self.admin_empresa)
 
         self.ui.pushButton_compra_directa.clicked.connect(self.formulario_venta_directa)
         self.ui.pushButton_mesas.clicked.connect(self.mesas_venta)
@@ -110,9 +113,13 @@ class MainWindow(QtGui.QMainWindow):
                     self.ui.stackedWidget.widget(i).set_ocupado(True)
             except:
                 pass
+    def admin_empresa(self):
+        'Abre la interfaz de configuracion de los datos de la empresa'
+        config_empresa = FormularioEmpresa(self.ui.stackedWidget.widget(6))
+        config_empresa.exec_()
 
     def admin_estadisticas(self):
-        'Cambia a la interfaz de venta por mesas'
+        'Cambia a la interfaz de estadisticas'
         self.ui.stackedWidget.setCurrentIndex(7)
         self.ui.stackedWidget.widget(7).actualizar_productos()
 

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main_window.ui'
 #
-# Created: Sat Dec 19 04:13:34 2015
+# Created: Sun Dec 20 19:23:08 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -56,6 +56,8 @@ class Ui_MainWindow(object):
         self.menuAdministraci_n.setObjectName("menuAdministraci_n")
         self.menuArchivo = QtGui.QMenu(self.menubar)
         self.menuArchivo.setObjectName("menuArchivo")
+        self.menuConfiguraci_n = QtGui.QMenu(self.menubar)
+        self.menuConfiguraci_n.setObjectName("menuConfiguraci_n")
         MainWindow.setMenuBar(self.menubar)
         self.actionUsuarios = QtGui.QAction(MainWindow)
         self.actionUsuarios.setObjectName("actionUsuarios")
@@ -72,14 +74,20 @@ class Ui_MainWindow(object):
         self.actionVentas.setObjectName("actionVentas")
         self.actionEstadisticas = QtGui.QAction(MainWindow)
         self.actionEstadisticas.setObjectName("actionEstadisticas")
+        self.actionCambiar_datos_de_la_empresa = QtGui.QAction(MainWindow)
+        self.actionCambiar_datos_de_la_empresa.setObjectName("actionCambiar_datos_de_la_empresa")
+        self.actionDatos_empresa = QtGui.QAction(MainWindow)
+        self.actionDatos_empresa.setObjectName("actionDatos_empresa")
         self.menuAdministraci_n.addAction(self.actionUsuarios)
         self.menuAdministraci_n.addAction(self.actionProductos)
         self.menuAdministraci_n.addAction(self.actionVentas)
         self.menuAdministraci_n.addAction(self.actionEstadisticas)
         self.menuArchivo.addAction(self.actionCambiar_Usuario)
         self.menuArchivo.addAction(self.actionSalir)
+        self.menuConfiguraci_n.addAction(self.actionDatos_empresa)
         self.menubar.addAction(self.menuArchivo.menuAction())
         self.menubar.addAction(self.menuAdministraci_n.menuAction())
+        self.menubar.addAction(self.menuConfiguraci_n.menuAction())
 
         self.retranslateUi(MainWindow)
         self.stackedWidget.setCurrentIndex(0)
@@ -93,6 +101,7 @@ class Ui_MainWindow(object):
         self.menuAdministraci_n.setStatusTip(QtGui.QApplication.translate("MainWindow", "Sección administrativa de la aplicación", None, QtGui.QApplication.UnicodeUTF8))
         self.menuAdministraci_n.setTitle(QtGui.QApplication.translate("MainWindow", "&Administración", None, QtGui.QApplication.UnicodeUTF8))
         self.menuArchivo.setTitle(QtGui.QApplication.translate("MainWindow", "&Archivo", None, QtGui.QApplication.UnicodeUTF8))
+        self.menuConfiguraci_n.setTitle(QtGui.QApplication.translate("MainWindow", "Configuración", None, QtGui.QApplication.UnicodeUTF8))
         self.actionUsuarios.setText(QtGui.QApplication.translate("MainWindow", "&Usuarios", None, QtGui.QApplication.UnicodeUTF8))
         self.actionUsuarios.setStatusTip(QtGui.QApplication.translate("MainWindow", "Ingresa a la ventana de administración de usuarios", None, QtGui.QApplication.UnicodeUTF8))
         self.actionUsuarios.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+2", None, QtGui.QApplication.UnicodeUTF8))
@@ -111,4 +120,6 @@ class Ui_MainWindow(object):
         self.actionVentas.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+4", None, QtGui.QApplication.UnicodeUTF8))
         self.actionEstadisticas.setText(QtGui.QApplication.translate("MainWindow", "Estadísticas", None, QtGui.QApplication.UnicodeUTF8))
         self.actionEstadisticas.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+5", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionCambiar_datos_de_la_empresa.setText(QtGui.QApplication.translate("MainWindow", "Cambiar datos de la empresa", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionDatos_empresa.setText(QtGui.QApplication.translate("MainWindow", "Datos empresa", None, QtGui.QApplication.UnicodeUTF8))
 

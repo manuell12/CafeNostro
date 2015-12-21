@@ -9,7 +9,7 @@ enviar a la Vista.
 
 from PySide import QtCore, QtGui
 from admin_productos.model_admin_producto import Producto
-from model_venta import Pedido, VentaProducto, Venta, Pago, Empresa
+from model_venta import Pedido, VentaProducto, Venta, Pago
 import admin_productos.controller_admin_producto as controller_admin_producto
 
 
@@ -219,16 +219,6 @@ def addDataVenta(fecha, num_documento, tipo, total_pago, id_usuario, id_pedido):
     venta = Venta(None, fecha, num_documento, tipo,
                   total_pago, id_usuario, id_pedido)
     Venta.addDataVenta(venta)
-
-def getEmpresa(id_empresa):
-    empresa = Empresa()
-    empresa.id_empresa = id_empresa
-    return Empresa.getEmpresa(empresa)
-
-def editNumMesasEmpresa(num_mesas):
-    empresa = Empresa()
-    empresa.num_mesas = num_mesas
-    Empresa.editNumMesasEmpresa(empresa)
 
 class TotalProductosModel(QtGui.QSortFilterProxyModel):
     """

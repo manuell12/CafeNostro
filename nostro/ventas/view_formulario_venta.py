@@ -7,6 +7,7 @@ import sys,os
 import controller_venta as controller
 import admin_productos.controller_admin_producto as controller_admin_producto
 import admin_usuarios.controller_admin_user as controller_admin_user
+import admin_empresa.controller_empresa as controller_empresa
 from ventas.view_admin_venta import AdminVentas
 from ventas.view_numero_pagos import NumeroPagos
 import datetime
@@ -432,7 +433,7 @@ class FormularioVenta(QtGui.QWidget):
         productos = controller.getProductosPedido(self.id_pedido)
         num_productos = len(productos)
         espacio_productos = num_productos*15
-        empresa = controller.getEmpresa(1)[0]
+        empresa = controller_empresa.getEmpresa(1)[0]
 
         c = canvas.Canvas("PDF_detalles/detalle_mesa_"+str(self.mesa)+"_documento_"+controller_admin_producto.zerosAtLeft(self.num_documento,8)+".pdf")
         ancho = 300

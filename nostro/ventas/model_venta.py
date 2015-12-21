@@ -54,7 +54,6 @@ def obtenerObjetoPagos(data):
                           row[3], row[4], row[5]))
     return lista
 
-
 class Pedido(object):
     """
     Clase que representa a la tabla Pedido.
@@ -534,3 +533,4 @@ class Pago(object):
             print "Error al obtener los pagos:", e.args[0]
             conn.close()
             return None
+

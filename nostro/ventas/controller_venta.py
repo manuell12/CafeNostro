@@ -220,7 +220,6 @@ def addDataVenta(fecha, num_documento, tipo, total_pago, id_usuario, id_pedido):
                   total_pago, id_usuario, id_pedido)
     Venta.addDataVenta(venta)
 
-
 class TotalProductosModel(QtGui.QSortFilterProxyModel):
     """
     Un QSortFilterProxyModel especializado que carga los datos dados en un modelo bidimensional QStandardItemModel.
@@ -304,3 +303,15 @@ class PushButtonMesa(QtGui.QPushButton):
         self.habilitado = True
         self.setEnabled(True)
         self.setText("Mesa " + str(mesa))
+
+class LabelPago(QtGui.QLabel):
+    """
+    Un QLabel especializado que almacena el estado de un producto (pagar = 1,no pagar = 0) y dependiendo de eso carga un icono.
+    """
+    estado = 0
+
+    def __init__(self, list_pixmap, estado, parent=None):
+        super(LabelPago, self).__init__(parent)
+        self.estado = estado
+        pixmap = list_pixmap[self.estado]
+        self.setPixmap(pixmap)

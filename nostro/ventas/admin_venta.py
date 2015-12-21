@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'admin_venta.ui'
 #
-# Created: Thu Nov 26 11:11:09 2015
+# Created: Sat Dec 19 05:05:35 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,13 +12,18 @@ from PySide import QtCore, QtGui
 class Ui_AdminVentas(object):
     def setupUi(self, AdminVentas):
         AdminVentas.setObjectName("AdminVentas")
-        AdminVentas.resize(612, 407)
-        self.verticalLayout = QtGui.QVBoxLayout(AdminVentas)
+        AdminVentas.resize(634, 367)
+        self.verticalLayout_2 = QtGui.QVBoxLayout(AdminVentas)
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.groupBox = QtGui.QGroupBox(AdminVentas)
+        self.groupBox.setTitle("")
+        self.groupBox.setObjectName("groupBox")
+        self.verticalLayout = QtGui.QVBoxLayout(self.groupBox)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.label = QtGui.QLabel(AdminVentas)
+        self.label = QtGui.QLabel(self.groupBox)
         self.label.setObjectName("label")
         self.verticalLayout.addWidget(self.label)
-        self.tableView_ventas = QtGui.QTableView(AdminVentas)
+        self.tableView_ventas = QtGui.QTableView(self.groupBox)
         self.tableView_ventas.setProperty("cursor", QtCore.Qt.PointingHandCursor)
         self.tableView_ventas.setMouseTracking(True)
         self.tableView_ventas.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
@@ -29,7 +34,7 @@ class Ui_AdminVentas(object):
         self.tableView_ventas.setObjectName("tableView_ventas")
         self.tableView_ventas.horizontalHeader().setMinimumSectionSize(20)
         self.verticalLayout.addWidget(self.tableView_ventas)
-        self.frame = QtGui.QFrame(AdminVentas)
+        self.frame = QtGui.QFrame(self.groupBox)
         self.frame.setFrameShape(QtGui.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtGui.QFrame.Raised)
         self.frame.setObjectName("frame")
@@ -38,14 +43,15 @@ class Ui_AdminVentas(object):
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
         self.pushButton_editar = QtGui.QPushButton(self.frame)
-        self.pushButton_editar.setMinimumSize(QtCore.QSize(0, 50))
+        self.pushButton_editar.setMinimumSize(QtCore.QSize(100, 50))
         self.pushButton_editar.setObjectName("pushButton_editar")
         self.horizontalLayout.addWidget(self.pushButton_editar)
         self.pushButton_eliminar = QtGui.QPushButton(self.frame)
-        self.pushButton_eliminar.setMinimumSize(QtCore.QSize(0, 50))
+        self.pushButton_eliminar.setMinimumSize(QtCore.QSize(100, 50))
         self.pushButton_eliminar.setObjectName("pushButton_eliminar")
         self.horizontalLayout.addWidget(self.pushButton_eliminar)
         self.verticalLayout.addWidget(self.frame)
+        self.verticalLayout_2.addWidget(self.groupBox)
 
         self.retranslateUi(AdminVentas)
         QtCore.QMetaObject.connectSlotsByName(AdminVentas)

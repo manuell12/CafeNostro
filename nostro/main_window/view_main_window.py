@@ -14,8 +14,10 @@ from ventas.view_admin_venta import AdminVentas
 from ventas.view_formulario_venta import FormularioVenta
 from ventas.view_mesas_venta import MesasVenta
 import ventas.controller_venta as controller_venta
+import admin_empresa.controller_empresa as controller_empresa
 import admin_usuarios.controller_admin_user as controller
 from estadisticas.view_estadistica import Estadistica
+from admin_empresa.view_formulario_empresa import FormularioEmpresa
 
 
 class MainWindow(QtGui.QMainWindow):
@@ -26,7 +28,7 @@ class MainWindow(QtGui.QMainWindow):
     """
 
     venta_directa_en_curso = False
-    num_mesas = 17
+    num_mesas = controller_empresa.getEmpresa(1)[0].num_mesas
 
     def __init__(self, tipo=None, rut=None):
         'Constructor de la clase'
@@ -44,7 +46,7 @@ class MainWindow(QtGui.QMainWindow):
         # Se crea un QProgressDialog para notificar al usuario sobre las cargas del programa.
         progress = QtGui.QProgressDialog("Cargando modulos...", "", 0, self.num_mesas+5)
         progress.setWindowTitle("Cargando...")
-        progress.setWindowFlags(QtCore.Qt.WindowTitleHint)
+        progress.setWindowFlags(QtCore.Qt.FramelessWindowHint)
         label = QtGui.QLabel()
         pixmap = QtGui.QPixmap('images/cafe_nostro_load_modulos.png')
         label.setPixmap(pixmap)
@@ -63,23 +65,25 @@ class MainWindow(QtGui.QMainWindow):
         progress.setValue(4)
         self.ui.stackedWidget.addWidget(MesasVenta(self,self.num_mesas,self.rut)) #6
         progress.setValue(5)
+        self.ui.stackedWidget.addWidget(Estadistica()) # 7
+        progress.setValue(6)
 
         pixmap = QtGui.QPixmap('images/cafe_nostro_load_mesas.png')
         label.setPixmap(pixmap)
 
-        for i in range(1,self.num_mesas+1): #7 = primera mesa
+        for i in range(1,self.num_mesas+1): #8 = primera mesa
             self.ui.stackedWidget.addWidget(FormularioVenta(self.ui,self.rut,str(i)))
             progress.setValue(i+5)
 
-        self.ui.stackedWidget.addWidget(Estadistica()) # self.num_mesas+5
+        
         progress.setValue(self.num_mesas+5)
         self.setVisible(True)
 
     def config_user(self):
-        self.nombre = unicode(controller.getUsuarioRut(self.rut)[0].nombre)+" "+unicode(controller.getUsuarioRut(self.rut)[0].apellido)
+        self.nombre = unicode(controller.getUsuarioRut(self.rut)[0].nombre.decode('cp1252'))+" "+unicode(controller.getUsuarioRut(self.rut)[0].apellido.decode('cp1252'))
         if(controller.getUsuarioRut(self.rut)[0].nombre == "root"):
             self.nombre = "ROOT"
-        self.ui.label_usuario.setText(u"<font color='black' size='5'><b>"+self.nombre+"</b></font>")
+        self.ui.label_usuario.setText(u"<font color='white' size='5'><b>"+self.nombre+"</b></font>")
         if(self.tipo != None):
             if(self.tipo == 1):
                 self.ui.actionUsuarios.setEnabled(False)
@@ -92,13 +96,14 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.actionUsuarios.triggered.connect(self.admin_users)
         self.ui.actionProductos.triggered.connect(self.admin_productos)
         self.ui.actionEstadisticas.triggered.connect(self.admin_estadisticas)
+        self.ui.actionDatos_empresa.triggered.connect(self.admin_empresa)
 
         self.ui.pushButton_compra_directa.clicked.connect(self.formulario_venta_directa)
         self.ui.pushButton_mesas.clicked.connect(self.mesas_venta)
         self.ui.stackedWidget.currentChanged.connect(self.stackedWidget_changed)
 
     def stackedWidget_changed(self,index):
-        for i in range(7,self.num_mesas+8):
+        for i in range(8,self.num_mesas+9):
             try:
                 id_pedido = self.ui.stackedWidget.widget(i).id_pedido
                 pedido = controller_venta.getPedido(id_pedido)
@@ -108,11 +113,15 @@ class MainWindow(QtGui.QMainWindow):
                     self.ui.stackedWidget.widget(i).set_ocupado(True)
             except:
                 pass
+    def admin_empresa(self):
+        'Abre la interfaz de configuracion de los datos de la empresa'
+        config_empresa = FormularioEmpresa(self.ui.stackedWidget.widget(6))
+        config_empresa.exec_()
 
     def admin_estadisticas(self):
-        'Cambia a la interfaz de venta por mesas'
-        self.ui.stackedWidget.setCurrentIndex(self.num_mesas+7)
-        self.ui.stackedWidget.widget(self.num_mesas+7).actualizar_productos()
+        'Cambia a la interfaz de estadisticas'
+        self.ui.stackedWidget.setCurrentIndex(7)
+        self.ui.stackedWidget.widget(7).actualizar_productos()
 
     def mesas_venta(self):
         'Cambia a la interfaz de venta por mesas'

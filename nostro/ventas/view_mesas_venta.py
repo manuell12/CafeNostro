@@ -5,6 +5,7 @@ from PySide import QtCore, QtGui
 from mesas_venta import Ui_MesasVenta
 from ventas.view_formulario_venta import FormularioVenta
 import ventas.controller_venta as controller_venta
+import admin_empresa.controller_empresa as controller_empresa
 
 
 class MesasVenta(QtGui.QWidget):
@@ -150,9 +151,9 @@ class MesasVenta(QtGui.QWidget):
         self.ui.pushButton_borrar.setFocus()
 
     def agregar_mesa(self):
-        num_mesa = controller_venta.getEmpresa(1)[0].num_mesas+1
+        num_mesa = controller_empresa.getEmpresa(1)[0].num_mesas+1
 
-        controller_venta.editNumMesasEmpresa(num_mesa)
+        controller_empresa.editNumMesasEmpresa(num_mesa)
         
         pushButton_mesa = controller_venta.PushButtonMesa("Mesa "+str(num_mesa),False)
         pushButton_mesa.mesa = num_mesa

@@ -134,8 +134,15 @@
     <addaction name="actionCambiar_Usuario"/>
     <addaction name="actionSalir"/>
    </widget>
+   <widget class="QMenu" name="menuConfiguraci_n">
+    <property name="title">
+     <string>Configuración</string>
+    </property>
+    <addaction name="actionDatos_empresa"/>
+   </widget>
    <addaction name="menuArchivo"/>
    <addaction name="menuAdministraci_n"/>
+   <addaction name="menuConfiguraci_n"/>
   </widget>
   <action name="actionUsuarios">
    <property name="text">
@@ -206,6 +213,16 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+5</string>
+   </property>
+  </action>
+  <action name="actionCambiar_datos_de_la_empresa">
+   <property name="text">
+    <string>Cambiar datos de la empresa</string>
+   </property>
+  </action>
+  <action name="actionDatos_empresa">
+   <property name="text">
+    <string>Datos empresa</string>
    </property>
   </action>
  </widget>

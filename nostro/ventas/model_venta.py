@@ -15,7 +15,7 @@ def connect():
 
 def obtenerObjetoPedidos(data):
     """
-    Recibe como parametro la tupla recibida desde la BD y retorna una lista de objetos con todos los datos de los productos.
+    Recibe como parametro la tupla recibida desde la BD y retorna una lista de objetos con todos los datos de los pedidos.
     """
     lista = list()
     for i, row in enumerate(data):
@@ -35,7 +35,7 @@ def obtenerObjetoVentaProductos(data):
 
 def obtenerObjetoVentas(data):
     """
-    Recibe como parametro la tupla recibida desde la BD y retorna una lista de objetos con todos los datos de los productos.
+    Recibe como parametro la tupla recibida desde la BD y retorna una lista de objetos con todos los datos de las ventas.
     """
     lista = list()
     for i, row in enumerate(data):
@@ -46,7 +46,7 @@ def obtenerObjetoVentas(data):
 
 def obtenerObjetoPagos(data):
     """
-    Recibe como parametro la tupla recibida desde la BD y retorna una lista de objetos con todos los datos de los productos.
+    Recibe como parametro la tupla recibida desde la BD y retorna una lista de objetos con todos los datos de los pagos.
     """
     lista = list()
     for i, row in enumerate(data):
@@ -76,6 +76,10 @@ class Pedido(object):
         self.en_curso = en_curso
 
     def addDataPedido(cls):
+        """
+        Crea un registro nuevo en la tabla pedido con los datos:
+        id_pedido, mesa, en_curso.
+        """
         conex = connect()
         conn = conex.cursor()
         query = "INSERT INTO pedido(idPedido, mesa, en_curso) VALUES(%s, %s, %s)"
@@ -87,6 +91,9 @@ class Pedido(object):
         conn.close()
 
     def finalizarPedido(cls):
+        """
+        Cambia la columna en_curso a 0, de un pedido.
+        """
         conex = connect()
         conn = conex.cursor()
         query = "UPDATE pedido SET en_curso = 0 WHERE idPedido = {0}".format(
@@ -96,6 +103,9 @@ class Pedido(object):
         conn.close()
 
     def deletePedido(cls):
+        """
+        Elimina un pedido de la base de datos.
+        """
         try:
             conex = connect()
             conn = conex.cursor()
@@ -109,6 +119,9 @@ class Pedido(object):
             return "Error"
 
     def getPedido(cls):
+        """
+        Obtiene un pedido (objeto) por su id.
+        """
         query = "SELECT * FROM pedido WHERE idPedido = {0}".format(
             cls.id_pedido)
 
@@ -126,6 +139,9 @@ class Pedido(object):
             return None
 
     def getPedidoActivoPorMesa(cls):
+        """
+        Obtiene los pedidos activos asignados a la mesa dada.
+        """
         query = "SELECT * FROM pedido WHERE mesa = {0} and en_curso = 1".format(
             cls.mesa)
 
@@ -146,9 +162,9 @@ class Pedido(object):
     def all(cls):
         """
         Método utlizado para obtener la colección completa de filas
-        en la tabla pedido
-        Este método al ser de clase no necesita una instancia (objeto)
-        Sólo basta con invocarlo desde la clase
+        en la tabla pedido.
+        Este método al ser de clase no necesita una instancia (objeto).
+        Sólo basta con invocarlo desde la clase.
         """
         query = "SELECT * FROM {}".format(
             cls.__tablename__)
@@ -195,6 +211,10 @@ class VentaProducto(object):
         self.porcentaje_descuento = porcentaje_descuento
 
     def addDataVentaProducto(cls):
+        """
+        Crea un registro nuevo en la tabla venta_has_producto con los datos:
+        id_pedido, id_producto, cantidad, precio_venta, porcentaje_descuento.
+        """
         conex = connect()
         conn = conex.cursor()
         query = "INSERT INTO venta_has_producto(idPedido, idProducto, cantidad, precio_venta, porcentaje_descuento) VALUES(%s, %s, %s, %s, %s)"
@@ -293,7 +313,10 @@ class VentaProducto(object):
         conn.close()
 
     def cambiarCantidadProducto(cls, cambiar):
-        '''Interacciona con la base de datos a travez de una query que actualiza el estado de un Producto, especificando su id'''
+        """
+        Interacciona con la base de datos a travez de una query que 
+        actualiza el estado de un Producto, especificando su id
+        """
         conex = connect()
         conn = conex.cursor()
         if(cambiar == "aumentar"):
@@ -346,6 +369,10 @@ class Venta(object):
         self.id_pedido = id_pedido
 
     def addDataVenta(cls):
+        """
+        Crea un registro nuevo en la tabla venta con los datos:
+        fecha, num_documento, tipo, total_pago, id_usuario, id_pedido.
+        """
         conex = connect()
         conn = conex.cursor()
         query = "INSERT INTO venta(fecha, num_documento, tipo, total_pago, idUsuario, idPedido) VALUES(%s, %s, %s, %s, %s, %s)"
@@ -380,6 +407,9 @@ class Venta(object):
         conn.close()
 
     def edit_data_venta(cls):
+        """
+        Método utiizado para editar los datos de una venta.
+        """
         print("{}\t{}\t{}\t{}".format(cls.id_venta,
                                       cls.fecha, cls.total_pago, cls.id_usuario))
         try:
@@ -398,7 +428,9 @@ class Venta(object):
         conn.close()
 
     def delete_venta(cls):
-        """Método que se encarga de eliminar un venta identificandola con su PK"""
+        """
+        Método que se encarga de eliminar un venta identificandola con su PK
+        """
         conex = connect()
         conn = conex.cursor()
         query = "DELETE FROM venta WHERE idVenta = {}".format(cls.id_venta)
@@ -408,6 +440,9 @@ class Venta(object):
 
     @classmethod
     def getIdPedido(cls, id_venta):
+        """
+        Obtiene el id de pedido que esta asociado a una venta.
+        """
         conex = connect()
         conn = conex.cursor()
         query = "SELECT `idPedido` FROM `venta` WHERE `idVenta` = {}".format(
@@ -421,7 +456,9 @@ class Venta(object):
 
     @classmethod
     def get_id_venta(cls, id_pedido):
-        """ Obtiene el id venta que esta asociado a un pedido """
+        """
+        Obtiene el id venta que esta asociado a un pedido.
+        """
         conex = connect()
         conn = conex.cursor()
         query = "SELECT `idVenta` FROM `venta` WHERE `idPedido` = {}".format(
@@ -437,9 +474,9 @@ class Venta(object):
     def all(cls):
         """
         Método utlizado para obtener la colección completa de filas
-        en la tabla pedido
-        Este método al ser de clase no necesita una instancia (objeto)
-        Sólo basta con invocarlo desde la clase
+        en la tabla venta.
+        Este método al ser de clase no necesita una instancia (objeto).
+        Sólo basta con invocarlo desde la clase.
         """
         query = "SELECT * FROM {}".format(
             cls.__tablename__)
@@ -489,6 +526,10 @@ class Pago(object):
         self.id_venta = id_venta
 
     def addDataPago(cls):
+        """
+        Crea un registro nuevo en la tabla pago con los datos:
+        id_pago, pago_total, efectivo, tarjeta, propina, id_venta.
+        """
         conex = connect()
         conn = conex.cursor()
         query = "INSERT INTO pago(idPago, pago_total, efectivo, tarjeta, propina, idVenta) VALUES(%s,%s, %s, %s, %s, %s)"
@@ -503,6 +544,9 @@ class Pago(object):
         conn.close()
 
     def delete_pago(cls):
+        """
+        Elimina un pago asociado a un id de una venta.
+        """
         conex = connect()
         conn = conex.cursor()
         query = "DELETE FROM pago WHERE idVenta = {}".format(cls.id_venta)
@@ -514,9 +558,9 @@ class Pago(object):
     def all(cls):
         """
         Método utlizado para obtener la colección completa de filas
-        en la tabla pedido
-        Este método al ser de clase no necesita una instancia (objeto)
-        Sólo basta con invocarlo desde la clase
+        en la tabla pago.
+        Este método al ser de clase no necesita una instancia (objeto).
+        Sólo basta con invocarlo desde la clase.
         """
         query = "SELECT * FROM {}".format(
             cls.__tablename__)

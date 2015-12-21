@@ -14,47 +14,66 @@ import admin_productos.controller_admin_producto as controller_admin_producto
 
 
 def Productos():
-    """Retorna todos los Productos de la base de datos"""
+    """
+    Retorna todos los Productos de la base de datos.
+    """
     return Producto.all()
 
 
 def getPedidos():
-    """Retorna todos los pedidos"""
+    """
+    Retorna todos los pedidos de la base de datos.
+    """
     return Pedido.all()
 
 
 def getVentas():
-    """Retorna todos los pedidos"""
+    """
+    Retorna todas las ventas de la base de datos.
+    """
     return Venta.all()
 
 
 def getPagos():
-    """Retorna todos los pagos"""
+    """
+    Retorna todos los pagos de la base de datos.
+    """
     return Pago.all()
 
 
 def getVentaPedidoId(id_pedido):
+    """
+    Obtiene la venta realizada para el pedido pasado como parámetro.
+    """
     venta = Venta()
     venta.id_pedido = id_pedido
     return Venta.getVentaPedidoId(venta)
 
 
 def getProductoStatus(status):
-    """Obtiene los Productos de la base de datos que tengan el mismo estado determinado por el parámetro entregado"""
+    """
+    Obtiene los Productos de la base de datos que tengan el mismo estado
+    determinado por el parámetro entregado.
+    """
     producto = Producto()
     producto.status = status
     return Producto.getProductoStatus(producto)
 
 
 def getProductoCategoria(categoria):
-    """Obtiene los Productos de la base de datos que tengan la misma categoria determinado por el parámetro entregado"""
+    """
+    Obtiene los Productos de la base de datos que tengan la misma categoria 
+    determinado por el parámetro entregado.
+    """
     producto = Producto()
     producto.id_categoria = categoria
     return Producto.getProductoCategoria(producto)
 
 
 def getProductoCodigo(codigo):
-    """Obtiene el producto determinado por su codigo"""
+    """
+    Obtiene un producto dando como parámetro su codigo.
+    """
     producto = Producto()
     codigo = codigo + "%"
     producto.codigo = codigo
@@ -62,14 +81,19 @@ def getProductoCodigo(codigo):
 
 
 def getProductoId(id_producto):
-    """Obtiene los Productos de la base de datos que tengan el mismo id determinado por el parámetro entregado"""
+    """
+    Obtiene el producto de la base de datos que su id coincida con
+    la id entregada como parámetro.
+    """
     producto = Producto()
     producto.id_producto = id_producto
     return Producto.getProductoId(producto)
 
 
 def addDataPedido(mesa, en_curso=1):
-    """Agrega un pedido a la base de datos y retorna el id"""
+    """
+    Agrega un pedido a la base de datos y retorna el id
+    """
     try:
         pedidos = getPedidos()[-1].id_pedido + 1
     except:
@@ -80,18 +104,28 @@ def addDataPedido(mesa, en_curso=1):
 
 
 def finalizarPedido(id_pedido):
+    """
+    Cambia el estado de un pedido a 0 (en_curso = 0) entregando el id de dicho
+    pedido como parámetro.
+    """
     pedido = Pedido()
     pedido.id_pedido = id_pedido
     Pedido.finalizarPedido(pedido)
 
 
 def getPedido(id_pedido):
+    """
+    Obtiene un pedido (objeto), dando su id como parámetro.
+    """
     pedido = Pedido()
     pedido.id_pedido = id_pedido
     return Pedido.getPedido(pedido)
 
 
 def deletePedido(id_pedido):
+    """
+    Elimina el pedido correspondiente a la id entregada como parámetro.
+    """
     producto_pedido = VentaProducto()
     producto_pedido.id_pedido = id_pedido
     VentaProducto.deleteProductosPedido(producto_pedido)
@@ -101,7 +135,9 @@ def deletePedido(id_pedido):
 
 
 def delete_venta(id_venta, id_pedido):
-    """Elimina los registros relacionados a una venta"""
+    """
+    Elimina los registros relacionados a una venta
+    """
     pago = Pago()
     pago.id_venta = id_venta
     pago.delete_pago()
@@ -115,13 +151,18 @@ def delete_venta(id_venta, id_pedido):
 
 
 def getPedidoActivoPorMesa(mesa):
+    """
+    Obtiene un pedido que se encuentre activo (en_curso = 1)
+    para la mesa entregada como parámetro.
+    """
     pedido = Pedido()
     pedido.mesa = mesa
     return Pedido.getPedidoActivoPorMesa(pedido)
 
-
 def addDataPago(pago_total, efectivo, tarjeta, propina, id_venta):
-    """Agrega un pedido a la base de datos y retorna el id"""
+    """
+    Agrega un pedido a la base de datos.
+    """
     try:
         pagos = getPagos()[-1].id_pago + 1
     except:
@@ -131,7 +172,9 @@ def addDataPago(pago_total, efectivo, tarjeta, propina, id_venta):
 
 
 def addDataVentaProducto(id_pedido, id_producto, precio_venta):
-    """Agrega un producto a un pedido"""
+    """
+    Agrega un producto a un pedido explicitando su id y su precio de venta.
+    """
     venta_producto = VentaProducto()
     venta_producto.id_pedido = id_pedido
     venta_producto.id_producto = id_producto
@@ -145,13 +188,19 @@ def addDataVentaProducto(id_pedido, id_producto, precio_venta):
 
 
 def getProductosPedido(id_pedido):
-    """Obtiene todos los productos de un pedido"""
+    """
+    Obtiene todos los productos de un pedido
+    """
     venta_producto = VentaProducto()
     venta_producto.id_pedido = id_pedido
     return VentaProducto.getProductosPedido(venta_producto)
 
 
 def getProductosPedidoRepetidosPorCantidad(id_pedido):
+    """
+    Obtiene los productos de un pedido (objetos) repetidos la cantidad
+    de veces que se hayan registrado.
+    """
     productos_normal = getProductosPedido(id_pedido)
     productos_repetidos = list()
     for producto in productos_normal:
@@ -161,7 +210,10 @@ def getProductosPedidoRepetidosPorCantidad(id_pedido):
 
 
 def hayProductoPedido(id_pedido, id_producto):
-    """Retorna True si existe un producto en un pedido"""
+    """
+    Retorna True si existe un producto en un pedido.
+    Retorna False en caso contrario.
+    """
     venta_producto = VentaProducto()
     venta_producto.id_producto = id_producto
     venta_producto.id_pedido = id_pedido
@@ -174,7 +226,10 @@ def hayProductoPedido(id_pedido, id_producto):
 
 
 def hayProducto(id_producto):
-    """Retorna True si existe un producto en la tabla de venta"""
+    """
+    Retorna True si existe un producto en la tabla de venta.
+    Retorna False en caso contrario.
+    """
     venta_producto = VentaProducto()
     venta_producto.id_producto = id_producto
     producto = VentaProducto.hayProducto(venta_producto)
@@ -207,7 +262,9 @@ def cambiarCantidadProducto(id_pedido, id_producto, cambiar):
 
 
 def deleteProducto(id_pedido, id_producto):
-    """Elimina un Producto de la base de datos"""
+    """
+    Elimina un Producto de la base de datos
+    """
     venta_producto = VentaProducto()
     venta_producto.id_producto = id_producto
     venta_producto.id_pedido = id_pedido
@@ -215,10 +272,13 @@ def deleteProducto(id_pedido, id_producto):
 
 
 def addDataVenta(fecha, num_documento, tipo, total_pago, id_usuario, id_pedido):
-    """Agrega una venta a la base de datos y retorna el id"""
+    """
+    Agrega una venta a la base de datos y retorna el id
+    """
     venta = Venta(None, fecha, num_documento, tipo,
                   total_pago, id_usuario, id_pedido)
     Venta.addDataVenta(venta)
+
 
 class TotalProductosModel(QtGui.QSortFilterProxyModel):
     """
@@ -249,11 +309,11 @@ class TotalProductosModel(QtGui.QSortFilterProxyModel):
 
         self.setSourceModel(self.model)
 
-# def set_headers(header)
-
 
 def editDataVenta(id_venta, fecha, total_pago, id_usuario):
-    """ Modifica una venta finalizada """
+    """
+    Modifica una venta
+    """
     print("-----Edit Data Venta-------")
     venta = Venta()
     venta.id_venta = id_venta
@@ -265,14 +325,17 @@ def editDataVenta(id_venta, fecha, total_pago, id_usuario):
 
 
 def getIdPedido(id_venta):
-    """Obtiene el id_pedido a traves del id de la venta"""
+    """
+    Obtiene el id_pedido a traves del id de la venta
+    """
     id_pedido = Venta.getIdPedido(id_venta)
-    # print(id_pedido)
     return id_pedido
 
 
 def getIdVenta(id_pedido):
-    """Obtiene el id del pedido a traves de la venta relacionada"""
+    """
+    Obtiene el id del pedido a traves de la venta relacionada
+    """
     id_venta = Venta.get_id_venta(id_pedido)
     return id_venta
 
@@ -303,6 +366,7 @@ class PushButtonMesa(QtGui.QPushButton):
         self.habilitado = True
         self.setEnabled(True)
         self.setText("Mesa " + str(mesa))
+
 
 class LabelPago(QtGui.QLabel):
     """

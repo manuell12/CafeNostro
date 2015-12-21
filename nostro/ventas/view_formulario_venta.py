@@ -3,7 +3,8 @@
 
 from PySide import QtCore, QtGui
 from formulario_venta import Ui_FormularioVenta
-import sys,os
+import sys
+import os
 import controller_venta as controller
 import admin_productos.controller_admin_producto as controller_admin_producto
 import admin_usuarios.controller_admin_user as controller_admin_user
@@ -19,6 +20,12 @@ import _winreg as winreg
 import subprocess
 
 class FormularioVenta(QtGui.QWidget):
+    """
+    Clase FormularioVenta encargada tanto de mostrar en pantalla la información
+    correspondiente a un pedido actual, como de realizar funciones de
+    crear pedido, crear venta, crear pagos, editar venta, ofrecer mas opciones
+    de pago e imprimir detalle.
+    """
 
     __header_table__ = ((u"ID", 20),
                         (u"Código", 50),
@@ -35,9 +42,16 @@ class FormularioVenta(QtGui.QWidget):
     id_tablaPd = 0
     crear_pedido = True
     crear_documento = True
+    crear_venta = True
 
     def __init__(self, main, rut_usuario, mesa):
-        'Constructor de la clase'
+        """
+        Constructor de la clase FormularioVenta.
+        Asigna los atributos de la clase: main,rut_usuario,mesa
+        Asigna un boton de la vista por mesas al formulario en caso de que no
+        sea compra directa.
+        En caso de ser compra directa, oculta la informacion referente a propina.
+        """
         QtGui.QWidget.__init__(self)
         self.ui = Ui_FormularioVenta()
         self.ui.setupUi(self)
@@ -45,8 +59,9 @@ class FormularioVenta(QtGui.QWidget):
         self.connect_actions()
         self.main = main
         self.mesa = mesa
+        self.rut_usuario = rut_usuario
         
-        if(int(self.mesa) != 0): #asignar un boton a la mesa
+        if int(self.mesa) != 0: #asignar un boton a la mesa
             self.button = self.main.stackedWidget.widget(6).list_mesas[int(mesa)-1] 
         else:
             self.ui.lcdNumber_propina.setVisible(False)
@@ -57,6 +72,7 @@ class FormularioVenta(QtGui.QWidget):
             self.ui.label_price_3.setVisible(False)
 
         pedido = controller.getPedidoActivoPorMesa(self.mesa)
+
         try:
             self.id_pedido = pedido[0].id_pedido
             self.crear_pedido = False
@@ -64,11 +80,14 @@ class FormularioVenta(QtGui.QWidget):
         except:
             pass
 
-        self.rut_usuario = rut_usuario
         self.load_model_total_productos(controller.getProductoStatus(1))
         self.set_combobox_tipo_pago()
 
     def set_combobox_tipo_pago(self):
+        """
+        Inicializa el QComboBox de la vista que muestra los tipos de pago
+        (efectivo y tarjeta).
+        """
         __type_pay__ = ((u"EFECTIVO"),
                         (u"TARJETA"))
 
@@ -86,6 +105,10 @@ class FormularioVenta(QtGui.QWidget):
         self.ui.comboBox_tipo_pago.setModel(model)
 
     def connect_actions(self):
+        """
+        Método que conecta las funciones de la clase con los eventos
+        que genere el usuario al interactuar con los QWidgets de la vista.
+        """
         self.ui.pushButton_agregar.clicked.connect(self.action_agregar)
         self.ui.pushButton_eliminar.clicked.connect(self.action_eliminar)
         self.ui.pushButton_opciones.clicked.connect(self.action_opciones)
@@ -109,10 +132,22 @@ class FormularioVenta(QtGui.QWidget):
             self.lineEdit_buscar_codigo_changed)
 
     def set_ocupado(self, ocupado):
+        """
+        Método que recibe como parámetro un booleano.
+        Asigna la mesa como ocupada (roja) si 'ocupado' == True.
+        Asigna la mesa como libre (verde) si 'ocupado' == False.
+        Actualiza la vista por mesas.
+        """
         self.button.ocupado = ocupado
         self.main.stackedWidget.widget(6).update_buttons()
 
     def action_agregar(self):
+        """
+        Método llamado cuando el usuario presiona en el boton 'agregar'
+        ubicado entre las tablas.
+        Crea un pedido para la mesa actual (compra directa es mesa 0), en caso
+        de que sea la primera vez que se agrega un producto a la mesa.
+        """
         if(self.crear_pedido):
             self.id_pedido = controller.addDataPedido(self.mesa)
             self.crear_pedido = False
@@ -122,12 +157,20 @@ class FormularioVenta(QtGui.QWidget):
         self.ui.tableView_total_productos.setFocus()
 
     def action_eliminar(self):
+        """
+        Método llamado cuando el usuario presiona en el boton 'eliminar'
+        ubicado a la derecha de la tabla de pedidos.
+        """
         controller.deleteProducto(self.id_pedido, self.id_tablaPd)
         self.reload_data_table2()
         self.ui.tableView_pedido.selectRow(self.row_tablaPd)
         self.ui.tableView_pedido.setFocus()
 
     def action_aumentar(self):
+        """
+        Método llamado cuando el usuario presiona en el boton '+'
+        ubicado a la derecha de la tabla de pedidos.
+        """
         controller.cambiarCantidadProducto(
             self.id_pedido, self.id_tablaPd, "aumentar")
         self.reload_data_table2()
@@ -135,6 +178,10 @@ class FormularioVenta(QtGui.QWidget):
         self.ui.tableView_pedido.setFocus()
 
     def action_disminuir(self):
+        """
+        Método llamado cuando el usuario presiona en el boton '-'
+        ubicado a la derecha de la tabla de pedidos.
+        """
         controller.cambiarCantidadProducto(
             self.id_pedido, self.id_tablaPd, "disminuir")
         self.reload_data_table2()
@@ -144,36 +191,69 @@ class FormularioVenta(QtGui.QWidget):
     """" ================================ FILTROS TABLA TOTAL PRODUCTOS =================================== """
 
     def action_cocina(self):
+        """
+        Método llamado cuando el usuario presiona en el boton de filtro
+        'cocina'
+        """
         productos = controller.getProductoCategoria(1)
         self.load_model_total_productos(productos)
 
     def action_helados(self):
+        """
+        Método llamado cuando el usuario presiona en el boton de filtro
+        'helados'
+        """
         productos = controller.getProductoCategoria(2)
         self.load_model_total_productos(productos)
 
     def action_bebidas_calientes(self):
+        """
+        Método llamado cuando el usuario presiona en el boton de filtro
+        'bebidas calientes'
+        """
         productos = controller.getProductoCategoria(3)
         self.load_model_total_productos(productos)
 
     def action_bebidas_frias(self):
+        """
+        Método llamado cuando el usuario presiona en el boton de filtro
+        'bebidas frias'
+        """
         productos = controller.getProductoCategoria(4)
         self.load_model_total_productos(productos)
 
     def action_reposteria(self):
+        """
+        Método llamado cuando el usuario presiona en el boton de filtro
+        'reposteria'
+        """
         productos = controller.getProductoCategoria(5)
         self.load_model_total_productos(productos)
 
     def action_otros(self):
+        """
+        Método llamado cuando el usuario presiona en el boton de filtro
+        'otros'
+        """
         productos = controller.getProductoCategoria(6)
         self.load_model_total_productos(productos)
 
     def lineEdit_buscar_codigo_changed(self, text):
+        """
+        Método llamado cuando el usuario ingresa texto en el QLineEdit
+        para buscar por código.
+        """
         productos = controller.getProductoCodigo(text)
         self.load_model_total_productos(productos)
 
     """ ============================================================================= TABLA TOTAL PRODUCTOS ============================================="""
 
     def cell_selected_table1(self, index, indexp):
+        """
+        Método llamado cuando el usuario CAMBIA la seleccion de una fila 
+        de la tabla de total productos (table1).
+        Obtiene el id, el nombre y el precio del producto seleccionado.
+        """
         model = self.ui.tableView_total_productos.model().sourceModel()
         self.id_tablaP = int(model.item(index.row(), 0).text())
         self.nombre_tablaP = model.item(index.row(), 2).text()
@@ -184,6 +264,11 @@ class FormularioVenta(QtGui.QWidget):
             self.precio_tablaP = self.precio_tablaP + precio[i]
 
     def load_model_total_productos(self, data=""):
+        """
+        Carga los datos entregados como parámetro 'data' en la tabla en
+        una instancia de TotalProductosModel().
+        Carga los Header de la tabla con el atributo de clase __header_table__.
+        """
         model = controller.TotalProductosModel()
         self.ui.tableView_total_productos.setModel(model)
         model.load_data(data, self.__header_table__)
@@ -191,6 +276,12 @@ class FormularioVenta(QtGui.QWidget):
         self.set_columns_total_productos()
 
     def set_columns_total_productos(self):
+        """
+        Configura los anchos de las columnas de la tabla de total de productos.
+        Realiza un ordenamiento ascendente de la columna 0 (id producto)
+        Oculta la columna 0 de la vista.
+        Conecta el SelectionModel de la tabla con la función 'cell_selected_table1'
+        """
         self.ui.tableView_total_productos.horizontalHeader().setResizeMode(
             2, self.ui.tableView_total_productos.horizontalHeader().Stretch)
 
@@ -208,7 +299,7 @@ class FormularioVenta(QtGui.QWidget):
 
     def load_productos_table2(self, pedido=None):
         """
-        Carga la información de la base de datos en la tabla.
+        Carga la información de la base de datos en la tabla de pedidos.
         Obtiene desde la base de datos a traves del controlador
         la información completa de la tabla.
         Crea un model para adjuntar los datos a la grilla y luego
@@ -240,9 +331,14 @@ class FormularioVenta(QtGui.QWidget):
         subtotal = 0
 
         for i, data in enumerate(productos):
-            row = [data.id_producto, controller.getProductoId(data.id_producto)[0].codigo, controller.getProductoId(data.id_producto)[
-                0].nombre, data.cantidad, controller_admin_producto.monetaryFormat(str(data.precio_venta).split(".")[0])]
+            row = [data.id_producto, 
+                   controller.getProductoId(data.id_producto)[0].codigo,
+                   controller.getProductoId(data.id_producto)[0].nombre,
+                   data.cantidad,
+                   controller_admin_producto.monetaryFormat(str(data.precio_venta).split(".")[0])]
+
             subtotal = subtotal + (long(data.precio_venta) * data.cantidad)
+
             for j, field in enumerate(row):
                 index = model.index(i, j, QtCore.QModelIndex())
                 if j is 5:
@@ -250,12 +346,13 @@ class FormularioVenta(QtGui.QWidget):
                 else:
                     model.setData(index, field)
 
-        self.ui.lcdNumber_subtotal.setDecMode()
-        self.ui.lcdNumber_propina.setDecMode()
-        self.ui.lcdNumber_total.setDecMode()
-        self.ui.lcdNumber_subtotal.display(subtotal)
-        self.ui.lcdNumber_propina.display(subtotal * 0.1)
-        self.ui.lcdNumber_total.display(subtotal * 1.1)
+        self.subtotal = subtotal
+        self.propina = subtotal * 0.1
+        self.total = subtotal * 1.1
+
+        self.ui.lcdNumber_subtotal.display(self.subtotal)
+        self.ui.lcdNumber_propina.display(self.propina)
+        self.ui.lcdNumber_total.display(self.total)
 
         modelSel = self.ui.tableView_pedido.selectionModel()
         modelSel.currentChanged.connect(self.cell_selected_table2)
@@ -266,11 +363,19 @@ class FormularioVenta(QtGui.QWidget):
             self.set_source_model_table2(model)
 
     def reload_data_table2(self):
+        """
+        Actualiza la tabla de pedidos.
+        """
         self.set_model_table2()
         self.set_source_model_table2(
-            self.load_productos_table2())  # table2(self)
+            self.load_productos_table2())
 
     def cell_selected_table2(self, index, indexp):
+        """
+        Método llamado cuando el usuario CAMBIA la seleccion de una fila 
+        de la tabla de pedidos (table2).
+        Obtiene el id y el precio del producto seleccionado.
+        """
         model = self.ui.tableView_pedido.model()
         index = self.ui.tableView_pedido.currentIndex()
         self.row_tablaPd = index.row()
@@ -281,7 +386,9 @@ class FormularioVenta(QtGui.QWidget):
         # self.ui.lcdNumber_subtotal.display(self.id)
 
     def set_model_table2(self):
-        """Define el módelo de la grilla para trabajarla."""
+        """
+        Define el módelo de la grilla para trabajar.
+        """
         self.proxyModel = QtGui.QSortFilterProxyModel()
         self.proxyModel.setDynamicSortFilter(True)
 
@@ -291,7 +398,6 @@ class FormularioVenta(QtGui.QWidget):
         """
         Actualiza constantemente el origen de los datos para siempre tenerlos
         al día así pudiendo buscar y mostrar solo algunos datos.
-        Además llama a las funciones que rellenan los comboBox de filtrado y
         asigna el tamaño de las columnas a las grillas respectivas.
         """
         self.proxyModel.setSourceModel(model)
@@ -299,7 +405,6 @@ class FormularioVenta(QtGui.QWidget):
         self.ui.tableView_pedido.horizontalHeader().setResizeMode(
             2, self.ui.tableView_pedido.horizontalHeader().Stretch)
 
-        # Designamos los header de la grilla y sus respectivos anchos
         for col, h in enumerate(self.__header_table2__):
             model.setHeaderData(col, QtCore.Qt.Horizontal, h[0])
             self.ui.tableView_pedido.setColumnWidth(col, h[1])
@@ -308,6 +413,10 @@ class FormularioVenta(QtGui.QWidget):
         self.ui.tableView_pedido.setColumnHidden(0, True)
 
     def vaciar_table2(self):
+        """
+        Método que crea un QSortFilterProxyModel vacío y lo carga en la tabla
+        de pedidos. (reinicia la vista)
+        """
         empty_model = QtGui.QSortFilterProxyModel()
         self.ui.tableView_pedido.setModel(empty_model)
         self.ui.lcdNumber_propina.display(0)
@@ -317,10 +426,17 @@ class FormularioVenta(QtGui.QWidget):
     """ ===================================================================== NUMERO DE PAGOS ============================================================ """
 
     def action_opciones(self):
+        """
+        Método que se llama cuando el usuario apreta en el boton 'mas opciones'.
+        Crea una instancia de NumeroPagos().
+        """
         self.pagos = NumeroPagos(self.id_pedido,self,self.ui.lcdNumber_subtotal.value())
         self.pagos.show()
 
     def clearLayout(self, layout):
+        """
+        Método generico para borrar todos los widgets de un layout.
+        """
         if layout is not None:
             while layout.count():
                 item = layout.takeAt(0)
@@ -333,6 +449,12 @@ class FormularioVenta(QtGui.QWidget):
     """ ======================================================================= CERRAR VENTA ============================================================ """
 
     def action_cerrar_venta(self):
+        """
+        Método que se llama cuando el usuario apreta en el boton "cerrar venta".
+        Guarda los datos de la venta en la base de datos (si no se ha guardado en 'action_imprimir').
+        Guarda los datos de un pago para todos los productos del pedido.
+        Reinicia los datos de la mesa para generar un pedido totalmente nuevo.
+        """
         msgBox = QtGui.QMessageBox()
         msgBox.setIcon(QtGui.QMessageBox.Warning)
         msgBox.setStandardButtons(
@@ -346,40 +468,65 @@ class FormularioVenta(QtGui.QWidget):
                 if self.edit is True:
                     self.editarVenta()
                 else:
-                    self.agregarVenta()
-                    self.agregarPedido()
+                    if(self.crear_venta):
+                        self.agregarVenta()
+                        self.crear_venta = False
+                    else:
+                        self.editarVenta()
+                    self.agregarPago()
                     self.main.stackedWidget.widget(5).reload_data_table()
                     self.crear_pedido = True
                     self.crear_documento = True
+                    self.crear_venta = True
                     self.vaciar_table2()
             except:
-                self.agregarVenta()
-                self.agregarPedido()
+                if(self.crear_venta):
+                    self.agregarVenta()
+                    self.crear_venta = False
+                else:
+                    self.editarVenta()
+                self.agregarPago()
                 self.main.stackedWidget.widget(5).reload_data_table()
                 self.crear_pedido = True
                 self.crear_documento = True
+                self.crear_venta = True
                 self.vaciar_table2()
+
+            self.habilitarMesasUnidas()
                 
         else:
             return False
 
     def agregarVenta(self):
+        """
+        Método que registra el pedido actual como una venta y la guarda
+        en la base de datos.
+        """
         y = int(time.strftime("%Y"))
         m = int(time.strftime("%m"))
         d = int(time.strftime("%d"))
         fecha = datetime.date(y, m, d)
         self.crear_o_asignar_num_documento()
 
-        if(self.mesa == "0"):
+        if int(self.mesa) == 0:
             tipo = "directa"
+            total_pago = self.subtotal
         else:
             tipo = "pedido por mesa"
-        total_pago = self.ui.lcdNumber_total.value()
+            total_pago = self.total
+
         id_pedido = int(self.id_pedido)
         id_usuario = int(controller_admin_user.getUsuarioRut(
             self.rut_usuario)[0].id_usuario)
         controller.addDataVenta(fecha, self.num_documento,
                                 tipo, total_pago, id_usuario, id_pedido)
+
+    def habilitarMesasUnidas(self):
+        """
+        Método que habilita las mesas que se encontraban unidas
+        a la mesa actual. 
+        Si no hay mesas unidas no hace nada.
+        """
         try:
             self.button.setText("Mesa "+str(self.button.mesa))
             for button in self.button.unido_a:
@@ -389,27 +536,40 @@ class FormularioVenta(QtGui.QWidget):
             pass
 
     def editarVenta(self):
+        """
+        Edita la fecha, el total de pago y el usuario encargado de la venta
+        para el pedido actual.
+        """
         print("-----Editar Venta-----")
         y = int(time.strftime("%Y"))
         m = int(time.strftime("%m"))
         d = int(time.strftime("%d"))
         fecha = datetime.date(y, m, d)
-        total_pago = self.ui.lcdNumber_total.value()
+        if int(self.mesa) == 0:
+            total_pago = self.subtotal
+        else:
+            total_pago = self.total
         id_venta = controller.getIdVenta(int(self.id_pedido))
         id_usuario = int(controller_admin_user.getUsuarioRut(
             self.rut_usuario)[0].id_usuario)
 
         controller.editDataVenta(id_venta, fecha, total_pago, id_usuario)
 
-    def agregarPedido(self):
-        total_pago = self.ui.lcdNumber_total.value()
+    def agregarPago(self):
+        """
+        Agrega en un pago todos los productos del pedido actual.
+        """
+        if int(self.mesa) == 0:
+            total_pago = self.subtotal
+        else:
+            total_pago = self.total
         if(int(self.ui.comboBox_tipo_pago.currentIndex()) == 0):  # efectivo
             efectivo = total_pago
             tarjeta = 0
         else:
             tarjeta = total_pago
             efectivo = 0
-        propina = self.ui.lcdNumber_propina.value()
+        propina = self.propina
         id_pedido = int(self.id_pedido)
         id_venta = controller.getVentaPedidoId(id_pedido)[0].id_venta
         controller.addDataPago(total_pago, efectivo,
@@ -418,6 +578,9 @@ class FormularioVenta(QtGui.QWidget):
 
     """============================================================== IMPRIMIR BOLETA =============================================="""
     def crear_o_asignar_num_documento(self):
+        """
+        Asigna un número de documento UNICO para un pedido.
+        """
         if(self.crear_documento): # Verifica si se creo un numero de documento
             try: # Si hay ventas registradas, obtiene el numero del último documento y le suma una unidad.
                 self.num_documento = controller.getVentas()[-1].num_documento + 1
@@ -426,10 +589,18 @@ class FormularioVenta(QtGui.QWidget):
             self.crear_documento = False
 
     def action_imprimir(self):
-        # Obtener datos
+        """
+        Método que se ejecuta cuando el usuario apreta en el boton "imprimir detalle".
+        Genera un canvas con los datos de la venta y lo exporta como PDF a la carpeta nostro/PDF_detalles
+        """
+        # Se crea una venta sólo si no se ha creado anteriormente.
+        if(self.crear_venta):
+            self.agregarVenta()
+            self.crear_venta = False
+
+        # Obtener Datos.
         nombre_usuario = str(controller_admin_user.getUsuarioRut(self.rut_usuario)[0].nombre).upper()+" "+str(controller_admin_user.getUsuarioRut(self.rut_usuario)[0].apellido).upper()
         fecha_hora = time.strftime("Fecha: %d-%m-%Y       Hora: %H:%M:%S")
-        self.crear_o_asignar_num_documento()
         productos = controller.getProductosPedido(self.id_pedido)
         num_productos = len(productos)
         espacio_productos = num_productos*15
@@ -469,17 +640,17 @@ class FormularioVenta(QtGui.QWidget):
 
         c.drawString(120,fin_alto_productos-15,"CONSUMO: ")
         c.drawString(200,fin_alto_productos-15,"$")
-        c.drawRightString(250,fin_alto_productos-15,str(controller_admin_producto.monetaryFormat(int(self.ui.lcdNumber_subtotal.value()))))
+        c.drawRightString(250,fin_alto_productos-15,str(controller_admin_producto.monetaryFormat(int(self.subtotal))))
         c.drawString(120,fin_alto_productos-30,"TOTAL: ")
         c.drawString(200,fin_alto_productos-30,"$")
-        c.drawRightString(250,fin_alto_productos-30,str(controller_admin_producto.monetaryFormat(int(self.ui.lcdNumber_subtotal.value()))))
+        c.drawRightString(250,fin_alto_productos-30,str(controller_admin_producto.monetaryFormat(int(self.subtotal))))
         if(int(self.mesa) != 0):
             c.drawString(35,fin_alto_productos-60,"PROPINA SUGERIDA 10%: ")
             c.drawString(200,fin_alto_productos-60,"$")
-            c.drawRightString(250,fin_alto_productos-60,str(controller_admin_producto.monetaryFormat(int(self.ui.lcdNumber_propina.value()))))
+            c.drawRightString(250,fin_alto_productos-60,str(controller_admin_producto.monetaryFormat(int(self.propina))))
             c.drawString(35,fin_alto_productos-75,"TOTAL + PROPINA: ")
             c.drawString(200,fin_alto_productos-75,"$")
-            c.drawRightString(250,fin_alto_productos-75,str(controller_admin_producto.monetaryFormat(int(self.ui.lcdNumber_total.value()))))
+            c.drawRightString(250,fin_alto_productos-75,str(controller_admin_producto.monetaryFormat(int(self.total))))
 
             c.drawString(10,fin_alto_productos-115,"Gracias por su visita.")
         else:
@@ -487,32 +658,23 @@ class FormularioVenta(QtGui.QWidget):
 
 
         c.save()
-        #os.startfile(os.getcwd() + "/PDF_detalles/detalle_mesa_"+str(self.mesa)+"_documento_"+controller_admin_producto.zerosAtLeft(self.num_documento,8)+".pdf")
-        self.imprimir_pdf(os.getcwd() + "/PDF_detalles/detalle_mesa_"+str(self.mesa)+"_documento_"+controller_admin_producto.zerosAtLeft(self.num_documento,8)+".pdf")
+        self.imprimir_pdf(os.getcwd() + "/PDF_detalles/detalle_mesa_"+
+            str(self.mesa)+"_documento_"+
+            controller_admin_producto.zerosAtLeft(self.num_documento,8)+".pdf")
 
     def imprimir_pdf(self,pdf):
-          
-        # Dynamically get path to AcroRD32.exe  
-        AcroRD32Path = winreg.QueryValue(winreg.HKEY_CLASSES_ROOT,'Software\\Adobe\\Acrobat\Exe')  
+        """
+        Recibe como primer parámetro el URL de un PDF. Abre el PDF en Adobe 
+        Acrobat Reader y lo imprime con la impresora predeterminada.
+        Espera 5 segundos y cierra el proceso AcroRD32.exe.
+        """
+        AcroRD32Path = winreg.QueryValue(winreg.HKEY_CLASSES_ROOT,
+                                         'Software\\Adobe\\Acrobat\Exe')  
           
         acroread = AcroRD32Path  
-          
-        #print('variable acroread is : {0}'.format(acroread))  
-          
-        # The last set of double quotes leaves the printer blank, basically defaulting to the default printer for the system.  
         cmd= '{0} /N /T "{1}" ""'.format(acroread,pdf)  
-          
-        # Open command line in a different process other than ArcMap  
         proc = subprocess.Popen(cmd)  
-          
-        # 2 lines below would not close adobe reader and locked ArcMap.  
-        #stdout,stderr=proc.communicate()  
-        #exit_code=proc.wait()  
-          
-        # Needed to put a sleep in here so the command line had time to open the pdf and spool the job to the printer.  
         time.sleep(5)  
-          
-        # Kill AcroRD32.exe from Task Manager  
         os.system("TASKKILL /F /IM AcroRD32.exe")  
 
 if __name__ == "__main__":

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'numero_pagos.ui'
 #
-# Created: Fri Dec 18 19:14:58 2015
+# Created: Mon Dec 21 00:27:23 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -29,6 +29,10 @@ class Ui_NumeroPagos(object):
         self.verticalLayout_3.addLayout(self.horizontalLayout_4)
         self.tableWidget_resumen = QtGui.QTableWidget(NumeroPagos)
         self.tableWidget_resumen.setMinimumSize(QtCore.QSize(0, 0))
+        self.tableWidget_resumen.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
+        self.tableWidget_resumen.setAlternatingRowColors(True)
+        self.tableWidget_resumen.setSelectionMode(QtGui.QAbstractItemView.SingleSelection)
+        self.tableWidget_resumen.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
         self.tableWidget_resumen.setObjectName("tableWidget_resumen")
         self.tableWidget_resumen.setColumnCount(0)
         self.tableWidget_resumen.setRowCount(0)

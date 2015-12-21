@@ -5,6 +5,7 @@ from PySide import QtCore, QtGui
 from numero_pagos import Ui_NumeroPagos
 import ventas.controller_venta as controller
 import admin_productos.controller_admin_producto as controller_admin_producto
+import os,time
 
 class NumeroPagos(QtGui.QDialog):
 
@@ -12,7 +13,8 @@ class NumeroPagos(QtGui.QDialog):
                         u"Código",
                         u"Nombre",
                         u"Precio bruto",
-                        u"Pago")
+                        u"Pago",
+                        u"¿Pagar?")
 
     def __init__(self, pedido, ventaForm, subtotal):
         'Constructor de la clase'
@@ -26,6 +28,9 @@ class NumeroPagos(QtGui.QDialog):
         self.show()
         self.ui.spinBox_numero_pagos.setRange(1,20)
         self.n_pagos = self.ui.spinBox_numero_pagos.value()
+        self.ui.tableWidget_resumen.setColumnCount(6)
+
+        self.ui.tableWidget_resumen.cellPressed.connect(self.tabla_cell_pressed)
         self.ui.spinBox_numero_pagos.valueChanged.connect(self.spinBox_numero_pagos_changed)
         self.ui.pushButton_pagar.clicked.connect(self.action_pagar)
 
@@ -104,23 +109,26 @@ class NumeroPagos(QtGui.QDialog):
                 else:
                     self.clearLayout(item.layout())
 
-    def tabla_cell_changed(self, currentRow, currentColumn, previousRow, previousColumn):
-        item = self.ui.tableWidget_resumen.item(currentRow,0)
-        try:
-            self.id = item.text()
-        except:
-            pass
+    def tabla_cell_pressed(self,row,column):
+        if(column == 5):
+            estado = self.ui.tableWidget_resumen.cellWidget(row,5).estado
+            if(estado == 0):
+                self.ui.tableWidget_resumen.cellWidget(row,5).estado = 1
+            if(estado == 1):
+                self.ui.tableWidget_resumen.cellWidget(row,5).estado = 0
+                self.list_combobox[row].setCurrentIndex(0)
+            self.reload_data_table()
 
-    def load_data_table(self):
-        self.ui.tableWidget_resumen.sortItems(0, QtCore.Qt.AscendingOrder)
-        self.ui.tableWidget_resumen.setColumnCount(5)
-        self.ui.tableWidget_resumen.setHorizontalHeaderLabels(self.__header_table__)
+    def load_data_table(self,re=False):
+        __check_icons__ = [(QtGui.QPixmap(os.getcwd() + "/admin_productos/icons/red_check.png")),
+                           (QtGui.QPixmap(os.getcwd() + "/admin_productos/icons/green_check.png"))]
+        self.productos = controller.getProductosPedidoRepetidosPorCantidad(self.id_pedido)
+        self.cantidad_productos = len(self.productos)
+        if(not re):
+            self.ui.tableWidget_resumen.setHorizontalHeaderLabels(self.__header_table__)
+            self.ui.tableWidget_resumen.setRowCount(self.cantidad_productos)
 
-        productos = controller.getProductosPedidoRepetidosPorCantidad(self.id_pedido)
-        self.cantidad_productos = len(productos)
-        self.ui.tableWidget_resumen.setRowCount(self.cantidad_productos)
-
-        __type_pay__ = list()
+        __type_pay__ = ["NINGUNO"]
 
         for pago in range(1,self.n_pagos+1):
             __type_pay__.append("Pago "+str(pago))
@@ -128,7 +136,7 @@ class NumeroPagos(QtGui.QDialog):
         self.list_combobox = list()
         self.list_precio = list()
 
-        for i, data in enumerate(productos):
+        for i, data in enumerate(self.productos):
             model = QtGui.QStandardItemModel()
             for text in __type_pay__:
                 text_item = QtGui.QStandardItem(text)
@@ -142,7 +150,16 @@ class NumeroPagos(QtGui.QDialog):
             combobox = QtGui.QComboBox()
             combobox.setView(view)
             combobox.setModel(model)
+            estado = 1
+            if(re):
+                index = self.ui.tableWidget_resumen.cellWidget(i,4).currentIndex()
+                combobox.setCurrentIndex(index)
+                estado = self.ui.tableWidget_resumen.cellWidget(i,5).estado
+            else:
+                combobox.setCurrentIndex(1)
             combobox.currentIndexChanged.connect(self.combobox_changed)
+
+            label_pixmap = controller.LabelPago(__check_icons__,estado)
 
             self.list_precio.append(int(str(data.precio_venta).split(".")[0]))
             self.list_combobox.append(combobox)
@@ -150,16 +167,15 @@ class NumeroPagos(QtGui.QDialog):
                    QtGui.QTableWidgetItem(controller.getProductoId(data.id_producto)[0].codigo),
                    QtGui.QTableWidgetItem(controller.getProductoId(data.id_producto)[0].nombre),
                    QtGui.QTableWidgetItem(controller_admin_producto.monetaryFormat(str(data.precio_venta).split(".")[0])),
-                   combobox]
+                   combobox,
+                   label_pixmap]
             for j, cell in enumerate(row):
-                if(j == 4):
+                if(j == 4 or j == 5):
                     self.ui.tableWidget_resumen.setCellWidget(i,j,cell)
                 else:
                     self.ui.tableWidget_resumen.setItem(i,j,cell)
 
-        self.ui.tableWidget_resumen.sortItems(0, QtCore.Qt.AscendingOrder)
         self.ui.tableWidget_resumen.setColumnHidden(0, True)
-        self.ui.tableWidget_resumen.resizeColumnsToContents()
         self.ui.tableWidget_resumen.resizeColumnsToContents()
         self.ui.tableWidget_resumen.horizontalHeader().setResizeMode(
             2, self.ui.tableWidget_resumen.horizontalHeader().Stretch)
@@ -167,13 +183,12 @@ class NumeroPagos(QtGui.QDialog):
         self.combobox_changed(0)
 
     def reload_data_table(self):
-        self.ui.tableWidget_resumen.setRowCount(0)
-        self.load_data_table()
+        self.load_data_table(True)
 
     def combobox_changed(self,index):
         lista = list()
         for i,combobox in enumerate(self.list_combobox,1):
-            lista.append(combobox.currentIndex())
+            lista.append(combobox.currentIndex()-1)
 
         lista_suma = list()
         for i in range(0,self.n_pagos):
@@ -188,6 +203,13 @@ class NumeroPagos(QtGui.QDialog):
             self.label_pagos_propina[i].setText(str(suma*0.1))
 
     def action_pagar(self):
+        lista_estados = list()
+        total_productos_pagados = True
+        for i in range(len(self.list_combobox)):
+            if(self.ui.tableWidget_resumen.cellWidget(i,5).estado == 0):
+                total_productos_pagados = False
+            lista_estados.append(self.ui.tableWidget_resumen.cellWidget(i,5).estado)
+
         msgBox = QtGui.QMessageBox()
         msgBox.setIcon(QtGui.QMessageBox.Warning)
         msgBox.setStandardButtons(
@@ -214,8 +236,14 @@ class NumeroPagos(QtGui.QDialog):
                     total_pago, efectivo, tarjeta, propina, id_venta)
                 self.close()
             self.ventaForm.main.stackedWidget.widget(5).reload_data_table()
-            controller.finalizarPedido(self.id_pedido)
-            self.ventaForm.crear_pagos = True
-            self.ventaForm.vaciar_table2()
+            if(total_productos_pagados):
+                controller.finalizarPedido(self.id_pedido)
+                self.ventaForm.crear_pagos = True
+                self.ventaForm.vaciar_table2()
+            else:
+                for row,estado in enumerate(lista_estados):
+                    if(estado == 1):
+                        controller.cambiarCantidadProducto(self.id_pedido, self.productos[row].id_producto,"disminuir")
+                self.ventaForm.reload_data_table2()
         else:
             return False

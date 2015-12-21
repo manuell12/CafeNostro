@@ -440,11 +440,11 @@ class FormularioVenta(QtGui.QWidget):
         alto = 390+espacio_productos
         c.setPageSize((ancho, alto+50))
         c.drawImage("images/logo_nombre.jpg",40,alto-30,220,66)
-        c.drawString(10,alto-50,empresa.nombre)
-        c.drawString(10,alto-65,empresa.direccion)
+        c.drawString(10,alto-50,empresa.nombre.decode('cp1252'))
+        c.drawString(10,alto-65,empresa.direccion.decode('cp1252'))
         c.drawString(10,alto-80,"FONO: "+empresa.fono)
         c.drawString(10,alto-110,fecha_hora)
-        c.drawString(10,alto-125,"CREADOR: "+nombre_usuario)
+        c.drawString(10,alto-125,"CREADOR: "+nombre_usuario.decode('cp1252'))
         c.drawString(10,alto-140,"NUM. CUENTA: "+controller_admin_producto.zerosAtLeft(self.num_documento,8))
         c.drawString(10,alto-155,"---------------------------------------------------------")
         if(int(self.mesa) == 0):

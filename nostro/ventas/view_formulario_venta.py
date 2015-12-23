@@ -43,6 +43,7 @@ class FormularioVenta(QtGui.QWidget):
     crear_pedido = True
     crear_venta = True
     crear_documento = True
+    edit = False
 
     def __init__(self, main, rut_usuario, mesa):
         """

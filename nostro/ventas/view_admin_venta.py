@@ -70,16 +70,24 @@ class AdminVentas(QtGui.QWidget):
             pedido = controller_venta.getPedido(id_pedido)[0]
 
             self.mainwindow.stackedWidget.setCurrentIndex(8)
-            
-            if(int(pedido.mesa) == 0):
-                self.ui.lcdNumber_propina.setVisible(False)
-                self.ui.lcdNumber_total.setVisible(False)
-                self.ui.label.setVisible(False)
-                self.ui.label_4.setVisible(False)
-                self.ui.label_price_2.setVisible(False)
-                self.ui.label_price_3.setVisible(False)
 
-            formEdit = self.mainwindow.stackedWidget.currentWidget()            
+            formEdit = self.mainwindow.stackedWidget.widget(8) 
+
+            if(int(pedido.mesa) == 0):
+                formEdit.ui.lcdNumber_propina.setVisible(False)
+                formEdit.ui.lcdNumber_total.setVisible(False)
+                formEdit.ui.label.setVisible(False)
+                formEdit.ui.label_4.setVisible(False)
+                formEdit.ui.label_price_2.setVisible(False)
+                formEdit.ui.label_price_3.setVisible(False)
+            else:
+                formEdit.ui.lcdNumber_propina.setVisible(True)
+                formEdit.ui.lcdNumber_total.setVisible(True)
+                formEdit.ui.label.setVisible(True)
+                formEdit.ui.label_4.setVisible(True)
+                formEdit.ui.label_price_2.setVisible(True)
+                formEdit.ui.label_price_3.setVisible(True)
+           
             formEdit.ui.pushButton_opciones.setVisible(False)
             formEdit.ui.comboBox_tipo_pago.setVisible(False)
             formEdit.ui.pushButton_cerrar_venta.setText("GUARDAR")

@@ -42,7 +42,6 @@ class FormularioVenta(QtGui.QWidget):
     id_tablaPd = 0
     crear_pedido = True
     crear_venta = True
-    crear_documento = True
     edit = False
 
     def __init__(self, main, rut_usuario, mesa):
@@ -72,14 +71,18 @@ class FormularioVenta(QtGui.QWidget):
             self.ui.label_price_2.setVisible(False)
             self.ui.label_price_3.setVisible(False)
 
-        pedido = controller.getPedidoActivoPorMesa(self.mesa)
-
-        try:
-            self.id_pedido = pedido[0].id_pedido
+        if(self.mesa == "-1"):
             self.crear_pedido = False
-            self.reload_data_table2()
-        except:
-            pass
+            self.crear_venta = False
+        else:
+            pedido = controller.getPedidoActivoPorMesa(self.mesa)
+
+            try:
+                self.id_pedido = pedido[0].id_pedido
+                self.crear_pedido = False
+                self.reload_data_table2()
+            except:
+                pass
 
         self.load_model_total_productos(controller.getProductoStatus(1))
         self.set_combobox_tipo_pago()
@@ -418,6 +421,9 @@ class FormularioVenta(QtGui.QWidget):
         Método que se llama cuando el usuario apreta en el boton 'mas opciones'.
         Crea una instancia de NumeroPagos().
         """
+        if(self.crear_venta):
+            self.agregarVenta()
+            self.crear_venta = False
         self.pagos = NumeroPagos(self.id_pedido,self)
         self.pagos.show()
 
@@ -467,6 +473,8 @@ class FormularioVenta(QtGui.QWidget):
                     else:
                         self.editarVenta()
                     self.agregarPago()
+                    self.crear_pedido = True
+                    self.crear_venta = True
 
                 self.edit = False
                 self.main.stackedWidget.widget(5).reload_data_table()
@@ -481,7 +489,6 @@ class FormularioVenta(QtGui.QWidget):
                 self.main.stackedWidget.widget(5).reload_data_table()
                 self.crear_pedido = True
                 self.crear_venta = True
-                self.crear_documento = True
                 self.vaciar_table2()
 
             self.habilitarMesasUnidas()
@@ -574,13 +581,10 @@ class FormularioVenta(QtGui.QWidget):
         """
         Asigna un número de documento UNICO para un pedido.
         """
-        if(self.crear_documento):
-            try: # Obtiene el numero del último documento y le suma una unidad.
-                self.num_documento = controller.getVentas()[-1].num_documento + 1
-            except: # Si no hay ventas registradas, comienza con 0
-                self.num_documento = 0
-            self.crear_documento = False
-
+        try: # Obtiene el numero del último documento y le suma una unidad.
+            self.num_documento = controller.getVentas()[-1].num_documento + 1
+        except: # Si no hay ventas registradas, comienza con 0
+            self.num_documento = 0
     def action_imprimir(self):
         """
         Método que se ejecuta cuando el usuario apreta en el 

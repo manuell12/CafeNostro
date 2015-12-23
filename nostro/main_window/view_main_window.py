@@ -44,7 +44,7 @@ class MainWindow(QtGui.QMainWindow):
         self.setVisible(False) # Se oculta la ventana principal mientras se cargan los componentes.
 
         # Se crea un QProgressDialog para notificar al usuario sobre las cargas del programa.
-        progress = QtGui.QProgressDialog("Cargando modulos...", "", 0, self.num_mesas+5)
+        progress = QtGui.QProgressDialog("Cargando modulos...", "", 0, self.num_mesas+7)
         progress.setWindowTitle("Cargando...")
         progress.setWindowFlags(QtCore.Qt.FramelessWindowHint)
         label = QtGui.QLabel()
@@ -67,16 +67,18 @@ class MainWindow(QtGui.QMainWindow):
         progress.setValue(5)
         self.ui.stackedWidget.addWidget(Estadistica()) # 7
         progress.setValue(6)
+        self.ui.stackedWidget.addWidget(FormularioVenta(self.ui,self.rut,"-1")) # 8
+        progress.setValue(7)
 
         pixmap = QtGui.QPixmap('images/cafe_nostro_load_mesas.png')
         label.setPixmap(pixmap)
 
-        for i in range(1,self.num_mesas+1): #8 = primera mesa
+        for i in range(1,self.num_mesas+1): #9 = primera mesa
             self.ui.stackedWidget.addWidget(FormularioVenta(self.ui,self.rut,str(i)))
             progress.setValue(i+5)
 
         
-        progress.setValue(self.num_mesas+5)
+        progress.setValue(self.num_mesas+7)
         self.setVisible(True)
 
     def config_user(self):
@@ -86,10 +88,16 @@ class MainWindow(QtGui.QMainWindow):
         Si el usuario no es administrador bloquea todas las funcionalidades
         administrativas que el programa ofrece.
         """
-        self.nombre = unicode(controller.getUsuarioRut(self.rut)[0].nombre.decode('cp1252'))+" "+unicode(controller.getUsuarioRut(self.rut)[0].apellido.decode('cp1252'))
+        self.nombre = (
+            unicode(
+                controller.getUsuarioRut(self.rut)[0].nombre.decode('cp1252'))+
+            " "+
+            unicode(
+                controller.getUsuarioRut(self.rut)[0].apellido.decode('cp1252')))
         if(controller.getUsuarioRut(self.rut)[0].nombre == "root"):
             self.nombre = "ROOT"
-        self.ui.label_usuario.setText(u"<font color='white' size='5'><b>"+self.nombre+"</b></font>")
+        self.ui.label_usuario.setText(
+            u"<font color='white' size='5'><b>"+self.nombre+"</b></font>")
         if(self.tipo != None):
             if(self.tipo == 1):
                 self.ui.actionUsuarios.setEnabled(False)
@@ -117,7 +125,7 @@ class MainWindow(QtGui.QMainWindow):
         estado 'ocupado' en caso de que aun no se haya cerrado dicho pedido
         y un estado 'no ocupado' en caso contrario.
         """
-        for i in range(8,self.num_mesas+9):
+        for i in range(9,self.num_mesas+10):
             try:
                 id_pedido = self.ui.stackedWidget.widget(i).id_pedido
                 pedido = controller_venta.getPedido(id_pedido)

@@ -19,7 +19,7 @@ class MesasVenta(QtGui.QWidget):
     buttons_enabled = list()
 
     # Index del QStackedWidget donde se encuentra la primera mesa
-    pos_primera_mesa = 8 
+    pos_primera_mesa = 9 
 
     # Restamos uno porque la primera mesa empieza desde 1 y no desde 0
     pos_primera_mesa = pos_primera_mesa - 1 

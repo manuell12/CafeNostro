@@ -304,7 +304,7 @@ class FormularioVenta(QtGui.QWidget):
         modelSel.currentChanged.connect(self.cell_selected_table1)
 
 
-    def load_productos_table2(self, pedido=None):
+    def load_productos_table2(self):
         """
         Carga la información de la base de datos en la tabla de pedidos.
         Obtiene desde la base de datos a traves del controlador
@@ -312,29 +312,12 @@ class FormularioVenta(QtGui.QWidget):
         Crea un model para adjuntar los datos a la grilla y luego
         lo retorna para utilizarlo en setSourceModel.
         """
-        # self.typeModelClass = parent
-        # print("load_productos_table2 pedido: {}".format(pedido))
-        if pedido is None:
-            # self.edit = False
-            # print("Edit False")
-            # self.ui.pushButton_imprimir_comandas.setEnabled(True)
-            # self.ui.pushButton_cerrar_venta.setText("Cerrar Venta")
-            productos = controller.getProductosPedido(self.id_pedido)
-            # print(productos)
-        else:
-            # print(pedido)
-            self.edit = True
-            #print("Edit True")
-            # self.ui.pushButton_imprimir_comandas.setEnabled(False)
-            #self.ui.pushButton_cerrar_venta.setText("Guardar Cambios")
-            productos = controller.getProductosPedido(pedido)
-            self.id_pedido = pedido
-            # print(productos)
+
+        productos = controller.getProductosPedido(self.id_pedido)
+        
         row = len(productos)
-        # print("Total productos: {}".format(row))
 
         model = QtGui.QStandardItemModel(row, len(self.__header_table2__))
-        # model = QtGui.QStandardItemModel(row, len(self.headerTabla), parent)
         subtotal = 0
 
         for i, data in enumerate(productos):
@@ -365,10 +348,7 @@ class FormularioVenta(QtGui.QWidget):
         modelSel = self.ui.tableView_pedido.selectionModel()
         modelSel.currentChanged.connect(self.cell_selected_table2)
 
-        if pedido is None:
-            return model
-        else:
-            self.set_source_model_table2(model)
+        return model
 
     def reload_data_table2(self):
         """
@@ -467,13 +447,18 @@ class FormularioVenta(QtGui.QWidget):
         msgBox.setStandardButtons(
             QtGui.QMessageBox.Ok | QtGui.QMessageBox.Cancel)
         msgBox.setWindowTitle(u"Advertencia")
-        msgBox.setText(
-            u"Confirme para realizar venta.")
+        if self.edit:
+            msgBox.setText(
+                u"Confirme para guardar venta.")
+        else:
+            msgBox.setText(
+                u"Confirme para realizar venta.")
         press = msgBox.exec_()
         if press == QtGui.QMessageBox.Ok:
             try:
-                if self.edit is True:
-                    self.editarVenta()                    
+                if self.edit:
+                    self.editarVenta()
+                    self.main.stackedWidget.setCurrentIndex(5)                    
                 else:
                     if(self.crear_venta):
                         self.agregarVenta()
@@ -481,10 +466,8 @@ class FormularioVenta(QtGui.QWidget):
                     else:
                         self.editarVenta()
                     self.agregarPago()
-                    # self.main.stackedWidget.widget(5).reload_data_table()
-                    self.crear_pedido = True
-                    self.crear_venta = True
-                    self.crear_documento = True
+
+                self.edit = False
                 self.main.stackedWidget.widget(5).reload_data_table()
                 self.vaciar_table2()
             except:

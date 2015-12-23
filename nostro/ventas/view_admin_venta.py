@@ -67,27 +67,27 @@ class AdminVentas(QtGui.QWidget):
             print("ID Venta {}".format(id_venta))
             id_pedido = controller_venta.getIdPedido(id_venta)
             print("ID Pedido {}".format(id_pedido))
-            # print(id_pedido)
-            # productos = controller_venta.getProductosPedido(id_pedido)
-            # # print(len(productos))
+            pedido = controller_venta.getPedido(id_pedido)[0]
 
-            # for producto in productos:
-            #     for c in range(0, producto.cantidad):
-            #         print("{}\t{}\t{}\t{}\t{}".format(
-            #             producto.id_pedido,
-            #             producto.id_producto,
-            #             producto.cantidad,
-            #             producto.precio_venta,
-            #             producto.porcentaje_descuento))
-            #         controller_venta.addDataVentaProducto(
-            #             producto.id_pedido,
-            #             producto.id_producto,
-            #             producto.precio_venta)
+            self.mainwindow.stackedWidget.setCurrentIndex(8)
+            
+            if(int(pedido.mesa) == 0):
+                self.ui.lcdNumber_propina.setVisible(False)
+                self.ui.lcdNumber_total.setVisible(False)
+                self.ui.label.setVisible(False)
+                self.ui.label_4.setVisible(False)
+                self.ui.label_price_2.setVisible(False)
+                self.ui.label_price_3.setVisible(False)
 
-            self.mainwindow.stackedWidget.setCurrentIndex(4)
-            self.mainwindow.stackedWidget.currentWidget().id_pedido = id_pedido
-            self.mainwindow.stackedWidget.currentWidget().reload_data_table2()
-            self.mainwindow.stackedWidget.currentWidget().load_productos_table2(id_pedido)
+            formEdit = self.mainwindow.stackedWidget.currentWidget()            
+            formEdit.ui.pushButton_opciones.setVisible(False)
+            formEdit.ui.comboBox_tipo_pago.setVisible(False)
+            formEdit.ui.pushButton_cerrar_venta.setText("GUARDAR")
+            formEdit.edit = True
+            formEdit.mesa = pedido.mesa
+            formEdit.id_pedido = id_pedido
+            formEdit.reload_data_table2()
+
             self.set_source_model(self.load_ventas(self))
 
     def action_btn_eliminar(self):
@@ -119,7 +119,8 @@ class AdminVentas(QtGui.QWidget):
                     msgBox = QtGui.QMessageBox()
                     msgBox.setIcon(QtGui.QMessageBox.Critical)
                     msgBox.setWindowTitle("Error")
-                    msgBox.setText("Esta venta no puede ser eliminada por tener productos asociados.")
+                    msgBox.setText(
+                        "Esta venta no puede ser eliminada por tener productos asociados.")
                     msgBox.exec_()
                 else:
                     self.set_source_model(self.load_ventas(self))
@@ -140,19 +141,20 @@ class AdminVentas(QtGui.QWidget):
         row = len(ventas)
 
         model = QtGui.QStandardItemModel(row, len(self.__header_table__))
-        # model = QtGui.QStandardItemModel(row, len(self.headerTabla), parent)
 
         for i, data in enumerate(ventas):
-            row = [data.id_venta, c.zerosAtLeft(data.num_documento, 8), str(data.fecha), data.tipo, c.monetaryFormat(int(data.total_pago)), unicode(
-                controller.getUsuarioId(data.id_usuario)[0].nombre) + " " + unicode(controller.getUsuarioId(data.id_usuario)[0].apellido)]
-            # row = [data.id_venta, data.num_documento, str(data.fecha), data.tipo, c.monetaryFormat(int(data.total_pago)), unicode(
-            # controller.getUsuarioId(data.id_usuario)[0].nombre) + " " +
-            # unicode(controller.getUsuarioId(data.id_usuario)[0].apellido)]
+            row = [data.id_venta, 
+                   c.zerosAtLeft(data.num_documento, 8), 
+                   str(data.fecha), 
+                   data.tipo, 
+                   c.monetaryFormat(int(data.total_pago)), 
+                   (unicode(controller.getUsuarioId(data.id_usuario)[0].nombre) + 
+                    " " + 
+                    unicode(controller.getUsuarioId(data.id_usuario)[0].apellido))]
 
             for j, field in enumerate(row):
                 index = model.index(i, j, QtCore.QModelIndex())
                 if j is 4:
-                    # print self.__type_ventas__[field]
                     model.setData(index, field)
                 else:
                     model.setData(index, field)

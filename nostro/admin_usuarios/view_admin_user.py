@@ -9,6 +9,10 @@ import view_formulario_usuario
 
 
 class AdminUsers(QtGui.QWidget):
+    """
+    Clase AdminUsers encargada de mostrar una tabla con todos los usuarios
+    actualmente registrados en la base de datos.
+    """
 
     __header_table__ = ((u"ID", 20),
                         (u"Nombres", 200),
@@ -38,6 +42,7 @@ class AdminUsers(QtGui.QWidget):
         self.ui.eliminar_button.clicked.connect(self.action_btn_eliminar)
 
     def reload_data_table(self):
+        """Recarga los datos en la tabla (actualiza la vista)"""
         self.set_source_model(self.load_users(self))
 
     def action_btn_nuevo(self):
@@ -45,9 +50,14 @@ class AdminUsers(QtGui.QWidget):
         self.nuevoUsuarioWindow = view_formulario_usuario.FormularioUsuario()
         self.nuevoUsuarioWindow.reloadT.connect(self.reload_data_table)
         self.nuevoUsuarioWindow.exec_()
-        # self.load_users(self)
 
     def action_btn_editar(self):
+        """
+        Método que es llamado cuando el usuario del programa presiona 
+        en el boton 'editar'.
+        Crea una nueva instancia de FormularioUsuario en caso de que haya 
+        seleccionado un usuario.
+        """
         index = self.ui.tableUsers.currentIndex()
         if index.row() == -1:  # No se ha seleccionado producto
             msgBox = QtGui.QMessageBox()
@@ -64,7 +74,11 @@ class AdminUsers(QtGui.QWidget):
             # self.load_users(self)
 
     def action_btn_eliminar(self):
-        """Accion a realizar al presionar el boton eliminar"""
+        """
+        Método que es llamado cuando el usuario del programa presiona en el 
+        boton 'eliminar'.
+        Elimina el usuario seleccionado de la base de datos.
+        """
         index = self.ui.tableUsers.currentIndex()
         if index.row() == -1:  # No se ha seleccionado producto
             msgBox = QtGui.QMessageBox()
@@ -102,10 +116,13 @@ class AdminUsers(QtGui.QWidget):
         row = len(usuarios)
 
         model = QtGui.QStandardItemModel(row, len(self.__header_table__))
-        # model = QtGui.QStandardItemModel(row, len(self.headerTabla), parent)
 
         for i, data in enumerate(usuarios):
-            row = [data.id_usuario, data.nombre, data.apellido, data.rut, data.tipo]
+            row = [data.id_usuario, 
+                   data.nombre, 
+                   data.apellido, 
+                   data.rut, 
+                   data.tipo]
             for j, field in enumerate(row):
                 index = model.index(i, j, QtCore.QModelIndex())
                 if j is 4:
@@ -120,6 +137,11 @@ class AdminUsers(QtGui.QWidget):
         return model
 
     def tabla_cell_selected(self, index, indexp):
+        """
+        Método que es llamado cuando el usuario cambia la seleccion actual
+        de la tabla 'tableUsers'.
+        Se guarda en la variable global 'id' el id del usuario seleccionado.
+        """
         model = self.ui.tableUsers.model()
         index = self.ui.tableUsers.currentIndex()
         self.id = model.index(index.row(), 0, QtCore.QModelIndex()).data()
@@ -135,8 +157,7 @@ class AdminUsers(QtGui.QWidget):
         """
         Actualiza constantemente el origen de los datos para siempre tenerlos
         al día así pudiendo buscar y mostrar solo algunos datos.
-        Además llama a las funciones que rellenan los comboBox de filtrado y
-        asigna el tamaño de las columnas a las grillas respectivas.
+        Además asigna el tamaño de las columnas a las grillas respectivas.
         """
         self.proxyModel.setSourceModel(model)
 
@@ -145,7 +166,6 @@ class AdminUsers(QtGui.QWidget):
         self.ui.tableUsers.horizontalHeader().setResizeMode(
             2, self.ui.tableUsers.horizontalHeader().Stretch)
 
-        # Designamos los header de la grilla y sus respectivos anchos
         for col, h in enumerate(self.__header_table__):
             model.setHeaderData(col, QtCore.Qt.Horizontal, h[0])
             self.ui.tableUsers.setColumnWidth(col, h[1])

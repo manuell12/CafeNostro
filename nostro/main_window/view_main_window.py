@@ -95,6 +95,8 @@ class MainWindow(QtGui.QMainWindow):
                 self.ui.actionUsuarios.setEnabled(False)
                 self.ui.actionProductos.setEnabled(False)
                 self.ui.actionVentas.setEnabled(False)
+                self.ui.actionEstadisticas.setEnabled(False)
+                self.ui.actionDatos_empresa.setEnabled(False)
 
     def set_signals(self):
         'Setea los triggers que se usaran para cambiar la interfaz'

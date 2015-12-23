@@ -34,7 +34,8 @@ def getUsuarioRut(rut):
 
 def UpdateDataUsuario(id, nombre, apellido, rut, clave, tipo, status):
     """
-    Actualiza todos los campos de un usuario especificando su id, nombre, apellido, rut, clave, tipo y status
+    Actualiza todos los campos de un usuario especificando 
+    su id, nombre, apellido, rut, clave, tipo y status.
     """
     if clave == None:
         user = Usuario(id, nombre, apellido, rut, clave, tipo, status)
@@ -43,12 +44,13 @@ def UpdateDataUsuario(id, nombre, apellido, rut, clave, tipo, status):
         crypt = c.CryptoRAF()
         clave_encriptada = crypt.encrypt(
         clave, "fhfs8sdfkjshuif7yr4021934234233ihsidf89sssx")
-        user = Usuario(id, nombre, apellido, rut, clave_encriptada, tipo, status)
+        user = Usuario(id, 
+            nombre, apellido, rut, clave_encriptada, tipo, status)
         Usuario.UpdateDataUsuario(user)
 
 def UpdateStatusUsuario(id, status):
     """
-    Actualiza el estado de un usuario especificando su id
+    Actualiza el estado de un usuario especificando su id.
     """
     user = Usuario()
     user.id_usuario = id
@@ -57,17 +59,20 @@ def UpdateStatusUsuario(id, status):
 
 def AddDataUsuario(nombre, apellido, rut, clave, tipo, status):
     """
-    Agrega un usuario nuevo a la base de datos. Recibe como entrada todos los campos necesarios para su creacion
+    Agrega un usuario nuevo a la base de datos. Recibe como entrada 
+    todos los campos necesarios para su creacion.
     """
     crypt = c.CryptoRAF()
     clave_encriptada = crypt.encrypt(
         clave, "fhfs8sdfkjshuif7yr4021934234233ihsidf89sssx")
-    user = Usuario(None, nombre, apellido, rut, clave_encriptada, tipo, int(status))
+    user = Usuario(
+        None, nombre, apellido, rut, clave_encriptada, tipo, int(status))
     Usuario.AddDataUsuario(user)
 
 def getUsuarioStatus(status):
     """
-    Obtiene los usuarios de la base de datos que tengan el mismo estado determinado por el parámetro entregado
+    Obtiene los usuarios de la base de datos que tengan el mismo estado 
+    determinado por el parámetro entregado
     """
     user = Usuario()
     user.status = status
@@ -83,7 +88,8 @@ def deleteUser(id):
 
 def validarNombreF(label, nombre):
     """
-    Cambia el estado del label segun la respuesta de validacion del nombre ingresado
+    Cambia el estado del label segun la respuesta de validacion 
+    del nombre ingresado
     """
     if(validaTexto(nombre,"texto")):
         label.setText(
@@ -94,7 +100,8 @@ def validarNombreF(label, nombre):
 
 def validarApellidoF(label, apellido):
     """
-    Cambia el estado del label segun la respuesta de validacion del apellido ingresado
+    Cambia el estado del label segun la respuesta de validacion 
+    del apellido ingresado
     """
     if(validaTexto(apellido,"texto")):
         label.setText(
@@ -105,7 +112,8 @@ def validarApellidoF(label, apellido):
 
 def validarRutF(label, rut):
     """
-    Cambia el estado del label segun la respuesta de validacion del apellido ingresado
+    Cambia el estado del label segun la respuesta de validacion 
+    del apellido ingresado
     """
     if(validaRut(rut)):
         label.setText(
@@ -115,6 +123,10 @@ def validarRutF(label, rut):
             u"<font color='red'><b>Rut incorrecto, ej: 12345678-9</b></font>")
 
 def validarDatos(nombre,apellido,rut,verif,clave_ac,tipo):
+    """
+    Retorna True si todos los campos estan ingresados correctamente y
+    retorna False en caso contrario.
+    """
     if(clave_ac == None and verif !=None): # Nuevo usuario
         if(nombre != u"<font color='green'><b>Nombre correcto.</b></font>"):
             return False
@@ -153,10 +165,17 @@ def validarDatos(nombre,apellido,rut,verif,clave_ac,tipo):
         return True
 
 def validaTexto(text,validacion):
-    '''Función que evalua y valida el string 'text' dependiendo el valor del segundo parámetro:
-    numeros: retorna 'True' si el string 'text' posee sólo numeros
-    no_simbolos: retorna 'True' si el string 'text' posee sólo letras (mayusculas o minusculas o acentos) y/o números
-    Retorna 'False' en caso contrario o si el string 'text' esta vacío'''
+    """
+    Función que evalua y valida el string 'text' dependiendo el valor del 
+    segundo parámetro:
+        texto: retorna 'True' si el string text esta compuesto sólo por
+               letras (mayusculas y minusculas y tildes) y espacios.
+        digito: retorna 'True' si el string 'text' posee sólo numeros y ".".
+        numeros: retorna 'True' si el string 'text' esta compuesto sólo por
+                 números.
+
+    Retorna 'False' en caso contrario o si el string 'text' esta vacío
+    """
 
     valido=True
 
@@ -165,9 +184,6 @@ def validaTexto(text,validacion):
 
     if (validacion=="numeros"):
         cadena = "0123456789"
-
-    if (validacion=="no_simbolos"):
-        cadena = " ,.-abcdefghijklmnñopqrstuvwxyzáéíóúABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÚ0123456789"
 
     if (validacion=="texto"):
         cadena = " abcdefghijklmnñopqrstuvwxyzáéíóúABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÚ"
@@ -186,7 +202,9 @@ def validaTexto(text,validacion):
     return valido
 
 def validaRut(rut):
-    '''Función que valida si el rut es valido, retorna un booleano (true si es valido, false sino)'''
+    """Función que valida si el rut es valido, retorna un 
+    booleano (true si es valido, false sino)
+    """
     valido = False
     suma = 0
     multi= 2

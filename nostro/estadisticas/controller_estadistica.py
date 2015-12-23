@@ -13,20 +13,38 @@ from admin_productos.model_admin_producto import Producto
 import admin_productos.controller_admin_producto as controller_admin_producto
 
 def getProductosPedido(id_pedido):
+    """
+    Método que retorna todos los productos de un pedido (especificado por id).
+    """
     productos = VentaProducto()
     productos.id_pedido = id_pedido
     return VentaProducto.getProductosPedido(productos)
 
 def getVentas():
+    """
+    Retorna todas las ventas registradas en la base de datos.
+    """
     return Venta.all()
 
 def getVentasPorFecha(fecha_inicio,fecha_fin):
+    """
+    Retorna todas las ventas comprendidas entre 'fecha_inicio' y 'fecha_fin'.
+    """
     return Venta.getVentasPorFecha(fecha_inicio,fecha_fin)
 
 def getProductosPorFecha(fecha):
+    """
+    Retorna todos los productos realizados en la fecha 'fecha'.
+    """
     return VentaProducto.getProductosPorFecha(fecha)
 
 class ProductoVenta(object):
+    """
+    Clase especializada de productos vendidos para mostrarlos en los 
+    graficos estadisticos.
+    Se almacena el producto (objeto), la fecha en la cual fue vendido,
+    el precio y la cantidad.
+    """
     producto = Producto()
     fecha = ""
     precio = 0
@@ -72,7 +90,10 @@ class TotalProductosModel(QtGui.QSortFilterProxyModel):
 
 
 def crear_html(lista_productos,fecha_inicio,fecha_fin):
-    """=======================================================OPTIMIZAR!!!!===================================================="""
+    """
+    Método que crea un html con los datos entregados en 'lista_productos'
+    entre las fechas 'fecha_inicio' y 'fecha_fin'.
+    """
     # Se crea un QProgressDialog para notificar al usuario sobre las cargas del programa.
     progress = QtGui.QProgressDialog("<font color='white'>Cargando graficos...</font>", "", 0, len(lista_productos))
     progress.setWindowTitle("Aviso")

@@ -109,22 +109,32 @@ class FormularioVenta(QtGui.QWidget):
         Método que conecta las funciones de la clase con los eventos
         que genere el usuario al interactuar con los QWidgets de la vista.
         """
-        self.ui.pushButton_agregar.clicked.connect(self.action_agregar)
-        self.ui.pushButton_eliminar.clicked.connect(self.action_eliminar)
-        self.ui.pushButton_opciones.clicked.connect(self.action_opciones)
-        self.ui.pushButton_imprimir_comandas.clicked.connect(self.action_imprimir)
+        self.ui.pushButton_agregar.clicked.connect(
+            self.action_agregar)
+        self.ui.pushButton_eliminar.clicked.connect(
+            self.action_eliminar)
+        self.ui.pushButton_opciones.clicked.connect(
+            self.action_opciones)
+        self.ui.pushButton_imprimir_comandas.clicked.connect(
+            self.action_imprimir)
 
         self.ui.pushButton_aumentar_cantidad.clicked.connect(
             self.action_aumentar)
         self.ui.pushButton_disminuir_cantidad.clicked.connect(
             self.action_disminuir)
 
-        self.ui.pushButton_filtrar_bebidas_calientes.clicked.connect(self.action_bebidas_calientes)
-        self.ui.pushButton_filtrar_cocina.clicked.connect(self.action_cocina)
-        self.ui.pushButton_filtrar_bebidas_frias.clicked.connect(self.action_bebidas_frias)
-        self.ui.pushButton_filtrar_helados.clicked.connect(self.action_helados)
-        self.ui.pushButton_filtrar_reposteria.clicked.connect(self.action_reposteria)
-        self.ui.pushButton_filtrar_otros.clicked.connect(self.action_otros)
+        self.ui.pushButton_filtrar_bebidas_calientes.clicked.connect(
+            self.action_bebidas_calientes)
+        self.ui.pushButton_filtrar_cocina.clicked.connect(
+            self.action_cocina)
+        self.ui.pushButton_filtrar_bebidas_frias.clicked.connect(
+            self.action_bebidas_frias)
+        self.ui.pushButton_filtrar_helados.clicked.connect(
+            self.action_helados)
+        self.ui.pushButton_filtrar_reposteria.clicked.connect(
+            self.action_reposteria)
+        self.ui.pushButton_filtrar_otros.clicked.connect(
+            self.action_otros)
 
         self.ui.pushButton_cerrar_venta.clicked.connect(
             self.action_cerrar_venta)
@@ -188,7 +198,6 @@ class FormularioVenta(QtGui.QWidget):
         self.ui.tableView_pedido.selectRow(self.row_tablaPd)
         self.ui.tableView_pedido.setFocus()
 
-    """" ================================ FILTROS TABLA TOTAL PRODUCTOS =================================== """
 
     def action_cocina(self):
         """
@@ -246,7 +255,6 @@ class FormularioVenta(QtGui.QWidget):
         productos = controller.getProductoCodigo(text)
         self.load_model_total_productos(productos)
 
-    """ ============================================ TABLA TOTAL PRODUCTOS ============================================="""
 
     def cell_selected_table1(self, index, indexp):
         """
@@ -295,7 +303,6 @@ class FormularioVenta(QtGui.QWidget):
         modelSel = self.ui.tableView_total_productos.selectionModel()
         modelSel.currentChanged.connect(self.cell_selected_table1)
 
-    """ =========================== TABLA PRODUCTOS PEDIDOS ====================================================== """
 
     def load_productos_table2(self, pedido=None):
         """
@@ -335,7 +342,8 @@ class FormularioVenta(QtGui.QWidget):
                    controller.getProductoId(data.id_producto)[0].codigo,
                    controller.getProductoId(data.id_producto)[0].nombre,
                    data.cantidad,
-                   controller_admin_producto.monetaryFormat(str(data.precio_venta).split(".")[0])]
+                   controller_admin_producto.monetaryFormat(str(
+                    data.precio_venta).split(".")[0])]
 
             subtotal = subtotal + (long(data.precio_venta) * data.cantidad)
 
@@ -423,7 +431,6 @@ class FormularioVenta(QtGui.QWidget):
         self.ui.lcdNumber_subtotal.display(0)
         self.ui.lcdNumber_total.display(0)
 
-    """ ============================================= NUMERO DE PAGOS ============================= """
 
     def action_opciones(self):
         """
@@ -446,12 +453,12 @@ class FormularioVenta(QtGui.QWidget):
                 else:
                     self.clearLayout(item.layout())
 
-    """ ======================================================================= CERRAR VENTA ============================================================ """
 
     def action_cerrar_venta(self):
         """
         Método que se llama cuando el usuario apreta en el boton "cerrar venta".
-        Guarda los datos de la venta en la base de datos (si no se ha guardado en 'action_imprimir').
+        Guarda los datos de la venta en la base de datos 
+        (si no se ha guardado en 'action_imprimir').
         Guarda los datos de un pago para todos los productos del pedido.
         Reinicia los datos de la mesa para generar un pedido totalmente nuevo.
         """
@@ -532,7 +539,8 @@ class FormularioVenta(QtGui.QWidget):
             self.button.setText("Mesa "+str(self.button.mesa))
             for button in self.button.unido_a:
                 self.main.stackedWidget.widget(button.mesa+7).button.habilitado = True
-                self.main.stackedWidget.widget(button.mesa+7).button.setText("Mesa "+str(button.mesa))
+                self.main.stackedWidget.widget(button.mesa+7).button.setText(
+                    "Mesa "+str(button.mesa))
         except:
             pass
 
@@ -577,13 +585,13 @@ class FormularioVenta(QtGui.QWidget):
                                tarjeta, propina, id_venta)
         controller.finalizarPedido(id_pedido)
 
-    """============================================================== IMPRIMIR BOLETA =============================================="""
+
     def crear_o_asignar_num_documento(self):
         """
         Asigna un número de documento UNICO para un pedido.
         """
         if(self.crear_documento):
-            try: # Si hay ventas registradas, obtiene el numero del último documento y le suma una unidad.
+            try: # Obtiene el numero del último documento y le suma una unidad.
                 self.num_documento = controller.getVentas()[-1].num_documento + 1
             except: # Si no hay ventas registradas, comienza con 0
                 self.num_documento = 0
@@ -591,8 +599,10 @@ class FormularioVenta(QtGui.QWidget):
 
     def action_imprimir(self):
         """
-        Método que se ejecuta cuando el usuario apreta en el boton "imprimir detalle".
-        Genera un canvas con los datos de la venta y lo exporta como PDF a la carpeta nostro/docs
+        Método que se ejecuta cuando el usuario apreta en el 
+        boton "imprimir detalle".
+        Genera un canvas con los datos de la venta y 
+        lo exporta como PDF a la carpeta nostro/docs
         """
         # Se crea una venta sólo si no se ha creado anteriormente.
         if(self.crear_venta):
@@ -600,14 +610,18 @@ class FormularioVenta(QtGui.QWidget):
             self.crear_venta = False
 
         # Obtener Datos.
-        nombre_usuario = str(controller_admin_user.getUsuarioRut(self.rut_usuario)[0].nombre).upper()+" "+str(controller_admin_user.getUsuarioRut(self.rut_usuario)[0].apellido).upper()
+        nombre_usuario = str(controller_admin_user.getUsuarioRut(
+            self.rut_usuario)[0].nombre).upper()+" "+str(
+            controller_admin_user.getUsuarioRut(
+                self.rut_usuario)[0].apellido).upper()
         fecha_hora = time.strftime("Fecha: %d-%m-%Y       Hora: %H:%M:%S")
         productos = controller.getProductosPedido(self.id_pedido)
         num_productos = len(productos)
         espacio_productos = num_productos*15
         empresa = controller_empresa.getEmpresa(1)[0]
 
-        c = canvas.Canvas("docs/detalle_mesa_"+str(self.mesa)+"_documento_"+controller_admin_producto.zerosAtLeft(self.num_documento,8)+".pdf")
+        c = canvas.Canvas("docs/detalle_mesa_"+str(self.mesa)+"_documento_"+
+            controller_admin_producto.zerosAtLeft(self.num_documento,8)+".pdf")
         ancho = 300
         alto = 390+espacio_productos
         c.setPageSize((ancho, alto+50))
@@ -617,41 +631,54 @@ class FormularioVenta(QtGui.QWidget):
         c.drawString(10,alto-80,"FONO: "+empresa.fono)
         c.drawString(10,alto-110,fecha_hora)
         c.drawString(10,alto-125,"CREADOR: "+nombre_usuario.decode('cp1252'))
-        c.drawString(10,alto-140,"NUM. CUENTA: "+controller_admin_producto.zerosAtLeft(self.num_documento,8))
-        c.drawString(10,alto-155,"---------------------------------------------------------")
+        c.drawString(10,alto-140,"NUM. CUENTA: "+
+            controller_admin_producto.zerosAtLeft(self.num_documento,8))
+        c.drawString(10,alto-155,
+            "---------------------------------------------------------")
         if(int(self.mesa) == 0):
             c.drawString(10,alto-170,"COMPRA DIRECTA")
         else:
             c.drawString(10,alto-170,"MESA: "+str(self.mesa))
-        c.drawString(10,alto-185,"CUENTA: "+controller_admin_producto.zerosAtLeft(self.num_documento,8))
-        c.drawString(10,alto-200,"---------------------------------------------------------")
+        c.drawString(10,alto-185,"CUENTA: "
+            +controller_admin_producto.zerosAtLeft(self.num_documento,8))
+        c.drawString(10,alto-200,
+            "---------------------------------------------------------")
         alto_productos = alto-215
         for i,producto in enumerate(productos):
             c.drawString(10,alto_productos-15*i,str(producto.cantidad))
-            c.drawString(30,alto_productos-15*i,str(controller.getProductoId(producto.id_producto)[0].nombre).decode('cp1252'))
+            c.drawString(30,alto_productos-15*i,str(
+                controller.getProductoId(
+                    producto.id_producto)[0].nombre).decode('cp1252'))
             c.drawString(230,alto_productos-15*i,"$")
-            c.drawRightString(280,alto_productos-15*i,str(controller_admin_producto.monetaryFormat(int(producto.precio_venta*producto.cantidad))))
+            c.drawRightString(280,alto_productos-15*i,str(
+                controller_admin_producto.monetaryFormat(
+                    int(producto.precio_venta*producto.cantidad))))
             fin_alto_productos = alto_productos-15*i
         try:
             fin_alto_productos
         except:
             fin_alto_productos = alto_productos
-        c.drawString(10,fin_alto_productos-15,"---------------------------------------------------------")
+        c.drawString(10,fin_alto_productos-15,
+            "---------------------------------------------------------")
         fin_alto_productos = fin_alto_productos - 30
 
         c.drawString(120,fin_alto_productos-15,"CONSUMO: ")
         c.drawString(200,fin_alto_productos-15,"$")
-        c.drawRightString(250,fin_alto_productos-15,str(controller_admin_producto.monetaryFormat(int(self.subtotal))))
+        c.drawRightString(250,fin_alto_productos-15,str(
+            controller_admin_producto.monetaryFormat(int(self.subtotal))))
         c.drawString(120,fin_alto_productos-30,"TOTAL: ")
         c.drawString(200,fin_alto_productos-30,"$")
-        c.drawRightString(250,fin_alto_productos-30,str(controller_admin_producto.monetaryFormat(int(self.subtotal))))
+        c.drawRightString(250,fin_alto_productos-30,str(
+            controller_admin_producto.monetaryFormat(int(self.subtotal))))
         if(int(self.mesa) != 0):
             c.drawString(35,fin_alto_productos-60,"PROPINA SUGERIDA 10%: ")
             c.drawString(200,fin_alto_productos-60,"$")
-            c.drawRightString(250,fin_alto_productos-60,str(controller_admin_producto.monetaryFormat(int(self.propina))))
+            c.drawRightString(250,fin_alto_productos-60,str(
+                controller_admin_producto.monetaryFormat(int(self.propina))))
             c.drawString(35,fin_alto_productos-75,"TOTAL + PROPINA: ")
             c.drawString(200,fin_alto_productos-75,"$")
-            c.drawRightString(250,fin_alto_productos-75,str(controller_admin_producto.monetaryFormat(int(self.total))))
+            c.drawRightString(250,fin_alto_productos-75,str(
+                controller_admin_producto.monetaryFormat(int(self.total))))
 
             c.drawString(10,fin_alto_productos-115,"Gracias por su visita.")
         else:
@@ -659,7 +686,10 @@ class FormularioVenta(QtGui.QWidget):
 
 
         c.save()
-        self.imprimir_pdf(os.getcwd() + "/docs/detalle_mesa_"+str(self.mesa)+"_documento_"+controller_admin_producto.zerosAtLeft(self.num_documento,8)+".pdf")
+
+        self.imprimir_pdf(os.getcwd() + "/docs/detalle_mesa_"+str(self.mesa)+
+            "_documento_"+controller_admin_producto.zerosAtLeft(
+                self.num_documento,8)+".pdf")
 
     def imprimir_pdf(self,pdf):
         """

@@ -147,13 +147,18 @@ class NumeroPagos(QtGui.QDialog):
         Si 're' es True, realiza funciones para actualizar la tabla y mantener
         los valores modificados por el usuario.
         """
-        __check_icons__ = [(QtGui.QPixmap(os.getcwd() + "/admin_productos/icons/red_check.png")),
-                           (QtGui.QPixmap(os.getcwd() + "/admin_productos/icons/green_check.png"))]
-        self.productos = controller.getProductosPedidoRepetidosPorCantidad(self.id_pedido)
+        __check_icons__ = [(QtGui.QPixmap(
+                            os.getcwd() + "/admin_productos/icons/red_check.png")),
+                           (QtGui.QPixmap(
+                            os.getcwd() + "/admin_productos/icons/green_check.png"))]
+        self.productos = controller.getProductosPedidoRepetidosPorCantidad(
+            self.id_pedido)
         self.cantidad_productos = len(self.productos)
         if(not re):
-            self.ui.tableWidget_resumen.setHorizontalHeaderLabels(self.__header_table__)
-            self.ui.tableWidget_resumen.setRowCount(self.cantidad_productos)
+            self.ui.tableWidget_resumen.setHorizontalHeaderLabels(
+                self.__header_table__)
+            self.ui.tableWidget_resumen.setRowCount(
+                self.cantidad_productos)
 
         __type_pay__ = ["NINGUNO"]
 
@@ -179,9 +184,11 @@ class NumeroPagos(QtGui.QDialog):
             combobox.setModel(model)
             estado = 1
             if(re):
-                index = self.ui.tableWidget_resumen.cellWidget(i,4).currentIndex()
+                index = self.ui.tableWidget_resumen.cellWidget(
+                    i,4).currentIndex()
                 combobox.setCurrentIndex(index)
-                estado = self.ui.tableWidget_resumen.cellWidget(i,5).estado
+                estado = self.ui.tableWidget_resumen.cellWidget(
+                    i,5).estado
             else:
                 combobox.setCurrentIndex(1)
             combobox.currentIndexChanged.connect(self.combobox_changed)
@@ -196,7 +203,8 @@ class NumeroPagos(QtGui.QDialog):
                    QtGui.QTableWidgetItem(
                     controller.getProductoId(data.id_producto)[0].nombre),
                    QtGui.QTableWidgetItem(
-                    controller_admin_producto.monetaryFormat(str(data.precio_venta).split(".")[0])),
+                    controller_admin_producto.monetaryFormat(
+                        str(data.precio_venta).split(".")[0])),
                    combobox,
                    label_pixmap]
             for j, cell in enumerate(row):
@@ -284,8 +292,14 @@ class NumeroPagos(QtGui.QDialog):
                 id_pedido_new = controller.addDataPedido(self.ventaForm.mesa)
                 for row,estado in enumerate(lista_estados):
                     if(estado == 1):
-                        controller.cambiarCantidadProducto(self.id_pedido, self.productos[row].id_producto,"disminuir")
-                        controller.addDataVentaProducto(id_pedido_new, self.productos[row].id_producto, self.productos[row].precio_venta)
+                        controller.cambiarCantidadProducto(
+                            self.id_pedido, 
+                            self.productos[row].id_producto,
+                            "disminuir")
+                        controller.addDataVentaProducto(
+                            id_pedido_new, 
+                            self.productos[row].id_producto, 
+                            self.productos[row].precio_venta)
                 self.ventaForm.id_pedido = id_pedido_new
                 id_pedido_old = self.id_pedido
                 self.id_pedido = id_pedido_new

@@ -13,7 +13,7 @@ def connect():
 
 def obtenerObjetoEmpresa(data):
     """
-    Recibe como parametro la tupla recibida desde la BD y retorna una lista de objetos con todos los datos de los productos.
+    Recibe como parametro la tupla recibida desde la BD y retorna una lista de objetos con todos los datos de la empresa.
     """
     lista = list()
     for i, row in enumerate(data):
@@ -75,6 +75,10 @@ class Empresa(object):
         conn.close()
 
     def editNumMesasEmpresa(cls):
+        """
+        Método que accede a la base de datos y modifica el numero de mesas 
+        de una empresa.
+        """
         try:
             conex = connect()
             conn = conex.cursor()
@@ -89,6 +93,10 @@ class Empresa(object):
         conn.close()
 
     def updateDataEmpresa(cls):
+        """
+        Método que accede a la base de datos y modifica todos los campos 
+        de una emprea por su id.
+        """
         try:
             conex = connect()
             conn = conex.cursor()

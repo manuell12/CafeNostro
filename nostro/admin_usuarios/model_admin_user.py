@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 """
 Modelo.
-Accede a la base de datos, tiene la habilidad de crear, modificar y eliminar registros de ella.
+Accede a la base de datos, tiene la habilidad de crear, 
+modificar y eliminar registros de ella.
 """
 
 import MySQLdb
@@ -14,7 +15,8 @@ def connect():
 
 def obtenerObjetoUsuarios(data):
     """
-    Recibe como parametro la tupla recibida desde la BD y retorna una lista de objetos con todos los datos de los productos.
+    Recibe como parametro la tupla recibida desde la BD y retorna una lista 
+    de objetos con todos los datos de los productos.
     """
     lista = list()
     for i,row in enumerate(data):
@@ -54,31 +56,11 @@ class Usuario(object):
         self.tipo = tipo
         self.status = status
 
-    def updateNombreUsuario(cls, nombre, id):
-        conex = connect()
-        conn = conex.cursor()
-        query = "UPDATE usuario SET nombre = ? WHERE idUsuario = ?"
-        conn.execute(query, [nombre, idUsuario])
-        conex.commit()
-        conn.close()
-
-    def updateApellidoUsuario(cls, apellido, id):
-        conex = connect()
-        conn = conex.cursor()
-        query = "UPDATE usuario SET apellido = ? WHERE idUsuario = ?"
-        conn.execute(query, [apellido, idUsuario])
-        conex.commit()
-        conn.close()
-
-    def updateRutUsuario(cls, rut, id):
-        conex = connect()
-        conn = conex.cursor()
-        query = "UPDATE usuario SET rut = ? WHERE idUsuario = ?"
-        conn.execute(query, [rut, idUsuario])
-        conex.commit()
-        conn.close()
-
     def UpdateDataUsuario(cls):
+        """
+        Método que accede a la base de datos a travez de una query que 
+        modifica todos los campos de un usuario identificado por su id.
+        """
         conex = connect()
         conn = conex.cursor()
         query = "UPDATE usuario SET nombre = %s, apellido = %s, rut = %s, clave =  %s , tipo = %s, status = %s WHERE idUsuario = %s"
@@ -94,6 +76,11 @@ class Usuario(object):
         conn.close()
 
     def UpdateDataUsuarioWithoutNewPass(cls):
+        """
+        Método que accede a la base de datos a travez de una query que 
+        modifica todos los campos (excepto clave) de un usuario 
+        identificado por su id.
+        """
         conex = connect()
         conn = conex.cursor()
         query = "UPDATE usuario SET nombre = %s, apellido = %s, rut = %s, tipo = %s, status = %s WHERE idUsuario = %s"
@@ -108,7 +95,10 @@ class Usuario(object):
         conn.close()
 
     def UpdateStatusUsuario(cls):
-        '''Interacciona con la base de datos a travez de una query que actualiza el estado de un usuario, especificando su id'''
+        """
+        Interacciona con la base de datos a travez de una query que 
+        actualiza el estado de un usuario, especificando su id
+        """
         conex = connect()
         conn = conex.cursor()
         query = "UPDATE usuario SET status = %s WHERE idUsuario = %s"
@@ -119,6 +109,10 @@ class Usuario(object):
         conn.close()
 
     def AddDataUsuario(cls):
+        """
+        Interacciona con la base de datos a travez de una query que 
+        agrega un usuario nuevo especificando todos sus campos.
+        """
         conex = connect()
         conn = conex.cursor()
         query = "INSERT INTO usuario(nombre, apellido, rut, clave, tipo, status) VALUES(%s, %s, %s, %s, %s, %s)"
@@ -133,6 +127,9 @@ class Usuario(object):
         conn.close()
 
     def getUsuarioId(cls):
+        """
+        Obtiene un usuario en la base de datos por su id.
+        """
         conex = connect()
         conn = conex.cursor()
         query = "SELECT * FROM usuario WHERE idUsuario = {}".format(
@@ -143,6 +140,9 @@ class Usuario(object):
         return obtenerObjetoUsuarios(usuario)
 
     def getUsuarioRut(cls):
+        """
+        Obtiene un usuario en la base de datos por su rut.
+        """
         conex = connect()
         conn = conex.cursor()
         query = "SELECT * FROM usuario WHERE rut = '{0}'".format(
@@ -153,6 +153,9 @@ class Usuario(object):
         return obtenerObjetoUsuarios(usuario)
 
     def deleteUsers(cls):
+        """
+        Elimina un usuario de la base de datos por su id.
+        """
         conex = connect()
         conn = conex.cursor()
         query = "DELETE FROM usuario WHERE idUsuario = {}".format(
@@ -187,7 +190,8 @@ class Usuario(object):
 
     def getUsuarioStatus(cls):
         """
-        Método utlizado para obtener los usuarios que compartan un valor de status.
+        Método utlizado para obtener los usuarios que compartan 
+        un valor de status.
         Este método al ser de clase no necesita una instancia (objeto)
         Sólo basta con invocarlo desde la clase
         """

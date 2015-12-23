@@ -363,6 +363,9 @@ class PushButtonMesa(QtGui.QPushButton):
             self.setProperty("ocupado", False)
 
     def reset():
+        """
+        Reinicia el boton a un estado inicial.
+        """
         self.habilitado = True
         self.setEnabled(True)
         self.setText("Mesa " + str(mesa))

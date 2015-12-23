@@ -48,7 +48,6 @@ class Usuarios(object):
 
         self.valido = False
 
-        # Si el nombre viene con un valor hay que obtener la fila de la DB
         if rut is not None and clave is not None:
             self.load(rut=rut,clave=clave)
 
@@ -56,17 +55,9 @@ class Usuarios(object):
         """
         Carga un usuario de estado "1" desde la base de datos por su nombre y clave.
         """
-
         conn = connect()
-        #query = "SELECT * FROM {}".format(self.__tablename__)
         if rut is not None and clave is not None:
             query = ("SELECT * FROM usuario WHERE rut = '%s'" % rut + " AND clave = '%s'" % clave + " AND status = '%s'" % 1)
-            #condition = "rut"
-        """
-        if clave is not None:
-            query += " WHERE clave = ?"
-            condition = clave
-        """
         conn.execute(query)
         row = conn.fetchone()
         conn.close()
@@ -81,9 +72,17 @@ class Usuarios(object):
             self.valido = True
 
     def userValido(self):
+        """
+        Método que retorna un booleano correspondiente a:
+            True: usuario valido.
+            False: usuario invalido.
+        """
         return self.valido    
 
     def getTipoUsuarioPorRut(cls):
+        """
+        Método que obtiene el tipo de un usuario especifico.
+        """
         conn = connect()
         query = ("SELECT tipo FROM usuario WHERE rut = '%s'" % cls.rut)
         conn.execute(query)

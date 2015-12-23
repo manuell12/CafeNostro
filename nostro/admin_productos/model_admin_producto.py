@@ -15,7 +15,8 @@ def connect():
 
 def obtenerObjetoProductos(data):
     """
-    Recibe como parametro la tupla recibida desde la BD y retorna una lista de objetos con todos los datos de los productos.
+    Recibe como parametro la tupla recibida desde la BD y retorna una lista 
+    de objetos con todos los datos de los productos.
     """
     listaP = list()
     for i,row in enumerate(data):
@@ -26,7 +27,8 @@ def obtenerObjetoProductos(data):
 
 def obtenerObjetoCategorias(data):
     """
-    Recibe como parametro la tupla recibida desde la BD y retorna una lista de objetos con todos los datos de las categorias.
+    Recibe como parametro la tupla recibida desde la BD y retorna una lista 
+    de objetos con todos los datos de las categorias.
     """
     listaC = list()
     for i, row in enumerate(data):
@@ -70,31 +72,11 @@ class Producto(object):
         self.id_categoria = id_categoria
         self.codigo = codigo
 
-    def updateNombreProducto(cls, nombre, id):
-        conex = connect()
-        conn = conex.cursor()
-        query = "UPDATE producto SET nombre = ? WHERE idProducto = ?"
-        conn.execute(query, [nombre, idproducto])
-        conex.commit()
-        conn.close()
-
-    def updateApellidoProducto(cls, descripcion, id):
-        conex = connect()
-        conn = conex.cursor()
-        query = "UPDATE producto SET descripcion = ? WHERE idProducto = ?"
-        conn.execute(query, [descripcion, idproducto])
-        conex.commit()
-        conn.close()
-
-    def updateRutproducto(cls, tipo, id):
-        conex = connect()
-        conn = conex.cursor()
-        query = "UPDATE producto SET tipo = ? WHERE idProducto = ?"
-        conn.execute(query, [tipo, idproducto])
-        conex.commit()
-        conn.close()
-
     def UpdateDataProducto(cls):
+        """
+        Interacciona con la base de datos a travez de una query que actualiza
+        todos los campos de un producto, especificando su id.
+        """
         conex = connect()
         conn = conex.cursor()
 
@@ -112,7 +94,10 @@ class Producto(object):
         conn.close()
 
     def UpdateStatusProducto(cls):
-        '''Interacciona con la base de datos a travez de una query que actualiza el estado de un Producto, especificando su id'''
+        """
+        Interacciona con la base de datos a travez de una query que actualiza 
+        el estado de un Producto, especificando su id.
+        """
         conex = connect()
         conn = conex.cursor()
         query = "UPDATE producto SET status = %s WHERE idProducto = %s"
@@ -123,6 +108,10 @@ class Producto(object):
         conn.close()
 
     def AddDataProducto(cls):
+        """
+        Agrega un nuevo producto a la base de datos, rellenando todos sus 
+        campos.
+        """
         conex = connect()
         conn = conex.cursor()
         query = "INSERT INTO producto(nombre, descripcion, precio_neto, precio_bruto, status, idCategoria, codigo) VALUES(%s, %s, %s, %s, %s, %s, %s)"
@@ -138,6 +127,9 @@ class Producto(object):
         conn.close()
 
     def getProductoId(cls):
+        """
+        Retorna el producto (objeto) que corresponde a la id especificada.
+        """
         conex = connect()
         conn = conex.cursor()
         query = "SELECT * FROM producto WHERE idProducto = {}".format(
@@ -148,6 +140,9 @@ class Producto(object):
         return obtenerObjetoProductos(Producto)
 
     def hayProductoCodigo(cls):
+        """
+        Retorna el producto (objeto) que corresponda al codigo especificado.
+        """
         conex = connect()
         conn = conex.cursor()
         query = "SELECT * FROM producto WHERE codigo = %s"
@@ -157,6 +152,9 @@ class Producto(object):
         return obtenerObjetoProductos(Producto)
 
     def getProductoCategoria(cls):
+        """
+        Retorna los productos pertenecientes a una categoria especifica.
+        """
         conex = connect()
         conn = conex.cursor()
         query = "SELECT * FROM producto WHERE idCategoria = {} and status = 1".format(
@@ -167,6 +165,10 @@ class Producto(object):
         return obtenerObjetoProductos(Producto)
 
     def getProductoCodigo(cls):
+        """
+        Retorna los productos que, en su código, contengan la palabra
+        entregada en cls.codigo. 
+        """
         conex = connect()
         conn = conex.cursor()
         query = "SELECT * FROM producto WHERE codigo like %s and status = 1"
@@ -176,6 +178,9 @@ class Producto(object):
         return obtenerObjetoProductos(Producto)
 
     def deleteProducto(cls):
+        """
+        Elimina un producto especificando su id.
+        """
         conex = connect()
         conn = conex.cursor()
         query = "DELETE FROM producto WHERE idProducto = {}".format(

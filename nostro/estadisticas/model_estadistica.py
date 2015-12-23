@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 """
 Modelo.
-Accede a la base de datos, tiene la habilidad de crear, modificar y eliminar registros de ella.
+Accede a la base de datos, tiene la habilidad de crear, 
+modificar y eliminar registros de ella.
 """
 
 import MySQLdb
@@ -14,7 +15,8 @@ def connect():
 
 def obtenerObjetoVentaProductos(data):
     """
-    Recibe como parametro la tupla recibida desde la BD y retorna una lista de objetos con todos los datos de los productos.
+    Recibe como parametro la tupla recibida desde la BD y retorna una lista 
+    de objetos con todos los datos de los productos.
     """
     lista = list()
     for i, row in enumerate(data):
@@ -23,7 +25,8 @@ def obtenerObjetoVentaProductos(data):
 
 def obtenerObjetoVentas(data):
     """
-    Recibe como parametro la tupla recibida desde la BD y retorna una lista de objetos con todos los datos de los productos.
+    Recibe como parametro la tupla recibida desde la BD y retorna una lista 
+    de objetos con todos los datos de los productos.
     """
     lista = list()
     for i, row in enumerate(data):
@@ -81,7 +84,8 @@ class VentaProducto(object):
     @classmethod
     def getProductosPorFecha(cls,fecha):
         """
-        Método utlizado para obtener la cantidad vendida de un producto en un dia especificado.
+        Método utlizado para obtener la cantidad vendida de un producto 
+        en un dia especificado.
         """
         query = "SELECT VP.idPedido,VP.idProducto,SUM(VP.cantidad) as cantidad,VP.precio_venta,VP.porcentaje_descuento FROM venta_has_producto VP, venta V WHERE V.idPedido = VP.idPedido and V.fecha = '{0}' GROUP by VP.idProducto".format(fecha)
         try:
@@ -133,7 +137,8 @@ class Venta(object):
     @classmethod
     def getVentasPorFecha(cls, fecha_inicio, fecha_fin):
         """
-        Método utlizado para obtener la colección de filas en la tabla venta comprendidas entre las fechas dadas 
+        Método utlizado para obtener la colección de filas en la tabla 
+        venta comprendidas entre las fechas dadas.
         Este método al ser de clase no necesita una instancia (objeto)
         Sólo basta con invocarlo desde la clase
         """

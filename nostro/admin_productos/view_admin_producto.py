@@ -44,6 +44,10 @@ class AdminProductos(QtGui.QWidget):
         self.ui.tableProductos.currentCellChanged.connect(self.tabla_cell_changed)
 
     def tabla_cell_changed(self, currentRow, currentColumn, previousRow, previousColumn):
+        """
+        Método que es llamado cuando el usuario presiona en la tabla 'tableProductos'.
+        Guarda en la variable global id, el id del producto selecionado.
+        """
         item = self.ui.tableProductos.item(currentRow,0)
         try:
             self.id = item.text()
@@ -51,25 +55,38 @@ class AdminProductos(QtGui.QWidget):
             pass
 
     def load_data_table(self):
+        """
+        Carga en la tabla 'tableProductos' todos los productos registrados en 
+        la base de datos.
+        """
         self.ui.tableProductos.sortItems(0, QtCore.Qt.AscendingOrder)
         self.ui.tableProductos.setColumnCount(8)
         self.ui.tableProductos.setHorizontalHeaderLabels(self.__header_table__)
-        __check_icons__ = [(QtGui.QIcon(os.getcwd() + "/admin_productos/icons/red_check.png")),
-                           (QtGui.QIcon(os.getcwd() + "/admin_productos/icons/green_check.png"))]
+        __check_icons__ = [(QtGui.QIcon(
+                            os.getcwd() + "/admin_productos/icons/red_check.png")),
+                           (QtGui.QIcon(
+                            os.getcwd() + "/admin_productos/icons/green_check.png"))]
 
         productos = controller_admin_producto.Productos()
         row = len(productos)
         self.ui.tableProductos.setRowCount(row)
 
         for i, data in enumerate(productos):
-            row = [QtGui.QTableWidgetItem(controller_admin_producto.zerosAtLeft(data.id_producto,2)),
+            row = [QtGui.QTableWidgetItem(
+                    controller_admin_producto.zerosAtLeft(data.id_producto,2)),
                    QtGui.QTableWidgetItem(data.codigo),
                    QtGui.QTableWidgetItem(data.nombre),
                    QtGui.QTableWidgetItem(data.descripcion),
-                   QtGui.QTableWidgetItem(controller_admin_producto.monetaryFormat(int(data.precio_neto))),
-                   QtGui.QTableWidgetItem(controller_admin_producto.monetaryFormat(int(data.precio_bruto))),
-                   QtGui.QTableWidgetItem(self.__type_productos__[int(data.id_categoria)]),
-                   QtGui.QTableWidgetItem(__check_icons__[int(data.status)],"")]
+                   QtGui.QTableWidgetItem(
+                    controller_admin_producto.monetaryFormat(
+                        int(data.precio_neto))),
+                   QtGui.QTableWidgetItem(
+                    controller_admin_producto.monetaryFormat(
+                        int(data.precio_bruto))),
+                   QtGui.QTableWidgetItem(
+                    self.__type_productos__[int(data.id_categoria)]),
+                   QtGui.QTableWidgetItem(
+                    __check_icons__[int(data.status)],"")]
             for j, cell in enumerate(row):
                 self.ui.tableProductos.setItem(i,j,cell)
 
@@ -81,6 +98,10 @@ class AdminProductos(QtGui.QWidget):
             3, self.ui.tableProductos.horizontalHeader().Stretch)
 
     def reload_data_table(self):
+        """
+        Recarga todos los productos a la tabla con la finalidad de actualizar
+        la vista.
+        """
         self.ui.tableProductos.setRowCount(0)
         self.load_data_table()
 
@@ -93,6 +114,12 @@ class AdminProductos(QtGui.QWidget):
         # self.load_productos(self)
 
     def action_btn_editar(self):
+        """
+        Método que es llamado cuando el usuario presiona en el boton 'editar'.
+        Crea una instancia de FormularioProducto si el usuario seleccionó
+        un producto y en caso contrario crea un mensaje de error en un
+        QMessageBox.
+        """
         index = self.ui.tableProductos.currentIndex()
         if index.row() == -1:  # No se ha seleccionado producto
             msgBox = QtGui.QMessageBox()
@@ -110,7 +137,10 @@ class AdminProductos(QtGui.QWidget):
             self.ui.tableProductos.selectRow(index.row())
 
     def action_btn_eliminar(self):
-        """Accion a realizar al presionar el boton eliminar"""
+        """
+        Método que es llamado cuando el usuario presiona en el boton eliminar.
+        Elimina el producto en caso de que no sea parte de ninguna venta.
+        """
         index = self.ui.tableProductos.currentIndex()
         if index.row() == -1:  # No se ha seleccionado producto
             msgBox = QtGui.QMessageBox()
@@ -145,7 +175,11 @@ class AdminProductos(QtGui.QWidget):
                     return False
 
     def action_btn_estado(self):
-        """Accion a realizar al presionar el boton cambiar estado"""
+        """
+        Método que es llamado cuando el usuario presiona en el boton 
+        'cambiar estado'.
+        Cambia el estado de un producto a 0 si es 1 y viceversa.
+        """
         index = self.ui.tableProductos.currentIndex()
         if index.row() == -1:  # No se ha seleccionado producto
             msgBox = QtGui.QMessageBox()

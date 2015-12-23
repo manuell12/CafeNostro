@@ -7,7 +7,10 @@ import controller_admin_producto
 
 
 class FormularioProducto(QtGui.QDialog):
-
+    """
+    Clase FormularioProducto que permite al usuario ingresar datos tanto para
+    un crear nuevo producto como para modificar un producto existente.
+    """
     reloadT = QtCore.Signal()
     identificador = False
     codigo = ""
@@ -45,14 +48,16 @@ class FormularioProducto(QtGui.QDialog):
                 self.descripcion = row.descripcion
                 self.ui.lineEdit_descripcion.setText(self.descripcion)
                 self.precio_bruto = int(row.precio_bruto)
-                self.ui.lineEdit_precio_neto.setText(str(self.precio_bruto).split(".")[0])
+                self.ui.lineEdit_precio_neto.setText(
+                    str(self.precio_bruto).split(".")[0])
                 self.id_categoria = row.id_categoria
                 self.ui.comboBox_id_categoria.setCurrentIndex(
                     int(self.id_categoria))
 
     def connect_actions(self):
         """
-        Método que conecta los slots de los widgets de la interfaz grafica con las funciones de FormularioProducto
+        Método que conecta los slots de los widgets de la interfaz grafica 
+        con las funciones de FormularioProducto.
         """
         self.ui.lineEdit_nombre.textChanged.connect(
             self.lineEdit_nombre_changed)
@@ -64,20 +69,37 @@ class FormularioProducto(QtGui.QDialog):
             self.comboBox_id_categoria_changed)
 
     def lineEdit_nombre_changed(self, text):
+        """
+        Método que es llamado cuando el usuario cambia el contenido del QLabel
+        'lineEdit_nombre'. Valida que el campo esté correctamente escrito.
+        """
         controller_admin_producto.validarNombreF(
             self.ui.label_error_nombre, text)
 
     def lineEdit_codigo_changed(self, text):
+        """
+        Método que es llamado cuando el usuario cambia el contenido del QLabel
+        'lineEdit_codigo'. Valida que el campo esté correctamente escrito.
+        """
         text_upper = text.upper()
         self.ui.lineEdit_codigo.setText(text_upper)
         controller_admin_producto.validarCodigoF(
             self.ui.label_error_codigo, text_upper, self.codigo)
 
     def lineEdit_precio_neto_changed(self, text):
+        """
+        Método que es llamado cuando el usuario cambia el contenido del QLabel
+        'lineEdit_precio_neto'. Valida que el campo esté correctamente escrito.
+        """
         controller_admin_producto.validarPrecioNetoF(
             self.ui.label_error_precio, text)
 
     def comboBox_id_categoria_changed(self, index):
+        """
+        Método que es llamado cuando el usuario cambia la seleccion del 
+        QComboBox 'comboBox_id_categoria'. 
+        Valida que el campo esté correctamente escrito.
+        """
         if(index != 0):
             self.ui.label_error_categoria.setText(
                 u"<font color='green'><b>Selección correcta.</b></font>")
@@ -86,6 +108,11 @@ class FormularioProducto(QtGui.QDialog):
                 u"<font color='red'><b>Debe seleccionar un tipo.</b></font>")
 
     def accept(self):
+        """
+        Método que es llamado cuando el usuario presiona en el boton 'OK'.
+        Guarda los cambios realizados sobre un producto existente o
+        crea un nuevo producto con los datos ingresados.
+        """
         self.nombre = unicode(self.ui.lineEdit_nombre.text())
         self.descripcion = unicode(self.ui.lineEdit_descripcion.toPlainText())        
         self.precio_bruto = unicode(self.ui.lineEdit_precio_neto.text())
@@ -102,7 +129,14 @@ class FormularioProducto(QtGui.QDialog):
                 self.ui.label_error_categoria.text())
             if(validar):
                 controller_admin_producto.UpdateDataProducto(
-                    self.id, self.nombre, self.descripcion, self.precio_neto, self.precio_bruto, self.status, self.id_categoria, self.codigo)
+                    self.id, 
+                    self.nombre, 
+                    self.descripcion, 
+                    self.precio_neto, 
+                    self.precio_bruto, 
+                    self.status, 
+                    self.id_categoria, 
+                    self.codigo)
                 msgBox = QtGui.QMessageBox()
                 msgBox.setIcon(QtGui.QMessageBox.Information)
                 msgBox.setWindowTitle("Correcto")
@@ -123,7 +157,13 @@ class FormularioProducto(QtGui.QDialog):
                 self.ui.label_error_categoria.text())
             if(validar):
                 controller_admin_producto.AddDataProducto(
-                    self.nombre, self.descripcion, self.precio_neto, self.precio_bruto, self.status, self.id_categoria, self.codigo)
+                    self.nombre, 
+                    self.descripcion, 
+                    self.precio_neto, 
+                    self.precio_bruto, 
+                    self.status, 
+                    self.id_categoria, 
+                    self.codigo)
                 msgBox = QtGui.QMessageBox()
                 msgBox.setIcon(QtGui.QMessageBox.Information)
                 msgBox.setWindowTitle("Correcto")

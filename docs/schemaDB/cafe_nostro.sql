@@ -1,58 +1,47 @@
--- phpMyAdmin SQL Dump
--- version 4.2.11
--- http://www.phpmyadmin.net
+CREATE DATABASE  IF NOT EXISTS `cafe_nostro` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `cafe_nostro`;
+-- MySQL dump 10.13  Distrib 5.6.24, for Win64 (x86_64)
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 02-12-2015 a las 00:18:23
--- Versión del servidor: 5.6.21
--- Versión de PHP: 5.5.19
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
+-- Host: 127.0.0.1    Database: cafe_nostro
+-- ------------------------------------------------------
+-- Server version	5.6.21
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Base de datos: `cafe_nostro`
+-- Table structure for table `categoria`
 --
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `categoria`
---
-
-CREATE TABLE IF NOT EXISTS `categoria` (
-`idCategoria` int(11) NOT NULL,
+DROP TABLE IF EXISTS `categoria`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `categoria` (
+  `idCategoria` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
   `descripcion` text NOT NULL,
-  `preparada_en` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+  `preparada_en` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idCategoria`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Volcado de datos para la tabla `categoria`
+-- Table structure for table `empresa`
 --
 
-INSERT INTO `categoria` (`idCategoria`, `nombre`, `descripcion`, `preparada_en`) VALUES
-(1, 'Comida', '', 'Cocina'),
-(2, 'Helado', 'Selección de helados artesanales de distintos sabores.', 'Heladeria'),
-(3, 'Bebidas calientes', 'Distintos tipos de café hecho por baristas profesionales.', 'Barra'),
-(4, 'Bebidas frías', 'Conjunto de bebidas y/o jugos para acompañar.', 'Barra'),
-(5, 'Repostería', '', 'Vitrina'),
-(6, 'Otros', 'Otros', 'Otro');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `empresa`
---
-
-CREATE TABLE IF NOT EXISTS `empresa` (
-`idEmpresa` int(11) NOT NULL,
+DROP TABLE IF EXISTS `empresa`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `empresa` (
+  `idEmpresa` int(11) NOT NULL AUTO_INCREMENT,
   `rut` varchar(45) NOT NULL,
   `nombre` varchar(45) NOT NULL,
   `direccion` varchar(45) NOT NULL,
@@ -60,264 +49,137 @@ CREATE TABLE IF NOT EXISTS `empresa` (
   `giro` varchar(45) NOT NULL,
   `fono` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
-  `num_mesas` int(11) DEFAULT NULL
+  `num_mesas` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idEmpresa`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Estructura de tabla para la tabla `pago`
+-- Table structure for table `pago`
 --
 
-CREATE TABLE IF NOT EXISTS `pago` (
+DROP TABLE IF EXISTS `pago`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pago` (
   `idPago` int(11) NOT NULL,
   `pago_total` decimal(10,5) NOT NULL,
   `efectivo` decimal(10,5) DEFAULT NULL,
   `tarjeta` decimal(10,5) DEFAULT NULL,
   `propina` decimal(10,5) DEFAULT NULL,
-  `idVenta` int(11) NOT NULL
+  `idVenta` int(11) NOT NULL,
+  PRIMARY KEY (`idPago`),
+  KEY `fk_pago_venta1_idx` (`idVenta`),
+  CONSTRAINT `fk_pago_venta1` FOREIGN KEY (`idVenta`) REFERENCES `venta` (`idVenta`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
--- --------------------------------------------------------
-
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Estructura de tabla para la tabla `pedido`
+-- Table structure for table `pedido`
 --
 
-CREATE TABLE IF NOT EXISTS `pedido` (
+DROP TABLE IF EXISTS `pedido`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pedido` (
   `idPedido` int(11) NOT NULL,
   `mesa` varchar(45) NOT NULL,
-  `en_curso` int(11) DEFAULT NULL
+  `en_curso` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idPedido`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
--- --------------------------------------------------------
-
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Estructura de tabla para la tabla `producto`
+-- Table structure for table `producto`
 --
 
-CREATE TABLE IF NOT EXISTS `producto` (
-`idProducto` int(11) NOT NULL,
+DROP TABLE IF EXISTS `producto`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `producto` (
+  `idProducto` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
   `descripcion` text NOT NULL,
   `precio_neto` decimal(10,5) NOT NULL,
   `precio_bruto` decimal(10,5) NOT NULL,
   `status` varchar(1) DEFAULT NULL,
   `idCategoria` int(11) NOT NULL,
-  `codigo` varchar(45) DEFAULT NULL
+  `codigo` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idProducto`),
+  KEY `fk_producto_categoria1_idx` (`idCategoria`),
+  CONSTRAINT `fk_producto_categoria1` FOREIGN KEY (`idCategoria`) REFERENCES `categoria` (`idCategoria`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Volcado de datos para la tabla `producto`
+-- Table structure for table `usuario`
 --
 
-INSERT INTO `producto` (`idProducto`, `nombre`, `descripcion`, `precio_neto`, `precio_bruto`, `status`, `idCategoria`, `codigo`) VALUES
-(1, 'Ristretto', '', '1053.00000', '1300.00000', '1', 3, 'CAF0'),
-(2, 'Lungo', '', '1053.00000', '1300.00000', '1', 3, 'CAF1'),
-(3, 'Espresso', '', '1053.00000', '1300.00000', '1', 3, NULL),
-(4, 'Espresso doble', '', '1458.00000', '1800.00000', '1', 3, NULL),
-(5, 'Americano', '', '1093.50000', '1350.00000', '1', 3, NULL),
-(6, 'Macchiato', '', '1215.00000', '1500.00000', '1', 3, NULL),
-(7, 'Macchiato doble', '', '1579.50000', '1950.00000', '1', 3, NULL),
-(8, 'Capuccino', '', '1498.50000', '1850.00000', '1', 3, NULL),
-(9, 'Capuccino grande', '', '1620.00000', '2000.00000', '1', 3, NULL),
-(10, 'Capuccino miel canela', '', '1620.00000', '2000.00000', '1', 3, NULL),
-(11, 'Latte macchiato', '', '1620.00000', '2000.00000', '1', 3, NULL),
-(12, 'Mokaccino', '', '2065.50000', '2550.00000', '1', 3, NULL),
-(13, 'Café helado', '', '2308.50000', '2850.00000', '1', 3, NULL),
-(14, 'Chocolate helado', '', '2308.50000', '2850.00000', '1', 3, NULL),
-(15, 'Nutelatte', '', '2065.50000', '2550.00000', '1', 3, NULL),
-(16, 'Chocolate sabores', '', '1660.50000', '2050.00000', '1', 3, NULL),
-(17, 'Chocolate marshmallows', '', '1782.00000', '2200.00000', '1', 3, NULL),
-(18, 'Té selección', '', '1125.90000', '1390.00000', '1', 3, NULL),
-(19, 'Tetera té gourmet', '', '2065.50000', '2550.00000', '1', 3, NULL),
-(20, 'Agua mineral', '', '1174.50000', '1450.00000', '1', 4, NULL),
-(21, 'Soda italiana', '', '1215.00000', '1500.00000', '1', 4, NULL),
-(22, 'Bebida', '', '1215.00000', '1500.00000', '1', 4, NULL),
-(23, 'Jugo natural', '', '1701.00000', '2100.00000', '1', 4, NULL),
-(24, 'Milk shake', '', '2065.50000', '2550.00000', '1', 4, NULL),
-(25, 'Copa helado', '', '2187.00000', '2700.00000', '1', 2, NULL),
-(26, 'Panini queso, jamón, verduras', '', '2389.50000', '2950.00000', '1', 1, NULL),
-(27, 'Panini queso, jamón, tomate, pesto', '', '2308.50000', '2850.00000', '1', 1, NULL),
-(28, 'Panini queso, chorizo, morrón', '', '2187.00000', '2700.00000', '1', 1, NULL),
-(29, 'Panini queso, jamón, dijon', '', '2146.50000', '2650.00000', '1', 1, NULL),
-(30, 'Panini queso, tomate, orégano', '', '2146.50000', '2650.00000', '1', 1, NULL),
-(31, 'Descafeinado', '', '202.50000', '250.00000', '1', 3, NULL),
-(32, 'Café X', 'Un café que posee una X', '1611.90000', '1990.00000', '0', 3, NULL),
-(33, 'helado', 'Un helado bien frío', '0.00000', '990.00000', '0', 2, NULL),
-(34, 'Helado', 'Helado muy frio', '801.90000', '990.00000', '0', 2, NULL),
-(35, 'helado2', '', '1620.00000', '2000.00000', '1', 2, 'HEL');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `usuario`
---
-
-CREATE TABLE IF NOT EXISTS `usuario` (
-`idUsuario` int(11) NOT NULL,
+DROP TABLE IF EXISTS `usuario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `usuario` (
+  `idUsuario` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
   `apellido` varchar(45) NOT NULL,
   `rut` varchar(15) NOT NULL,
   `clave` varchar(45) NOT NULL,
   `tipo` int(11) NOT NULL,
-  `status` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+  `status` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idUsuario`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Volcado de datos para la tabla `usuario`
+-- Table structure for table `venta`
 --
 
-INSERT INTO `usuario` (`idUsuario`, `nombre`, `apellido`, `rut`, `clave`, `tipo`, `status`) VALUES
-(4, 'root', 'root', 'root', '2a533081', 0, 1);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `venta`
---
-
-CREATE TABLE IF NOT EXISTS `venta` (
-`idVenta` int(11) NOT NULL,
+DROP TABLE IF EXISTS `venta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `venta` (
+  `idVenta` int(11) NOT NULL AUTO_INCREMENT,
   `fecha` date NOT NULL,
   `num_documento` int(11) NOT NULL,
   `tipo` varchar(20) NOT NULL,
   `total_pago` decimal(10,5) NOT NULL,
   `idUsuario` int(11) NOT NULL,
-  `idPedido` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
+  `idPedido` int(11) NOT NULL,
+  PRIMARY KEY (`idVenta`),
+  KEY `fk_venta_usuario_idx` (`idUsuario`),
+  KEY `fk_venta_pedido1_idx` (`idPedido`),
+  CONSTRAINT `fk_venta_pedido1` FOREIGN KEY (`idPedido`) REFERENCES `pedido` (`idPedido`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_venta_usuario` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Estructura de tabla para la tabla `venta_has_producto`
+-- Table structure for table `venta_has_producto`
 --
 
-CREATE TABLE IF NOT EXISTS `venta_has_producto` (
+DROP TABLE IF EXISTS `venta_has_producto`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `venta_has_producto` (
   `idPedido` int(11) NOT NULL,
   `idProducto` int(11) NOT NULL,
   `cantidad` int(11) NOT NULL,
   `precio_venta` decimal(10,5) NOT NULL,
-  `porcentaje_descuento` int(11) DEFAULT NULL
+  `porcentaje_descuento` int(11) DEFAULT NULL,
+  KEY `fk_venta_has_producto_producto1_idx` (`idProducto`),
+  KEY `fk_venta_has_producto_pedido1_idx` (`idPedido`),
+  CONSTRAINT `fk_venta_has_producto_pedido1` FOREIGN KEY (`idPedido`) REFERENCES `pedido` (`idPedido`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_venta_has_producto_producto1` FOREIGN KEY (`idProducto`) REFERENCES `producto` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `categoria`
---
-ALTER TABLE `categoria`
- ADD PRIMARY KEY (`idCategoria`);
-
---
--- Indices de la tabla `empresa`
---
-ALTER TABLE `empresa`
- ADD PRIMARY KEY (`idEmpresa`);
-
---
--- Indices de la tabla `pago`
---
-ALTER TABLE `pago`
- ADD PRIMARY KEY (`idPago`), ADD KEY `fk_pago_venta1_idx` (`idVenta`);
-
---
--- Indices de la tabla `pedido`
---
-ALTER TABLE `pedido`
- ADD PRIMARY KEY (`idPedido`);
-
---
--- Indices de la tabla `producto`
---
-ALTER TABLE `producto`
- ADD PRIMARY KEY (`idProducto`), ADD KEY `fk_producto_categoria1_idx` (`idCategoria`);
-
---
--- Indices de la tabla `usuario`
---
-ALTER TABLE `usuario`
- ADD PRIMARY KEY (`idUsuario`);
-
---
--- Indices de la tabla `venta`
---
-ALTER TABLE `venta`
- ADD PRIMARY KEY (`idVenta`), ADD KEY `fk_venta_usuario_idx` (`idUsuario`), ADD KEY `fk_venta_pedido1_idx` (`idPedido`);
-
---
--- Indices de la tabla `venta_has_producto`
---
-ALTER TABLE `venta_has_producto`
- ADD KEY `fk_venta_has_producto_producto1_idx` (`idProducto`), ADD KEY `fk_venta_has_producto_pedido1_idx` (`idPedido`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `categoria`
---
-ALTER TABLE `categoria`
-MODIFY `idCategoria` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT de la tabla `empresa`
---
-ALTER TABLE `empresa`
-MODIFY `idEmpresa` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT de la tabla `producto`
---
-ALTER TABLE `producto`
-MODIFY `idProducto` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=36;
---
--- AUTO_INCREMENT de la tabla `usuario`
---
-ALTER TABLE `usuario`
-MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT de la tabla `venta`
---
-ALTER TABLE `venta`
-MODIFY `idVenta` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `pago`
---
-ALTER TABLE `pago`
-ADD CONSTRAINT `fk_pago_venta1` FOREIGN KEY (`idVenta`) REFERENCES `venta` (`idVenta`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Filtros para la tabla `producto`
---
-ALTER TABLE `producto`
-ADD CONSTRAINT `fk_producto_categoria1` FOREIGN KEY (`idCategoria`) REFERENCES `categoria` (`idCategoria`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Filtros para la tabla `venta`
---
-ALTER TABLE `venta`
-ADD CONSTRAINT `fk_venta_pedido1` FOREIGN KEY (`idPedido`) REFERENCES `pedido` (`idPedido`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_venta_usuario` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Filtros para la tabla `venta_has_producto`
---
-ALTER TABLE `venta_has_producto`
-ADD CONSTRAINT `fk_venta_has_producto_pedido1` FOREIGN KEY (`idPedido`) REFERENCES `pedido` (`idPedido`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_venta_has_producto_producto1` FOREIGN KEY (`idProducto`) REFERENCES `producto` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2015-12-17 22:24:05

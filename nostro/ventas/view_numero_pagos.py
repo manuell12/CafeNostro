@@ -277,6 +277,10 @@ class NumeroPagos(QtGui.QDialog):
             if(total_productos_pagados):
                 pass
             else:
+                try:
+                    num_documento_old = self.ventaForm.num_documento
+                except:
+                    pass
                 id_pedido_new = controller.addDataPedido(self.ventaForm.mesa)
                 for row,estado in enumerate(lista_estados):
                     if(estado == 1):
@@ -309,10 +313,17 @@ class NumeroPagos(QtGui.QDialog):
                 controller.finalizarPedido(self.id_pedido)
                 self.ventaForm.crear_pedido = True
                 self.ventaForm.crear_venta = True
+                self.ventaForm.crear_documento = True
                 self.ventaForm.vaciar_table2()
             else:
                 controller.finalizarPedido(id_pedido_new)
+
+                try:
+                    self.ventaForm.num_documento = num_documento_old
+                except:
+                    pass
                 self.ventaForm.id_pedido = id_pedido_old
+                
                 self.ventaForm.reload_data_table2()
         else:
             return False

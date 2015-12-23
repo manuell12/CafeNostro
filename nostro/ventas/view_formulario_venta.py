@@ -42,6 +42,7 @@ class FormularioVenta(QtGui.QWidget):
     id_tablaPd = 0
     crear_pedido = True
     crear_venta = True
+    crear_documento = True
 
     def __init__(self, main, rut_usuario, mesa):
         """
@@ -476,6 +477,7 @@ class FormularioVenta(QtGui.QWidget):
                     # self.main.stackedWidget.widget(5).reload_data_table()
                     self.crear_pedido = True
                     self.crear_venta = True
+                    self.crear_documento = True
                 self.main.stackedWidget.widget(5).reload_data_table()
                 self.vaciar_table2()
             except:
@@ -488,6 +490,7 @@ class FormularioVenta(QtGui.QWidget):
                 self.main.stackedWidget.widget(5).reload_data_table()
                 self.crear_pedido = True
                 self.crear_venta = True
+                self.crear_documento = True
                 self.vaciar_table2()
 
             self.habilitarMesasUnidas()
@@ -579,15 +582,17 @@ class FormularioVenta(QtGui.QWidget):
         """
         Asigna un número de documento UNICO para un pedido.
         """
-        try: # Si hay ventas registradas, obtiene el numero del último documento y le suma una unidad.
-            self.num_documento = controller.getVentas()[-1].num_documento + 1
-        except: # Si no hay ventas registradas, comienza con 0
-            self.num_documento = 0
+        if(self.crear_documento):
+            try: # Si hay ventas registradas, obtiene el numero del último documento y le suma una unidad.
+                self.num_documento = controller.getVentas()[-1].num_documento + 1
+            except: # Si no hay ventas registradas, comienza con 0
+                self.num_documento = 0
+            self.crear_documento = False
 
     def action_imprimir(self):
         """
         Método que se ejecuta cuando el usuario apreta en el boton "imprimir detalle".
-        Genera un canvas con los datos de la venta y lo exporta como PDF a la carpeta nostro/PDF_detalles
+        Genera un canvas con los datos de la venta y lo exporta como PDF a la carpeta nostro/docs
         """
         # Se crea una venta sólo si no se ha creado anteriormente.
         if(self.crear_venta):
@@ -602,7 +607,7 @@ class FormularioVenta(QtGui.QWidget):
         espacio_productos = num_productos*15
         empresa = controller_empresa.getEmpresa(1)[0]
 
-        c = canvas.Canvas("PDF_detalles/detalle_mesa_"+str(self.mesa)+"_documento_"+controller_admin_producto.zerosAtLeft(self.num_documento,8)+".pdf")
+        c = canvas.Canvas("docs/detalle_mesa_"+str(self.mesa)+"_documento_"+controller_admin_producto.zerosAtLeft(self.num_documento,8)+".pdf")
         ancho = 300
         alto = 390+espacio_productos
         c.setPageSize((ancho, alto+50))
@@ -654,9 +659,7 @@ class FormularioVenta(QtGui.QWidget):
 
 
         c.save()
-        self.imprimir_pdf(os.getcwd() + "/PDF_detalles/detalle_mesa_"+
-            str(self.mesa)+"_documento_"+
-            controller_admin_producto.zerosAtLeft(self.num_documento,8)+".pdf")
+        self.imprimir_pdf(os.getcwd() + "/docs/detalle_mesa_"+str(self.mesa)+"_documento_"+controller_admin_producto.zerosAtLeft(self.num_documento,8)+".pdf")
 
     def imprimir_pdf(self,pdf):
         """

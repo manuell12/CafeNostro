@@ -1,5 +1,8 @@
-#Archivo charts que se genera automaticamente
+# Archivo charts que se genera automaticamente
 nostro/estadisticas/charts.htm
+
+# Documentos que se generan automaticamente
+nostro/docs/*.pdf
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

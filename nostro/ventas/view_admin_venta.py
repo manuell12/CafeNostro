@@ -34,7 +34,9 @@ class AdminVentas(QtGui.QWidget):
         self.formularioVenta = formularioVenta
 
     def connect_actions(self):
-        """Conectar botones con su respectiva accion"""
+        """
+        Conectar botones con su respectiva accion
+        """
         self.ui.pushButton_editar.clicked.connect(self.action_btn_editar)
         self.ui.pushButton_eliminar.clicked.connect(self.action_btn_eliminar)
         # self.ui.tableView_ventas.viewportEntered.connect(self.mouse_entered)

@@ -41,7 +41,6 @@ class FormularioVenta(QtGui.QWidget):
     id_tablaP = 0
     id_tablaPd = 0
     crear_pedido = True
-    crear_documento = True
     crear_venta = True
 
     def __init__(self, main, rut_usuario, mesa):
@@ -430,7 +429,7 @@ class FormularioVenta(QtGui.QWidget):
         Método que se llama cuando el usuario apreta en el boton 'mas opciones'.
         Crea una instancia de NumeroPagos().
         """
-        self.pagos = NumeroPagos(self.id_pedido,self,self.ui.lcdNumber_subtotal.value())
+        self.pagos = NumeroPagos(self.id_pedido,self)
         self.pagos.show()
 
     def clearLayout(self, layout):
@@ -476,7 +475,6 @@ class FormularioVenta(QtGui.QWidget):
                     self.agregarPago()
                     # self.main.stackedWidget.widget(5).reload_data_table()
                     self.crear_pedido = True
-                    self.crear_documento = True
                     self.crear_venta = True
                 self.main.stackedWidget.widget(5).reload_data_table()
                 self.vaciar_table2()
@@ -489,7 +487,6 @@ class FormularioVenta(QtGui.QWidget):
                 self.agregarPago()
                 self.main.stackedWidget.widget(5).reload_data_table()
                 self.crear_pedido = True
-                self.crear_documento = True
                 self.crear_venta = True
                 self.vaciar_table2()
 
@@ -582,12 +579,10 @@ class FormularioVenta(QtGui.QWidget):
         """
         Asigna un número de documento UNICO para un pedido.
         """
-        if(self.crear_documento): # Verifica si se creo un numero de documento
-            try: # Si hay ventas registradas, obtiene el numero del último documento y le suma una unidad.
-                self.num_documento = controller.getVentas()[-1].num_documento + 1
-            except: # Si no hay ventas registradas, comienza con 0
-                self.num_documento = 0
-            self.crear_documento = False
+        try: # Si hay ventas registradas, obtiene el numero del último documento y le suma una unidad.
+            self.num_documento = controller.getVentas()[-1].num_documento + 1
+        except: # Si no hay ventas registradas, comienza con 0
+            self.num_documento = 0
 
     def action_imprimir(self):
         """

@@ -273,7 +273,7 @@ def deleteProducto(id_pedido, id_producto):
 
 def addDataVenta(fecha, num_documento, tipo, total_pago, id_usuario, id_pedido):
     """
-    Agrega una venta a la base de datos y retorna el id
+    Agrega una venta a la base de datos.
     """
     venta = Venta(None, fecha, num_documento, tipo,
                   total_pago, id_usuario, id_pedido)

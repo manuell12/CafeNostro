@@ -80,6 +80,12 @@ class MainWindow(QtGui.QMainWindow):
         self.setVisible(True)
 
     def config_user(self):
+        """
+        Configura aspectos del programa dependiendo el nombre y el tipo de
+        usuario que se haya logueado al inicio.
+        Si el usuario no es administrador bloquea todas las funcionalidades
+        administrativas que el programa ofrece.
+        """
         self.nombre = unicode(controller.getUsuarioRut(self.rut)[0].nombre.decode('cp1252'))+" "+unicode(controller.getUsuarioRut(self.rut)[0].apellido.decode('cp1252'))
         if(controller.getUsuarioRut(self.rut)[0].nombre == "root"):
             self.nombre = "ROOT"
@@ -103,6 +109,12 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.stackedWidget.currentChanged.connect(self.stackedWidget_changed)
 
     def stackedWidget_changed(self,index):
+        """
+        Método que es llamado cuando se cambia el indice del QStackedWidget.
+        Recorre los pedidos de todas las mesas definidas para otorgar un
+        estado 'ocupado' en caso de que aun no se haya cerrado dicho pedido
+        y un estado 'no ocupado' en caso contrario.
+        """
         for i in range(8,self.num_mesas+9):
             try:
                 id_pedido = self.ui.stackedWidget.widget(i).id_pedido

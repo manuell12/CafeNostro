@@ -9,12 +9,20 @@ import admin_empresa.controller_empresa as controller_empresa
 
 
 class MesasVenta(QtGui.QWidget):
+    """
+    Clase MesasVenta que muestra una interfaz gráfica de las mesas que existen
+    en el local y realiza funciones para agregar, borrar, unir y separar mesas.
+    """
     editable = False
-    identificador = 0 # 0: borrar mesas, 1: unir mesas, 2: separar mesas
+    identificador = 0 # 0: borrar mesas, 1: unir mesas, 2: habilitar
     buttons_disabled = list()
     buttons_enabled = list()
-    pos_primera_mesa = 8 # Index del QStackedWidget donde se encuentra la primera mesa
-    pos_primera_mesa = pos_primera_mesa - 1 # Restamos uno porque la primera mesa empieza desde 1 y no desde 0
+
+    # Index del QStackedWidget donde se encuentra la primera mesa
+    pos_primera_mesa = 8 
+
+    # Restamos uno porque la primera mesa empieza desde 1 y no desde 0
+    pos_primera_mesa = pos_primera_mesa - 1 
 
     def __init__(self,main,num_mesas,rut):
         'Constructor de la clase'
@@ -30,13 +38,35 @@ class MesasVenta(QtGui.QWidget):
         self.connect_signals()
 
     def connect_signals(self):
+        """
+        Método que conecta las funciones de la clase con los eventos
+        que genere el usuario al interactuar con los QWidgets de la vista.
+        """
         self.ui.pushButton_agregar.clicked.connect(self.agregar_mesa)
         self.ui.pushButton_borrar.clicked.connect(self.borrar_mesa)
         self.ui.pushButton_aceptar.clicked.connect(self.aceptar)
         self.ui.pushButton_unir.clicked.connect(self.action_button_unir_mesas)
         self.ui.pushButton_habilitar.clicked.connect(self.action_button_habilitar_mesas)
 
+    def borrar_mesa(self):
+        """
+        Método que es llamado cuando el usuario presiona en el boton 'borrar'.
+        Cambia a un estado en el cual se pueden seleccionar mesas al presionar.
+        """
+        self.sender().setCheckable(True)
+        self.sender().setChecked(True)
+        self.ui.pushButton_aceptar.setVisible(True)
+        self.ui.label_info.setText("Selecciona la/las mesa(s) que desea borrar.")
+        self.editable = True
+        for button in self.list_mesas:
+            button.setCheckable(True)
+        self.identificador = 0
+
     def action_button_unir_mesas(self):
+        """
+        Método que es llamado cuando el usuario presiona en el boton 'unir'.
+        Cambia a un estado en el cual se pueden seleccionar mesas al presionar.
+        """
         self.sender().setCheckable(True)
         self.sender().setChecked(True)
         self.ui.pushButton_aceptar.setVisible(True)
@@ -47,6 +77,11 @@ class MesasVenta(QtGui.QWidget):
         self.identificador = 1
 
     def action_button_habilitar_mesas(self):
+        """
+        Método que es llamado cuando el usuario presiona en el boton 
+        'habilitar'.
+        Cambia a un estado en el cual se pueden seleccionar mesas al presionar.
+        """
         self.sender().setCheckable(True)
         self.sender().setChecked(True)
         self.ui.pushButton_aceptar.setVisible(True)
@@ -58,6 +93,12 @@ class MesasVenta(QtGui.QWidget):
         self.identificador = 2
 
     def unir_mesas(self, buttons_mesas):
+        """
+        Método que recibe como atributo una lista de PushButtonMesa.
+        Une los pedidos de cada una de las mesas a las que corresponden
+        los botones de la lista y los muestra en la mesa a la que
+        esta asignada el PRIMER boton de la lista.
+        """
         texto = ""
         num_mesa = buttons_mesas[0].mesa # número de la mesa a la que se van a unir las demás
         buttons_mesas[0].unido = True # asignamos la mesa como "unido"
@@ -112,6 +153,14 @@ class MesasVenta(QtGui.QWidget):
             self.main.ui.stackedWidget.widget(num_mesa+self.pos_primera_mesa).vaciar_table2()
 
     def aceptar(self):
+        """
+        Método llamado cuando el usuario acepta la selección de mesas a:
+            - Borrar: self.identificador = 0
+            - Unir: self.identificador = 1
+            - Habilitar: self.identificador = 2
+        Realiza las tareas pertinentes en cada uno de los 3 casos y 
+        luego vuelve al estado normal: button.setCheckable(False)
+        """
         for button in self.list_mesas:
             self.main.ui.stackedWidget.widget(button.mesa+self.pos_primera_mesa).button = button
 
@@ -151,6 +200,11 @@ class MesasVenta(QtGui.QWidget):
         self.ui.pushButton_borrar.setFocus()
 
     def agregar_mesa(self):
+        """
+        Método que agrega una mesa adicional al local.
+        Crea una nueva instancia de PushButtonMesa y lo asocia a una nueva
+        instancia de FormularioVenta.
+        """
         num_mesa = controller_empresa.getEmpresa(1)[0].num_mesas+1
 
         controller_empresa.editNumMesasEmpresa(num_mesa)
@@ -170,17 +224,11 @@ class MesasVenta(QtGui.QWidget):
             self.column = 0
             self.row = self.row +1
 
-    def borrar_mesa(self):
-        self.sender().setCheckable(True)
-        self.sender().setChecked(True)
-        self.ui.pushButton_aceptar.setVisible(True)
-        self.ui.label_info.setText("Selecciona la/las mesa(s) que desea borrar.")
-        self.editable = True
-        for button in self.list_mesas:
-            button.setCheckable(True)
-        self.identificador = 0
-
     def create_buttons(self):
+        """
+        Método que crea una instancia de PushButtonMesa por cada mesa que 
+        este registrada en el local 'self.num_mesas' y la muestra en la vista.
+        """
         self.list_mesas = list()
         self.row = 0
         self.column = 0
@@ -200,6 +248,11 @@ class MesasVenta(QtGui.QWidget):
                 self.column = 0
 
     def update_buttons(self):
+        """
+        Limpia el layout donde se muestran las mesas y crea nuevas instancias
+        de PushButtonMesa por cada mesa del local manteniendo las
+        configuraciones de cada una.
+        """
         self.row = 0
         self.column = 0
         lista = list()
@@ -224,6 +277,11 @@ class MesasVenta(QtGui.QWidget):
         self.list_mesas = lista
 
     def button_pressed(self):
+        """
+        Método que es llamado cuando el usuario presiona en algun PushButtonMesa,
+        cambia el indice del QStackedWidget de la ventana principal al 
+        FormularioVenta que corresponde el boton presionado.
+        """
         button_mesa = self.sender()
         num_mesa = button_mesa.mesa
         if (self.editable):
@@ -232,6 +290,9 @@ class MesasVenta(QtGui.QWidget):
             self.main.ui.stackedWidget.setCurrentIndex(num_mesa+self.pos_primera_mesa)
 
     def clearLayout(self, layout):
+        """
+        Método generico para borrar todos los widgets de un layout.
+        """
         if layout is not None:
             while layout.count():
                 item = layout.takeAt(0)

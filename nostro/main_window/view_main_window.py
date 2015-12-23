@@ -113,6 +113,7 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.actionProductos.triggered.connect(self.admin_productos)
         self.ui.actionEstadisticas.triggered.connect(self.admin_estadisticas)
         self.ui.actionDatos_empresa.triggered.connect(self.admin_empresa)
+        self.ui.actionSalir.triggered.connect(self.close)
 
         self.ui.pushButton_compra_directa.clicked.connect(self.formulario_venta_directa)
         self.ui.pushButton_mesas.clicked.connect(self.mesas_venta)

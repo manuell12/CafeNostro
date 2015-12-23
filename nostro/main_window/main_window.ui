@@ -131,7 +131,6 @@
     <property name="title">
      <string>&amp;Archivo</string>
     </property>
-    <addaction name="actionCambiar_Usuario"/>
     <addaction name="actionSalir"/>
    </widget>
    <widget class="QMenu" name="menuConfiguraci_n">

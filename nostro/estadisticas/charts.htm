@@ -1,0 +1,144 @@
+
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Highcharts Example</title>
+
+        <script type="text/javascript" src="js/jquery.min.js"></script><script type="text/javascript">
+        function isArray(obj) {
+            return Object.prototype.toString.call(obj) === '[object Array]';
+        }
+
+        function splat(obj) {
+            return isArray(obj) ? obj : [obj];
+        }
+        $(function () {
+    $('#chart-unit-product').highcharts({
+        chart: {
+            type: 'line',
+            zoomType: 'x'
+        },
+        title: {
+            text: 'Unidades Vendidas por Producto'
+        },
+        xAxis: {
+            type: 'datetime',
+            title: {
+                text: 'Fecha'
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'Unidades'
+            },
+            min: 0
+        },
+        plotOptions: {
+            line: {
+                marker: {
+                    radius: 4
+                },
+                lineWidth: 2,
+                states: {
+                    hover: {
+                        lineWidth: 3
+                    }
+                },
+                threshold: null
+            },
+            column: {
+                animation: false
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            formatter: function (tooltip) {
+                var items = this.points || splat(this),
+                    series = items[0].series,
+                    s;
+
+                // sort the values
+                items.sort(function(a, b){
+                    return ((a.y < b.y) ? -1 : ((a.y > b.y) ? 1 : 0));
+                });
+                items.reverse();
+
+                return tooltip.defaultFormatter.call(this, tooltip);
+            },
+            shared: true
+        },
+        series: [{name:" Espresso doble ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,22),data:[10]},{name:" Espresso ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,22),data:[2]},{name:" Macchiato ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,22),data:[1]}]
+    });
+    $('#chart-price-product').highcharts({
+        chart: {
+            type: 'line',
+            zoomType: 'x'
+        },
+        title: {
+            text: 'Ingreso Total por Producto'
+        },
+        xAxis: {
+            type: 'datetime',
+            title: {
+                text: 'Fecha'
+            }
+        },
+        yAxis: {
+            title: {
+                text: '$ Pesos Chilenos (CLP)'
+            },
+            min: 0
+        },
+        plotOptions: {
+            line: {
+                marker: {
+                    radius: 4
+                },
+                lineWidth: 2,
+                states: {
+                    hover: {
+                        lineWidth: 3
+                    }
+                },
+                threshold: null
+            },
+            column: {
+                animation: false
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            formatter: function (tooltip) {
+                var items = this.points || splat(this),
+                    series = items[0].series,
+                    s;
+
+                // sort the values
+                items.sort(function(a, b){
+                    return ((a.y < b.y) ? -1 : ((a.y > b.y) ? 1 : 0));
+                });
+                items.reverse();
+
+                return tooltip.defaultFormatter.call(this, tooltip);
+            },
+            shared: true
+        },
+        series: [{name:" Espresso doble ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,22),data:[18000.00000]},{name:" Espresso ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,22),data:[2600.00000]},{name:" Macchiato ", pointInterval: 24 * 3600 * 1000, pointStart: Date.UTC(2015,11,22),data:[1500.00000]}]
+    });
+}); 
+    </script>
+    </head>
+    <body>
+<script src="js/highcharts.js"></script>
+<script src="js/modules/exporting.js"></script>
+
+<div id="chart-unit-product" style="min-width: 310px; height: 350px; margin: 0 auto"></div>
+<div id="chart-price-product" style="min-width: 310px; height: 350px; margin: 0 auto"></div>
+
+    </body>
+</html>

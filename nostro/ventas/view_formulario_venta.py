@@ -246,7 +246,7 @@ class FormularioVenta(QtGui.QWidget):
         productos = controller.getProductoCodigo(text)
         self.load_model_total_productos(productos)
 
-    """ ============================================================================= TABLA TOTAL PRODUCTOS ============================================="""
+    """ ============================================ TABLA TOTAL PRODUCTOS ============================================="""
 
     def cell_selected_table1(self, index, indexp):
         """
@@ -295,7 +295,7 @@ class FormularioVenta(QtGui.QWidget):
         modelSel = self.ui.tableView_total_productos.selectionModel()
         modelSel.currentChanged.connect(self.cell_selected_table1)
 
-    """ ======================================================================= TABLA PRODUCTOS PEDIDOS ============================================================ """
+    """ =========================== TABLA PRODUCTOS PEDIDOS ====================================================== """
 
     def load_productos_table2(self, pedido=None):
         """
@@ -423,7 +423,7 @@ class FormularioVenta(QtGui.QWidget):
         self.ui.lcdNumber_subtotal.display(0)
         self.ui.lcdNumber_total.display(0)
 
-    """ ===================================================================== NUMERO DE PAGOS ============================================================ """
+    """ ============================================= NUMERO DE PAGOS ============================= """
 
     def action_opciones(self):
         """
@@ -466,7 +466,7 @@ class FormularioVenta(QtGui.QWidget):
         if press == QtGui.QMessageBox.Ok:
             try:
                 if self.edit is True:
-                    self.editarVenta()
+                    self.editarVenta()                    
                 else:
                     if(self.crear_venta):
                         self.agregarVenta()
@@ -474,11 +474,12 @@ class FormularioVenta(QtGui.QWidget):
                     else:
                         self.editarVenta()
                     self.agregarPago()
-                    self.main.stackedWidget.widget(5).reload_data_table()
+                    # self.main.stackedWidget.widget(5).reload_data_table()
                     self.crear_pedido = True
                     self.crear_documento = True
                     self.crear_venta = True
-                    self.vaciar_table2()
+                self.main.stackedWidget.widget(5).reload_data_table()
+                self.vaciar_table2()
             except:
                 if(self.crear_venta):
                     self.agregarVenta()

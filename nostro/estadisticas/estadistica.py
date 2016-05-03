@@ -9,6 +9,9 @@
 
 from PySide import QtCore, QtGui
 
+from PySide.QtNetwork import *
+from PySide.QtWebKit import QWebView
+
 class Ui_Estadistica(object):
     def setupUi(self, Estadistica):
         Estadistica.setObjectName("Estadistica")
@@ -91,7 +94,7 @@ class Ui_Estadistica(object):
         self.tableView.setObjectName("tableView")
         self.verticalLayout_4.addWidget(self.tableView)
         self.horizontalLayout_3.addWidget(self.groupBox)
-        self.webView = QtWebKit.QWebView(Estadistica)
+        self.webView = QWebView(Estadistica)
         self.webView.setUrl(QtCore.QUrl("about:blank"))
         self.webView.setRenderHints(QtGui.QPainter.Antialiasing|QtGui.QPainter.HighQualityAntialiasing|QtGui.QPainter.SmoothPixmapTransform|QtGui.QPainter.TextAntialiasing)
         self.webView.setObjectName("webView")
@@ -110,4 +113,4 @@ class Ui_Estadistica(object):
         self.label.setText(QtGui.QApplication.translate("Estadistica", "Ingreso Total:                $", None, QtGui.QApplication.UnicodeUTF8))
         self.label_ingreso_total.setText(QtGui.QApplication.translate("Estadistica", "0", None, QtGui.QApplication.UnicodeUTF8))
 
-from PySide import QtWebKit
+
